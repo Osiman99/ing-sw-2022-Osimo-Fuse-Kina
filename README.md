@@ -1,1 +1,1 @@
-# ing-sw-2022-osimo-fuse-kina
+# ing-sw-2022-Osimo-Fuse-Kina
