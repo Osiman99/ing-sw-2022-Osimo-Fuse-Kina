@@ -1,18 +1,36 @@
 package it.polimi.ingsw;
 
+/**
+ * This enum contains all possible colors that students can get
+ */
 public enum StudentColor {
-    RED(0), GREEN(1), BLUE(2), YELLOW(3), PINK(4);
+    RED("RED"), GREEN("GREEN"), BLUE("BLUE"), YELLOW("YELLOW"), PINK("PINK");
 
-    int studentColorCode;
+    private final String studentColor;
 
-    StudentColor(int studentColorCode) {
-        this.studentColorCode = studentColorCode;
+    /**
+     * Default constructor
+     *
+     * @param studentColor is the string representation of the tower color
+     */
+    StudentColor(String studentColor) {
+        this.studentColor = studentColor;
     }
 
-    public int getStudentColorCode(){
-        return this.studentColorCode;
+    /**
+     *
+     * @return a string containing the color of the student
+     */
+    public String getStudentColor(){
+        return this.studentColor;
     }
-    public int getStudentColor(int studentColorCode){
-        return StudentColor.this.studentColorCode;
+
+    /**
+     *
+     * @param studentColor is the string color of the tower
+     * @return the color
+     */
+    public String getStudentColor(String studentColor){
+        return StudentColor.this.studentColor;
     }
 }

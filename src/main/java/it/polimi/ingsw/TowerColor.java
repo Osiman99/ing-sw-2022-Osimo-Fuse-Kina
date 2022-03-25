@@ -1,18 +1,36 @@
 package it.polimi.ingsw;
 
+/**
+ * This enum contains all possible colors that towers can get
+ */
 public enum TowerColor {
-    WHITE(0), BLACK(1), GREY(2);
+    BLACK("BLACK"), WHITE("WHITE"), GREY("GREY") ;
 
-    int towerColorCode;
+    private final String towerColor;
 
-    TowerColor(int towerColorCode) {
-        this.towerColorCode = towerColorCode;
+    /**
+     * Default constructor
+     *
+     * @param towerColor is the string representation of the tower color
+     */
+    TowerColor(String towerColor) {
+        this.towerColor = towerColor;
     }
 
-    public int getTowerColorCode(){
-        return this.towerColorCode;
+    /**
+     *
+     * @return a string containing the color of the tower
+     */
+    public String getTowerColor(){
+        return this.towerColor;
     }
-    public int getTowerColor(int towerColorCode){
-        return TowerColor.this.towerColorCode;
+
+    /**
+     *
+     * @param towerColor is the string color of the tower
+     * @return the color
+     */
+    public String getTowerColor(String towerColor){
+        return TowerColor.this.towerColor;
     }
 }
