@@ -6,25 +6,25 @@ package it.polimi.ingsw;
 public enum StudentColor {
     RED("RED"), GREEN("GREEN"), BLUE("BLUE"), YELLOW("YELLOW"), PINK("PINK");
 
-    private final String studentColor;
+    private final String Color;
 
     /**
      * Default constructor
      *
-     * @param studentColor is the string representation of the tower color
+     * @param Color is the string representation of the student color
      */
-    StudentColor(String studentColor) {
-        this.studentColor = studentColor;
+    StudentColor(String Color) {
+        this.Color = Color;
     }
 
     /**
      *
      * @return a string containing the color of the student
      */
-    public String getStudentColor(){
-        return this.studentColor;
+    public String getColor(){
+        return this.Color;
     }
 
 
-    // public String getStudentColor(String studentColor){return StudentColor.this.studentColor;}
+    // public String getsColor(String sColor){return StudentColor.this.sColor;}
 }
