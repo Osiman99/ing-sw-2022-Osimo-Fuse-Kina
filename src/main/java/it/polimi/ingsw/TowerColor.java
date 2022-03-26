@@ -25,12 +25,6 @@ public enum TowerColor {
         return this.towerColor;
     }
 
-    /**
-     *
-     * @param towerColor is the string color of the tower
-     * @return the color
-     */
-    public String getTowerColor(String towerColor){
-        return TowerColor.this.towerColor;
-    }
+
+   // public String getTowerColor(String towerColor){return TowerColor.this.towerColor;}
 }

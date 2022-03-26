@@ -25,12 +25,6 @@ public enum StudentColor {
         return this.studentColor;
     }
 
-    /**
-     *
-     * @param studentColor is the string color of the tower
-     * @return the color
-     */
-    public String getStudentColor(String studentColor){
-        return StudentColor.this.studentColor;
-    }
+
+    // public String getStudentColor(String studentColor){return StudentColor.this.studentColor;}
 }
