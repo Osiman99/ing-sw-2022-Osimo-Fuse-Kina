@@ -1,7 +1,7 @@
 package it.polimi.ingsw;
 
 public class StudentRow {
-    private StudentRow[] students = new StudentRow[10];
+    private Student[] students;
     private StudentColor rowColor;
 
     /**
@@ -10,16 +10,16 @@ public class StudentRow {
      * @param students
      * @param rowColor
      */
-    public StudentRow(StudentRow[] students, StudentColor rowColor) {
+    public StudentRow(Student[] students, StudentColor rowColor) {
         this.students = students;
         this.rowColor = rowColor;
     }
 
-    public StudentRow[] getStudents() {
+    public Student[] getStudents() {
         return students;
     }
 
-    public void setStudents(StudentRow[] students) {
+    public void setStudents(Student[] students) {
         this.students = students;
     }
 
