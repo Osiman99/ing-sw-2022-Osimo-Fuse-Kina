@@ -22,4 +22,6 @@ public class AssistantDeck {
            deck[i] = new AssistantCard(value[i + 1], maxValue[i/2 + 1]);
        }
     }
+
+    //public AssistantCard playCard(){...}
 }
