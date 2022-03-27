@@ -2,15 +2,15 @@ package it.polimi.ingsw;
 
 public class Student {
 
-    private StudentColor Color;
+    private StudentColor color;
 
     /**
      * Default constructor
      *
-     * @param Color is the representation of the student color
+     * @param color is the representation of the student color
      */
-    public Student(StudentColor Color) {
-        this.Color = Color;
+    public Student(StudentColor color) {
+        this.color = color;
     }
 
     /**
@@ -19,7 +19,7 @@ public class Student {
      * @return the color of the student
      */
     public StudentColor getColor() {
-        return Color;
+        return color;
     }
 }
 

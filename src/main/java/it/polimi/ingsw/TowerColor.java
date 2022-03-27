@@ -6,15 +6,15 @@ package it.polimi.ingsw;
 public enum TowerColor {
     BLACK("BLACK"), WHITE("WHITE"), GREY("GREY") ;
 
-    private final String Color;
+    private final String color;
 
     /**
      * Default constructor
      *
-     * @param Color is the string representation of the tower color
+     * @param color is the string representation of the tower color
      */
-    TowerColor(String Color) {
-        this.Color = Color;
+    TowerColor(String color) {
+        this.color = color;
     }
 
     /**
@@ -22,7 +22,7 @@ public enum TowerColor {
      * @return a string containing the color of the tower
      */
     public String getColor(){
-        return this.Color;
+        return this.color;
     }
 
 
