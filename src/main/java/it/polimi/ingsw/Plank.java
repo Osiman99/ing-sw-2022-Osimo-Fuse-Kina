@@ -4,8 +4,14 @@ public class Plank {
     private Tower[] towers;
     private StudentRow[] diningRoom;
 
-    public void diningRoom() {
+    /**
+     * constructor
+     *
+     * @param diningRoom
+     */
+    public Plank(StudentRow[] diningRoom) {
+        this.diningRoom = diningRoom;
+
 
     }
-
 }

@@ -22,4 +22,3 @@ public class Student {
         return color;
     }
 }
-
