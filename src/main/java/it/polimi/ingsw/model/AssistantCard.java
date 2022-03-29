@@ -2,8 +2,10 @@ package it.polimi.ingsw.model;
 
 public class AssistantCard {
 
-    private int value;
-    private int maxMoves;
+    private final int value;
+    private final int maxMoves;
+
+
 
     /**
      * default constructor
@@ -13,5 +15,19 @@ public class AssistantCard {
     public AssistantCard(int value, int maxMoves) {
         this.value = value;
         this.maxMoves = maxMoves;
+    }
+
+    /**
+     * @return value
+     */
+    public int getValue() {
+        return value;
+    }
+
+    /**
+     * @return maxMoves
+     */
+    public int getMaxMoves() {
+        return maxMoves;
     }
 }
