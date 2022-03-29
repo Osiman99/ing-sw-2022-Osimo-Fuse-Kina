@@ -1,6 +1,4 @@
-package it.polimi.ingsw;
-
-import java.util.ArrayList;
+package it.polimi.ingsw.model;
 
 public class AssistantDeck {
 
