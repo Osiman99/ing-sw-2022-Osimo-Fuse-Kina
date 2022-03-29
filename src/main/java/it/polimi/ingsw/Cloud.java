@@ -17,6 +17,15 @@ public class Cloud {
     }
 
     /**
+     * Getter
+     *
+     * @return
+     */
+    public Student[] getStudents() {
+        return students;
+    }
+
+    /**
      * Setter
      *
      * @param students
