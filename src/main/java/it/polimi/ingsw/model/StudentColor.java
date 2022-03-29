@@ -1,30 +1,36 @@
 package it.polimi.ingsw.model;
 
 /**
- * This enum contains all possible colors that students can get
+ * This enum contains all possible colors that students can get and we associate
+ * a number to each color to correlate with the student row
  */
 public enum StudentColor {
-    RED("RED"), GREEN("GREEN"), BLUE("BLUE"), YELLOW("YELLOW"), PINK("PINK");
+    GREEN(0), RED(1), YELLOW(2), PINK(3), BLUE(4);
 
-    private final String color;
+    private int code;
 
     /**
-     * Default constructor
-     *
-     * @param color is the string representation of the student color
+     * constructor
+     * @param code
      */
-    StudentColor(String color) {
-        this.color = color;
+    StudentColor(int code) {
+        this.code = code;
     }
 
     /**
-     *
-     * @return a string containing the color of the student
+     * Get the color code
+     * @return code
      */
-    public String getColor(){
-        return this.color;
+    public int getCode() {
+        return this.code;
     }
 
-
-    // public String getsColor(String color){return StudentColor.this.color;}
+    /**
+     * Get the color given the color code
+     * @param code
+     * @return color
+     */
+    public int getStudentColor(int code) {
+        return StudentColor.this.code;
+    }
 }
