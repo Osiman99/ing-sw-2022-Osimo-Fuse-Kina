@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Cloud {
 
-    private List<Student> cloud;
+    private List<Student> students;
 
 
 

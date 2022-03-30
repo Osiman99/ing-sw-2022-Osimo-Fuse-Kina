@@ -1,8 +1,11 @@
 package it.polimi.ingsw.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BagSingleton {
 
-    private static Student[] students;
+    private static List<Student> bag;
 
     /**
      * singular instance
@@ -22,12 +25,9 @@ public class BagSingleton {
          */
         if (instance == null){
             instance = new BagSingleton();
-            students = new Student[120];
-            // dobbiamo inizializzare l'array
+            bag = new ArrayList<Student>(120);
         }
         return instance;
     }
-
-    // altri metodi dopo che vengono create le classi Cloud, Plank
 
 }

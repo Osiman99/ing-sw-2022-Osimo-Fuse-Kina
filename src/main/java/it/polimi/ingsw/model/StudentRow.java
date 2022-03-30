@@ -1,8 +1,11 @@
 package it.polimi.ingsw.model;
 
+import java.util.List;
+
 public class StudentRow {
-    private Student[] students;
+    private List<Student> students;
     private StudentColor rowColor;
+
 
     /**
      * Default constructor
@@ -10,16 +13,16 @@ public class StudentRow {
      * @param students
      * @param rowColor
      */
-    public StudentRow(Student[] students, StudentColor rowColor) {
+    public StudentRow(List<Student> students, StudentColor rowColor) {
         this.students = students;
         this.rowColor = rowColor;
     }
 
-    public Student[] getStudents() {
+    public List<Student> getStudents() {
         return students;
     }
 
-    public void setStudents(Student[] students) {
+    public void setStudents(List<Student> students) {
         this.students = students;
     }
 

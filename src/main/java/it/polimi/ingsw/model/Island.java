@@ -4,7 +4,8 @@ import java.util.List;
 
 public class Island {
 
-    private List<Student> island;
+    private List<Student> students;
+    private List<Tower> towers;
 
 
 
