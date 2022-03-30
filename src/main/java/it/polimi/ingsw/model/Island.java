@@ -1,8 +1,13 @@
 package it.polimi.ingsw.model;
 
+import java.util.List;
+
 public class Island {
 
-    private int numIslands = 12;
+    private List<Student> list;
+
+
+    //private int numIslands = 12;
 
 
     // possiamo creare una List<Island> che ad ogni isola possiamo associare un valore boolean per indicare se c'è o no

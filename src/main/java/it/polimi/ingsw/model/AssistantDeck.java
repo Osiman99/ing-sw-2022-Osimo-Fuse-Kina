@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -8,26 +9,19 @@ public class AssistantDeck {
     /**
      * list of cards
      */
-    private List<AssistantCard> list;
+    private List<AssistantCard> deck = new ArrayList<AssistantCard>();
 
     /**
      * deck constructor
      */
     public AssistantDeck() {
 
-        AssistantCard[] deck = new AssistantCard[10];
-
         /**
          * add Assistant cards to deck
          */
-       for(int i = 0; i < deck.length; i++){
-           deck[i] = new AssistantCard(i + 1, i/2 + 1);
+       for(int i = 0; i < 10; i++) {
+           deck.add(new AssistantCard(i + 1, i / 2 + 1));
        }
-
-        /**
-         * fills the list from array
-         */
-        list =Arrays.asList(deck);
     }
 
     //public AssistantCard playCard(){...}
