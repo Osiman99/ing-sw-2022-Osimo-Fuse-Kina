@@ -7,6 +7,7 @@ public class Plank {
     private Tower[] towers;
     private StudentRow[] diningRoom;
 
+
     /*public Plank() {
         Student[] diningRoom = {null};
 
