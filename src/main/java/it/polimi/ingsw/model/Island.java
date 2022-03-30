@@ -4,10 +4,8 @@ import java.util.List;
 
 public class Island {
 
-    private List<Student> list;
+    private List<Student> island;
 
-
-    //private int numIslands = 12;
 
 
     // possiamo creare una List<Island> che ad ogni isola possiamo associare un valore boolean per indicare se c'è o no
