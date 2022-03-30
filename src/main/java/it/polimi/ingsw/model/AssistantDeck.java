@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class AssistantDeck {
@@ -32,8 +31,6 @@ public class AssistantDeck {
            deck.add(new AssistantCard(i + 1, i / 2 + 1));
        }
 
-
     }
 
-    //public AssistantCard playCard(){...}
 }

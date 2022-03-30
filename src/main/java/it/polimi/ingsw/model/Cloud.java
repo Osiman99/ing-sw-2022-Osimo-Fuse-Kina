@@ -8,10 +8,9 @@ public class Cloud {
 
     private List<Student> cloud;
 
-    // if(Player1, Player2) {students = new Student[3]}
-    // if(Player1, Player2, Player 3) {students = new Student[4]}
 
 
+    // if 2 players then 3 students per cloud
+    // if 3 players then 4 students per row
 
-    //public void moveStudentsToEntrance(Player player){}
 }
