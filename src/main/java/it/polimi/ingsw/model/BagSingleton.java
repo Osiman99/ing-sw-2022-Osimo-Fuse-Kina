@@ -5,7 +5,7 @@ import java.util.List;
 
 public class BagSingleton {
 
-    private static List<Student> bag;
+    private static List<Student> students;
 
     /**
      * singular instance
@@ -25,7 +25,7 @@ public class BagSingleton {
          */
         if (instance == null){
             instance = new BagSingleton();
-            bag = new ArrayList<Student>(120);
+            students = new ArrayList<Student>(120);
         }
         return instance;
     }

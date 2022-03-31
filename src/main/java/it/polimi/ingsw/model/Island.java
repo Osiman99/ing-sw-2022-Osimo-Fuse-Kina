@@ -1,11 +1,13 @@
 package it.polimi.ingsw.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Island {
 
-    private List<Student> students;
-    private List<Tower> towers;
+    private List<Student> students = new ArrayList<Student>();
+    private List<Tower> towers = new ArrayList<Tower>();
+
 
 
 
