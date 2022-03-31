@@ -25,9 +25,12 @@ public class BagSingleton {
          */
         if (instance == null){
             instance = new BagSingleton();
-            students = new ArrayList<Student>(120);
+            students = new ArrayList<Student>();
         }
         return instance;
     }
 
+    public void moveStudent(){
+
+    }
 }
