@@ -3,9 +3,11 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.StudentRow;
 import it.polimi.ingsw.model.Tower;
 
+import java.util.List;
+
 public class Plank {
-    private Tower[] towers;
-    private StudentRow[] diningRoom;
+    private List<Tower> towers;
+    private List<StudentRow> diningRoom;
 
 
     /*public Plank() {
