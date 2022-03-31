@@ -10,6 +10,17 @@ public class Plank {
     private List<Tower> towers = new ArrayList<Tower>();
     private List<StudentRow> diningRoom = new ArrayList<StudentRow>();
 
+    public boolean isTowerSpaceEmpty(){
+        if(towers.size() == 0)
+            return true;
+        else
+            return false;
+    }
+
+
+
+
+
 
     /*public Plank() {
         Student[] diningRoom = {null};
