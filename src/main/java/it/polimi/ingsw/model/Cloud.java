@@ -2,11 +2,30 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.Student;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Cloud {
 
+    private Game game;
     private List<Student> students;
+
+    public Cloud(){
+        this.game = Game.getInstance();
+        this.students = new ArrayList<Student>();
+    }
+
+    public void moveStudentToEntrance(){
+        if (this.game.getNumPlayers() == 2){
+            //fai cose
+        }else if (this.game.getNumPlayers() == 3){
+            //fai altre cose
+        }
+    }
+
+
+
+
 
 
 

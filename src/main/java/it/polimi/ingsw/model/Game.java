@@ -1,0 +1,38 @@
+package it.polimi.ingsw.model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Game {
+    public static final int MAX_PLAYERS = 3;
+    private Gameboard gameboard;              //forse va fatto final (singleton o no?)
+    private static Game instance;
+    private List<Player> players;
+    private int chosenPlayersNumber;
+
+    private Game(){
+        players = new ArrayList<Player>();
+        this.gameboard = Gameboard.getInstance();
+    }
+
+
+    public static Game getInstance(){
+        if (instance == null){
+            instance = new Game();
+        }
+        return instance;
+    }
+
+    public int getNumPlayers() {
+        return players.size();   //oppure return chosenPlayersNumber (in base a se vogliamo
+                                 // fare la FA se uno si scollega dal gioco)
+    }
+
+    public Player getPlayerByNickname(String nickname) {
+        return players.stream()
+                .filter(player -> nickname.equals(player.getNickname()))
+                .findFirst()
+                .orElse(null);
+    }
+
+}

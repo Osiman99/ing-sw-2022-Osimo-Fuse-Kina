@@ -8,7 +8,22 @@ public class AssistantDeck {
     /**
      * list of cards
      */
-    private List<AssistantCard> deck = new ArrayList<AssistantCard>();
+    private List<AssistantCard> deck;
+
+    /**
+     * deck constructor
+     */
+    public AssistantDeck() {
+        deck = new ArrayList<AssistantCard>();
+
+        /**
+         * add Assistant cards to deck
+         */
+        for(int i = 0; i < 10; i++) {
+            deck.add(new AssistantCard(i + 1, i / 2 + 1));
+        }
+
+    }
 
     /**
      * Getter
@@ -17,20 +32,6 @@ public class AssistantDeck {
      */
     public List<AssistantCard> getDeck() {
         return deck;
-    }
-
-    /**
-     * deck constructor
-     */
-    public AssistantDeck() {
-
-        /**
-         * add Assistant cards to deck
-         */
-       for(int i = 0; i < 10; i++) {
-           deck.add(new AssistantCard(i + 1, i / 2 + 1));
-       }
-
     }
 
 }

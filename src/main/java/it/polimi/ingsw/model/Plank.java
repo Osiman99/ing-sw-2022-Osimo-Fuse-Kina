@@ -7,8 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Plank {
-    private List<Tower> towers = new ArrayList<Tower>();
-    private List<StudentRow> diningRoom = new ArrayList<StudentRow>();
+    private List<Tower> towers;
+    private List<StudentRow> diningRoom;
+
+    public Plank(){
+        towers = new ArrayList<Tower>();
+        diningRoom = new ArrayList<StudentRow>();
+    }
 
     public boolean isTowerSpaceEmpty(){
         if(towers.size() == 0)

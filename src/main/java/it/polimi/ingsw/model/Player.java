@@ -8,7 +8,17 @@ public class Player {
     private String nickname;
     private Plank plank;
     private PlayerState state;
-    private List<Plank> planks = new ArrayList<Plank>();
     private AssistantDeck deck;
     private int numCoins = 1;
+
+    public Player(){
+        //fai cose
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+
 }
+

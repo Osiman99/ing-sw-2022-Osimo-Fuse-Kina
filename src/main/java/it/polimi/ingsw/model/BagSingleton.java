@@ -15,7 +15,9 @@ public class BagSingleton {
     /**
      * private constructor
      */
-    private BagSingleton(){}
+    private BagSingleton(){
+        students = new ArrayList<Student>();
+    }
 
 
     public static BagSingleton getInstance(){
@@ -25,7 +27,6 @@ public class BagSingleton {
          */
         if (instance == null){
             instance = new BagSingleton();
-            students = new ArrayList<Student>();
         }
         return instance;
     }

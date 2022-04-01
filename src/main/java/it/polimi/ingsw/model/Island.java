@@ -5,8 +5,14 @@ import java.util.List;
 
 public class Island {
 
-    private List<Student> students = new ArrayList<Student>();
-    private List<Tower> towers = new ArrayList<Tower>();
+    private List<Student> students;
+    private List<Tower> towers;
+
+    public Island(){
+        students = new ArrayList<Student>();
+        towers = new ArrayList<Tower>();
+    }
+
 
 
 
