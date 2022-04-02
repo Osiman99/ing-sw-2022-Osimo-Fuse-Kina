@@ -49,7 +49,7 @@ public class BagSingleton {
                    students.remove(0);
                }
            }
-
+            //manca il throw exception
     }
 
 }
