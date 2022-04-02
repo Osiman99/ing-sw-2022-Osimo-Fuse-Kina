@@ -24,7 +24,7 @@ public class Plank {
             return false;
     }
 
-    public addStudentsEntrance(){
+    public  void addStudentsEntrance(){
 
     }
 

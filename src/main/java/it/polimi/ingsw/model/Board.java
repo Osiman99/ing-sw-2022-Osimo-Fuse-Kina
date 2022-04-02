@@ -3,17 +3,17 @@ package it.polimi.ingsw.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Gameboard {
+public class Board {
     private int numIslands;
     private List<Island> islands;
     private List<Cloud> clouds;
     private Player professorsControlledBy[];
-    private static Gameboard instance;
+    private static Board instance;
 
     /**
      * Gameboard constructor
      */
-    public Gameboard(){
+    public Board(){
         islands = new ArrayList<Island>();
         clouds = new ArrayList<Cloud>();
         professorsControlledBy = new Player[5];
@@ -25,9 +25,9 @@ public class Gameboard {
      *
      * @return
      */
-    public static Gameboard getInstance(){
+    public static Board getInstance(){
         if (instance == null){
-            instance = new Gameboard();
+            instance = new Board();
         }
         return instance;
     }
