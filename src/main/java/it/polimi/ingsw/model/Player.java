@@ -11,12 +11,31 @@ public class Player {
     private AssistantDeck deck;
     private int numCoins = 1;
 
-    public Player(){
-        //fai cose
+    public Player(String nickname){
+        this.nickname = nickname;
+        plank = new Plank();
+        state = PlayerState.SLEEP;
+        deck = new AssistantDeck();
     }
 
-    public String getNickname() {
+    public String getNickname(){
         return nickname;
+    }
+
+    public Plank getPlank() {
+        return plank;
+    }
+
+    public PlayerState getState() {
+        return state;
+    }
+
+    public AssistantDeck getDeck() {
+        return deck;
+    }
+
+    public int getNumCoins() {
+        return numCoins;
     }
 
 

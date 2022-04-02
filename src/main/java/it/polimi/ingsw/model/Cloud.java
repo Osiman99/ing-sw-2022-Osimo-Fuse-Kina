@@ -7,20 +7,19 @@ import java.util.List;
 
 public class Cloud {
 
-    private Game game;
     private List<Student> students;
 
     public Cloud(){
-        this.game = Game.getInstance();
         this.students = new ArrayList<Student>();
     }
 
-    public void moveStudentToEntrance(){
-        if (this.game.getNumPlayers() == 2){
-            //fai cose
-        }else if (this.game.getNumPlayers() == 3){
-            //fai altre cose
+    public void moveStudentToEntrance(Player player){
+        player.
+        for(int i = 0; i < students.size(); i++) {
+            students.remove(0);
         }
+
+
     }
 
 
