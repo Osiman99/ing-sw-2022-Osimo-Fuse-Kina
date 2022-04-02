@@ -14,15 +14,13 @@ public class Cloud {
     }
 
     public void moveStudentToEntrance(Player player){
-        player.addStudentsToEntrance
         for(int i = 0; i < students.size(); i++) {
+            player.addStudentsToEntrance(students.get(0));
             students.remove(0);
         }
 
 
     }
-
-
 
 
 

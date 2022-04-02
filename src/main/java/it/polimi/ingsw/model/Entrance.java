@@ -20,4 +20,8 @@ public class Entrance {
     public void moveStudentToIsland(Island island){
 
     }
+
+    public void addStudent(Student student){
+        students.add(0, student);
+    }
 }

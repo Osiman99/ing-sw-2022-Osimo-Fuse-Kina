@@ -38,7 +38,8 @@ public class Player {
         return numCoins;
     }
 
-    public void addStudentsToEntrance(){
+    public void addStudentsToEntrance(Student student){
+        plank.giveStudentToPlayer(student);
 
     }
 

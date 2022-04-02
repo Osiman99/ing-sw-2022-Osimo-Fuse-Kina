@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Game {
     public static final int MAX_PLAYERS = 3;
-    private Gameboard gameboard;              //forse va fatto final (singleton o no?)
+    private Board board;              //forse va fatto final (singleton o no?)
     private static Game instance;
     private List<Player> players;
     private int chosenPlayersNumber;
@@ -15,7 +15,7 @@ public class Game {
      */
     private Game(){
         players = new ArrayList<Player>();
-        this.gameboard = Gameboard.getInstance();
+        this.board = Board.getInstance();
     }
 
     /**

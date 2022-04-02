@@ -24,8 +24,8 @@ public class Plank {
             return false;
     }
 
-    public  void addStudentsEntrance(){
-
+    public void giveStudentToPlayer(Student student){
+        entrance.addStudent(student);
     }
 
 

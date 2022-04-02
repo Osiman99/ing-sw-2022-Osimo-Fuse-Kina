@@ -11,7 +11,7 @@ public class Board {
     private static Board instance;
 
     /**
-     * Gameboard constructor
+     * Board constructor
      */
     public Board(){
         islands = new ArrayList<Island>();
