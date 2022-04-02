@@ -10,12 +10,18 @@ public class Game {
     private List<Player> players;
     private int chosenPlayersNumber;
 
+    /**
+     * Game constructor
+     */
     private Game(){
         players = new ArrayList<Player>();
         this.gameboard = Gameboard.getInstance();
     }
 
-
+    /**
+     * singleton class, create object only if it doesn't exist
+     * @return
+     */
     public static Game getInstance(){
         if (instance == null){
             instance = new Game();
@@ -23,16 +29,27 @@ public class Game {
         return instance;
     }
 
+    /**
+     * getter
+     * @return
+     */
     public int getNumPlayers() {
         return players.size();   //oppure return chosenPlayersNumber (in base a se vogliamo
                                  // fare la FA se uno si scollega dal gioco)
     }
 
+    /**
+     * it searches the player with this nickname
+     * @param nickname
+     * @return Player
+     */
     public Player getPlayerByNickname(String nickname) {
         return players.stream()
                 .filter(player -> nickname.equals(player.getNickname()))
                 .findFirst()
                 .orElse(null);
     }
+
+
 
 }
