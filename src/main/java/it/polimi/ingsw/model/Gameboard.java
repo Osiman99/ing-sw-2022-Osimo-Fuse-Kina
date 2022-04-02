@@ -17,6 +17,11 @@ public class Gameboard {
         numIslands = 12;
     }
 
+    /**
+     * create the object only if it does not exist
+     *
+     * @return
+     */
     public static Gameboard getInstance(){
         if (instance == null){
             instance = new Gameboard();
