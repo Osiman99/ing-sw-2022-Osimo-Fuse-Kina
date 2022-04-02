@@ -10,9 +10,9 @@ public class Cloud {
     private Game game;
     private List<Student> students;
 
-    public Cloud(){
+    public Cloud(ArrayList<Student> students){
         this.game = Game.getInstance();
-        this.students = new ArrayList<Student>();
+        this.students = students;
     }
 
     public void moveStudentToEntrance(){
