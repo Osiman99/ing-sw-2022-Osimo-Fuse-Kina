@@ -10,6 +10,9 @@ public class Gameboard {
     private Player professorsControlledBy[];
     private static Gameboard instance;
 
+    /**
+     * Gameboard constructor
+     */
     public Gameboard(){
         islands = new ArrayList<Island>();
         clouds = new ArrayList<Cloud>();
@@ -18,7 +21,7 @@ public class Gameboard {
     }
 
     /**
-     * create the object only if it does not exist
+     * Singleton,create the object only if it does not exist
      *
      * @return
      */
