@@ -12,7 +12,7 @@ public class Cloud {
 
     public Cloud(ArrayList<Student> students){
         this.game = Game.getInstance();
-        this.students = students;
+        this.students = new ArrayList<Student>();
     }
 
     public void moveStudentToEntrance(){
