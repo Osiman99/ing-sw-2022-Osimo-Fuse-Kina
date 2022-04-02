@@ -9,10 +9,12 @@ import java.util.List;
 public class Plank {
     private List<Tower> towers;
     private List<StudentRow> diningRoom;
+    private Entrance entrance;
 
     public Plank(){
         towers = new ArrayList<Tower>();
         diningRoom = new ArrayList<StudentRow>();
+        entrance = new Entrance();
     }
 
     public boolean isTowerSpaceEmpty(){
@@ -20,6 +22,10 @@ public class Plank {
             return true;
         else
             return false;
+    }
+
+    public addStudentsEntrance(){
+
     }
 
 

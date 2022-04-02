@@ -14,7 +14,7 @@ public class Cloud {
     }
 
     public void moveStudentToEntrance(Player player){
-        player.
+        player.addStudentsToEntrance
         for(int i = 0; i < students.size(); i++) {
             students.remove(0);
         }

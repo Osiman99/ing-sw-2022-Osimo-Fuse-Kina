@@ -38,6 +38,10 @@ public class Player {
         return numCoins;
     }
 
+    public void addStudentsToEntrance(){
+
+    }
+
 
 }
 
