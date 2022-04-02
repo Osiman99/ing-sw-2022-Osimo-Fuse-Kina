@@ -40,7 +40,6 @@ public class BagSingleton {
      */
     public void moveStudentToCloud() {
 
-       try {
            if (this.game.getNumPlayers() == 2){
                for(int i = 0; i < 3; i++){
                    students.remove(0);
@@ -50,10 +49,7 @@ public class BagSingleton {
                    students.remove(0);
                }
            }
-       }
-       catch ( EmptyListException emptyListException){
-           //..........
-       }
+
     }
 
 }
