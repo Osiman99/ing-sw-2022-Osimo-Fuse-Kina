@@ -13,16 +13,21 @@ public class Cloud {
         this.students = new ArrayList<Student>();
     }
 
-    public void moveStudentToEntrance(Player player){
-        for(int i = 0; i < students.size(); i++) {
-            player.addStudentsToEntrance(students.get(0));
-            students.remove(0);
-        }
-
-
+    public int getStudentsSize(){
+        return students.size();
     }
 
+    public Student getFirstStudent(){
+        return students.get(0);
+    }
 
+    public void removeStudent(){
+        students.remove(0);
+    }
+
+    public void addStudent(Student student){
+        students.add(student);
+    }
 
 
 

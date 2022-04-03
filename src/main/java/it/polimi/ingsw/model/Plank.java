@@ -8,12 +8,12 @@ import java.util.List;
 
 public class Plank {
     private List<Tower> towers;
-    private List<StudentRow> diningRoom;
+    private StudentRow diningRoom[];
     private Entrance entrance;
 
     public Plank(){
         towers = new ArrayList<Tower>();
-        diningRoom = new ArrayList<StudentRow>();
+        diningRoom = new StudentRow[5];
         entrance = new Entrance();
     }
 

@@ -22,6 +22,6 @@ public class Entrance {
     }
 
     public void addStudent(Student student){
-        students.add(0, student);
+        students.add(student);
     }
 }
