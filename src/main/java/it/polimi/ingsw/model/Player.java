@@ -39,9 +39,12 @@ public class Player {
     }
 
     public void addStudentToEntrance(Student student){
-        plank.giveStudentToPlayer(student);
+        plank.giveStudentToEntrance(student);
     }
 
+    public void addStudentToDiningRoom(Student student){
+        plank.giveStudentToDiningRoom(student);
+    }
 
 }
 

@@ -33,4 +33,8 @@ public class StudentRow {
     public void setRowColor(StudentColor rowColor) {
         this.rowColor = rowColor;
     }
+
+    public void addStudent(Student student){
+        students.add(student);
+    }
 }

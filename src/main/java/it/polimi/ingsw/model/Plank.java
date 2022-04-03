@@ -24,8 +24,13 @@ public class Plank {
             return false;
     }
 
-    public void giveStudentToPlayer(Student student){
+    public void giveStudentToEntrance(Student student){
         entrance.addStudent(student);
+    }
+
+    public void giveStudentToDiningRoom(Student student){
+        diningRoom[student.getColor().getCode()].addStudent(student);
+        entrance.removeStudent(student);
     }
 
 

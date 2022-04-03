@@ -65,5 +65,11 @@ public class Board {
         }
     }
 
+    public void moveStudentsFromEntranceToDiningRoom(Player player, List<Student> moving_students){  //la Lista moving_students gli arriva dal main (il player deve scegliere) che fa getStudentsForDiningRoom dalla classe Entrance
+        for(int i = 0; i < moving_students.size(); i++){
+            player.addStudentToDiningRoom(moving_students.get(i));
+        }
+    }
+
 
 }
