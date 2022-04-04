@@ -33,7 +33,10 @@ public class Plank {
         entrance.removeStudent(student);
     }
 
-
+    public void giveStudentToIsland(Student student, Island island){
+        island.addStudent(student);
+        entrance.removeStudent(student);
+    }
 
 
 

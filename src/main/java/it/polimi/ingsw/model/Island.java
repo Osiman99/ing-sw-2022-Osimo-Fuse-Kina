@@ -13,6 +13,10 @@ public class Island {
         towers = new ArrayList<Tower>();
     }
 
+    public void addStudent(Student student){
+        students.add(student);
+    }
+
 
 
 

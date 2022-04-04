@@ -7,19 +7,11 @@ public class Entrance {
 
     private Game game;
     private List<Student> students;
-    private List<Student> moving_students;
+    private Student moving_student;
 
     public Entrance() {
         this.game = Game.getInstance();
         this.students = new ArrayList<Student>();
-    }
-
-    public void moveStudentToStudentRow(StudentRow studentRow) {
-
-    }
-
-    public void moveStudentToIsland(Island island){
-
     }
 
     public void addStudent(Student student){
@@ -30,25 +22,18 @@ public class Entrance {
         for(int i = 0; i < students.size(); i++){
             if (student.equals(students.get(i))){
                 students.remove(i);
+                break;
             }
         }
     }
 
-    public List<Student> getStudentsForDiningRoom(int a, int b, int c){      //tramite CLI
-        moving_students = new ArrayList<Student>();
-        moving_students.add(students.get(a));
-        moving_students.add(students.get(b));
-        moving_students.add(students.get(c));
-        return moving_students;
-    }
-
-    //OVERLOADING
-    public List<Student> getStudentsForDiningRoom(int a, int b, int c, int d){   //tramite CLI
-        moving_students = new ArrayList<Student>();
-        moving_students.add(students.get(a));
-        moving_students.add(students.get(b));
-        moving_students.add(students.get(c));
-        moving_students.add(students.get(d));
-        return moving_students;
+    public Student getStudentForDiningRoom(StudentColor color) {      //tramite CLI, nel main si fa il for
+        for (Student student : students) {
+            if (student.getColor() == color) {
+                moving_student = student;
+                break;
+            }
+        }
+        return moving_student;
     }
 }

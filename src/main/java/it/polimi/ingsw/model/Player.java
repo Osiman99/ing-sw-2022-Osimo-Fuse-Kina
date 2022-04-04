@@ -46,5 +46,9 @@ public class Player {
         plank.giveStudentToDiningRoom(student);
     }
 
+    public void addStudentToIsland(Student student, Island island){
+        plank.giveStudentToIsland(student, island);
+    }
+
 }
 

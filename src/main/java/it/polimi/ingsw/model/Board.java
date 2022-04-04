@@ -39,16 +39,20 @@ public class Board {
      * if there are 2 players Cloud gets 3 students from the Bag each round,
      * if there are 3 players it gets 4.
      */
-    public void moveStudentsFromBagToCloud(Cloud cloud) {
-        if (this.game.getNumPlayers() == 2) {
-            for (int i = 0; i < 3; i++) {
-                cloud.addStudent(this.bag.getFirstStudent());
-                bag.removeStudent();
+    public void moveStudentsFromBagToClouds() {
+        if (game.getNumPlayers() == 2) {
+            for (int i = 0; i < 2; i++){
+                for (int j = 0; j < 3; j++) {
+                    clouds.get(i).addStudent(bag.getFirstStudent());
+                    bag.removeStudent();
+                }
             }
-        } else if (this.game.getNumPlayers() == 3) {
-            for (int i = 0; i < 4; i++) {
-                cloud.addStudent(this.bag.getFirstStudent());
-                bag.removeStudent();
+        }else if (game.getNumPlayers() == 3) {
+            for (int i = 0; i < 3; i++){
+                for (int j = 0; j < 4; j++) {
+                    clouds.get(i).addStudent(bag.getFirstStudent());
+                    bag.removeStudent();
+                }
             }
         }
     }
@@ -65,11 +69,15 @@ public class Board {
         }
     }
 
-    public void moveStudentsFromEntranceToDiningRoom(Player player, List<Student> moving_students){  //la Lista moving_students gli arriva dal main (il player deve scegliere) che fa getStudentsForDiningRoom dalla classe Entrance
-        for(int i = 0; i < moving_students.size(); i++){
-            player.addStudentToDiningRoom(moving_students.get(i));
-        }
+    public void moveStudentFromEntranceToDiningRoom(Player player, Student moving_student){    //la for si fa nel main (GUI)
+        player.addStudentToDiningRoom(moving_student);
     }
+
+    public void moveStudentFromEntranceToIsland(Player player, Island island, Student moving_student){    //la for si fa nel main (GUI)
+        player.addStudentToIsland(moving_student, island);
+    }
+
+
 
 
 }
