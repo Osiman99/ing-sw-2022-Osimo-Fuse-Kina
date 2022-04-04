@@ -77,7 +77,13 @@ public class Board {
         player.addStudentToIsland(moving_student, island);
     }
 
+    public void moveTowerFromPlankToIsland(){
 
+    }
+
+    public void moveTowerFromIslandToPlank(){
+
+    }
 
 
 }
