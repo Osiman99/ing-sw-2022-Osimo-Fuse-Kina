@@ -38,16 +38,23 @@ public class Player {
         return numCoins;
     }
 
-    public void addStudentToEntrance(Student student){
-        plank.giveStudentToEntrance(student);
+    public void moveStudentsFromCloudToEntrance(Cloud cloud) {
+        for (int i = 0; i < cloud.getStudentsSize(); i++) {
+            plank.addStudentToEntrance(cloud.getFirstStudent());
+            cloud.removeStudent();
+        }
     }
 
-    public void addStudentToDiningRoom(Student student){
-        plank.giveStudentToDiningRoom(student);
+    public void moveStudentFromEntranceToDiningRoom(Student student){    //la for si fa nel main (GUI)
+        plank.addStudentToDiningRoom(student);
     }
 
-    public void addStudentToIsland(Student student, Island island){
-        plank.giveStudentToIsland(student, island);
+    public void moveStudentFromEntranceToIsland(Student student, Island island){    //la for si fa nel main (GUI)
+        plank.addStudentToIsland(student, island);
+    }
+
+    public void moveTowerFromPlankToIsland(){
+
     }
 
 }

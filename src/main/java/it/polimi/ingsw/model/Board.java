@@ -57,30 +57,6 @@ public class Board {
         }
     }
 
-    /**
-     * it moves students from cloud to entrance
-     * @param player
-     * @param cloud
-     */
-    public void moveStudentsFromCloudToEntrance(Player player, Cloud cloud) {
-        for (int i = 0; i < cloud.getStudentsSize(); i++) {
-            player.addStudentToEntrance(cloud.getFirstStudent());
-            cloud.removeStudent();
-        }
-    }
-
-    public void moveStudentFromEntranceToDiningRoom(Player player, Student moving_student){    //la for si fa nel main (GUI)
-        player.addStudentToDiningRoom(moving_student);
-    }
-
-    public void moveStudentFromEntranceToIsland(Player player, Island island, Student moving_student){    //la for si fa nel main (GUI)
-        player.addStudentToIsland(moving_student, island);
-    }
-
-    public void moveTowerFromPlankToIsland(){
-
-    }
-
     public void moveTowerFromIslandToPlank(){
 
     }

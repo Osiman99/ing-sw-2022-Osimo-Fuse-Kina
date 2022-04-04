@@ -24,16 +24,16 @@ public class Plank {
             return false;
     }
 
-    public void giveStudentToEntrance(Student student){
+    public void addStudentToEntrance(Student student){
         entrance.addStudent(student);
     }
 
-    public void giveStudentToDiningRoom(Student student){
+    public void addStudentToDiningRoom(Student student){
         diningRoom[student.getColor().getCode()].addStudent(student);
         entrance.removeStudent(student);
     }
 
-    public void giveStudentToIsland(Student student, Island island){
+    public void addStudentToIsland(Student student, Island island){
         island.addStudent(student);
         entrance.removeStudent(student);
     }
