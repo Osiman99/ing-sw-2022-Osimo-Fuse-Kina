@@ -40,17 +40,19 @@ public class Player {
 
     public void moveStudentsFromCloudToEntrance(Cloud cloud) {
         for (int i = 0; i < cloud.getStudentsSize(); i++) {
-            plank.addStudentToEntrance(cloud.getFirstStudent());
+            plank.getEntrance().addStudent(cloud.getFirstStudent());
             cloud.removeStudent();
         }
     }
 
     public void moveStudentFromEntranceToDiningRoom(Student student){    //la for si fa nel main (GUI)
-        plank.addStudentToDiningRoom(student);
+        plank.getDiningRoom()[student.getColor().getCode()].addStudent(student);
+        plank.getEntrance().removeStudent(student);
     }
 
     public void moveStudentFromEntranceToIsland(Student student, Island island){    //la for si fa nel main (GUI)
-        plank.addStudentToIsland(student, island);
+        island.addStudent(student);
+        plank.getEntrance().removeStudent(student);
     }
 
     public void moveTowerFromPlankToIsland(){

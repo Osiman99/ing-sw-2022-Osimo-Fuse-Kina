@@ -24,18 +24,12 @@ public class Plank {
             return false;
     }
 
-    public void addStudentToEntrance(Student student){
-        entrance.addStudent(student);
+    public Entrance getEntrance() {
+        return entrance;
     }
 
-    public void addStudentToDiningRoom(Student student){
-        diningRoom[student.getColor().getCode()].addStudent(student);
-        entrance.removeStudent(student);
-    }
-
-    public void addStudentToIsland(Student student, Island island){
-        island.addStudent(student);
-        entrance.removeStudent(student);
+    public StudentRow[] getDiningRoom() {
+        return diningRoom;
     }
 
 
