@@ -5,10 +5,10 @@ import java.util.List;
 
 public class Player {
 
-    private String nickname;
-    private Plank plank;
+    private final String nickname;
+    private final Plank plank;
     private PlayerState state;
-    private AssistantDeck deck;
+    private final AssistantDeck deck;
     private int numCoins = 1;
 
     public Player(String nickname){
@@ -55,8 +55,9 @@ public class Player {
         plank.getEntrance().removeStudent(student);
     }
 
-    public void moveTowerFromPlankToIsland(){
-
+    public void moveTowerFromPlankToIsland(Island island){
+        island.addTower(plank.getTowerSpace().getFirstTower());
+        plank.getTowerSpace().removeTower();
     }
 
 }

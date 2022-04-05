@@ -5,7 +5,6 @@ import java.util.List;
 
 public class Board {
     private Game game;
-    private static int numIslands;   //si potrebbe anche non mettere static perchè Board è singleton
     private List<Island> islands;
     private List<Cloud> clouds;
     private Player professorsControlledBy[];  //da rivedere
@@ -19,7 +18,6 @@ public class Board {
         islands = new ArrayList<Island>();
         clouds = new ArrayList<Cloud>();
         professorsControlledBy = new Player[5];  //da rivedere
-        numIslands = 12;
         bag = Bag.getInstance();
     }
 

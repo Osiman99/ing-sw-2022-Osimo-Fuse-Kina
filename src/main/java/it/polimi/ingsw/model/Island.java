@@ -17,6 +17,10 @@ public class Island {
         students.add(student);
     }
 
+    public void addTower(Tower tower){
+        towers.add(tower);
+    }
+
 
 
 

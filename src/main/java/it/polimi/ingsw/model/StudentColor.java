@@ -25,12 +25,12 @@ public enum StudentColor {
         return this.code;
     }
 
-    /**
+    /*
      * Get the color given the color code
      * @param code
      * @return color
-     */
-    public int getStudentColor(int code) {
+
+     public int getStudentColor(int code) {
         return StudentColor.this.code;
-    }
+    }*/
 }

@@ -7,18 +7,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Plank {
-    private List<Tower> towers;
+    private TowerSpace towerSpace;
     private StudentRow diningRoom[];
     private Entrance entrance;
 
     public Plank(){
-        towers = new ArrayList<Tower>();
+        towerSpace = new TowerSpace();
         diningRoom = new StudentRow[5];
         entrance = new Entrance();
     }
 
     public boolean isTowerSpaceEmpty(){
-        if(towers.size() == 0)
+        if(towerSpace.getTowersList().size() == 0)
             return true;
         else
             return false;
@@ -30,6 +30,10 @@ public class Plank {
 
     public StudentRow[] getDiningRoom() {
         return diningRoom;
+    }
+
+    public TowerSpace getTowerSpace() {
+        return towerSpace;
     }
 
 
