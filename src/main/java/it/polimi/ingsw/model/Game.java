@@ -13,7 +13,7 @@ public class Game {
     /**
      * Game constructor
      */
-    private Game(){
+    public Game(){
         players = new ArrayList<Player>();
         this.board = Board.getInstance();
     }
@@ -50,6 +50,11 @@ public class Game {
                 .orElse(null);
     }
 
+    public void addPlayer(Player player){
+        players.add(player);
+    }
 
-
+    public Board getBoard() {
+        return board;
+    }
 }

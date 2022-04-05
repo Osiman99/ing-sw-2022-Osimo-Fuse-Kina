@@ -7,9 +7,10 @@ public class Board {
     private Game game;
     private List<Island> islands;
     private List<Cloud> clouds;
-    private Player professorsControlledBy[];  //da rivedere
+    private String professorsControlledBy[];  //da rivedere
     private static Board instance;
     private Bag bag;
+
 
     /**
      * Board constructor
@@ -17,8 +18,12 @@ public class Board {
     public Board(){
         islands = new ArrayList<Island>();
         clouds = new ArrayList<Cloud>();
-        professorsControlledBy = new Player[5];  //da rivedere
+        professorsControlledBy = new String[5];
         bag = Bag.getInstance();
+    }
+
+    public Bag getBag() {
+        return bag;
     }
 
     /**
@@ -26,6 +31,9 @@ public class Board {
      *
      * @return
      */
+
+
+
     public static Board getInstance(){
         if (instance == null){
             instance = new Board();
@@ -53,6 +61,19 @@ public class Board {
                 }
             }
         }
+    }
+
+    public void moveTowerFromPlankToIsland(Player player, Island island){
+        island.addTower(player.getPlank().getTowerSpace().getFirstTower());
+        player.getPlank().getTowerSpace().removeTower();
+    }
+
+    public void addIsland(Island island){
+        islands.add(island);
+    }
+
+    public void addCloud(Cloud cloud){
+        clouds.add(cloud);
     }
 
     public void moveTowerFromIslandToPlank(){

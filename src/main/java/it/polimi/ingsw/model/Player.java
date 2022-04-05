@@ -55,10 +55,5 @@ public class Player {
         plank.getEntrance().removeStudent(student);
     }
 
-    public void moveTowerFromPlankToIsland(Island island){
-        island.addTower(plank.getTowerSpace().getFirstTower());
-        plank.getTowerSpace().removeTower();
-    }
-
 }
 
