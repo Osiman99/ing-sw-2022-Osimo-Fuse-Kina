@@ -9,10 +9,17 @@ import static org.junit.jupiter.api.Assertions.*;
 class PlayerTest {
 
     private Player player;
+    private Plank plank;
+    private PlayerState state;
+    private AssistantDeck deck;
+    private int numCoins;
 
     @BeforeEach
     void setUp() {
         player = new Player("elis");
+        plank = player.getPlank();
+        deck = player.getDeck();
+        numCoins = player.getNumCoins();
     }
 
     @AfterEach
@@ -26,18 +33,23 @@ class PlayerTest {
 
     @Test
     void getPlank() {
+        assertEquals(plank, player.getPlank());
     }
 
     @Test
     void getState() {
+        assertEquals(PlayerState.SLEEP, player.getState());
     }
 
     @Test
     void getDeck() {
+        assertEquals(deck, player.getDeck());
     }
 
     @Test
     void getNumCoins() {
+        numCoins = numCoins + 3;
+        assertEquals(numCoins, 4);
     }
 
     @Test

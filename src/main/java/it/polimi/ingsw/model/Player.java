@@ -55,5 +55,9 @@ public class Player {
         plank.getEntrance().removeStudent(student);
     }
 
+    public void addPlank(){
+
+    }
+
 }
 
