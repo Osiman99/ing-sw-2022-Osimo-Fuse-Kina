@@ -15,10 +15,6 @@ public class AssistantDeck {
      */
     public AssistantDeck() {
         deck = new ArrayList<AssistantCard>();
-
-        /**
-         * add Assistant cards to deck
-         */
         for(int i = 0; i < 10; i++) {
             deck.add(new AssistantCard(i + 1, i / 2 + 1));
         }

@@ -8,7 +8,7 @@ public class Game {
     private Board board;              //forse va fatto final (singleton o no?)
     private static Game instance;
     private List<Player> players;
-    private int chosenPlayersNumber;
+    private int chosenPlayersNumber; //servirebbe nel caso un player si scollega dal gioco (FA)
 
     /**
      * Game constructor

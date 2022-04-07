@@ -9,7 +9,7 @@ public class Entrance {
     private List<Student> students;
     private Student moving_student;
 
-    public Entrance() {
+    public Entrance(){
         this.game = Game.getInstance();
         this.students = new ArrayList<Student>();
     }

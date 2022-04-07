@@ -10,6 +10,7 @@ public class Player {
     private PlayerState state;
     private final AssistantDeck deck;
     private int numCoins = 1;
+    private int chosenCardValue;
 
     public Player(String nickname){
         this.nickname = nickname;
@@ -55,9 +56,12 @@ public class Player {
         plank.getEntrance().removeStudent(student);
     }
 
-    public void addPlank(){
-
+    public void chooseAssistantCard(int value){
+        //controllo value
+        chosenCardValue = value;
     }
+
+
 
 }
 

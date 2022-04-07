@@ -1,7 +1,9 @@
 package it.polimi.ingsw.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class Board {
     private Game game;
@@ -10,6 +12,10 @@ public class Board {
     private String professorsControlledBy[];  //da rivedere
     private static Board instance;
     private Bag bag;
+    private Random random;
+    private int randomInt;
+    private final int NUM_ISLAND_INIT = 12;
+    private ArrayList<Student> studentsIslandInit;
 
 
     /**
@@ -17,7 +23,47 @@ public class Board {
      */
     public Board(){
         islands = new ArrayList<Island>();
+        studentsIslandInit = new ArrayList<Student>();
+        for (int i = 0; i < 2; i++) {
+            studentsIslandInit.add(new Student(StudentColor.GREEN));
+        }
+        for (int i = 0; i < 2; i++) {
+            studentsIslandInit.add(new Student(StudentColor.RED));
+        }
+        for (int i = 0; i < 2; i++) {
+            studentsIslandInit.add(new Student(StudentColor.YELLOW));
+        }
+        for (int i = 0; i < 2; i++) {
+            studentsIslandInit.add(new Student(StudentColor.PINK));
+        }
+        for (int i = 0; i < 2; i++) {
+            studentsIslandInit.add(new Student(StudentColor.BLUE));
+        }
+        Collections.shuffle(studentsIslandInit);
+
+        random = new Random();
+        randomInt = random.nextInt(NUM_ISLAND_INIT-1);
+        for (int i = 0; i < NUM_ISLAND_INIT; i++) {
+            islands.add(new Island());
+        }
+        islands.get(randomInt).setMotherNature(true);
+        for (int i = 0; i < NUM_ISLAND_INIT; i++){
+            if (!(islands.get(i) == islands.get(randomInt) || islands.get(i) == islands.get((randomInt+6)%12))){
+
+
+            }
+        }
+
         clouds = new ArrayList<Cloud>();
+        if (game.getNumPlayers() == 2) {
+            for (int i = 0; i < 2; i++) {
+                clouds.add(new Cloud());
+            }
+        }else if (game.getNumPlayers() == 3){
+            for (int i = 0; i < 3; i++){
+                clouds.add(new Cloud());
+            }
+        }
         professorsControlledBy = new String[5];
         bag = Bag.getInstance();
     }

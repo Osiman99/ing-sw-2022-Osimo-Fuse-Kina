@@ -7,6 +7,7 @@ public class Island {
 
     private List<Student> students;
     private List<Tower> towers;
+    private boolean motherNature = false;
 
     public Island(){
         students = new ArrayList<Student>();
@@ -21,9 +22,13 @@ public class Island {
         towers.add(tower);
     }
 
+    public void setMotherNature(boolean motherNature) {
+        this.motherNature = motherNature;
+    }
 
-
-
+    public boolean isMotherNature() {
+        return motherNature;
+    }
 
     // possiamo creare una List<Island> che ad ogni isola possiamo associare un valore boolean per indicare se c'è o no
     // motherNature, un int(oppure 5 siccome ci sono 5 professori) che ci da il numero degli studenti di ogni colore e
