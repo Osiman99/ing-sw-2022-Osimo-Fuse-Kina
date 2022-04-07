@@ -6,26 +6,31 @@ import java.util.List;
 public class Game {
     public static final int MAX_PLAYERS = 3;
     private Board board;              //forse va fatto final (singleton o no?)
-    private static Game instance;
+    private static Game instance;   //classe Game per non farla singleton basta non mettere static in instance (e chiamare il setInstance per ogni game creato nel main)
     private List<Player> players;
     private int chosenPlayersNumber; //servirebbe nel caso un player si scollega dal gioco (FA)
 
     /**
      * Game constructor
      */
-    public Game(){
+    public Game(List<String> nicknames){
         players = new ArrayList<Player>();
-        this.board = Board.getInstance();
+        for (int i = 0; i < chosenPlayersNumber; i++){
+            players.add(new Player(nicknames.get(i)));
+        }
+        board = Board.getInstance();
     }
 
     /**
      * singleton class, create object only if it doesn't exist
      * @return
      */
+
+    public static void setInstance(Game game){  //nel main devo evocare questo metodo
+        instance = game;
+    }
+
     public static Game getInstance(){
-        if (instance == null){
-            instance = new Game();
-        }
         return instance;
     }
 
@@ -50,11 +55,16 @@ public class Game {
                 .orElse(null);
     }
 
-    public void addPlayer(Player player){
-        players.add(player);
-    }
 
     public Board getBoard() {
         return board;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void setChosenPlayersNumber(int chosenPlayersNumber) {
+        this.chosenPlayersNumber = chosenPlayersNumber;
     }
 }

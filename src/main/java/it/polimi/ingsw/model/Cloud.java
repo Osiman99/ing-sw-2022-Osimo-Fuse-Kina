@@ -10,7 +10,7 @@ public class Cloud {
     private List<Student> students;
 
     public Cloud(){
-        this.students = new ArrayList<Student>();
+        students = new ArrayList<Student>();
     }
 
     public int getStudentsSize(){

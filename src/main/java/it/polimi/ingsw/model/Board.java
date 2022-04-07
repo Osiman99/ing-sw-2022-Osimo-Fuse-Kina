@@ -40,7 +40,6 @@ public class Board {
             studentsIslandInit.add(new Student(StudentColor.BLUE));
         }
         Collections.shuffle(studentsIslandInit);
-
         random = new Random();
         randomInt = random.nextInt(NUM_ISLAND_INIT-1);
         for (int i = 0; i < NUM_ISLAND_INIT; i++) {
@@ -49,8 +48,8 @@ public class Board {
         islands.get(randomInt).setMotherNature(true);
         for (int i = 0; i < NUM_ISLAND_INIT; i++){
             if (!(islands.get(i) == islands.get(randomInt) || islands.get(i) == islands.get((randomInt+6)%12))){
-
-
+                islands.get(i).addStudent(studentsIslandInit.get(0));
+                //studentsIslandInit.remove(0);
             }
         }
 
@@ -64,8 +63,11 @@ public class Board {
                 clouds.add(new Cloud());
             }
         }
+
         professorsControlledBy = new String[5];
+        game = Game.getInstance();
         bag = Bag.getInstance();
+
     }
 
     public Bag getBag() {
@@ -114,15 +116,13 @@ public class Board {
         player.getPlank().getTowerSpace().removeTower();
     }
 
-    public void addIsland(Island island){
-        islands.add(island);
-    }
-
-    public void addCloud(Cloud cloud){
-        clouds.add(cloud);
-    }
-
-    public void moveTowerFromIslandToPlank(){
+    public void moveTowerFromIslandToPlank(Island island){      //la for sarà nel conquerIsland
+        for (int i = 0; i < game.getNumPlayers(); i++){
+            if (island.getFirstTower().getColor() == game.getPlayers().get(i).getPlank().getTowerSpace().getFirstTower().getColor()){
+                game.getPlayers().get(i).getPlank().getTowerSpace().addTower(island.getFirstTower());
+                island.removeTower();
+            }
+        }
 
     }
 
