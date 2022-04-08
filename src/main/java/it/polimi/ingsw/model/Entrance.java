@@ -10,8 +10,8 @@ public class Entrance {
     private Student moving_student;
 
     public Entrance(){
-        this.game = Game.getInstance();
-        this.students = new ArrayList<Student>();
+        game = Game.getInstance();
+        students = new ArrayList<Student>();
     }
 
     public void addStudent(Student student){
@@ -26,6 +26,8 @@ public class Entrance {
             }
         }
     }
+
+
 
     public Student getStudentForDiningRoom(StudentColor color) {      //tramite CLI, nel main si fa il for
         for (Student student : students) {

@@ -6,7 +6,7 @@ import java.util.List;
 public class Game {
     public static final int MAX_PLAYERS = 3;
     private Board board;              //forse va fatto final (singleton o no?)
-    private static Game instance;   //classe Game per non farla singleton basta non mettere static in instance (e chiamare il setInstance per ogni game creato nel main)
+    private static Game instance;   //classe Game, per non farla singleton basta non mettere static in instance (e chiamare il setInstance per ogni game creato nel main)
     private List<Player> players;
     private int chosenPlayersNumber; //servirebbe nel caso un player si scollega dal gioco (FA)
 

@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class Bag {
@@ -17,6 +19,22 @@ public class Bag {
      */
     private Bag(){
         students = new ArrayList<Student>();
+        for (int i = 0; i < 24; i++) {
+            students.add(new Student(StudentColor.GREEN));
+        }
+        for (int i = 0; i < 24; i++) {
+            students.add(new Student(StudentColor.RED));
+        }
+        for (int i = 0; i < 24; i++) {
+            students.add(new Student(StudentColor.YELLOW));
+        }
+        for (int i = 0; i < 24; i++) {
+            students.add(new Student(StudentColor.PINK));
+        }
+        for (int i = 0; i < 24; i++) {
+            students.add(new Student(StudentColor.BLUE));
+        }
+        Collections.shuffle(students);
     }
 
 
