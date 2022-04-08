@@ -17,6 +17,13 @@ public class Game {
         players = new ArrayList<Player>();
         for (int i = 0; i < chosenPlayersNumber; i++){
             players.add(new Player(nicknames.get(i)));
+            if (i == 0) {
+                players.get(i).setPlayerColor(TowerColor.BLACK);
+            }else if (i == 1){
+                players.get(i).setPlayerColor(TowerColor.WHITE);
+            }else if (i == 2){
+                players.get(i).setPlayerColor(TowerColor.GREY);
+            }
         }
         board = Board.getInstance();
     }

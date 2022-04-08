@@ -12,15 +12,26 @@ public class Entrance {
     public Entrance(){
         game = Game.getInstance();
         students = new ArrayList<Student>();
+        if(game.getNumPlayers() == 2){
+            for(int i = 0; i < 7; i++) {
+                students.add(game.getBoard().getBag().getFirstStudent());
+                game.getBoard().getBag().removeStudent();
+            }
+        }if(game.getNumPlayers() == 3) {
+            for (int i = 0; i < 9; i++) {
+                students.add(game.getBoard().getBag().getFirstStudent());
+                game.getBoard().getBag().removeStudent();
+            }
+        }
     }
 
     public void addStudent(Student student){
         students.add(student);
     }
 
-    public void removeStudent(Student student){
+    public void removeStudent(Student student){     //student come parametro o color?
         for(int i = 0; i < students.size(); i++){
-            if (student.equals(students.get(i))){
+            if (students.get(i).getColor().equals(student.getColor())){
                 students.remove(i);
                 break;
             }
@@ -29,7 +40,7 @@ public class Entrance {
 
 
 
-    public Student getStudentForDiningRoom(StudentColor color) {      //tramite CLI, nel main si fa il for
+    public Student getStudentForDiningRoom(StudentColor color) {      //tramite CLI, nel main si fa il for; student come parametro o color?
         for (Student student : students) {
             if (student.getColor() == color) {
                 moving_student = student;

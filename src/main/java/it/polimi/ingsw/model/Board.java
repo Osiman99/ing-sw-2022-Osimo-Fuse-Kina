@@ -49,7 +49,7 @@ public class Board {
         for (int i = 0; i < NUM_ISLAND_INIT; i++){
             if (!(islands.get(i) == islands.get(randomInt) || islands.get(i) == islands.get((randomInt+6)%12))){
                 islands.get(i).addStudent(studentsIslandInit.get(0));
-                //studentsIslandInit.remove(0);
+                studentsIslandInit.remove(0);
             }
         }
 
@@ -95,14 +95,14 @@ public class Board {
      */
     public void moveStudentsFromBagToClouds() {
         if (game.getNumPlayers() == 2) {
-            for (int i = 0; i < 2; i++){
+            for (int i = 0; i < game.getNumPlayers(); i++){
                 for (int j = 0; j < 3; j++) {
                     clouds.get(i).addStudent(bag.getFirstStudent());
                     bag.removeStudent();
                 }
             }
         }else if (game.getNumPlayers() == 3) {
-            for (int i = 0; i < 3; i++){
+            for (int i = 0; i < game.getNumPlayers(); i++){
                 for (int j = 0; j < 4; j++) {
                     clouds.get(i).addStudent(bag.getFirstStudent());
                     bag.removeStudent();

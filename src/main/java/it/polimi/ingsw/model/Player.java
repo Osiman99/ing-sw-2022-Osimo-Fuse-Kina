@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Player {
 
+    private TowerColor playerColor;
     private final String nickname;
     private final Plank plank;
     private PlayerState state;
@@ -37,6 +38,18 @@ public class Player {
 
     public int getNumCoins() {
         return numCoins;
+    }
+
+    public TowerColor getPlayerColor() {
+        return playerColor;
+    }
+
+    public int getChosenCardValue() {
+        return chosenCardValue;
+    }
+
+    public void setPlayerColor(TowerColor playerColor) {
+        this.playerColor = playerColor;
     }
 
     public void moveStudentsFromCloudToEntrance(Cloud cloud) {

@@ -13,7 +13,7 @@ public enum StudentColor {
      * constructor
      * @param code
      */
-    StudentColor(int code) {
+    StudentColor(int code) {        //COSTRUTTORE INUTILE
         this.code = code;
     }
 
