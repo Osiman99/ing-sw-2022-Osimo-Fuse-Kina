@@ -24,7 +24,12 @@ public class Board {
     public Board(){
         game = Game.getInstance();
         bag = Bag.getInstance();
+        professorsControlledBy = new String[5];
+
         islands = new ArrayList<Island>();
+        for (int i = 0; i < NUM_ISLAND_INIT; i++) {
+            islands.add(new Island());
+        }
         studentsIslandInit = new ArrayList<Student>();
         for (int i = 0; i < 2; i++) {
             studentsIslandInit.add(new Student(StudentColor.GREEN));
@@ -44,9 +49,6 @@ public class Board {
         Collections.shuffle(studentsIslandInit);
         random = new Random();
         randomInt = random.nextInt(NUM_ISLAND_INIT-1);
-        for (int i = 0; i < NUM_ISLAND_INIT; i++) {
-            islands.add(new Island());
-        }
         islands.get(randomInt).setMotherNature(true);
         for (int i = 0; i < NUM_ISLAND_INIT; i++){
             if (!(islands.get(i) == islands.get(randomInt) || islands.get(i) == islands.get((randomInt+6)%12))){
@@ -65,9 +67,6 @@ public class Board {
                 clouds.add(new Cloud());
             }
         }
-
-        professorsControlledBy = new String[5];
-
     }
 
     public Bag getBag() {
@@ -124,6 +123,17 @@ public class Board {
             }
         }
 
+    }
+
+    public void moveMotherNature(int numMoves){
+        for (int i = 0; i < islands.size(); i++){
+            if (islands.get(i).isMotherNature()){
+                islands.get(i).setMotherNature(false);
+                islands.get((i+numMoves)%12).setMotherNature(true);
+                //calculateSupremacy
+                break;
+            }
+        }
     }
 
 

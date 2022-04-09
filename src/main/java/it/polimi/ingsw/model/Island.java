@@ -7,11 +7,12 @@ public class Island {
 
     private List<Student> students;
     private List<Tower> towers;
-    private boolean motherNature = false;
+    private boolean motherNature;
 
     public Island(){
         students = new ArrayList<Student>();
         towers = new ArrayList<Tower>();
+        motherNature = false;
     }
 
     public void addStudent(Student student){
@@ -33,6 +34,8 @@ public class Island {
     public Tower getFirstTower(){
         return towers.get(0);
     }
+
+
 
     public void removeTower(){
         towers.remove(0);

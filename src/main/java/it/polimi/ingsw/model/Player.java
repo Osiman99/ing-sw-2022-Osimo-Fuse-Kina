@@ -12,8 +12,10 @@ public class Player {
     private final AssistantDeck deck;
     private int numCoins = 1;
     private int chosenCardValue;
+    private Game game;
 
     public Player(String nickname){
+        game = Game.getInstance();
         this.nickname = nickname;
         plank = new Plank();
         state = PlayerState.SLEEP;
@@ -73,6 +75,18 @@ public class Player {
         //controllo value
         chosenCardValue = value;
     }
+
+    public void chooseNumMoves (int numMoves){
+        for (int i = 0; i < deck.getDeck().size(); i++) {
+            if (deck.getDeck().get(i).getValue() == chosenCardValue) {
+                if (numMoves <= deck.getDeck().get(i).getMaxMoves() && numMoves > 0){
+                    game.getBoard().moveMotherNature(numMoves);
+                }//else throw exception;
+            }
+        }
+    }
+
+
 
 
 
