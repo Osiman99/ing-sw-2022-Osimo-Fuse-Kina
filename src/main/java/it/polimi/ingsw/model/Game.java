@@ -8,14 +8,24 @@ public class Game {
     private Board board;              //forse va fatto final (singleton o no?)
     private static Game instance;   //classe Game, per non farla singleton basta non mettere static in instance (e chiamare il setInstance per ogni game creato nel main)
     private List<Player> players;
-    private int chosenPlayersNumber; //servirebbe nel caso un player si scollega dal gioco (FA)
+    private int chosenPlayersNumber;       //servirebbe nel caso un player si scollega dal gioco (FA)
+    private int contPlayer;
 
     /**
      * Game constructor
      */
-    public Game(List<String> nicknames){
+    public Game(){
+
+    }
+
+    public void initGame(Game game, List<String> nicknames, int chosenPlayersNumber){
+        setInstance(game);
+        board = Board.getInstance();
+        contPlayer = 0;
+        this.chosenPlayersNumber = chosenPlayersNumber;
         players = new ArrayList<Player>();
-        for (int i = 0; i < chosenPlayersNumber; i++){
+        for (int i = 0; i < this.chosenPlayersNumber; i++){
+            contPlayer = contPlayer + 1;
             players.add(new Player(nicknames.get(i)));
             if (i == 0) {
                 players.get(i).setPlayerColor(TowerColor.BLACK);
@@ -25,13 +35,7 @@ public class Game {
                 players.get(i).setPlayerColor(TowerColor.GREY);
             }
         }
-        board = Board.getInstance();
     }
-
-    /**
-     * singleton class, create object only if it doesn't exist
-     * @return
-     */
 
     public static void setInstance(Game game){  //nel main devo evocare questo metodo
         instance = game;
@@ -41,12 +45,19 @@ public class Game {
         return instance;
     }
 
+    public int getContPlayer() {
+        return contPlayer;
+    }
+
     /**
      * getter
      * @return
      */
+
+
+
     public int getNumPlayers() {
-        return players.size();   //oppure return chosenPlayersNumber (in base a se vogliamo
+        return chosenPlayersNumber;   //oppure return chosenPlayersNumber (in base a se vogliamo
                                  // fare la FA se uno si scollega dal gioco)
     }
 
@@ -69,9 +80,5 @@ public class Game {
 
     public List<Player> getPlayers() {
         return players;
-    }
-
-    public void setChosenPlayersNumber(int chosenPlayersNumber) {
-        this.chosenPlayersNumber = chosenPlayersNumber;
     }
 }

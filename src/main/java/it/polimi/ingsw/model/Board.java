@@ -22,6 +22,8 @@ public class Board {
      * Board constructor
      */
     public Board(){
+        game = Game.getInstance();
+        bag = Bag.getInstance();
         islands = new ArrayList<Island>();
         studentsIslandInit = new ArrayList<Student>();
         for (int i = 0; i < 2; i++) {
@@ -65,8 +67,6 @@ public class Board {
         }
 
         professorsControlledBy = new String[5];
-        game = Game.getInstance();
-        bag = Bag.getInstance();
 
     }
 

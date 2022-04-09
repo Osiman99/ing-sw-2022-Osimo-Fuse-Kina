@@ -12,31 +12,27 @@ public class TowerSpace {
         towers = new ArrayList<Tower>();
         game = Game.getInstance();
         if (game.getNumPlayers() == 2) {
-            for (int i = 0; i < game.getNumPlayers(); i++) {
-                if (game.getPlayers().get(i).getPlayerColor() == TowerColor.BLACK) {
-                    for (int j = 0; j < 8; j++){
-                        towers.add(new Tower(TowerColor.BLACK));
-                    }
-                }else if (game.getPlayers().get(i).getPlayerColor() == TowerColor.WHITE){
-                    for (int j = 0; j < 8; j++){
-                        towers.add(new Tower(TowerColor.BLACK));
-                    }
+            if (game.getContPlayer() == 1) {
+                for (int j = 0; j < 8; j++){
+                    towers.add(new Tower(TowerColor.BLACK));
+                }
+            }else if (game.getContPlayer() == 2){
+                for (int j = 0; j < 8; j++){
+                    towers.add(new Tower(TowerColor.WHITE));
                 }
             }
         }else if (game.getNumPlayers() == 3){
-            for (int i = 0; i < game.getNumPlayers(); i++) {
-                if (game.getPlayers().get(i).getPlayerColor() == TowerColor.BLACK) {
-                    for (int j = 0; j < 6; j++){
-                        towers.add(new Tower(TowerColor.BLACK));
-                    }
-                }else if (game.getPlayers().get(i).getPlayerColor() == TowerColor.WHITE){
-                    for (int j = 0; j < 6; j++){
-                        towers.add(new Tower(TowerColor.WHITE));
-                    }
-                }else if (game.getPlayers().get(i).getPlayerColor() == TowerColor.GREY){
-                    for (int j = 0; j < 6; j++){
-                        towers.add(new Tower(TowerColor.GREY));
-                    }
+            if (game.getContPlayer() == 1) {
+                for (int j = 0; j < 6; j++){
+                    towers.add(new Tower(TowerColor.BLACK));
+                }
+            }else if (game.getContPlayer() == 2){
+                for (int j = 0; j < 6; j++){
+                    towers.add(new Tower(TowerColor.WHITE));
+                }
+            }else if (game.getContPlayer() == 3){
+                for (int j = 0; j < 6; j++){
+                    towers.add(new Tower(TowerColor.GREY));
                 }
             }
         }
