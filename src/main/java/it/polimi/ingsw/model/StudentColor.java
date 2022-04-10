@@ -25,6 +25,24 @@ public enum StudentColor {
         return this.code;
     }
 
+    public static StudentColor getStudentColor(int code) {
+        if (StudentColor.GREEN.getCode() == code) {
+            return StudentColor.GREEN;
+        }
+        else if (StudentColor.RED.getCode() == code) {
+            return StudentColor.RED;
+        }
+        else if (StudentColor.YELLOW.getCode() == code) {
+            return StudentColor.YELLOW;
+        }
+        else if (StudentColor.PINK.getCode() == code) {
+            return StudentColor.PINK;
+        }
+        else{
+            return StudentColor.BLUE;
+        }
+    }
+
     /*
      * Get the color given the color code
      * @param code

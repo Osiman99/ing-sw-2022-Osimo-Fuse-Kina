@@ -15,7 +15,6 @@ public class Game {
      * Game constructor
      */
     public Game(){
-
     }
 
     public void initGame(Game game, List<String> nicknames, int chosenPlayersNumber){

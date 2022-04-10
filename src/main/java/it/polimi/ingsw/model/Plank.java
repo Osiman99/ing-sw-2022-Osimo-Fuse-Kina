@@ -14,6 +14,9 @@ public class Plank {
     public Plank(){
         towerSpace = new TowerSpace();
         diningRoom = new StudentRow[5];
+        for (int i = 0; i < 5; i++){
+            diningRoom[i] = new StudentRow(i);
+        }
         entrance = new Entrance();
     }
 

@@ -25,6 +25,9 @@ public class Board {
         game = Game.getInstance();
         bag = Bag.getInstance();
         professorsControlledBy = new String[5];
+        for (int i = 0; i < 5; i++) {
+            professorsControlledBy[i] = "";
+        }
 
         islands = new ArrayList<Island>();
         for (int i = 0; i < NUM_ISLAND_INIT; i++) {
@@ -117,12 +120,11 @@ public class Board {
 
     public void moveTowerFromIslandToPlank(Island island){      //la for sarà nel conquerIsland
         for (int i = 0; i < game.getNumPlayers(); i++){
-            if (island.getFirstTower().getColor() == game.getPlayers().get(i).getPlank().getTowerSpace().getFirstTower().getColor()){
+            if (island.getFirstTower().getColor() == game.getPlayers().get(i).getPlayerColor()){
                 game.getPlayers().get(i).getPlank().getTowerSpace().addTower(island.getFirstTower());
                 island.removeTower();
             }
         }
-
     }
 
     public void moveMotherNature(int numMoves){
@@ -134,6 +136,10 @@ public class Board {
                 break;
             }
         }
+    }
+
+    public void moveProfessor(){
+
     }
 
 

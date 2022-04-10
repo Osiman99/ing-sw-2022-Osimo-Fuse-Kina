@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StudentRow {
@@ -7,15 +8,10 @@ public class StudentRow {
     private StudentColor rowColor;
 
 
-    /**
-     * Default constructor
-     *
-     * @param students
-     * @param rowColor
-     */
-    public StudentRow(List<Student> students, StudentColor rowColor) {
-        this.students = students;
-        this.rowColor = rowColor;
+
+    public StudentRow(int code) {
+        students = new ArrayList<Student>();
+        rowColor = StudentColor.getStudentColor(code);
     }
 
     public List<Student> getStudents() {
