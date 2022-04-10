@@ -139,7 +139,25 @@ public class Board {
     }
 
     public void moveProfessor(){
-
+        if (game.getNumPlayers() == 2) {
+            for (int i = 0; i < 5; i++) {
+                if (game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size()){
+                    professorsControlledBy[i] = game.getPlayers().get(0).getNickname();
+                }else if (game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size()){
+                    professorsControlledBy[i] = game.getPlayers().get(1).getNickname();
+                }
+            }
+        }else if (game.getNumPlayers() == 3) {
+            for (int i = 0; i < 5; i++) {
+                if (game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() && game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size()){
+                    professorsControlledBy[i] = game.getPlayers().get(0).getNickname();
+                }else if (game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() && game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size()){
+                    professorsControlledBy[i] = game.getPlayers().get(1).getNickname();
+                }else if (game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() && game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size()){
+                    professorsControlledBy[i] = game.getPlayers().get(2).getNickname();
+                }
+            }
+        }
     }
 
 

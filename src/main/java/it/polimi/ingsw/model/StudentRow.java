@@ -5,13 +5,13 @@ import java.util.List;
 
 public class StudentRow {
     private List<Student> students;
-    private StudentColor rowColor;
+    private StudentColor rowColor;    //ROWCOLOR INUTILE
 
 
 
     public StudentRow(int code) {
         students = new ArrayList<Student>();
-        rowColor = StudentColor.getStudentColor(code);
+        rowColor = StudentColor.getStudentColor(code);   //ROWCOLOR INUTILE
     }
 
     public List<Student> getStudents() {
