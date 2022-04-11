@@ -11,11 +11,6 @@ public class Game {
     private int chosenPlayersNumber;       //servirebbe nel caso un player si scollega dal gioco (FA)
     private int contPlayer;
 
-    /**
-     * Game constructor
-     */
-    public Game(){
-    }
 
     public void initGame(Game game, List<String> nicknames, int chosenPlayersNumber){
         setInstance(game);

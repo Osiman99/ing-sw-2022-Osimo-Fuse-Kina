@@ -13,6 +13,7 @@ public class Player {
     private int numCoins = 1;
     private int chosenCardValue;
     private Game game;
+    private CharacterCardsStrategy characterCardsStrategy;
 
     public Player(String nickname){
         game = Game.getInstance();
@@ -86,9 +87,38 @@ public class Player {
         }
     }
 
+    public void useEffect(){
+        switch(characterCardsStrategy.getName()){
+            case "Sommelier":
+                break;
+            case "Chef":
+                break;
+            case "Messenger":
+                break;
+            case "Postman":
+                break;
+            case "Herbalist":
+                break;
+            case "Centaur":
+                break;
+            case "Joker":
+                break;
+            case "Knight":
+                break;
+            case "Merchant":
+                break;
+            case "Musician":
+                break;
+            case "Lady":
+                break;
+            case "Sinister":
+                break;
+        }
+    }
 
-
-
+    public void setCharacterCardsStrategy(CharacterCardsStrategy characterCardsStrategy){
+        this.characterCardsStrategy = characterCardsStrategy;
+    }
 
 }
 
