@@ -1,8 +1,8 @@
 package it.polimi.ingsw.model;
 
 public class SinisterStrategy implements CharacterCardsStrategy{
-    public String name;
-    public int price;
+    private String name;
+    private int price;
 
     public SinisterStrategy(){
         name = "Sinister";
@@ -13,7 +13,7 @@ public class SinisterStrategy implements CharacterCardsStrategy{
     }
 
     @Override
-    public void applyEffect() {
+    public void applyEffect(Player player) {
 
     }
 }

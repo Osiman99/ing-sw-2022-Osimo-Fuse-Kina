@@ -31,7 +31,7 @@ public class Entrance {
 
     public void removeStudent(Student student){     //student come parametro o color?
         for(int i = 0; i < students.size(); i++){
-            if (students.get(i).getColor().equals(student.getColor())){
+            if (students.get(i).getColor() == student.getColor()){  //equals in tutte le cose così?
                 students.remove(i);
                 break;
             }

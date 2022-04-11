@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model;
 
 public interface CharacterCardsStrategy {
+
     public String getName();
-    public void applyEffect();
+    public void applyEffect(Player player);
+
 }

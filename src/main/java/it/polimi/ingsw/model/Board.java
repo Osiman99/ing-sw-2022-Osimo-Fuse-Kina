@@ -16,6 +16,7 @@ public class Board {
     private int randomInt;
     private final int NUM_ISLAND_INIT = 12;
     private ArrayList<Student> studentsIslandInit;
+    private CharacterCardsStrategy characterCardsStrategy;
 
 
     /**
@@ -160,6 +161,10 @@ public class Board {
         }
     }
 
+    public void chooseCharacterCardsStrategy(Player player, CharacterCardsStrategy characterCardsStrategy){
+        this.characterCardsStrategy = characterCardsStrategy;
+        characterCardsStrategy.applyEffect(player);
+    }
 
 
 }
