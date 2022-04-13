@@ -35,11 +35,26 @@ public class Island {
         return towers.get(0);
     }
 
+    public Student getFirstStudent(){
+        return students.get(0);
+    }
 
+    public List<Tower> getTowers() {
+        return towers;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
 
     public void removeTower(){
         towers.remove(0);
     }
+
+    public void removeStudent(){
+        students.remove(0);
+    }
+
 
     // possiamo creare una List<Island> che ad ogni isola possiamo associare un valore boolean per indicare se c'è o no
     // motherNature, un int(oppure 5 siccome ci sono 5 professori) che ci da il numero degli studenti di ogni colore e

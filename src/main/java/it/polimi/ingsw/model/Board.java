@@ -117,6 +117,7 @@ public class Board {
     public void moveTowerFromPlankToIsland(Player player, Island island){
         island.addTower(player.getPlank().getTowerSpace().getFirstTower());
         player.getPlank().getTowerSpace().removeTower();
+        joinIslands(island);
     }
 
     public void moveTowerFromIslandToPlank(Island island){      //la for sarà nel conquerIsland
@@ -125,7 +126,7 @@ public class Board {
                 game.getPlayers().get(i).getPlank().getTowerSpace().addTower(island.getFirstTower());
                 island.removeTower();
             }
-        }
+        }//break
     }
 
     public void moveMotherNature(int numMoves){
@@ -133,7 +134,7 @@ public class Board {
             if (islands.get(i).isMotherNature()){
                 islands.get(i).setMotherNature(false);
                 islands.get((i+numMoves)%12).setMotherNature(true);
-                //calculateSupremacy
+                calculateSupremacy();
                 break;
             }
         }
@@ -161,9 +162,38 @@ public class Board {
         }
     }
 
-    public void chooseCharacterCardsStrategy(Player player, CharacterCardsStrategy characterCardsStrategy){
+    public void chooseCharacterCardsStrategy(Player player, CharacterCardsStrategy characterCardsStrategy){  //forse farlo in player con le classi non strategy
         this.characterCardsStrategy = characterCardsStrategy;
         characterCardsStrategy.applyEffect(player);
+    }
+
+    public void calculateSupremacy(){
+
+    }
+
+    public void joinIslands(Island island){
+        for (int i = 0; i < islands.size(); i++){
+            if (islands.get(i) == island) {
+                if (!(islands.get((i+1)%islands.size()).getFirstTower() == null || islands.get((i+1)%islands.size()).getFirstTower().getColor() != island.getFirstTower().getColor())) {
+                    for (int j = 0; j < islands.get((i+1)%islands.size()).getTowers().size(); j++){
+                        island.addTower(islands.get((i+1)%islands.size()).getFirstTower());
+                        islands.get((i+1)%islands.size()).removeTower();
+                    }
+                    for (int j = 0; j < islands.get((i+1)%islands.size()).getStudents().size(); j++){
+                        island.addStudent(islands.get((i+1)%islands.size()).getFirstStudent());
+                        islands.get((i+1)%islands.size()).removeStudent();
+                    }
+                    islands.remove(islands.get((i+1)%islands.size()));
+                }if ((i-1) == -1) {
+                    if (!(islands.get(5).getFirstTower() == null || islands.get(5).getFirstTower().getColor() != island.getFirstTower().getColor())) {
+                        for (int j = 0; j < islands.get(5).getTowers().size(); j++) {
+                            island.addTower(islands.get(5).getFirstTower());
+                            islands.remove(island);
+                        }
+                    }
+                }
+            }
+        }
     }
 
 
