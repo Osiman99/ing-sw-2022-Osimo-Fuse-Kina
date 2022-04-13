@@ -185,12 +185,29 @@ public class Board {
                     }
                     islands.remove(islands.get((i+1)%islands.size()));
                 }if ((i-1) == -1) {
-                    if (!(islands.get(5).getFirstTower() == null || islands.get(5).getFirstTower().getColor() != island.getFirstTower().getColor())) {
-                        for (int j = 0; j < islands.get(5).getTowers().size(); j++) {
-                            island.addTower(islands.get(5).getFirstTower());
-                            islands.remove(island);
+                    if (!(islands.get(islands.size()-1).getFirstTower() == null || islands.get(islands.size()-1).getFirstTower().getColor() != island.getFirstTower().getColor())) {
+                        for (int j = 0; j < islands.get(islands.size()-1).getTowers().size(); j++) {
+                            island.addTower(islands.get(islands.size()-1).getFirstTower());
+                            islands.get(islands.size()-1).removeTower();
+                        }
+                        for (int j = 0; j < islands.get(islands.size()-1).getStudents().size(); j++) {
+                            island.addStudent(islands.get(islands.size()-1).getFirstStudent());
+                            islands.get(islands.size()-1).removeStudent();
                         }
                     }
+                    islands.remove(islands.get(islands.size()-1));
+                }else {
+                    if (!(islands.get(i-1).getFirstTower() == null || islands.get(i-1).getFirstTower().getColor() != island.getFirstTower().getColor())) {
+                        for (int j = 0; j < islands.get(i-1).getTowers().size(); j++) {
+                            island.addTower(islands.get(i-1).getFirstTower());
+                            islands.get(i-1).removeTower();
+                        }
+                        for (int j = 0; j < islands.get(i-1).getTowers().size(); j++) {
+                            island.addStudent(islands.get(i-1).getFirstStudent());
+                            islands.get(i-1).removeStudent();
+                        }
+                    }
+                    islands.remove(islands.get(i-1));
                 }
             }
         }
