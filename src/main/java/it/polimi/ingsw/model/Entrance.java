@@ -6,7 +6,7 @@ import java.util.List;
 public class Entrance {
 
     private Game game;
-    private List<Student> students;
+    private ArrayList<Student> students;
     private Student moving_student;
 
     public Entrance(){
@@ -23,6 +23,10 @@ public class Entrance {
                 game.getBoard().getBag().removeStudent();
             }
         }
+    }
+
+    public ArrayList<Student> getStudents() {
+        return students;
     }
 
     public void addStudent(Student student){

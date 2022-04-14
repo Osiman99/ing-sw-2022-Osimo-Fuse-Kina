@@ -29,7 +29,9 @@ public class Cloud {
         students.add(student);
     }
 
-
+    public List<Student> getStudents() {
+        return students;
+    }
 
     // if 2 players then 3 students per cloud
     // if 3 players then 4 students per row

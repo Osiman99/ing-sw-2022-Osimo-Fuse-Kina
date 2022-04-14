@@ -14,9 +14,9 @@ public class Game {
 
     public void initGame(Game game, List<String> nicknames, int chosenPlayersNumber){
         setInstance(game);
-        board = Board.getInstance();
-        contPlayer = 0;
         this.chosenPlayersNumber = chosenPlayersNumber;
+        contPlayer = 0;
+        board = Board.getInstance();
         players = new ArrayList<Player>();
         for (int i = 0; i < this.chosenPlayersNumber; i++){
             contPlayer = contPlayer + 1;

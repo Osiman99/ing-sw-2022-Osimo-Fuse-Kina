@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Bag {
 
-    private static List<Student> students;  //si potrebbe anche non mettere static perchè Bag è singleton
+    private List<Student> students;  //si potrebbe anche non mettere static perchè Bag è singleton
 
     /**
      * singular instance
@@ -61,5 +61,7 @@ public class Bag {
         return students.get(0);
     }
 
-
+    public List<Student> getStudents() {
+        return students;
+    }
 }

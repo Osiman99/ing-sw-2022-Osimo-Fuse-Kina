@@ -7,6 +7,7 @@ public class Player {
 
     private TowerColor playerColor;
     private int supremacyCont;
+    private int studentsSize;
     private final String nickname;
     private final Plank plank;
     private PlayerState state;
@@ -63,7 +64,8 @@ public class Player {
     }
 
     public void moveStudentsFromCloudToEntrance(Cloud cloud) {
-        for (int i = 0; i < cloud.getStudentsSize(); i++) {
+        studentsSize = cloud.getStudentsSize();
+        for (int i = 0; i < studentsSize; i++) {
             plank.getEntrance().addStudent(cloud.getFirstStudent());
             cloud.removeStudent();
         }
@@ -90,6 +92,8 @@ public class Player {
                 if (numMoves <= deck.getDeck().get(i).getMaxMoves() && numMoves > 0){
                     game.getBoard().moveMotherNature(numMoves);
                 }//else throw exception;
+                //remove AssistantCard
+                break;
             }
         }
     }
