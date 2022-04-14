@@ -88,6 +88,10 @@ public class Board {
         return bag;
     }
 
+    public List<Cloud> getClouds() {
+        return clouds;
+    }
+
     /**
      * Singleton,create the object only if it does not exist
      *
@@ -237,13 +241,16 @@ public class Board {
             }else if (game.getNumPlayers() == 3) {
                 for (int i = 0; i < 3; i++){
                     if (game.getPlayers().get(i).getPlayerColor() == island.getFirstTower().getColor()){
-                        if (game.getPlayers().get(i).getSupremacyCont() < game.getPlayers().get((i+1)%3).getSupremacyCont()){
+                        if (game.getPlayers().get((i+1)%3).getSupremacyCont() > game.getPlayers().get(i).getSupremacyCont() && game.getPlayers().get((i+1)%3).getSupremacyCont() > game.getPlayers().get((i+2)%3).getSupremacyCont()){
                             for (int j = 0; j < island.getTowers().size(); j++){
                                 moveTowerFromIslandToPlank(island);
                                 moveTowerFromPlankToIsland(game.getPlayers().get((i+1)%3), island);
                             }
-                        }if (game.getPlayers().get(i).getSupremacyCont() < game.getPlayers().get((i+2)%3).getSupremacyCont()){
-
+                        }if (game.getPlayers().get((i+2)%3).getSupremacyCont() > game.getPlayers().get(i).getSupremacyCont() && game.getPlayers().get((i+2)%3).getSupremacyCont() > game.getPlayers().get((i+1)%3).getSupremacyCont()){
+                            for (int j = 0; j < island.getTowers().size(); j++){
+                                moveTowerFromIslandToPlank(island);
+                                moveTowerFromPlankToIsland(game.getPlayers().get((i+2)%3), island);
+                            }
                         }
                     }
                 }
