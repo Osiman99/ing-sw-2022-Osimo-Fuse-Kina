@@ -6,6 +6,7 @@ import java.util.List;
 public class Player {
 
     private TowerColor playerColor;
+    private int supremacyCont;
     private final String nickname;
     private final Plank plank;
     private PlayerState state;
@@ -17,6 +18,7 @@ public class Player {
     public Player(String nickname){
         game = Game.getInstance();
         this.nickname = nickname;
+        supremacyCont = 0;
         plank = new Plank();
         state = PlayerState.SLEEP;
         deck = new AssistantDeck();
@@ -24,6 +26,12 @@ public class Player {
 
     public String getNickname(){
         return nickname;
+    }
+
+    public int getSupremacyCont() { return supremacyCont; }
+
+    public void setSupremacyCont(int supremacyCont) {
+        this.supremacyCont = supremacyCont;
     }
 
     public Plank getPlank() {

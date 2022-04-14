@@ -17,6 +17,11 @@ public class Board {
     private final int NUM_ISLAND_INIT = 12;
     private ArrayList<Student> studentsIslandInit;
     private CharacterCardsStrategy characterCardsStrategy;
+    private int greenCont;
+    private int redCont;
+    private int yellowCont;
+    private int pinkCont;
+    private int blueCont;
 
 
     /**
@@ -29,6 +34,12 @@ public class Board {
         for (int i = 0; i < 5; i++) {
             professorsControlledBy[i] = "";
         }
+
+        greenCont = 0;
+        redCont = 0;
+        yellowCont = 0;
+        pinkCont = 0;
+        blueCont = 0;
 
         islands = new ArrayList<Island>();
         for (int i = 0; i < NUM_ISLAND_INIT; i++) {
@@ -117,6 +128,7 @@ public class Board {
     public void moveTowerFromPlankToIsland(Player player, Island island){
         island.addTower(player.getPlank().getTowerSpace().getFirstTower());
         player.getPlank().getTowerSpace().removeTower();
+        //isEmpty? if yes finisce il gioco
         joinIslands(island);
     }
 
@@ -134,7 +146,7 @@ public class Board {
             if (islands.get(i).isMotherNature()){
                 islands.get(i).setMotherNature(false);
                 islands.get((i+numMoves)%12).setMotherNature(true);
-                calculateSupremacy();
+                calculateSupremacy(islands.get(i));
                 break;
             }
         }
@@ -167,8 +179,92 @@ public class Board {
         characterCardsStrategy.applyEffect(player);
     }
 
-    public void calculateSupremacy(){
+    public void calculateSupremacy(Island island){
+        if (island.getStudents() != null){
+            for (int i = 0; i < island.getStudents().size(); i++) {
+                if (island.getStudents().get(i).getColor() == StudentColor.GREEN){
+                    greenCont++;
+                }else if (island.getStudents().get(i).getColor() == StudentColor.RED){
+                    redCont++;
+                }else if (island.getStudents().get(i).getColor() == StudentColor.YELLOW) {
+                    yellowCont++;
+                }else if (island.getStudents().get(i).getColor() == StudentColor.PINK) {
+                    pinkCont++;
+                }else if (island.getStudents().get(i).getColor() == StudentColor.BLUE) {
+                    blueCont++;
+                }
+            }for (int i = 0; i < 5; i++){
+                for (int j = 0; j < game.getNumPlayers(); j++){
+                    if (professorsControlledBy[i].equals(game.getPlayers().get(j).getNickname())){
+                        if (i == 0){
+                            game.getPlayers().get(j).setSupremacyCont(game.getPlayers().get(j).getSupremacyCont() + greenCont);
+                        }else if (i == 1){
+                            game.getPlayers().get(j).setSupremacyCont(game.getPlayers().get(j).getSupremacyCont() + redCont);
+                        }else if (i == 2){
+                            game.getPlayers().get(j).setSupremacyCont(game.getPlayers().get(j).getSupremacyCont() + yellowCont);
+                        }else if (i == 3) {
+                            game.getPlayers().get(j).setSupremacyCont(game.getPlayers().get(j).getSupremacyCont() + pinkCont);
+                        }else {
+                            game.getPlayers().get(j).setSupremacyCont(game.getPlayers().get(j).getSupremacyCont() + blueCont);
+                        }
+                    }
+                }
+            } if (island.getTowers() != null){
+                for (int i = 0; i < island.getTowers().size(); i++) {
+                    for (int j = 0; j < game.getNumPlayers(); j++){
+                        if (island.getFirstTower().getColor() == game.getPlayers().get(j).getPlayerColor()) {
+                                game.getPlayers().get(j).setSupremacyCont(game.getPlayers().get(j).getSupremacyCont() + 1);
+                        }
+                    }
+                }
+            }conquerIsland(island);
+        }
+    }
 
+    public void conquerIsland(Island island){
+        if (island.getTowers() != null){
+            if (game.getNumPlayers() == 2){
+                for (int i = 0; i < 2; i++){
+                    if (game.getPlayers().get(i).getPlayerColor() == island.getFirstTower().getColor()){
+                        if (game.getPlayers().get(i).getSupremacyCont() < game.getPlayers().get((i+1)%2).getSupremacyCont()){
+                            for (int j = 0; j < island.getTowers().size(); j++){
+                                moveTowerFromIslandToPlank(island);
+                                moveTowerFromPlankToIsland(game.getPlayers().get((i+1)%2), island);
+                            }
+                        }
+                    }
+                }
+            }else if (game.getNumPlayers() == 3) {
+                for (int i = 0; i < 3; i++){
+                    if (game.getPlayers().get(i).getPlayerColor() == island.getFirstTower().getColor()){
+                        if (game.getPlayers().get(i).getSupremacyCont() < game.getPlayers().get((i+1)%3).getSupremacyCont()){
+                            for (int j = 0; j < island.getTowers().size(); j++){
+                                moveTowerFromIslandToPlank(island);
+                                moveTowerFromPlankToIsland(game.getPlayers().get((i+1)%3), island);
+                            }
+                        }if (game.getPlayers().get(i).getSupremacyCont() < game.getPlayers().get((i+2)%3).getSupremacyCont()){
+
+                        }
+                    }
+                }
+            }
+        }else{
+            if (game.getNumPlayers() == 2){
+                if (game.getPlayers().get(0).getSupremacyCont() > game.getPlayers().get(1).getSupremacyCont()){
+                    moveTowerFromPlankToIsland(game.getPlayers().get(0), island);
+                }else if (game.getPlayers().get(0).getSupremacyCont() < game.getPlayers().get(1).getSupremacyCont()){
+                    moveTowerFromPlankToIsland(game.getPlayers().get(1), island);
+                }
+            }else if (game.getNumPlayers() == 3) {
+                if (game.getPlayers().get(0).getSupremacyCont() > game.getPlayers().get(1).getSupremacyCont() && game.getPlayers().get(0).getSupremacyCont() > game.getPlayers().get(2).getSupremacyCont()){
+                    moveTowerFromPlankToIsland(game.getPlayers().get(0), island);
+                }else if (game.getPlayers().get(1).getSupremacyCont() > game.getPlayers().get(0).getSupremacyCont() && game.getPlayers().get(1).getSupremacyCont() > game.getPlayers().get(2).getSupremacyCont()){
+                    moveTowerFromPlankToIsland(game.getPlayers().get(1), island);
+                }else if (game.getPlayers().get(2).getSupremacyCont() > game.getPlayers().get(0).getSupremacyCont() && game.getPlayers().get(2).getSupremacyCont() > game.getPlayers().get(1).getSupremacyCont()){
+                    moveTowerFromPlankToIsland(game.getPlayers().get(2), island);
+                }
+            }
+        }
     }
 
     public void joinIslands(Island island){
@@ -212,6 +308,8 @@ public class Board {
             }
         }
     }
+
+
 
 
 }
