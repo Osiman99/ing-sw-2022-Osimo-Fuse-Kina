@@ -150,7 +150,7 @@ public class Board {
             if (islands.get(i).isMotherNature()){
                 islands.get(i).setMotherNature(false);
                 islands.get((i+numMoves)%12).setMotherNature(true);
-                calculateSupremacy(islands.get(i));
+                calculateSupremacy(islands.get((i+numMoves)%12));
                 break;
             }
         }
@@ -246,7 +246,7 @@ public class Board {
                                 moveTowerFromIslandToPlank(island);
                                 moveTowerFromPlankToIsland(game.getPlayers().get((i+1)%3), island);
                             }
-                        }if (game.getPlayers().get((i+2)%3).getSupremacyCont() > game.getPlayers().get(i).getSupremacyCont() && game.getPlayers().get((i+2)%3).getSupremacyCont() > game.getPlayers().get((i+1)%3).getSupremacyCont()){
+                        }else if (game.getPlayers().get((i+2)%3).getSupremacyCont() > game.getPlayers().get(i).getSupremacyCont() && game.getPlayers().get((i+2)%3).getSupremacyCont() > game.getPlayers().get((i+1)%3).getSupremacyCont()){
                             for (int j = 0; j < island.getTowers().size(); j++){
                                 moveTowerFromIslandToPlank(island);
                                 moveTowerFromPlankToIsland(game.getPlayers().get((i+2)%3), island);
@@ -271,6 +271,13 @@ public class Board {
                     moveTowerFromPlankToIsland(game.getPlayers().get(2), island);
                 }
             }
+        } greenCont = 0;
+        redCont = 0;
+        yellowCont = 0;
+        pinkCont = 0;
+        blueCont = 0;
+        for (int i = 0; i < game.getNumPlayers(); i++) {
+            game.getPlayers().get(i).setSupremacyCont(0);
         }
     }
 
@@ -315,8 +322,4 @@ public class Board {
             }
         }
     }
-
-
-
-
 }
