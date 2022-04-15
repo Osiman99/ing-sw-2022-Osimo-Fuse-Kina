@@ -85,16 +85,15 @@ class PlayerTest {
 
     @Test
     void moveStudentFromEntranceToDiningRoom() {
-        /*
         playerProva.moveStudentsFromCloudToEntrance(game.getBoard().getClouds().get(0));
-        System.out.println(game.getBoard().getClouds().size());
-        System.out.println(plank.getEntrance().getStudents().size());
-        playerProva.moveStudentFromEntranceToDiningRoom(playerProva.getPlank().getEntrance().getStudents().get(0));
-        assertEquals(playerProva.getPlank().getDiningRoom()[playerProva.getPlank().getEntrance().getStudents().get(0).getColor().getCode()].getStudents().get(0), playerProva.getPlank().getEntrance().getStudents().get(0));
-        */
+        Student stud = playerProva.getPlank().getEntrance().getStudents().get(0);
+        playerProva.moveStudentFromEntranceToDiningRoom(stud);
+        assertEquals(playerProva.getPlank().getDiningRoom()[stud.getColor().getCode()].getStudents().get(0), stud);
+
     }
 
     @Test
     void moveStudentFromEntranceToIsland() {
+
     }
 }
