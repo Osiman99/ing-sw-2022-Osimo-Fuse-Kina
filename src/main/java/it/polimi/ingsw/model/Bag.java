@@ -16,6 +16,7 @@ public class Bag {
 
     /**
      * private constructor
+     * inside the bag initially we have 24 students of each color
      */
     private Bag(){
         students = new ArrayList<Student>();
@@ -49,6 +50,9 @@ public class Bag {
         return instance;
     }
 
+    /**
+     * always remove the student in the first position of the arraylist when we need to put them in the clouds or entrance
+     */
     public void removeStudent(){
         students.remove(0);
     }

@@ -41,10 +41,17 @@ public class Board {
         pinkCont = 0;
         blueCont = 0;
 
+        /**
+         * creation of the 12 islands
+         */
         islands = new ArrayList<Island>();
         for (int i = 0; i < NUM_ISLAND_INIT; i++) {
             islands.add(new Island());
         }
+
+        /**
+         * in the beginning of the game we have 2 students of each color in the islands
+         */
         studentsIslandInit = new ArrayList<Student>();
         for (int i = 0; i < 2; i++) {
             studentsIslandInit.add(new Student(StudentColor.GREEN));
@@ -61,6 +68,11 @@ public class Board {
         for (int i = 0; i < 2; i++) {
             studentsIslandInit.add(new Student(StudentColor.BLUE));
         }
+
+        /**
+         * we put the 10 students in a random mode in the islands except the island in which is put motherNature
+         * and the opposite island in which is motherNature
+         */
         Collections.shuffle(studentsIslandInit);
         random = new Random();
         randomInt = random.nextInt(NUM_ISLAND_INIT-1);
@@ -72,6 +84,9 @@ public class Board {
             }
         }
 
+        /**
+         * we create the same number of clouds as there are players in the game(2 or 3)
+         */
         clouds = new ArrayList<Cloud>();
         if (game.getNumPlayers() == 2) {
             for (int i = 0; i < 2; i++) {
@@ -97,9 +112,6 @@ public class Board {
      *
      * @return
      */
-
-
-
     public static Board getInstance(){
         if (instance == null){
             instance = new Board();
@@ -128,6 +140,7 @@ public class Board {
             }
         }
     }
+
 
     public void moveTowerFromPlankToIsland(Player player, Island island){
         island.addTower(player.getPlank().getTowerSpace().getFirstTower());
