@@ -244,7 +244,7 @@ public class Board {
                 for (int i = 0; i < 2; i++){
                     if (game.getPlayers().get(i).getPlayerColor() == island.getFirstTower().getColor()){
                         if (game.getPlayers().get(i).getSupremacyCont() < game.getPlayers().get((i+1)%2).getSupremacyCont()){
-                            for (int j = 0; j < island.getTowers().size(); j++){
+                            for (Tower tower : island.getTowers()){          //è giusto? se sì applicarlo per tutti gli altri qua sotto
                                 moveTowerFromIslandToPlank(island);
                                 moveTowerFromPlankToIsland(game.getPlayers().get((i+1)%2), island);
                             }
