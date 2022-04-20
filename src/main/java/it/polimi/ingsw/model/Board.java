@@ -142,6 +142,12 @@ public class Board {
     }
 
 
+    /**
+     * when we add the tower to the island, at the same time we remove the tower from the towerSpace.
+     * when the towerSpace remains empty the player owning that plank wins the game
+     * @param player
+     * @param island
+     */
     public void moveTowerFromPlankToIsland(Player player, Island island){
         island.addTower(player.getPlank().getTowerSpace().getFirstTower());
         player.getPlank().getTowerSpace().removeTower();
@@ -150,6 +156,11 @@ public class Board {
         }
     }
 
+    /**
+     * if one player conquers an island(group of islands) that before was conquered by another player,
+     * the ex-conqueror of the island gets in its plank all the towers belonging to him.
+     * @param island
+     */
     public void moveTowerFromIslandToPlank(Island island){      //la for sarà nel conquerIsland
         for (int i = 0; i < game.getNumPlayers(); i++){
             if (island.getFirstTower().getColor() == game.getPlayers().get(i).getPlayerColor()){
@@ -159,6 +170,11 @@ public class Board {
         }//break
     }
 
+    /**
+     * the method that allows the mother nature to move.
+     * after the move is done the supremacy is calculated in the island in which mother nature is found.
+     * @param numMoves
+     */
     public void moveMotherNature(int numMoves){
         for (int i = 0; i < islands.size(); i++){
             if (islands.get(i).isMotherNature()){
@@ -170,6 +186,9 @@ public class Board {
         }
     }
 
+    /**
+     * moving the professor in cases with 2 or 3 players.
+     */
     public void moveProfessor(){
         if (game.getNumPlayers() == 2) {
             for (int i = 0; i < 5; i++) {
@@ -197,6 +216,10 @@ public class Board {
         characterCardsStrategy.applyEffect(player);
     }
 
+    /**
+     * calculate the supremacy
+     * @param island
+     */
     public void calculateSupremacy(Island island){
         if (island.getStudents() != null){
             for (int i = 0; i < island.getStudents().size(); i++) {
@@ -239,6 +262,11 @@ public class Board {
         }
     }
 
+    /**
+     * if one player has the highest supremacy in the island in which mother nature stops,
+     * he conquers the island by putting his tower in it
+     * @param island
+     */
     public void conquerIsland(Island island){
         if (island.getTowers() != null){
             if (game.getNumPlayers() == 2){
@@ -303,6 +331,11 @@ public class Board {
         }
     }
 
+    /**
+     * if there are 2 or more islands near each other and those islands are conquered by the same player,
+     * then the islands are unified
+     * @param island
+     */
     public void joinIslands(Island island){
         int numIsland = islands.size();
         for (int i = 0; i < numIsland; i++){
