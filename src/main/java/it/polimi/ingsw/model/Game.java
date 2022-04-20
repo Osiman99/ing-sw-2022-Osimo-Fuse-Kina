@@ -12,6 +12,12 @@ public class Game {
     private int contPlayer;
 
 
+    /**
+     * initialization of the game, choosing the number of players and getting their nicknames
+     * @param game
+     * @param nicknames
+     * @param chosenPlayersNumber
+     */
     public void initGame(Game game, List<String> nicknames, int chosenPlayersNumber){
         setInstance(game);
         this.chosenPlayersNumber = chosenPlayersNumber;

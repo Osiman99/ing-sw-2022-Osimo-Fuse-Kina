@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model;
 
+
+
+// questa classe potrebbe non servire a nulla
 public class EmptyListException extends RuntimeException {
 
     // no-argument constructor

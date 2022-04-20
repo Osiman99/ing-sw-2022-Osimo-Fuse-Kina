@@ -9,6 +9,10 @@ public class Entrance {
     private ArrayList<Student> students;
     private Student moving_student;
 
+    /**
+     * entrance constructor,
+     * if there are 2 players we get 7 students from the bag in it, if there are 3 players we get 9 students.
+     */
     public Entrance(){
         game = Game.getInstance();
         students = new ArrayList<Student>();

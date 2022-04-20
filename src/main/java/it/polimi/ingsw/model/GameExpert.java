@@ -2,6 +2,9 @@ package it.polimi.ingsw.model;
 
 import java.util.List;
 
+/**
+ * in this class we have to use the character cards
+ */
 public class GameExpert extends Game{
 
     @Override
