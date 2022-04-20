@@ -145,8 +145,9 @@ public class Board {
     public void moveTowerFromPlankToIsland(Player player, Island island){
         island.addTower(player.getPlank().getTowerSpace().getFirstTower());
         player.getPlank().getTowerSpace().removeTower();
-        //isEmpty? if yes finisce il gioco
-        joinIslands(island);
+        if (player.getPlank().getTowerSpace().isEmpty()){
+            System.out.println("HAI VINTO!");
+        }
     }
 
     public void moveTowerFromIslandToPlank(Island island){      //la for sarà nel conquerIsland
@@ -244,10 +245,11 @@ public class Board {
                 for (int i = 0; i < 2; i++){
                     if (game.getPlayers().get(i).getPlayerColor() == island.getFirstTower().getColor()){
                         if (game.getPlayers().get(i).getSupremacyCont() < game.getPlayers().get((i+1)%2).getSupremacyCont()){
-                            for (Tower tower : island.getTowers()){          //è giusto? se sì applicarlo per tutti gli altri qua sotto
+                            int numTowers = island.getTowers().size();
+                            for (int j = 0; j < numTowers; j++){
                                 moveTowerFromIslandToPlank(island);
                                 moveTowerFromPlankToIsland(game.getPlayers().get((i+1)%2), island);
-                            }
+                            }joinIslands(island);
                         }
                     }
                 }
@@ -255,15 +257,17 @@ public class Board {
                 for (int i = 0; i < 3; i++){
                     if (game.getPlayers().get(i).getPlayerColor() == island.getFirstTower().getColor()){
                         if (game.getPlayers().get((i+1)%3).getSupremacyCont() > game.getPlayers().get(i).getSupremacyCont() && game.getPlayers().get((i+1)%3).getSupremacyCont() > game.getPlayers().get((i+2)%3).getSupremacyCont()){
-                            for (int j = 0; j < island.getTowers().size(); j++){
+                            int numTowers = island.getTowers().size();
+                            for (int j = 0; j < numTowers; j++){
                                 moveTowerFromIslandToPlank(island);
                                 moveTowerFromPlankToIsland(game.getPlayers().get((i+1)%3), island);
-                            }
+                            }joinIslands(island);
                         }else if (game.getPlayers().get((i+2)%3).getSupremacyCont() > game.getPlayers().get(i).getSupremacyCont() && game.getPlayers().get((i+2)%3).getSupremacyCont() > game.getPlayers().get((i+1)%3).getSupremacyCont()){
-                            for (int j = 0; j < island.getTowers().size(); j++){
+                            int numTowers = island.getTowers().size();
+                            for (int j = 0; j < numTowers; j++){
                                 moveTowerFromIslandToPlank(island);
                                 moveTowerFromPlankToIsland(game.getPlayers().get((i+2)%3), island);
-                            }
+                            }joinIslands(island);
                         }
                     }
                 }
@@ -272,16 +276,21 @@ public class Board {
             if (game.getNumPlayers() == 2){
                 if (game.getPlayers().get(0).getSupremacyCont() > game.getPlayers().get(1).getSupremacyCont()){
                     moveTowerFromPlankToIsland(game.getPlayers().get(0), island);
+                    joinIslands(island);
                 }else if (game.getPlayers().get(0).getSupremacyCont() < game.getPlayers().get(1).getSupremacyCont()){
                     moveTowerFromPlankToIsland(game.getPlayers().get(1), island);
+                    joinIslands(island);
                 }
             }else if (game.getNumPlayers() == 3) {
                 if (game.getPlayers().get(0).getSupremacyCont() > game.getPlayers().get(1).getSupremacyCont() && game.getPlayers().get(0).getSupremacyCont() > game.getPlayers().get(2).getSupremacyCont()){
                     moveTowerFromPlankToIsland(game.getPlayers().get(0), island);
+                    joinIslands(island);
                 }else if (game.getPlayers().get(1).getSupremacyCont() > game.getPlayers().get(0).getSupremacyCont() && game.getPlayers().get(1).getSupremacyCont() > game.getPlayers().get(2).getSupremacyCont()){
                     moveTowerFromPlankToIsland(game.getPlayers().get(1), island);
+                    joinIslands(island);
                 }else if (game.getPlayers().get(2).getSupremacyCont() > game.getPlayers().get(0).getSupremacyCont() && game.getPlayers().get(2).getSupremacyCont() > game.getPlayers().get(1).getSupremacyCont()){
                     moveTowerFromPlankToIsland(game.getPlayers().get(2), island);
+                    joinIslands(island);
                 }
             }
         } greenCont = 0;
@@ -295,25 +304,28 @@ public class Board {
     }
 
     public void joinIslands(Island island){
-        for (int i = 0; i < islands.size(); i++){
+        int numIsland = islands.size();
+        for (int i = 0; i < numIsland; i++){
             if (islands.get(i) == island) {
                 if (!(islands.get((i+1)%islands.size()).getFirstTower() == null || islands.get((i+1)%islands.size()).getFirstTower().getColor() != island.getFirstTower().getColor())) {
-                    for (int j = 0; j < islands.get((i+1)%islands.size()).getTowers().size(); j++){
+                    int numTowersNextIsland = islands.get((i+1)%islands.size()).getTowers().size();
+                    for (int j = 0; j < numTowersNextIsland; j++){
                         island.addTower(islands.get((i+1)%islands.size()).getFirstTower());
                         islands.get((i+1)%islands.size()).removeTower();
-                    }
-                    for (int j = 0; j < islands.get((i+1)%islands.size()).getStudents().size(); j++){
+                    }int numStudentsNextIsland = islands.get((i+1)%islands.size()).getStudents().size();
+                    for (int j = 0; j < numStudentsNextIsland; j++){
                         island.addStudent(islands.get((i+1)%islands.size()).getFirstStudent());
                         islands.get((i+1)%islands.size()).removeStudent();
                     }
                     islands.remove(islands.get((i+1)%islands.size()));
                 }if ((i-1) == -1) {
                     if (!(islands.get(islands.size()-1).getFirstTower() == null || islands.get(islands.size()-1).getFirstTower().getColor() != island.getFirstTower().getColor())) {
-                        for (int j = 0; j < islands.get(islands.size()-1).getTowers().size(); j++) {
+                        int numTowersLastIsland = islands.get(islands.size()-1).getTowers().size();
+                        for (int j = 0; j < numTowersLastIsland; j++) {
                             island.addTower(islands.get(islands.size()-1).getFirstTower());
                             islands.get(islands.size()-1).removeTower();
-                        }
-                        for (int j = 0; j < islands.get(islands.size()-1).getStudents().size(); j++) {
+                        }int numStudentsLastIsland = islands.get(islands.size()-1).getStudents().size();
+                        for (int j = 0; j < numStudentsLastIsland; j++) {
                             island.addStudent(islands.get(islands.size()-1).getFirstStudent());
                             islands.get(islands.size()-1).removeStudent();
                         }
@@ -321,11 +333,12 @@ public class Board {
                     islands.remove(islands.get(islands.size()-1));
                 }else {
                     if (!(islands.get(i-1).getFirstTower() == null || islands.get(i-1).getFirstTower().getColor() != island.getFirstTower().getColor())) {
-                        for (int j = 0; j < islands.get(i-1).getTowers().size(); j++) {
+                        int numTowersPrevIsland = islands.get(i-1).getTowers().size();
+                        for (int j = 0; j < numTowersPrevIsland; j++) {
                             island.addTower(islands.get(i-1).getFirstTower());
                             islands.get(i-1).removeTower();
-                        }
-                        for (int j = 0; j < islands.get(i-1).getTowers().size(); j++) {
+                        }int numStudentsPrevIsland = islands.get(i-1).getStudents().size();
+                        for (int j = 0; j < numStudentsPrevIsland; j++) {
                             island.addStudent(islands.get(i-1).getFirstStudent());
                             islands.get(i-1).removeStudent();
                         }

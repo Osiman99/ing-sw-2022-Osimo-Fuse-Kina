@@ -54,5 +54,13 @@ public class TowerSpace {
         towers.remove(0);
     }
 
+    public boolean isEmpty(){
+        if (towers == null){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
 
 }

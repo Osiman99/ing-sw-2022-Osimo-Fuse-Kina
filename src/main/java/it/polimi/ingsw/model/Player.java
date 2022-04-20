@@ -7,7 +7,6 @@ public class Player {
 
     private TowerColor playerColor;
     private int supremacyCont;
-    private int studentsSize;
     private final String nickname;
     private final Plank plank;
     private PlayerState state;
@@ -64,7 +63,7 @@ public class Player {
     }
 
     public void moveStudentsFromCloudToEntrance(Cloud cloud) {
-        studentsSize = cloud.getStudentsSize();
+        int studentsSize = cloud.getStudentsSize();
         for (int i = 0; i < studentsSize; i++) {
             plank.getEntrance().addStudent(cloud.getFirstStudent());
             cloud.removeStudent();
