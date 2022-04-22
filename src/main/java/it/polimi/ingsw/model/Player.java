@@ -11,13 +11,14 @@ public class Player {
     private final Plank plank;
     private PlayerState state;
     private final AssistantDeck deck;
-    private int numCoins = 1;
+    private int numCoins;
     private int chosenCardValue;
     private CharacterCards characterCards;
     private Game game;
 
     public Player(String nickname){
         game = Game.getInstance();
+        numCoins = 1;
         this.nickname = nickname;
         supremacyCont = 0;
         plank = new Plank();
@@ -74,6 +75,9 @@ public class Player {
     public void moveStudentFromEntranceToDiningRoom(Student student){    //la for si fa nel main (GUI)
         plank.getDiningRoom()[student.getColor().getCode()].addStudent(student);
         plank.getEntrance().removeStudent(student);
+        if (plank.getDiningRoom()[student.getColor().getCode()].getStudents().size() == 3 || plank.getDiningRoom()[student.getColor().getCode()].getStudents().size() == 6 || plank.getDiningRoom()[student.getColor().getCode()].getStudents().size() == 9){
+            numCoins++;
+        }
     }
 
     public void moveStudentFromEntranceToIsland(Student student, Island island){    //la for si fa nel main (GUI)

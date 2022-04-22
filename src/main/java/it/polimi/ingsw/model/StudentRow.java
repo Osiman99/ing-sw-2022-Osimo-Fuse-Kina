@@ -28,7 +28,7 @@ public class StudentRow {
 
     public void setRowColor(StudentColor rowColor) {
         this.rowColor = rowColor;
-    }
+    }    //ROWCOLOR INUTILE
 
     public void addStudent(Student student){
         students.add(student);
