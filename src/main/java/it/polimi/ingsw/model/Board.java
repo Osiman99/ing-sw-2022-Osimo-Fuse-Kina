@@ -16,7 +16,6 @@ public class Board {
     private int randomInt;
     private final int NUM_ISLAND_INIT = 12;
     private ArrayList<Student> studentsIslandInit;
-    private CharacterCardsStrategy characterCardsStrategy;
     private int greenCont;
     private int redCont;
     private int yellowCont;
@@ -119,6 +118,10 @@ public class Board {
         return instance;
     }
 
+    public String[] getProfessorsControlledBy() {
+        return professorsControlledBy;
+    }
+
     /**
      * if there are 2 players Cloud gets 3 students from the Bag each round,
      * if there are 3 players it gets 4.
@@ -145,7 +148,7 @@ public class Board {
     public void moveTowerFromPlankToIsland(Player player, Island island){
         island.addTower(player.getPlank().getTowerSpace().getFirstTower());
         player.getPlank().getTowerSpace().removeTower();
-        if (player.getPlank().getTowerSpace().isEmpty()){
+        if (player.getPlank().getTowerSpace().getTowersList().isEmpty()){
             System.out.println("HAI VINTO!");
         }
     }
@@ -192,10 +195,6 @@ public class Board {
         }
     }
 
-    public void chooseCharacterCardsStrategy(Player player, CharacterCardsStrategy characterCardsStrategy){  //forse farlo in player con le classi non strategy
-        this.characterCardsStrategy = characterCardsStrategy;
-        characterCardsStrategy.applyEffect(player);
-    }
 
     public void calculateSupremacy(Island island){
         if (island.getStudents() != null){

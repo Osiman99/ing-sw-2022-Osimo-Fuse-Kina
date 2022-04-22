@@ -1,11 +1,11 @@
 package it.polimi.ingsw.model;
 
-public class ChefStrategy implements CharacterCardsStrategy{
+public class Sinister extends CharacterCards{
     private String name;
     private int price;
 
-    public ChefStrategy(){
-        name = "Chef";
+    public Sinister(){
+        name = "Sinister";
     }
 
     public String getName() {
@@ -13,7 +13,7 @@ public class ChefStrategy implements CharacterCardsStrategy{
     }
 
     @Override
-    public void applyEffect(Player player) {
+    public void applyEffect() {
 
     }
 }

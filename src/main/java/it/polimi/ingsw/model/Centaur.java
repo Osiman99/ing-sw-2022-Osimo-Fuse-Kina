@@ -1,10 +1,10 @@
 package it.polimi.ingsw.model;
 
-public class CentaurStrategy implements CharacterCardsStrategy{
+public class Centaur extends CharacterCards{
     private String name;
     private int price;
 
-    public CentaurStrategy(){
+    public Centaur(){
         name = "Centaur";
     }
 
@@ -12,8 +12,8 @@ public class CentaurStrategy implements CharacterCardsStrategy{
         return name;
     }
 
-    @Override
-    public void applyEffect(Player player) {
+
+    public void applyEffect() {
 
     }
 }

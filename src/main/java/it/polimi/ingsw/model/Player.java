@@ -13,6 +13,7 @@ public class Player {
     private final AssistantDeck deck;
     private int numCoins = 1;
     private int chosenCardValue;
+    private CharacterCards characterCards;
     private Game game;
 
     public Player(String nickname){
@@ -96,6 +97,30 @@ public class Player {
             }
         }
     }
+
+    public void chooseCharacterCard(CharacterCards characterCards, Student student, Island island){  //SOMMELIER
+        this.characterCards = characterCards;
+        this.characterCards.applyEffect(student, island);
+    }
+
+    public void chooseCharacterCard(CharacterCards characterCards, Island island){  //MESSENGER
+        this.characterCards = characterCards;
+        this.characterCards.applyEffect(island);
+    }
+
+    public void chooseCharacterCard(CharacterCards characterCards, Player player, int numMoves){  //POSTMAN
+        this.characterCards = characterCards;
+        this.characterCards.applyEffect(player, numMoves);
+    }
+
+    public void chooseCharacterCard(CharacterCards characterCards){     //TUTTI GLI ALTRI
+        this.characterCards = characterCards;
+        this.characterCards.applyEffect();
+    }
+
+
+
+
 
 }
 

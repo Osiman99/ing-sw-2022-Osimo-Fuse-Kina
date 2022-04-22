@@ -1,10 +1,10 @@
 package it.polimi.ingsw.model;
 
-public class LadyStrategy implements CharacterCardsStrategy{
+public class Lady extends CharacterCards{
     private String name;
     private int price;
 
-    public LadyStrategy(){
+    public Lady(){
         name = "Lady";
     }
 
@@ -13,7 +13,7 @@ public class LadyStrategy implements CharacterCardsStrategy{
     }
 
     @Override
-    public void applyEffect(Player player) {
+    public void applyEffect() {
 
     }
 }
