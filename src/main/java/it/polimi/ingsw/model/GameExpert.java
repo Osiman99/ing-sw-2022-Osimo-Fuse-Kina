@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * in this class we have to use the character cards
+ */
 public class GameExpert extends Game{
 
     private List<CharacterCards> threeChosenCards;

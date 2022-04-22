@@ -9,6 +9,9 @@ public class Cloud {
 
     private List<Student> students;
 
+    /**
+     * cloud constructor
+     */
     public Cloud(){
         students = new ArrayList<Student>();
     }
