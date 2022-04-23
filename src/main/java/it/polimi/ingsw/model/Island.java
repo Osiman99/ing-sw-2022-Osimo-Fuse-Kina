@@ -8,6 +8,7 @@ public class Island {
     private List<Student> students;
     private List<Tower> towers;
     private boolean motherNature;
+    private boolean banCard;
 
     public Island(){
         students = new ArrayList<Student>();

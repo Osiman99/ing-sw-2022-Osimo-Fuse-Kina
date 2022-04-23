@@ -9,19 +9,7 @@ import java.util.Random;
  */
 public class GameExpert extends Game{
 
-    private List<CharacterCards> threeChosenCards;
-    private CharacterCards sommelier;
-    private CharacterCards chef;
-    private CharacterCards messenger;
-    private CharacterCards postman;
-    private CharacterCards herbalist;
-    private CharacterCards centaur;
-    private CharacterCards joker;
-    private CharacterCards knight;
-    private CharacterCards merchant;
-    private CharacterCards musician;
-    private CharacterCards lady;
-    private CharacterCards sinister;
+    private List<CharacterCard> threeChosenCards;
     private Random random;
     private int randomInt;
 
@@ -29,58 +17,46 @@ public class GameExpert extends Game{
     @Override
     public void initGame(Game game, List<String> nicknames, int chosenPlayersNumber) {
         super.initGame(game, nicknames, chosenPlayersNumber);
-        threeChosenCards = new ArrayList<CharacterCards>();
+        threeChosenCards = new ArrayList<CharacterCard>();
         random = new Random();
         for (int i = 0; i < 3; i++) {
             randomInt = random.nextInt(11);
             switch (randomInt) {
                 case 0:
-                    sommelier = Sommelier.getInstance();
-                    threeChosenCards.add(sommelier);
+                    threeChosenCards.add(new CharacterCard(CharacterName.Sommelier));
                     break;
                 case 1:
-                    chef = new Chef();
-                    threeChosenCards.add(chef);
+                    threeChosenCards.add(new CharacterCard(CharacterName.Chef));
                     break;
                 case 2:
-                    messenger = new Messenger();
-                    threeChosenCards.add(messenger);
+                    threeChosenCards.add(new CharacterCard(CharacterName.Messenger));
                     break;
                 case 3:
-                    postman = new Postman();
-                    threeChosenCards.add(postman);
+                    threeChosenCards.add(new CharacterCard(CharacterName.Postman));
                     break;
                 case 4:
-                    herbalist = new Herbalist();
-                    threeChosenCards.add(herbalist);
+                    threeChosenCards.add(new CharacterCard(CharacterName.Herbalist));
                     break;
                 case 5:
-                    centaur = new Centaur();
-                    threeChosenCards.add(centaur);
+                    threeChosenCards.add(new CharacterCard(CharacterName.Centaur));
                     break;
                 case 6:
-                    joker = new Joker();
-                    threeChosenCards.add(joker);
+                    threeChosenCards.add(new CharacterCard(CharacterName.Joker));
                     break;
                 case 7:
-                    knight = new Knight();
-                    threeChosenCards.add(knight);
+                    threeChosenCards.add(new CharacterCard(CharacterName.Knight));
                     break;
                 case 8:
-                    merchant = new Merchant();
-                    threeChosenCards.add(merchant);
+                    threeChosenCards.add(new CharacterCard(CharacterName.Merchant));
                     break;
                 case 9:
-                    musician = new Musician();
-                    threeChosenCards.add(musician);
+                    threeChosenCards.add(new CharacterCard(CharacterName.Musician));
                     break;
                 case 10:
-                    lady = new Lady();
-                    threeChosenCards.add(lady);
+                    threeChosenCards.add(new CharacterCard(CharacterName.Lady));
                     break;
                 case 11:
-                    sinister = new Sinister();
-                    threeChosenCards.add(sinister);
+                    threeChosenCards.add(new CharacterCard(CharacterName.Sinister));
                     break;
             }
         }
