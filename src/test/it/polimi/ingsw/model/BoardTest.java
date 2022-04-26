@@ -4,20 +4,32 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class BoardTest {
 
-    /*
-    private static Game game;
-    private static Student student;
-    private static StudentColor red;
-    private static Cloud cloud;
-    private static Player player
+
+    private Game game;
+    private Student student;
+    private ArrayList<Student> students;
+    private StudentColor red;
+    private Cloud cloud;
+    private Player player;
 
 
     @BeforeEach
     void setUp() {
+        List<String> nicknames = new ArrayList<String>();
+        students = new ArrayList<Student>();
+        nicknames.add("davide");
+        nicknames.add("riise");
+        nicknames.add("elis");
+        game = new Game();
+        game.initGame(game, nicknames, 3);
+        /*
         game = new Game();
         game.addPlayer(player);
         red = StudentColor.RED;
@@ -41,29 +53,32 @@ class BoardTest {
             }
 
         }
-
-    }
     */
+    }
 
     @AfterEach
     void tearDown() {
     }
 
     @Test
-    void getBag() {
-    }
-
-    @Test
-    void getInstance() {
-    }
-
-    /*
-    @Test
     void moveStudentsFromBagToClouds() {
+
+        /*
+        for(int i=0; i< 12; i++){           //4 studenti x3 nuvole =12 : sposto i primi 12 studenti dalla Bag
+            students.add(game.getBoard().getBag().getFirstStudent());
+        }
         game.getBoard().moveStudentsFromBagToClouds();
-        assertEquals(student, game.getBoard());
+        int i=0;
+        for(int j=0; j<game.getBoard().getClouds().size(); j++){
+            for(int k=0; k<game.getBoard().getClouds().get(j).getStudentsSize(); k++,i++) {
+                System.out.println(i);
+                System.out.println(j);
+                System.out.println(k);
+                assertEquals(students.get(i), game.getBoard().getClouds().get(j).getStudents().get(k));
+            }
+        }
+        */
     }
-    */
 
     @Test
     void moveTowerFromPlankToIsland() {

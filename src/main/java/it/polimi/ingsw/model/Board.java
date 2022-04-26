@@ -106,6 +106,10 @@ public class Board {
         return clouds;
     }
 
+    public List<Island> getIslands() {
+        return islands;
+    }
+
     /**
      * Singleton,create the object only if it does not exist
      *
