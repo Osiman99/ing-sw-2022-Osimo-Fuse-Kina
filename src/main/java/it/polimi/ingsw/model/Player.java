@@ -102,6 +102,9 @@ public class Player {
         }
     }
 
+    public void chooseCharacterCard(){}
+
+
     public void chooseCharacterCard(CharacterCards characterCards, Student student, Island island){  //SOMMELIER
         this.characterCards = characterCards;
         this.characterCards.applyEffect(student, island);
