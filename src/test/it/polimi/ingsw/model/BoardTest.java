@@ -62,23 +62,18 @@ class BoardTest {
 
     @Test
     void moveStudentsFromBagToClouds() {
-        /*
-        for(int i=0; i< 12; i++){           //4 studenti x3 nuvole =12 : sposto i primi 12 studenti dalla Bag
-            students.add(game.getBoard().getBag().getFirstStudent());
+
+        for(int i=0; i< game.getNumPlayers()*(game.getNumPlayers()+1); i++){           // #nuvole x #studentiPerNuvola : sposto i primi 12 studenti dalla Bag
+            students.add(game.getBoard().getBag().getStudents().get(i));
         }
         game.getBoard().moveStudentsFromBagToClouds();
         int i=0;
         for(int j=0; j<game.getBoard().getClouds().size(); j++){
             for(int k=0; k<game.getBoard().getClouds().get(j).getStudentsSize(); k++,i++) {
-                System.out.println(i);
-                System.out.println(j);
-                System.out.println(k);
-                System.out.println(students.get(i));
-                System.out.println(game.getBoard().getClouds().get(j).getStudents().get(k));
                 assertEquals(students.get(i), game.getBoard().getClouds().get(j).getStudents().get(k));
             }
         }
-        */
+
     }
 
     @Test

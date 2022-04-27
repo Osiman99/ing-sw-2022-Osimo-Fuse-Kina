@@ -87,15 +87,10 @@ public class Board {
          * we create the same number of clouds as there are players in the game(2 or 3)
          */
         clouds = new ArrayList<Cloud>();
-        if (game.getNumPlayers() == 2) {
-            for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < game.getNumPlayers(); i++) {
                 clouds.add(new Cloud());
-            }
-        }else if (game.getNumPlayers() == 3){
-            for (int i = 0; i < 3; i++){
-                clouds.add(new Cloud());
-            }
         }
+
     }
 
     public Bag getBag() {
