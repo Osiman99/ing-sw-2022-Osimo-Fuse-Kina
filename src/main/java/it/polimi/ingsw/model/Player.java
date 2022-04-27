@@ -101,6 +101,8 @@ public class Player {
         }
     }
 
+    //QUA TUTTI I METODI APPLYEFFECT
+
 
 
 }
