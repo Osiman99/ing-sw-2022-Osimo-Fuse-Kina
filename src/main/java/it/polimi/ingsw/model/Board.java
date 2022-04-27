@@ -131,21 +131,13 @@ public class Board {
      * if there are 3 players it gets 4.
      */
     public void moveStudentsFromBagToClouds() {
-        if (game.getNumPlayers() == 2) {
-            for (int i = 0; i < game.getNumPlayers(); i++){
-                for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < game.getNumPlayers(); i++) {
+                for (int j = 0; j < game.getNumPlayers()+1; j++) {
                     clouds.get(i).addStudent(bag.getFirstStudent());
                     bag.removeStudent();
                 }
-            }
-        }else if (game.getNumPlayers() == 3) {
-            for (int i = 0; i < game.getNumPlayers(); i++){
-                for (int j = 0; j < 4; j++) {
-                    clouds.get(i).addStudent(bag.getFirstStudent());
-                    bag.removeStudent();
-                }
-            }
         }
+
     }
 
 
