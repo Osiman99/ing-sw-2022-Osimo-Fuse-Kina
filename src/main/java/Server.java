@@ -18,7 +18,7 @@ public class Server {
 
     public Server(){
         try {
-            serverSocket = new ServerSocket(3333);
+            serverSocket = new ServerSocket(5000);
             socket = serverSocket.accept();
             dataInputStream = new DataInputStream(socket.getInputStream());
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
