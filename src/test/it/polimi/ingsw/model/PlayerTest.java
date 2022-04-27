@@ -37,7 +37,7 @@ class PlayerTest {
         numCoins = playerProva.getNumCoins();
         cloud = game.getBoard().getClouds().get(0);
 
-        game.getBoard().moveStudentsFromBagToClouds();
+        //game.getBoard().moveStudentsFromBagToClouds();
     }
 
     @AfterEach
