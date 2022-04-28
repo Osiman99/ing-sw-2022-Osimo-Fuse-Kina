@@ -372,4 +372,64 @@ public class Board {
             }
         }
     }
+
+    //APPLYEFFECT
+
+    public void applyEffectSommelier(Player player, CharacterCard characterCard, Student student, Island island){
+        if (characterCard.getPrice() >= player.getNumCoins()){
+            for (int i = 0; i < 4; i++){
+                if (characterCard.getStudents().get(i).getColor() == student.getColor()){
+                    island.addStudent(characterCard.getStudents().get(i));
+                    characterCard.getStudents().remove(characterCard.getStudents().get(i));
+                    characterCard.getStudents().add(game.getBoard().getBag().getFirstStudent());
+                    game.getBoard().getBag().removeStudent();
+                }break;
+            }player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
+        }
+    }
+
+    public void applyEffectChef(Player player) {
+        //BISOGNA FAR PARTIRE UN THREAD
+    }
+
+    public void applyEffectMessenger(){
+
+    }
+
+    public void applyEffectPostman(){
+
+    }
+
+    public void applyEffectHerbalist(){
+
+    }
+
+    public void applyEffectCentaur(){
+
+    }
+
+    public void applyEffectJoker(){
+
+    }
+
+    public void applyEffectKnight(){
+
+    }
+
+    public void applyEffectMerchant(){
+
+    }
+
+    public void applyEffectMusician(){
+
+    }
+
+    public void applyEffectLady(){
+
+    }
+
+    public void applyEffectSinister(){
+
+    }
+
 }
