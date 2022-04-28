@@ -5,12 +5,14 @@ import java.net.Socket;
 
 public class ClientConnection extends Thread{
 
+    Client c;
     Socket s;
     DataInputStream dataInputStream;
     DataOutputStream dataOutputStream;
     boolean shouldRun = true;
 
     public ClientConnection(Socket socket, Client client){
+        c = client;
         s = socket;
     }
 

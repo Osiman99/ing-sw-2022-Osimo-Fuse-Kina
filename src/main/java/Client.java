@@ -1,5 +1,3 @@
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -18,17 +16,16 @@ public class Client{
             Socket socket = new Socket("localhost", 5000);
             cc = new ClientConnection(socket, this);
             cc.start();
-
             listenForInput();
         }catch (UnknownHostException e){
             e.printStackTrace();
         }catch (IOException e){
             e.printStackTrace();
         }
-
     }
 
     public void listenForInput(){
+
         Scanner console = new Scanner(System.in);
 
         while (true){
@@ -48,7 +45,6 @@ public class Client{
 
          cc.sendStringToServer(input);
         }
-
         cc.close();
     }
 }
