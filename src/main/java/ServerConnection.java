@@ -58,7 +58,5 @@ public class ServerConnection extends Thread{
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 }

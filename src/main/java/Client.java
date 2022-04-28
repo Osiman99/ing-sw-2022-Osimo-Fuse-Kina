@@ -37,7 +37,7 @@ public class Client{
             while(!console.hasNextLine()) {
                 try {
                     Thread.sleep(1);
-                  // System.out.println("waiting user input");
+                    // System.out.println("waiting user input");
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -56,7 +56,7 @@ public class Client{
                 while (dataInputStream.available() == 0){
                     try {
                         Thread.sleep(1);
-                       // System.out.println("waiting...");
+                        // System.out.println("waiting...");
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
