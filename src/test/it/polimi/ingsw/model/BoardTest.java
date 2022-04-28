@@ -89,11 +89,49 @@ class BoardTest {
 
 
     @Test
-    void addIsland() {
-    }
+    void moveProfessor() {
+        //creo degli studenti da aggiungere alle Dining Rooms dei players
+        Student sRed=new Student(StudentColor.RED);
+        Student sGreen=new Student(StudentColor.GREEN);
+        Student sPink=new Student(StudentColor.PINK);
+        Student sYellow=new Student(StudentColor.YELLOW);
+        //player 0 ha 2 REDstudent, player 1 ha 1 REDstudents, player 2 ha 1 REDstudent
+        game.getPlayers().get(1).getPlank().getDiningRoom()[StudentColor.RED.getCode()].addStudent(sRed);
+        game.getBoard().moveProfessor();
+        game.getPlayers().get(0).getPlank().getDiningRoom()[StudentColor.RED.getCode()].addStudent(sRed);
+        game.getBoard().moveProfessor();
+        game.getPlayers().get(0).getPlank().getDiningRoom()[StudentColor.RED.getCode()].addStudent(sRed);
+        game.getBoard().moveProfessor();
+        game.getPlayers().get(2).getPlank().getDiningRoom()[StudentColor.RED.getCode()].addStudent(sRed);
+        game.getBoard().moveProfessor();
+        //player 2 ha 1 GREENstudent
+        game.getPlayers().get(2).getPlank().getDiningRoom()[StudentColor.GREEN.getCode()].addStudent(sGreen);
+        game.getBoard().moveProfessor();
+        //tutti i player hanno 1 PINKstudent (il professore è del primo player ad aver spostato lo studente)
+        game.getPlayers().get(1).getPlank().getDiningRoom()[StudentColor.PINK.getCode()].addStudent(sPink);
+        game.getBoard().moveProfessor();
+        game.getPlayers().get(0).getPlank().getDiningRoom()[StudentColor.PINK.getCode()].addStudent(sPink);
+        game.getBoard().moveProfessor();
+        game.getPlayers().get(2).getPlank().getDiningRoom()[StudentColor.PINK.getCode()].addStudent(sPink);
+        game.getBoard().moveProfessor();
+        //player 1 ha 2 YELLOWstudent, player 2 ha 3 YELLOWstudent
+        game.getPlayers().get(2).getPlank().getDiningRoom()[StudentColor.YELLOW.getCode()].addStudent(sYellow);
+        game.getBoard().moveProfessor();
+        game.getPlayers().get(1).getPlank().getDiningRoom()[StudentColor.YELLOW.getCode()].addStudent(sYellow);
+        game.getBoard().moveProfessor();
+        game.getPlayers().get(1).getPlank().getDiningRoom()[StudentColor.YELLOW.getCode()].addStudent(sYellow);
+        game.getBoard().moveProfessor();
+        game.getPlayers().get(2).getPlank().getDiningRoom()[StudentColor.YELLOW.getCode()].addStudent(sYellow);
+        game.getBoard().moveProfessor();
+        game.getPlayers().get(2).getPlank().getDiningRoom()[StudentColor.YELLOW.getCode()].addStudent(sYellow);
+        game.getBoard().moveProfessor();
+        //nessun player ha BLUEstudent (nessuno possiede il professore)
 
-    @Test
-    void addCloud() {
+        assertEquals(game.getPlayers().get(0).getNickname(), game.getBoard().getProfessorsControlledBy()[StudentColor.RED.getCode()]);
+        assertEquals(game.getPlayers().get(2).getNickname(), game.getBoard().getProfessorsControlledBy()[StudentColor.GREEN.getCode()]);
+        assertEquals(game.getPlayers().get(1).getNickname(), game.getBoard().getProfessorsControlledBy()[StudentColor.PINK.getCode()]);
+        assertEquals(game.getPlayers().get(2).getNickname(), game.getBoard().getProfessorsControlledBy()[StudentColor.YELLOW.getCode()]);
+        assertEquals("", game.getBoard().getProfessorsControlledBy()[StudentColor.BLUE.getCode()]);
     }
 
 }
