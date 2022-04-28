@@ -76,4 +76,15 @@ public class CharacterCard {
         }
     }
 
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+
+
 }

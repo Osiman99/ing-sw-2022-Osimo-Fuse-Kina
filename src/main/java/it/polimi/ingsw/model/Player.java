@@ -63,6 +63,10 @@ public class Player {
         this.playerColor = playerColor;
     }
 
+    public void setNumCoins(int numCoins) {
+        this.numCoins = numCoins;
+    }
+
     public void moveStudentsFromCloudToEntrance(Cloud cloud) {
         int studentsSize = cloud.getStudentsSize();
         for (int i = 0; i < studentsSize; i++) {
@@ -100,9 +104,6 @@ public class Player {
             }
         }
     }
-
-    //QUA TUTTI I METODI APPLYEFFECT
-
 
 
 }

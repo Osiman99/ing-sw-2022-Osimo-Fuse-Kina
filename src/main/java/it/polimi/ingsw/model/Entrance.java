@@ -52,7 +52,7 @@ public class Entrance {
         for (Student student : students) {
             if (student.getColor() == color) {
                 moving_student = student;
-                break;
+                break;                                                 //forse da fare con eccezioni?
             }
         }
         return moving_student;
