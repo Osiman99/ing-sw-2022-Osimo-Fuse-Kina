@@ -51,6 +51,7 @@ public class Client{
 
             try {
                 dataOutputStream.writeUTF(input);
+                dataOutputStream.flush();
 
                 while (dataInputStream.available() == 0){
                     try {
