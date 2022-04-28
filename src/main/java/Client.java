@@ -13,7 +13,7 @@ public class Client{
 
     public Client(){
         try {
-            Socket socket = new Socket("localhost", 5000);
+            Socket socket = new Socket("127.0.0.1", 5000);
             cc = new ClientConnection(socket, this);
             cc.start();
             listenForInput();
