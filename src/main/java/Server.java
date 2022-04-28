@@ -41,7 +41,7 @@ public class Server {
                 }
 
                 String dataIn = dataInputStream.readUTF();
-
+                System.out.println(dataIn);
                 dataOutputStream.writeUTF(dataIn);
 
             } catch (IOException e) {

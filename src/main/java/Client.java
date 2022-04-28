@@ -18,8 +18,8 @@ public class Client{
     public Client(){
         try {
             Socket socket = new Socket("localhost", 5000);
-            DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
-            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dataInputStream = new DataInputStream(socket.getInputStream());
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
             listenForInput();
         }catch (UnknownHostException e){
@@ -34,9 +34,10 @@ public class Client{
         Scanner console = new Scanner(System.in);
 
         while (true){
-            while(console.hasNextLine()) {
+            while(!console.hasNextLine()) {
                 try {
                     Thread.sleep(1);
+                  // System.out.println("waiting user input");
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -54,6 +55,7 @@ public class Client{
                 while (dataInputStream.available() == 0){
                     try {
                         Thread.sleep(1);
+                       // System.out.println("waiting...");
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
