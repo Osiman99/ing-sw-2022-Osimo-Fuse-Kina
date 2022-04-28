@@ -83,8 +83,8 @@ class BoardTest {
         Tower tower = game.getPlayers().get(0).getPlank().getTowerSpace().getFirstTower();
         game.getBoard().moveTowerFromPlankToIsland(game.getPlayers().get(0), game.getBoard().getIslands().get(0));
         assertEquals(tower, game.getBoard().getIslands().get(0).getFirstTower());
-        //game.getBoard().moveTowerFromIslandToPlank(game.getBoard().getIslands().get(0));
-        //assertEquals(tower, game.getPlayers().get(0).getPlank().getTowerSpace().getTowersList().get(5));
+        game.getBoard().moveTowerFromIslandToPlank(game.getBoard().getIslands().get(0));
+        assertEquals(tower, game.getPlayers().get(0).getPlank().getTowerSpace().getTowersList().get(game.getPlayers().get(0).getPlank().getTowerSpace().getTowersList().size()-1));
     }
 
 
