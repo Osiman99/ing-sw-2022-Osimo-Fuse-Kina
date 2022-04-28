@@ -9,7 +9,6 @@ public class Server {
     ArrayList<ServerConnection> connections = new ArrayList<ServerConnection>();
     boolean shouldRun = true;
 
-
     public static void main(String[] args) {
         new Server();
     }
