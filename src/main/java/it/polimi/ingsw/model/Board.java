@@ -160,8 +160,9 @@ public class Board {
             if (island.getFirstTower().getColor() == game.getPlayers().get(i).getPlayerColor()){
                 game.getPlayers().get(i).getPlank().getTowerSpace().addTower(island.getFirstTower());
                 island.removeTower();
+                break;
             }
-        }//break
+        }
     }
 
     /**
