@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -91,7 +92,7 @@ class BoardTest {
 
     @Test
     void moveProfessor() {
-        //creo degli studenti da aggiungere alle Dining Rooms dei players
+        //creo degli studenti da aggiungere alle Dining Rooms dei players per ricreare delle situazioni di gioco
         Student sRed=new Student(StudentColor.RED);
         Student sGreen=new Student(StudentColor.GREEN);
         Student sPink=new Student(StudentColor.PINK);
@@ -135,4 +136,25 @@ class BoardTest {
         assertEquals("", game.getBoard().getProfessorsControlledBy()[StudentColor.BLUE.getCode()]);
     }
 
+    @Test
+    void moveMotherNature() {
+        //salvo l'indice della lista dell'isola attiva
+        int i=0;
+        for(; i<game.getBoard().getIslands().size(); i++)
+            if(game.getBoard().getIslands().get(i).isMotherNature())
+                break;
+
+        //genero un numero a caso da 1 a 5 che rappresenta il numero di mosse scelte dal player
+        Random random =new Random();
+        int randomInt = random.nextInt(4)+1;
+        game.getBoard().moveMotherNature(randomInt);
+
+        //salvo l'indice della nuova isola attiva
+        int j=0;
+        for(; j<game.getBoard().getIslands().size(); j++)
+            if(game.getBoard().getIslands().get(j).isMotherNature())
+                break;
+        assertEquals(game.getBoard().getIslands().get(i+randomInt), game.getBoard().getIslands().get(j));
+
+    }
 }
