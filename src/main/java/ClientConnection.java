@@ -5,15 +5,15 @@ import java.net.Socket;
 
 public class ClientConnection extends Thread{
 
-    Client c;
-    Socket s;
+    Client client;
+    Socket socket;
     DataInputStream dataInputStream;
     DataOutputStream dataOutputStream;
     boolean shouldRun = true;
 
     public ClientConnection(Socket socket, Client client){
-        c = client;
-        s = socket;
+        this.client = client;
+        this.socket = socket;
     }
 
     public void sendStringToServer(String text){
@@ -29,8 +29,8 @@ public class ClientConnection extends Thread{
     @Override
     public void run() {
         try {
-            dataInputStream = new DataInputStream(s.getInputStream());
-            dataOutputStream = new DataOutputStream(s.getOutputStream());
+            dataInputStream = new DataInputStream(socket.getInputStream());
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
             while (shouldRun) {
                 try {
@@ -58,7 +58,7 @@ public class ClientConnection extends Thread{
         try {
             dataInputStream.close();
             dataOutputStream.close();
-            s.close();
+            socket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

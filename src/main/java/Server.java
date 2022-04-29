@@ -18,9 +18,9 @@ public class Server {
             serverSocket = new ServerSocket(5000);
             while (shouldRun){
                 Socket socket = serverSocket.accept();
-                ServerConnection sc = new ServerConnection(socket,this);
-                sc.start();
-                connections.add(sc);
+                ServerConnection serverConnection = new ServerConnection(socket,this);
+                serverConnection.start();
+                connections.add(serverConnection);
         }
         } catch (IOException e) {
             e.printStackTrace();

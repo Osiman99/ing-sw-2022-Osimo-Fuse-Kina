@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Client{
 
-    ClientConnection cc;
+    ClientConnection clientConnection;
 
     public static void main(String[] args) {
         new Client();
@@ -14,8 +14,8 @@ public class Client{
     public Client(){
         try {
             Socket socket = new Socket("127.0.0.1", 5000);
-            cc = new ClientConnection(socket, this);
-            cc.start();
+            clientConnection = new ClientConnection(socket, this);
+            clientConnection.start();
             listenForInput();
         }catch (UnknownHostException e){
             e.printStackTrace();
@@ -43,8 +43,8 @@ public class Client{
                 break;
             }
 
-         cc.sendStringToServer(input);
+         clientConnection.sendStringToServer(input);
         }
-        cc.close();
+        clientConnection.close();
     }
 }

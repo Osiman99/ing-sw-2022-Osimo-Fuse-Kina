@@ -28,8 +28,8 @@ public class ServerConnection extends Thread{
 
     public void sendStringToAllClients(String text){
         for (int i = 0; i < server.connections.size(); i++){
-            ServerConnection sc = server.connections.get(i);
-            sc.sendStringToClient(text);
+            ServerConnection serverConnection = server.connections.get(i);
+            serverConnection.sendStringToClient(text);
         }
     }
 
@@ -47,14 +47,14 @@ public class ServerConnection extends Thread{
                         e.printStackTrace();
                     }
                 }
-
                 String textIn = dataInputStream.readUTF();
                 sendStringToAllClients(textIn);
-            }
 
+            }
             dataInputStream.close();
             dataOutputStream.close();
             socket.close();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
