@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.server.model;
 
 /**
  * This enum contains all possible colors that students can get and we associate

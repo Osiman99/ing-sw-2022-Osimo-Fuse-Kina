@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.server.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,12 +6,13 @@ import java.util.List;
 public class CharacterCard {
 
     private Game game;
-    private CharacterName characterName;
+    private it.polimi.ingsw.server.model.CharacterName characterName;
     private List<Student> students;
     private boolean banCards[];
     private int price;
+    private boolean enabled;
 
-    public CharacterCard(CharacterName characterName){
+    public CharacterCard(it.polimi.ingsw.server.model.CharacterName characterName){
         game = GameExpert.getInstance();
         this.characterName = characterName;
 
@@ -76,6 +77,17 @@ public class CharacterCard {
         }
     }
 
+    public it.polimi.ingsw.server.model.CharacterName getCharacterName() {
+        return characterName;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
     public List<Student> getStudents() {
         return students;

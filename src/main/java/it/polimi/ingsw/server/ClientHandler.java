@@ -1,9 +1,11 @@
+package it.polimi.ingsw.server;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-public class ServerConnection extends Thread{
+public class ClientHandler extends Thread{
 
     Socket socket;
     Server server;
@@ -11,7 +13,7 @@ public class ServerConnection extends Thread{
     DataOutputStream dataOutputStream;
     boolean shouldRun = true;
 
-    public ServerConnection(Socket socket, Server server){
+    public ClientHandler(Socket socket, Server server){
         super("ServerConnectionThread");
         this.socket = socket;
         this.server = server;
@@ -28,8 +30,8 @@ public class ServerConnection extends Thread{
 
     public void sendStringToAllClients(String text){
         for (int i = 0; i < server.connections.size(); i++){
-            ServerConnection serverConnection = server.connections.get(i);
-            serverConnection.sendStringToClient(text);
+            ClientHandler clientHandler = server.connections.get(i);
+            clientHandler.sendStringToClient(text);
         }
     }
 

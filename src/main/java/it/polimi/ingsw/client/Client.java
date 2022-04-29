@@ -1,3 +1,5 @@
+package it.polimi.ingsw.client;
+
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -5,7 +7,7 @@ import java.util.Scanner;
 
 public class Client{
 
-    ClientConnection clientConnection;
+    ServerHandler serverHandler;
 
     public static void main(String[] args) {
         new Client();
@@ -14,8 +16,8 @@ public class Client{
     public Client(){
         try {
             Socket socket = new Socket("127.0.0.1", 5000);
-            clientConnection = new ClientConnection(socket, this);
-            clientConnection.start();
+            serverHandler = new ServerHandler(socket, this);
+            serverHandler.start();
             listenForInput();
         }catch (UnknownHostException e){
             e.printStackTrace();
@@ -43,8 +45,8 @@ public class Client{
                 break;
             }
 
-         clientConnection.sendStringToServer(input);
+         serverHandler.sendStringToServer(input);
         }
-        clientConnection.close();
+        serverHandler.close();
     }
 }

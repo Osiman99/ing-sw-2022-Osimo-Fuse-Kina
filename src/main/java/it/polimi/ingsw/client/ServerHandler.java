@@ -1,9 +1,13 @@
+package it.polimi.ingsw.client;
+
+import it.polimi.ingsw.client.Client;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-public class ClientConnection extends Thread{
+public class ServerHandler extends Thread{
 
     Client client;
     Socket socket;
@@ -11,7 +15,7 @@ public class ClientConnection extends Thread{
     DataOutputStream dataOutputStream;
     boolean shouldRun = true;
 
-    public ClientConnection(Socket socket, Client client){
+    public ServerHandler(Socket socket, Client client){
         this.client = client;
         this.socket = socket;
     }

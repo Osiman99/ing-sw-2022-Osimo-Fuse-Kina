@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.server.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -187,19 +187,19 @@ public class Board {
     public void moveProfessor(){
         if (game.getNumPlayers() == 2) {
             for (int i = 0; i < 5; i++) {
-                if (game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size()){
+                if (game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size()) {
                     professorsControlledBy[i] = game.getPlayers().get(0).getNickname();
-                }else if (game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size()){
+                } else if (game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size()) {
                     professorsControlledBy[i] = game.getPlayers().get(1).getNickname();
                 }
             }
-        }else if (game.getNumPlayers() == 3) {
+        } else if (game.getNumPlayers() == 3) {
             for (int i = 0; i < 5; i++) {
-                if (game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() && game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size()){
+                if (game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() && game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size()) {
                     professorsControlledBy[i] = game.getPlayers().get(0).getNickname();
-                }else if (game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() && game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size()){
+                } else if (game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() && game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size()) {
                     professorsControlledBy[i] = game.getPlayers().get(1).getNickname();
-                }else if (game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() && game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size()){
+                } else if (game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() && game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size()) {
                     professorsControlledBy[i] = game.getPlayers().get(2).getNickname();
                 }
             }
@@ -245,7 +245,7 @@ public class Board {
                 for (int i = 0; i < island.getTowers().size(); i++) {
                     for (int j = 0; j < game.getNumPlayers(); j++){
                         if (island.getFirstTower().getColor() == game.getPlayers().get(j).getPlayerColor()) {
-                                game.getPlayers().get(j).setSupremacyCont(game.getPlayers().get(j).getSupremacyCont() + 1);
+                            game.getPlayers().get(j).setSupremacyCont(game.getPlayers().get(j).getSupremacyCont() + 1);
                         }
                     }
                 }
@@ -375,7 +375,12 @@ public class Board {
 
     //APPLYEFFECT
 
+    public void enableCharacterCard(CharacterCard characterCard){
+        characterCard.setEnabled(true);
+    }
+
     public void applyEffectSommelier(Player player, CharacterCard characterCard, Student student, Island island){
+
         if (characterCard.getPrice() >= player.getNumCoins()){
             for (int i = 0; i < 4; i++){
                 if (characterCard.getStudents().get(i).getColor() == student.getColor()){
@@ -389,7 +394,7 @@ public class Board {
     }
 
     public void applyEffectChef(Player player) {
-        //BISOGNA FAR PARTIRE UN THREAD
+
     }
 
     public void applyEffectMessenger(){

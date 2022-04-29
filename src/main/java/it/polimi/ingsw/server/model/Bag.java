@@ -1,7 +1,6 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.server.model;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 

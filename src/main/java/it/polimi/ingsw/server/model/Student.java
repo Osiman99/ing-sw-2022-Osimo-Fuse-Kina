@@ -1,6 +1,4 @@
-package it.polimi.ingsw.model;
-
-import it.polimi.ingsw.model.StudentColor;
+package it.polimi.ingsw.server.model;
 
 public class Student {
 
