@@ -1,12 +1,10 @@
 package it.polimi.ingsw.model;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
+import it.polimi.ingsw.server.model.Bag;
+import it.polimi.ingsw.server.model.Student;
+import it.polimi.ingsw.server.model.StudentColor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;

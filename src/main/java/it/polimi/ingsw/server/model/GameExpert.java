@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.server.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,15 +12,25 @@ public class GameExpert extends Game{
     private List<CharacterCard> threeChosenCards;
     private Random random;
     private int randomInt;
+    private int tempRandomInt1;
+    private int tempRandomInt2;
 
 
     @Override
     public void initGame(Game game, List<String> nicknames, int chosenPlayersNumber) {
         super.initGame(game, nicknames, chosenPlayersNumber);
+        tempRandomInt1 = -1;
+        tempRandomInt2 = -1;
         threeChosenCards = new ArrayList<CharacterCard>();
         random = new Random();
         for (int i = 0; i < 3; i++) {
-            randomInt = random.nextInt(11);
+            if(i == 0){
+                randomInt = random.nextInt(11);
+                tempRandomInt2 = randomInt;
+            }else if (i == 1){
+                tempRandomInt1 = randomInt;
+            }
+
             switch (randomInt) {
                 case 0:
                     threeChosenCards.add(new CharacterCard(CharacterName.Sommelier));
@@ -59,6 +69,14 @@ public class GameExpert extends Game{
                     threeChosenCards.add(new CharacterCard(CharacterName.Sinister));
                     break;
             }
+            randomInt = random.nextInt(11);
+            while (tempRandomInt1 == randomInt || tempRandomInt2 == randomInt) {
+                randomInt = random.nextInt(11);
+            }
         }
+    }
+
+    public List<CharacterCard> getThreeChosenCards() {
+        return threeChosenCards;
     }
 }

@@ -1,7 +1,4 @@
-package it.polimi.ingsw.model;
-
-import java.util.ArrayList;
-import java.util.List;
+package it.polimi.ingsw.server.model;
 
 public class Player {
 
@@ -80,7 +77,7 @@ public class Player {
         plank.getEntrance().removeStudent(student);
         if (plank.getDiningRoom()[student.getColor().getCode()].getStudents().size() == 3 || plank.getDiningRoom()[student.getColor().getCode()].getStudents().size() == 6 || plank.getDiningRoom()[student.getColor().getCode()].getStudents().size() == 9){
             numCoins++;
-        }
+        } game.getBoard().moveProfessor();
     }
 
     public void moveStudentFromEntranceToIsland(Student student, Island island){    //la for si fa nel main (GUI)

@@ -1,6 +1,4 @@
-package it.polimi.ingsw.model;
-
-import it.polimi.ingsw.model.TowerColor;
+package it.polimi.ingsw.server.model;
 
 public class Tower {
 
