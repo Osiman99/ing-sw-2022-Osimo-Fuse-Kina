@@ -17,7 +17,7 @@ public class Server {
 
     public Server(){
         try {
-            serverSocket = new ServerSocket(5000);
+            serverSocket = new ServerSocket(10000);
             while (shouldRun) {
                 Socket socket = serverSocket.accept();
                 ClientHandler serverConnection = new ClientHandler(socket, this);
