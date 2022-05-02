@@ -2,7 +2,7 @@ package it.polimi.ingsw.client;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.net.UnknownHostException;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Client{
@@ -19,9 +19,7 @@ public class Client{
             serverHandler = new ServerHandler(socket, this);
             serverHandler.start();
             listenForInput();
-        }catch (UnknownHostException e){
-            e.printStackTrace();
-        }catch (IOException e){
+        } catch (IOException e){
             e.printStackTrace();
         }
     }
@@ -41,7 +39,7 @@ public class Client{
 
             String input = console.nextLine();
 
-            if (input.toLowerCase().equals("quit")){
+            if (Objects.equals(input.toLowerCase(), "quit")){
                 break;
             }
 

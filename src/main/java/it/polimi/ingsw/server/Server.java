@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Server {
 
     ServerSocket serverSocket;
-    ArrayList<ClientHandler> connections = new ArrayList<ClientHandler>();
+    ArrayList<ClientHandler> connections = new ArrayList<>();
     boolean shouldRun = true;
 
     public static void main(String[] args) {
