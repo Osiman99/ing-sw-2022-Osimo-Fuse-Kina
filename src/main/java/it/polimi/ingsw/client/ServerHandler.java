@@ -1,11 +1,10 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.client.Client;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+
 
 public class ServerHandler extends Thread{
 
