@@ -44,8 +44,7 @@ public class Client{
             if (input.toLowerCase().equals("quit")){
                 break;
             }
-
-         serverHandler.sendStringToServer(input);
+            serverHandler.sendStringToServer(input);
         }
         serverHandler.close();
     }
