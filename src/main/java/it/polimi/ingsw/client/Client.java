@@ -15,9 +15,9 @@ public class Client{
 
     public Client(){
         try {
-            Socket socket = new Socket("127.0.0.1", 10000);
-            serverHandler = new ServerHandler(socket, this);
-            serverHandler.start();
+            Socket server = new Socket("127.0.0.1", 10000);
+            serverHandler = new ServerHandler(server, this);
+            serverHandler.run();
             listenForInput();
         } catch (IOException e){
             e.printStackTrace();

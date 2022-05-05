@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class Server {
 
     ServerSocket serverSocket;
+    private static int numberOfSockets;
     ArrayList<ClientHandler> connections = new ArrayList<>();
     boolean shouldRun = true;
 
@@ -19,13 +20,19 @@ public class Server {
         try {
             serverSocket = new ServerSocket(10000);
             while (shouldRun) {
-                Socket socket = serverSocket.accept();
-                ClientHandler serverConnection = new ClientHandler(socket, this);
-                serverConnection.start();
+                Socket client = serverSocket.accept();
+                //numberOfSockets++;
+                ClientHandler serverConnection = new ClientHandler(client, this);  //oppure al posto di this numberOfSockets
+                serverConnection.run();
                 connections.add(serverConnection);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    public static void runGame(){
+
+    }
+
 }

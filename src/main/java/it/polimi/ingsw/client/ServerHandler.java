@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.net.Socket;
 
 
-public class ServerHandler extends Thread{
+public class ServerHandler implements Runnable{
 
     Client client;
     Socket socket;
