@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BoardTest {
 
-
     private Game game;
     private Student student;
     private ArrayList<Student> students;
@@ -64,6 +63,7 @@ class BoardTest {
 
     @Test
     void moveStudentsFromBagToClouds() {
+
 
         for(int i=0; i< game.getNumPlayers()*(game.getNumPlayers()+1); i++){           // #nuvole x #studentiPerNuvola : sposto i primi 12 studenti dalla Bag
             students.add(game.getBoard().getBag().getStudents().get(i));
