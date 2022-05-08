@@ -4,15 +4,26 @@ package it.polimi.ingsw.server;
 //import java.io.DataOutputStream;
 //import it.polimi.ingsw.server.KeepAlive;
 
+import it.polimi.ingsw.server.model.Game;
+
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClientHandler implements Runnable{
 
+    private static Game game;
+    private Lobby lobby;
     Socket client;
     Server server;
     ObjectInputStream input;
     ObjectOutputStream output;
+    private static int contPlayer;
+
+    static {
+        contPlayer = 0;
+    }
     //boolean shouldRun = true;
 
     public ClientHandler(Socket client, Server server){
@@ -57,7 +68,7 @@ public class ClientHandler implements Runnable{
             }*/
 
         } catch (IOException e) {
-            System.out.println("could not open connection to " + client.getInetAddress());;
+            System.out.println("could not open connection to " + client.getInetAddress());
             return;
             //e.printStackTrace();
         }
@@ -74,10 +85,39 @@ public class ClientHandler implements Runnable{
     public void handleClientConnection() throws IOException{
         try {
             String next;
+            String next2;
             do {
-                this.sendMessage("What's your name?");
+                this.sendMessage("Do you want to join a game or create a new one?");
                 next = this.receiveMessage();
             }while(next.equals(""));
+            if (next.equals("join")){
+                do {
+                    this.sendMessage("What's your name?");
+                    next = this.receiveMessage();
+                    this.sendMessage(("How many players?"));
+                    next2 = this.receiveMessage();
+                    //server.getLobbies()
+                    contPlayer++;
+                }while(next.equals(""));
+                do {
+                    this.sendMessage("How many players?");
+                    next = this.receiveMessage();
+
+                }while(next.equals(""));
+            }else if (next.equals("create")) {
+                do {
+                    this.sendMessage("What's your name?");
+                    next = this.receiveMessage();
+
+                    contPlayer++;
+                } while (next.equals(""));
+                do {
+                    this.sendMessage("How many players?");
+                    next = this.receiveMessage();
+
+                } while (next.equals(""));
+            }
+
 
 
 
