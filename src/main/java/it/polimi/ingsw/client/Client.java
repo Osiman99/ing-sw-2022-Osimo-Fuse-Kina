@@ -15,9 +15,17 @@ public class Client{
 
     public Client(){
         try {
-            Socket server = new Socket("127.0.0.1", 10000);
+            Scanner scanner = new Scanner(System.in);
+
+            System.out.println("IP address of server?");
+            String ip = scanner.nextLine();
+            System.out.println("Server port?");
+            int socketPort = Integer.parseInt(scanner.nextLine());
+            Socket server = new Socket(ip, socketPort);
             serverHandler = new ServerHandler(server, this);
-            serverHandler.run();
+            Thread thread2 = new Thread(serverHandler, "server_" + server.getInetAddress());
+            thread2.start();
+
             //listenForInput();
         } catch (IOException e){
             e.printStackTrace();

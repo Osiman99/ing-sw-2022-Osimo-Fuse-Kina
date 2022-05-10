@@ -83,6 +83,23 @@ public class ClientHandler implements Runnable{
 
     }
 
+    /*public void sendStringToClient(String text){
+        try {
+            output.writeObject(text);
+            output.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+            //this.close();
+        }
+    }*/
+
+    /*public void sendStringToAllClients(String text) {
+        for (int i = 0; i < server.connections.size(); i++) {
+            ClientHandler clientHandler = server.connections.get(i);
+            clientHandler.sendStringToClient(text);
+        }
+    }*/
+
     public void handleClientConnection() throws IOException{
         try {
             String next;
@@ -101,8 +118,7 @@ public class ClientHandler implements Runnable{
                     if (server.getLobbies() != null){
                         int numLobbies = server.getLobbies().size();
                         for (int i = 0; i < numLobbies; i++) {
-                            if (server.getLobbies().get(i).getNumPlayers() == Integer.parseInt(next2) && !server.getLobbies().get(i).isFull()){
-
+                            if (server.getLobbies().get(i).getNumPlayers() == Integer.parseInt(next2) && !server.getLobbies().get(i).isFull()) {
                                 server.getLobbies().get(i).increaseRealTimeNumPlayer();
                             }
                         }

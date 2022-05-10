@@ -3,11 +3,13 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.server.model.Game;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Server {
 
@@ -18,8 +20,8 @@ public class Server {
     private static Game game;
     private static Thread start;
     private static int numberOfSockets;
+    private static boolean closeServer = false;
     ArrayList<ClientHandler> connections = new ArrayList<>();
-    boolean shouldRun = true;
     private List<Lobby> lobbies;
 
     public static void main(String[] args) {
@@ -28,19 +30,34 @@ public class Server {
     }
 
     public Server(){
+        try{
+            System.out.println("Internal ip: " + InetAddress.getLocalHost());
+        }catch (IOException e){
+
+        }
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Server port?");
+        int socketPort = Integer.parseInt(scanner.nextLine());
+        ServerSocket socket;
         try {
-            serverSocket = new ServerSocket(10000);
-            random = new Random();
-            setInstance(this);
-            while (shouldRun) {
-                Socket client = serverSocket.accept();
+            socket = new ServerSocket(socketPort);
+        } catch (IOException e) {
+            System.out.println("cannot open server socket");
+            System.exit(1);
+            return;
+        }
+        while (!closeServer) {
+            try {
+                Socket client = socket.accept();
                 //numberOfSockets++;
                 ClientHandler clientHandler = new ClientHandler(client, this);  //oppure al posto di this numberOfSockets
-                clientHandler.run();
                 connections.add(clientHandler);
+                Thread thread1 = new Thread(clientHandler, "client_" + client.getInetAddress());
+                thread1.start();
+                connections.add(clientHandler);
+            } catch (IOException e) {
+                System.out.println("connection dropped");
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
         lobbies = new ArrayList<Lobby>();
         random = new Random();
@@ -56,6 +73,8 @@ public class Server {
         start = new Thread(game);
         start.start();
     }*/
+
+
 
     public static void setInstance(Server server){
         instance = server;
