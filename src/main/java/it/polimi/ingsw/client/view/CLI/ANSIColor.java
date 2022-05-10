@@ -26,7 +26,12 @@ public class ANSIColor {
     public static final String CYAN_BACKGROUND = "\u001B[46m";
     public static final String WHITE_BACKGROUND = "\u001B[47m";
 
+    public static final String PURPLE_BOLD = "\033[1;35m";
     public static final String YELLOW_BOLD = "\033[1;33m";
     public static final String CYAN_BOLD = "\033[1;36m";
+
+    public static final String PURPLE_BOLD_BRIGHT = "\033[1;95m";
+    public static final String YELLOW_BOLD_BRIGHT ="\033[1;93m";
+    public static final String GREEN_BOLD_BRIGHT = "\033[1;92m";
 
 }
