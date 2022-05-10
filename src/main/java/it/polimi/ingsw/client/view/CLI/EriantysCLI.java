@@ -1,17 +1,42 @@
 package it.polimi.ingsw.client.view.CLI;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
 public class EriantysCLI {
 
-    public static String serverHostName;
-    public static int serverPortNumber;
+    private final PrintStream out;
+    private Thread inputThread;
 
+
+    /**
+     * Default constructor.
+     */
+    public EriantysCLI() {
+        out = System.out;
+    }
+
+    public String readLine() throws ExecutionException {
+        FutureTask<String> futureTask = new FutureTask<>(new InputReadTask());
+        inputThread = new Thread(futureTask);
+        inputThread.start();
+
+        String input = null;
+        try {
+            input = futureTask.get();
+        } catch (InterruptedException e) {
+            futureTask.cancel(true);
+            Thread.currentThread().interrupt();
+        }
+        return input;
+    }
 
 
     public ArrayList<String> welcome(String idIsola){
         ArrayList<String> res= new ArrayList<>();
-        res.add(ANSIColor.BLACK+ANSIColor.RED_BACKGROUND+"ISOLA"+idIsola);
+        res.add(ANSIColor.WHITE+"ISOLA"+idIsola);
         res.add("+-----------------+");
         res.add("|                 |"/*+ANSIColor.RESET*/);
         res.add("|                 |");
