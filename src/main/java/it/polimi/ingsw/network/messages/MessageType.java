@@ -1,27 +1,34 @@
 package it.polimi.ingsw.network.messages;
 
-
-
+/**
+ * This enum contains all the message type available and used by the server and clients.
+ */
 public enum MessageType {
-    PING ("Ping"),
-    TIMER_EXPIRED ("Timer has expired"),
-    CONNECTION_CLOSED ("Connection closed"),
-    INSERT_GAME_MODE ("Insert a game mode, multiplayer or solo mode: m | s"),
-    INSERT_NICKNAME("Insert nickname"),
-    INVALID_NICKNAME_ASK_AGAIN ("Your nickname was invalid, be sure to insert only valid characters (A-Z, a-z, 0-9)"),
-    NICKNAME_ALREADY_TAKEN("Your nickname has already been taken, insert another one"),
-    INSERT_NUMBER_OF_PLAYER ("Insert desired number of players"),
-    INVALID_NUMBER_OF_PLAYERS("Insert a valid number of players. Numbers of player allowed are: 2, 3 or 4"),
-    GAME_STARTED("Game started");
+    LOGIN_REQUEST, LOGIN_REPLY,
+    PLAYERNUMBER_REQUEST, PLAYERNUMBER_REPLY,
+    LOBBY,
+    GODLIST,
+    PICK_FIRST_PLAYER,
+    BOARD,
+    INIT_WORKERSPOSITIONS,
+    INIT_COLORS,
+    PICK_MOVING_WORKER,
+    MOVE,
+    MOVE_FX,
+    BUILD,
+    BUILD_FX,
+    WIN,
+    WIN_FX,
+    LOSE,
 
-    String message;
-
-    MessageType(String message){
-        this.message = message;
-    }
-
-    public String getMessage(){ return message;
-    }
-
-
+    //utility:
+    GAME_LOAD,
+    MATCH_INFO,
+    DISCONNECTION,
+    GENERIC_MESSAGE,
+    PING,
+    ERROR,
+    ENABLE_EFFECT,
+    APPLY_EFFECT,
+    PERSISTENCE
 }
