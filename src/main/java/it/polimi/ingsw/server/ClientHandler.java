@@ -1,207 +1,130 @@
 package it.polimi.ingsw.server;
 
-//import java.io.DataInputStream;
-//import java.io.DataOutputStream;
-//import it.polimi.ingsw.server.KeepAlive;
+import it.polimi.ingsw.network.messages.Message;
+import it.polimi.ingsw.network.messages.MessageType;
 
-import it.polimi.ingsw.server.model.Game;
-
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
-public class ClientHandler implements Runnable{
+public class ClientHandler implements Runnable {
+    private final Socket client;
+    private final SocketServer socketServer;
 
-    private static Game game;
-    Socket client;
-    Server server;
-    private Optional<Lobby> chosenLobby;
-    ObjectInputStream input;
-    ObjectOutputStream output;
-    private static int contPlayer;
+    private boolean connected;
 
-    static {
-        contPlayer = 0;
-    }
-    //boolean shouldRun = true;
+    private final Object inputLock;
+    private final Object outputLock;
 
-    public ClientHandler(Socket client, Server server){
-        //super("ServerConnectionThread");
+    private ObjectOutputStream output;
+    private ObjectInputStream input;
+
+    /**
+     * Default constructor.
+     *
+     * @param socketServer the socket of the server.
+     * @param client       the client connecting.
+     */
+    public ClientHandler(SocketServer socketServer, Socket client) {
+        this.socketServer = socketServer;
         this.client = client;
-        this.server = server;
-    }
+        connected = true;
 
-    /*public void sendStringToClient(String text){
+        inputLock = new Object();
+        outputLock = new Object();
+
         try {
-            dataOutputStream.writeUTF(text);
-            dataOutputStream.flush();
+            output = new ObjectOutputStream(client.getOutputStream());
+            input = new ObjectInputStream(client.getInputStream());
         } catch (IOException e) {
-            e.printStackTrace();
+            Server.LOGGER.severe(e.getMessage());
         }
-    }*/
-
-    /*public void sendStringToAllClients(String text){
-        for (int i = 0; i < server.connections.size(); i++){
-            ClientHandler clientHandler = server.connections.get(i);
-            clientHandler.sendStringToClient(text);
-        }
-    }*/
+    }
 
     @Override
     public void run() {
         try {
-            input = new ObjectInputStream(client.getInputStream());
-            output = new ObjectOutputStream(client.getOutputStream());
+            handleClientConnection();
+        } catch (IOException e) {
+            Server.LOGGER.severe("Client " + client.getInetAddress() + " connection dropped.");
+            disconnect();
+        }
+    }
 
-            /*while(shouldRun){
-                while(dataInputStream.available() == 0){
-                    try {
-                        Thread.sleep(1);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+    /**
+     * Handles the connection of a new client and keep listening to the socket for new messages.
+     *
+     * @throws IOException any of the usual Input/Output related exceptions.
+     */
+    private void handleClientConnection() throws IOException {
+        Server.LOGGER.info("Client connected from " + client.getInetAddress());
+
+        try {
+            while (!Thread.currentThread().isInterrupted()) {
+                synchronized (inputLock) {
+                    Message message = (Message) input.readObject();
+
+                    if (message != null && message.getMessageType() != MessageType.PING) {
+                        if (message.getMessageType() == MessageType.LOGIN_REQUEST) {
+                            socketServer.addClient(message.getNickname(), this);
+                        } else {
+                            Server.LOGGER.info(() -> "Received: " + message);
+                            socketServer.onMessageReceived(message);
+                        }
                     }
                 }
-                String textIn = dataInputStream.readUTF();
-                sendStringToAllClients(textIn);
-
-            }*/
-
-        } catch (IOException e) {
-            System.out.println("could not open connection to " + client.getInetAddress());
-            return;
-            //e.printStackTrace();
-        }
-        System.out.println("Connected to: " + client.getInetAddress() + " at port #" + client.getLocalPort());
-        try{
-            handleClientConnection();
-        }catch (IOException e) {
-            System.out.println("client " + client.getInetAddress() + " connection dropped");
-        }
-
-
-    }
-
-    /*public void sendStringToClient(String text){
-        try {
-            output.writeObject(text);
-            output.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-            //this.close();
-        }
-    }*/
-
-    /*public void sendStringToAllClients(String text) {
-        for (int i = 0; i < server.connections.size(); i++) {
-            ClientHandler clientHandler = server.connections.get(i);
-            clientHandler.sendStringToClient(text);
-        }
-    }*/
-
-    public void handleClientConnection() throws IOException{
-        try {
-            String next;
-            String next2;
-            do {
-                this.sendMessage("Do you want to join a game or create a new one? j/c");
-                next = this.receiveMessage();
-            }while(next.equals(""));
-            if (next.equals("j")){
-                do {
-                    this.sendMessage("What's your name?");
-                    next = this.receiveMessage();
-                    //controllo nickname
-                    this.sendMessage(("How many players?"));
-                    next2 = this.receiveMessage();
-                    if (server.getLobbies() != null){
-                        int numLobbies = server.getLobbies().size();
-                        for (int i = 0; i < numLobbies; i++) {
-                            if (server.getLobbies().get(i).getNumPlayers() == Integer.parseInt(next2) && !server.getLobbies().get(i).isFull()) {
-                                server.getLobbies().get(i).increaseRealTimeNumPlayer();
-                            }
-                        }
-
-                    }else{
-                        do{
-                            this.sendMessage("No lobbies available...");
-                            next = this.receiveMessage();
-                        }while (next.equals("j"));
-                        if(next.equals("c")){
-
-                        }
-                    }
-                    contPlayer++;
-                }while(next.equals(""));
-                do {
-                    this.sendMessage("How many players?");
-                    next = this.receiveMessage();
-
-                }while(next.equals(""));
-            }else if (next.equals("c")) {
-                do {
-                    this.sendMessage("What's your name?");
-                    next = this.receiveMessage();
-
-                    contPlayer++;
-                } while (next.equals(""));
-                do {
-                    this.sendMessage("How many players?");
-                    next = this.receiveMessage();
-
-                } while (next.equals(""));
             }
+        } catch (ClassCastException | ClassNotFoundException e) {
+            Server.LOGGER.severe("Invalid stream from client");
+        }
+        client.close();
+    }
 
+    /**
+     * Returns the current status of the connection.
+     *
+     * @return {@code true} if the connection is still active, {@code false} otherwise.
+     */
+    public boolean isConnected() {
+        return connected;
+    }
 
+    /**
+     * Disconnect the socket.
+     */
+    public void disconnect() {
+        if (connected) {
+            try {
+                if (!client.isClosed()) {
+                    client.close();
+                }
+            } catch (IOException e) {
+                Server.LOGGER.severe(e.getMessage());
+            }
+            connected = false;
+            Thread.currentThread().interrupt();
 
-
-
-
-        }catch (ClassCastException | ClassNotFoundException e) {
-            System.out.println("invalid stream from client");
-        }catch (Exception e) {
-            e.printStackTrace();
+            socketServer.onDisconnect(this);
         }
     }
 
-
-    public boolean isClose(){
-        if(client.isClosed()) return true;
-        return false;
-    }
-
-
-    public void closeSocket() throws IOException{
-        try{
-            input.close();
-            output.close();
-            client.close();
-        }catch (IOException e){}
-    }
-
-    public void sendMessage(Object msg) throws IOException{
-        try{
-            output.writeObject(msg);
-            output.flush();
-            output.reset();
-        }catch (IOException e){
-            System.out.println("Error while writing " + msg.getClass() + " type message to " + this.client.getInetAddress() + " so the game ends.");
-            //KeepAlive.run(false);
+    /**
+     * Sends a message to the client via socket.
+     *
+     * @param message the message to be sent.
+     */
+    public void sendMessage(Message message) {
+        try {
+            synchronized (outputLock) {
+                output.writeObject(message);
+                output.reset();
+                Server.LOGGER.info(() -> "Sent: " + message);
+            }
+        } catch (IOException e) {
+            Server.LOGGER.severe(e.getMessage());
+            disconnect();
         }
     }
-
-    public String receiveMessage() throws IOException, ClassNotFoundException{
-        try{
-            String next = (String) input.readObject();
-            return next;
-        }catch (IOException e){
-            System.out.println("Error while reading from " + this.client.getInetAddress() + " so the game ends.");
-            this.closeSocket();
-            //KeepAlive.run(false);
-        }
-        return "";
-    }
-
-
 }

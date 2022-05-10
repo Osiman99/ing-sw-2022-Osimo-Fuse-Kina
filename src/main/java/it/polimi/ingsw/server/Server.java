@@ -1,95 +1,120 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.server.model.Game;
+import it.polimi.ingsw.client.view.VirtualView;
+import it.polimi.ingsw.network.messages.Message;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.logging.Logger;
+
 
 public class Server {
 
-    ServerSocket serverSocket;
-    private Random random;
-    private int randomInt;
-    private static Server instance;
-    private static Game game;
-    private static Thread start;
-    private static int numberOfSockets;
-    private static boolean closeServer = false;
-    ArrayList<ClientHandler> connections = new ArrayList<>();
-    private List<Lobby> lobbies;
+    private final GameController gameController;
 
-    public static void main(String[] args) {
-        new Server();
+    private final Map<String, ClientHandler> clientHandlerMap;
+
+    public static final Logger LOGGER = Logger.getLogger(Server.class.getName());
+
+    private final Object lock;
+
+    public Server(GameController gameController) {
+        this.gameController = gameController;
+        this.clientHandlerMap = Collections.synchronizedMap(new HashMap<>());
+        this.lock = new Object();
+    }
+
+    /**
+     * Adds a client to be managed by the server instance.
+     *
+     * @param nickname      the nickname associated with the client.
+     * @param clientHandler the ClientHandler associated with the client.
+     */
+    public void addClient(String nickname, ClientHandler clientHandler) {
+        VirtualView vv = new VirtualView(clientHandler);
+
+        if (!gameController.isGameStarted()) {
+            if (gameController.checkLoginNicknamn(nickname, vv)) {
+                clientHandlerMap.put(nickname, clientHandler);
+                gameController.loginHandler(nickname, vv);
+            }
+        } else {
+            vv.showLoginResult(true, false, null);
+            clientHandler.disconnect();
+        }
 
     }
 
-    public Server(){
-        try{
-            System.out.println("Internal ip: " + InetAddress.getLocalHost());
-        }catch (IOException e){
+    /**
+     * Removes a client given his nickname.
+     *
+     * @param nickname      the VirtualView to be removed.
+     * @param notifyEnabled set to {@code true} to enable a lobby disconnection message, {@code false} otherwise.
+     */
+    public void removeClient(String nickname, boolean notifyEnabled) {
+        clientHandlerMap.remove(nickname);
+        gameController.removeVirtualView(nickname, notifyEnabled);
+        LOGGER.info(() -> "Removed " + nickname + " from the client list.");
+    }
 
-        }
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Server port?");
-        int socketPort = Integer.parseInt(scanner.nextLine());
-        ServerSocket socket;
-        try {
-            socket = new ServerSocket(socketPort);
-        } catch (IOException e) {
-            System.out.println("cannot open server socket");
-            System.exit(1);
-            return;
-        }
-        while (!closeServer) {
-            try {
-                Socket client = socket.accept();
-                //numberOfSockets++;
-                ClientHandler clientHandler = new ClientHandler(client, this);  //oppure al posto di this numberOfSockets
-                connections.add(clientHandler);
-                Thread thread1 = new Thread(clientHandler, "client_" + client.getInetAddress());
-                thread1.start();
-                connections.add(clientHandler);
-            } catch (IOException e) {
-                System.out.println("connection dropped");
+    /**
+     * Forwards a received message from the client to the GameController.
+     *
+     * @param message the message to be forwarded.
+     */
+    public void onMessageReceived(Message message) {
+        gameController.onMessageReceived(message);
+    }
+
+    /**
+     * Handles the disconnection of a client.
+     *
+     * @param clientHandler the client disconnecting.
+     */
+    public void onDisconnect(ClientHandler clientHandler) {
+        synchronized (lock) {
+            String nickname = getNicknameFromClientHandler(clientHandler);
+
+            if (nickname != null) {
+
+                boolean gameStarted = gameController.isGameStarted();
+                removeClient(nickname, !gameStarted); // enable lobby notifications only if the game didn't start yet.
+
+                if(gameController.getTurnController() != null &&
+                        !gameController.getTurnController().getNicknameQueue().contains(nickname)) {
+                    return;
+                }
+
+                // Resets server status only if the game was already started.
+                // Otherwise the server will wait for a new player to connect.
+                if (gameStarted) {
+                    gameController.broadcastDisconnectionMessage(nickname, " disconnected from the server. GAME ENDED.");
+
+                    gameController.endGame();
+                    clientHandlerMap.clear();
+                }
             }
         }
-        lobbies = new ArrayList<Lobby>();
-        random = new Random();
     }
 
-    /*public static void runGame()
-    {
-        start = new Thread(game);
-        start.start();
+
+    /**
+     * Returns the corresponding nickname of a ClientHandler.
+     *
+     * @param clientHandler the client handler.
+     * @return the corresponding nickname of a ClientHandler.
+     */
+    private String getNicknameFromClientHandler(ClientHandler clientHandler) {
+        return clientHandlerMap.entrySet()
+                .stream()
+                .filter(entry -> clientHandler.equals(entry.getValue()))
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElse(null);
     }
-
-    public static void runGameExpert(){
-        start = new Thread(game);
-        start.start();
-    }*/
-
-
-
-    public static void setInstance(Server server){
-        instance = server;
-    }
-
-    public static Server getInstance(){
-        return instance;
-    }
-
-    public List<Lobby> getLobbies() {
-        return lobbies;
-    }
-
-    /*public Lobby getRandomLobby(int numPlayers){
-        randomInt = random.nextInt(lobbies.size());
-        while(lobbies.get(randomInt).getNumPlayers()
-    }*/
 }
