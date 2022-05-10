@@ -1,26 +1,32 @@
 package it.polimi.ingsw.client.view.CLI;
 
+import it.polimi.ingsw.client.view.View;
+import it.polimi.ingsw.observer.ViewObservable;
+
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
-public class EriantysCLI {
-
-    private final PrintStream out;
-    private Thread inputThread;
+public class EriantysCLI extends ViewObservable implements View {
 
 
     /**
      * Default constructor.
      */
     public EriantysCLI() {
-        out = System.out;
+        PrintStream out = System.out;
     }
 
+
+    /**
+     * Reads a line from the standard input.
+     * @return the string read from the input.
+     * @throws ExecutionException if the input stream thread is interrupted.
+     */
     public String readLine() throws ExecutionException {
         FutureTask<String> futureTask = new FutureTask<>(new InputReadTask());
-        inputThread = new Thread(futureTask);
+        Thread inputThread = new Thread(futureTask);
         inputThread.start();
 
         String input = null;
@@ -34,15 +40,19 @@ public class EriantysCLI {
     }
 
 
-    public ArrayList<String> welcome(String idIsola){
-        ArrayList<String> res= new ArrayList<>();
-        res.add(ANSIColor.WHITE+"ISOLA"+idIsola);
-        res.add("+-----------------+");
-        res.add("|                 |"/*+ANSIColor.RESET*/);
-        res.add("|                 |");
-        res.add("|                 |");
-        res.add("+-----------------+");
-        return res;
+    public ArrayList<String> welcome(String serverIp){
+        ArrayList<String> result= new ArrayList<>();
+        //res.add(ANSIColor.WHITE+"ISOLA"+serverIp);
+        result.add(ANSIColor.PURPLE);
+        //result.add(" _  _  _  _  _        _  _  _  _          _  _  _               _              _           _       _  _  _  _  _       _           _         _  _  _  _");
+        result.add("(_)(_)(_)(_)(_)     (_)(_)(_)(_) _       (_)(_)(_)            _(_)_           (_) _       (_)     (_)(_)(_)(_)(_)     (_)_       _(_)      _(_)(_)(_)(_)_");
+        result.add("(_)                 (_)         (_)         (_)             _(_) (_)_         (_)(_)_     (_)           (_)             (_)_   _(_)       (_)          (_)");
+        result.add("(_) _  _            (_) _  _  _ (_)         (_)           _(_)     (_)_       (_)  (_)_   (_)           (_)               (_)_(_)         (_)_  _  _  _");
+        result.add("(_)(_)(_)           (_)(_)(_)(_)            (_)          (_) _  _  _ (_)      (_)    (_)_ (_)           (_)                 (_)             (_)(_)(_)(_)_");
+        result.add("(_)                 (_)   (_) _             (_)          (_)(_)(_)(_)(_)      (_)      (_)(_)           (_)                 (_)            _           (_)");
+        result.add("(_) _  _  _  _      (_)      (_) _        _ (_) _        (_)         (_)      (_)         (_)           (_)                 (_)           (_)_  _  _  _(_)");
+        result.add("(_)(_)(_)(_)(_)     (_)         (_)      (_)(_)(_)       (_)         (_)      (_)         (_)           (_)                 (_)             (_)(_)(_)(_)");
+        return result;
     }
 
 
@@ -52,30 +62,15 @@ public class EriantysCLI {
             System.out.println("Please provide server address and port");
             return;
         }
-
         serverHostName = args[0];
         serverPortNumber = Integer.parseInt(args[1]);
         */
 
         EriantysCLI cli = new EriantysCLI();
-        ArrayList<String> esempio = new ArrayList<>();
-/*
-        esempio.add("WELCOME");
-        esempio.add("TO");
-        esempio.add("ERIANTYS");
-        for(String s:esempio)
-            System.out.println(s);
-*/
-/*
-        System.out.println("WELCOME" +
-                "\n" +
-                "TO" +
-                "\n" +
-                "ERIANTYS");*/
+        ArrayList<String> entryScene;
 
-        esempio = cli.welcome("5");
-        for(String s:esempio)
+        entryScene = cli.welcome("127.0.0.1");
+        for(String s:entryScene)
             System.out.println(s);
-
     }
 }
