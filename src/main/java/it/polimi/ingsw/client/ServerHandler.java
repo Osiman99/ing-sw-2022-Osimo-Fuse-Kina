@@ -1,41 +1,40 @@
 package it.polimi.ingsw.client;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
+import java.util.Scanner;
 
 
 public class ServerHandler implements Runnable{
 
+    Socket server;
     Client client;
-    Socket socket;
-    DataInputStream dataInputStream;
-    DataOutputStream dataOutputStream;
+    ObjectInputStream input;
+    ObjectOutputStream output;
     boolean shouldRun = true;
 
-    public ServerHandler(Socket socket, Client client){
+    public ServerHandler(Socket server, Client client){
         this.client = client;
-        this.socket = socket;
+        this.server = server;
     }
 
-    public void sendStringToServer(String text){
+    /*public void sendStringToServer(String text){
         try {
-            dataOutputStream.writeUTF(text);
-            dataOutputStream.flush();
+            output.writeObject(text);
+            output.flush();
         } catch (IOException e) {
             e.printStackTrace();
-            close();
+            //this.close();
         }
-    }
+    }*/
 
     @Override
     public void run() {
         try {
-            dataInputStream = new DataInputStream(socket.getInputStream());
-            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            input = new ObjectInputStream(server.getInputStream());
+            output = new ObjectOutputStream(server.getOutputStream());
 
-            while (shouldRun) {
+            /*while (shouldRun) {
                 try {
                     while (dataInputStream.available() == 0) {
                         try {
@@ -50,20 +49,60 @@ public class ServerHandler implements Runnable{
                     e.printStackTrace();
                     close();
                 }
-            }
+            }*/
+            this.handleServerConnection();
+
         } catch (IOException e) {
-            e.printStackTrace();
-            close();
+            System.out.println("could not open connection to " + server.getInetAddress());
+            return;
         }
     }
 
-    public void close(){
+    public void closeSocket() throws IOException{
+        try{
+            input.close();
+            output.close();
+        }catch (IOException e){}
+    }
+
+    public void sendMessage(Object msg) throws IOException{
+        try{
+            output.writeObject(msg);
+            output.flush();
+            output.reset();
+        }catch (IOException e){
+            System.out.println("Error while writing " + msg.getClass() + " type message to " + this.server.getInetAddress() + " so the game ends.");
+            //KeepAlive.run(false);
+        }
+    }
+
+    public String receiveMessage() throws IOException, ClassNotFoundException{
+        try{
+            String next = (String) input.readObject();
+            return next;
+        }catch (IOException e){
+            System.out.println("Error while reading from " + this.server.getInetAddress() + " so the game ends.");
+            this.closeSocket();
+            //KeepAlive.run(false);
+        }
+        return "";
+    }
+
+    public void handleServerConnection() throws IOException {
         try {
-            dataInputStream.close();
-            dataOutputStream.close();
-            socket.close();
-        } catch (IOException e) {
+            String next;
+            String next2;
+            do {
+                next = this.receiveMessage();
+                Scanner scanner = new Scanner(System.in);
+                String nickname = scanner.nextLine();
+                this.sendMessage(nickname);
+            } while (next.equals(""));
+        } catch (ClassCastException | ClassNotFoundException e) {
+            System.out.println("invalid stream from server");
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 }

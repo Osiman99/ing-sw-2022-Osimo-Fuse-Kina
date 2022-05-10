@@ -10,13 +10,14 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ClientHandler implements Runnable{
 
     private static Game game;
-    private Lobby lobby;
     Socket client;
     Server server;
+    private Optional<Lobby> chosenLobby;
     ObjectInputStream input;
     ObjectOutputStream output;
     private static int contPlayer;
@@ -82,21 +83,55 @@ public class ClientHandler implements Runnable{
 
     }
 
+    /*public void sendStringToClient(String text){
+        try {
+            output.writeObject(text);
+            output.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+            //this.close();
+        }
+    }*/
+
+    /*public void sendStringToAllClients(String text) {
+        for (int i = 0; i < server.connections.size(); i++) {
+            ClientHandler clientHandler = server.connections.get(i);
+            clientHandler.sendStringToClient(text);
+        }
+    }*/
+
     public void handleClientConnection() throws IOException{
         try {
             String next;
             String next2;
             do {
-                this.sendMessage("Do you want to join a game or create a new one?");
+                this.sendMessage("Do you want to join a game or create a new one? j/c");
                 next = this.receiveMessage();
             }while(next.equals(""));
-            if (next.equals("join")){
+            if (next.equals("j")){
                 do {
                     this.sendMessage("What's your name?");
                     next = this.receiveMessage();
+                    //controllo nickname
                     this.sendMessage(("How many players?"));
                     next2 = this.receiveMessage();
-                    //server.getLobbies()
+                    if (server.getLobbies() != null){
+                        int numLobbies = server.getLobbies().size();
+                        for (int i = 0; i < numLobbies; i++) {
+                            if (server.getLobbies().get(i).getNumPlayers() == Integer.parseInt(next2) && !server.getLobbies().get(i).isFull()) {
+                                server.getLobbies().get(i).increaseRealTimeNumPlayer();
+                            }
+                        }
+
+                    }else{
+                        do{
+                            this.sendMessage("No lobbies available...");
+                            next = this.receiveMessage();
+                        }while (next.equals("j"));
+                        if(next.equals("c")){
+
+                        }
+                    }
                     contPlayer++;
                 }while(next.equals(""));
                 do {
@@ -104,7 +139,7 @@ public class ClientHandler implements Runnable{
                     next = this.receiveMessage();
 
                 }while(next.equals(""));
-            }else if (next.equals("create")) {
+            }else if (next.equals("c")) {
                 do {
                     this.sendMessage("What's your name?");
                     next = this.receiveMessage();
