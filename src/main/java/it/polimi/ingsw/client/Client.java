@@ -18,13 +18,13 @@ public class Client{
             Socket server = new Socket("127.0.0.1", 10000);
             serverHandler = new ServerHandler(server, this);
             serverHandler.run();
-            listenForInput();
+            //listenForInput();
         } catch (IOException e){
             e.printStackTrace();
         }
     }
 
-    public void listenForInput(){
+    /*public void listenForInput(){
 
         Scanner console = new Scanner(System.in);
 
@@ -44,6 +44,6 @@ public class Client{
             }
             serverHandler.sendStringToServer(input);
         }
-        serverHandler.close();
-    }
+        serverHandler.closeSocket();
+    }*/
 }

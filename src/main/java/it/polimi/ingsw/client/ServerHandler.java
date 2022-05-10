@@ -1,25 +1,23 @@
 package it.polimi.ingsw.client;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 
 
 public class ServerHandler implements Runnable{
 
     Client client;
-    Socket socket;
-    DataInputStream dataInputStream;
-    DataOutputStream dataOutputStream;
+    Socket server;
+    ObjectInputStream input;
+    ObjectOutputStream output;
     boolean shouldRun = true;
 
-    public ServerHandler(Socket socket, Client client){
+    public ServerHandler(Socket server, Client client){
         this.client = client;
-        this.socket = socket;
+        this.server = server;
     }
 
-    public void sendStringToServer(String text){
+    /*public void sendStringToServer(String text){
         try {
             dataOutputStream.writeUTF(text);
             dataOutputStream.flush();
@@ -27,15 +25,15 @@ public class ServerHandler implements Runnable{
             e.printStackTrace();
             close();
         }
-    }
+    }*/
 
     @Override
     public void run() {
         try {
-            dataInputStream = new DataInputStream(socket.getInputStream());
-            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            input = new ObjectInputStream(server.getInputStream());
+            output = new ObjectOutputStream(server.getOutputStream());
 
-            while (shouldRun) {
+            /*while (shouldRun) {
                 try {
                     while (dataInputStream.available() == 0) {
                         try {
@@ -50,20 +48,18 @@ public class ServerHandler implements Runnable{
                     e.printStackTrace();
                     close();
                 }
-            }
+            }*/
         } catch (IOException e) {
             e.printStackTrace();
-            close();
+            closeSocket();
         }
     }
 
-    public void close(){
-        try {
-            dataInputStream.close();
-            dataOutputStream.close();
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void closeSocket() throws IOException{
+        try{
+            input.close();
+            output.close();
+            client.close();
+        }catch (IOException e){}
     }
 }

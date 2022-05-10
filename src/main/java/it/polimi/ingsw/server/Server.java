@@ -35,13 +35,14 @@ public class Server {
             while (shouldRun) {
                 Socket client = serverSocket.accept();
                 //numberOfSockets++;
-                ClientHandler serverConnection = new ClientHandler(client, this);  //oppure al posto di this numberOfSockets
-                serverConnection.run();
-                connections.add(serverConnection);
+                ClientHandler clientHandler = new ClientHandler(client, this);  //oppure al posto di this numberOfSockets
+                clientHandler.run();
+                connections.add(clientHandler);
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }lobbies = new ArrayList<Lobby>();
+        }
+        lobbies = new ArrayList<Lobby>();
         random = new Random();
     }
 
