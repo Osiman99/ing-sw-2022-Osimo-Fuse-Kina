@@ -1,15 +1,20 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.observer.Observable;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Game {
+public class Game extends Observable {
     public static final int MAX_PLAYERS = 3;
     private Board board;              //forse va fatto final (singleton o no?)
     private static Game instance;   //classe Game, per non farla singleton basta non mettere static in instance (e chiamare il setInstance per ogni game creato nel main)
     private List<Player> players;
     private int chosenPlayersNumber;       //servirebbe nel caso un player si scollega dal gioco (FA)
     private int contPlayer;
+    public static final String SERVER_NICKNAME = "server";
+
 
 
     /**
