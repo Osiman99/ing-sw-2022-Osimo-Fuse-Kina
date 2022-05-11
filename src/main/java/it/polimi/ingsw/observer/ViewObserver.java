@@ -8,4 +8,11 @@ public interface ViewObserver {
      * @param playersNumber the number of players.
      */
     void onUpdatePlayersNumber(int playersNumber);
+
+    /**
+     * Sends a message to the server with the updated nickname.
+     *
+     * @param nickname the nickname to be sent.
+     */
+    void onUpdateNickname(String nickname);
 }

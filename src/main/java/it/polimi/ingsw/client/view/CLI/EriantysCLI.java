@@ -44,9 +44,9 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
 
-    public ArrayList<String> welcome(String serverIp){
-        ArrayList<String> result= new ArrayList<>();
-        result.add(ANSIColor.GREEN_BOLD_BRIGHT);
+    public ArrayList<String> welcome(String serverIp) {
+        ArrayList<String> result = new ArrayList<>();
+        //result.add(ANSIColor.GREEN_BOLD_BRIGHT);
         result.add(ANSIColor.PURPLE_BOLD_BRIGHT);
         result.add("      (_)(_)(_)(_)(_)     (_)(_)(_)(_) _      (_)(_)(_)          _(_)_          (_) _       (_)     (_)(_)(_)(_)(_)     (_)_       _(_)      _(_)(_)(_)(_)_");
         result.add("     (_)                 (_)         (_)        (_)           _(_) (_)_        (_)(_)_     (_)           (_)             (_)_   _(_)       (_)          (_)");
@@ -56,9 +56,13 @@ public class EriantysCLI extends ViewObservable implements View {
         result.add(" (_) _  _  _  _      (_)      (_) _       _ (_) _      (_)         (_)     (_)         (_)           (_)                 (_)           (_)_  _  _  _(_)");
         result.add("(_)(_)(_)(_)(_)     (_)         (_)     (_)(_)(_)     (_)         (_)     (_)         (_)           (_)                 (_)             (_)(_)(_)(_)");
         return result;
+
+        /*try {
+            askServerInfo();
+        } catch (ExecutionException e) {
+            out.println((STR_INPUT_CANCELED));
+        }*/
     }
-
-
    /* public void askServerInfo() throws ExecutionException {
         Map<String, String> serverInfo = new HashMap<>();
         String defaultIpAddress = "127.0.0.1";
@@ -68,6 +72,18 @@ public class EriantysCLI extends ViewObservable implements View {
         PrintStream out = null;
         out.println("Please specify the following settings. The default value is shown between brackets.");
     }*/
+
+
+    @Override
+    public void askNickname() {
+        out.print("Enter nickname: ");
+        try{
+            String nickname = readLine();
+            notifyObserver(obs -> obs.onUpdateNickname(nickname));
+        } catch (ExecutionException e){
+            out.println(STR_INPUT_CANCELED);
+        }
+    }
 
     public void askPlayersNumber(){
         int playersNumber;
