@@ -20,11 +20,14 @@ public class EriantysCLI extends ViewObservable implements View {
     /**
      * Default constructor.
      */
-    public EriantysCLI() { out = System.out;}
+    public EriantysCLI() {
+        out = System.out;
+    }
 
 
     /**
      * Reads a line from the standard input.
+     *
      * @return the string read from the input.
      * @throws ExecutionException if the input stream thread is interrupted.
      */
@@ -44,7 +47,7 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
 
-    public ArrayList<String> welcome(String serverIp) {
+    public ArrayList<String> welcome() {
         ArrayList<String> result = new ArrayList<>();
         //result.add(ANSIColor.GREEN_BOLD_BRIGHT);
         result.add(ANSIColor.PURPLE_BOLD_BRIGHT);
@@ -77,22 +80,22 @@ public class EriantysCLI extends ViewObservable implements View {
     @Override
     public void askNickname() {
         out.print("Enter nickname: ");
-        try{
+        try {
             String nickname = readLine();
             notifyObserver(obs -> obs.onUpdateNickname(nickname));
-        } catch (ExecutionException e){
+        } catch (ExecutionException e) {
             out.println(STR_INPUT_CANCELED);
         }
     }
 
-    public void askPlayersNumber(){
+    public void askPlayersNumber() {
         int playersNumber;
         String question = "How many players are going to play? (You can choose between 2 or 3 players): ";
 
-        try{
+        try {
             playersNumber = numberInput(2, 3, null, question);
             notifyObserver(obs -> obs.onUpdatePlayersNumber(playersNumber));
-        }catch (ExecutionException e){
+        } catch (ExecutionException e) {
             out.println((STR_INPUT_CANCELED));
         }
     }
@@ -110,7 +113,7 @@ public class EriantysCLI extends ViewObservable implements View {
      * @return the number inserted by the user.
      * @throws ExecutionException if the input stream thread is interrupted.
      */
-    private int numberInput(int minValue, int maxValue, List<Integer> jumpList, String question) throws ExecutionException{
+    private int numberInput(int minValue, int maxValue, List<Integer> jumpList, String question) throws ExecutionException {
         int number = minValue--;
 
         if (jumpList == null)
@@ -121,27 +124,16 @@ public class EriantysCLI extends ViewObservable implements View {
                 out.print(question);
                 number = Integer.parseInt(readLine());
 
-                if (number < minValue || number > maxValue){
+                if (number < minValue || number > maxValue) {
                     out.println("Invalid number! Please try again.\n");
-                } else if (jumpList.contains(number)){
+                } else if (jumpList.contains(number)) {
                     out.println("This number cannot be selected! Please try again.\n");
                 }
-            } catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 out.println("Invalid input! Please try again.\n");
             }
-        }while (number < minValue || number > maxValue || jumpList.contains(number));
+        } while (number < minValue || number > maxValue || jumpList.contains(number));
 
         return number;
-    }
-
-
-
-    public static void main(String[] args) {
-        EriantysCLI cli = new EriantysCLI();
-        ArrayList<String> entryScene;
-
-        entryScene = cli.welcome("127.0.0.1");
-        for(String s:entryScene)
-            System.out.println(s);
     }
 }
