@@ -33,5 +33,6 @@ public class ANSIColor {
     public static final String PURPLE_BOLD_BRIGHT = "\033[1;95m";
     public static final String YELLOW_BOLD_BRIGHT ="\033[1;93m";
     public static final String GREEN_BOLD_BRIGHT = "\033[1;92m";
+    public static final String BLACK_BOLD_BRIGHT = "\033[1;90m";
 
 }

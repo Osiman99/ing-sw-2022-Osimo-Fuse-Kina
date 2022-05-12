@@ -1,69 +1,101 @@
 package it.polimi.ingsw.client;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import it.polimi.ingsw.network.messages.Message;
+
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
+public class ServerHandler extends Client {
+    private final Socket socket;
 
-public class ServerHandler implements Runnable{
+    private final ObjectOutputStream outputStm;
+    private final ObjectInputStream inputStm;
+    private final ExecutorService readExecutionQueue;
+    private final ScheduledExecutorService pinger;
 
-    Client client;
-    Socket socket;
-    DataInputStream dataInputStream;
-    DataOutputStream dataOutputStream;
-    boolean shouldRun = true;
+    private static final int SOCKET_TIMEOUT = 10000;
 
-    public ServerHandler(Socket socket, Client client){
-        this.client = client;
-        this.socket = socket;
+    public ServerHandler(String address, int port) throws IOException {
+        this.socket = new Socket();
+        this.socket.connect(new InetSocketAddress(address, port), SOCKET_TIMEOUT);
+        this.outputStm = new ObjectOutputStream(socket.getOutputStream());
+        this.inputStm = new ObjectInputStream(socket.getInputStream());
+        this.readExecutionQueue = Executors.newSingleThreadExecutor();
+        this.pinger = Executors.newSingleThreadScheduledExecutor();
     }
 
-    public void sendStringToServer(String text){
+    /**
+     * Asynchronously reads a message from the server via socket and notifies the ClientController.
+     */
+    @Override
+    public void readMessage() {
+        readExecutionQueue.execute(() -> {
+
+            while (!readExecutionQueue.isShutdown()) {
+                Message message;
+                try {
+                    message = (Message) inputStm.readObject();
+                    Client.LOGGER.info("Received: " + message);
+                } catch (IOException | ClassNotFoundException e) {
+                    //message = new ErrorMessage(null, "Connection lost with the server.");
+                    disconnect();
+                    readExecutionQueue.shutdownNow();
+                }
+                //notifyObserver(message);
+            }
+        });
+    }
+
+    /**
+     * Sends a message to the server via socket.
+     *
+     * @param message the message to be sent.
+     */
+    @Override
+    public void sendMessage(Message message) {
         try {
-            dataOutputStream.writeUTF(text);
-            dataOutputStream.flush();
+            outputStm.writeObject(message);
+            outputStm.reset();
         } catch (IOException e) {
-            e.printStackTrace();
-            close();
+            disconnect();
+            //notifyObserver(new ErrorMessage(null, "Could not send message."));
         }
     }
 
+    /**
+     * Disconnect the socket from the server.
+     */
     @Override
-    public void run() {
+    public void disconnect() {
         try {
-            dataInputStream = new DataInputStream(socket.getInputStream());
-            dataOutputStream = new DataOutputStream(socket.getOutputStream());
-
-            while (shouldRun) {
-                try {
-                    while (dataInputStream.available() == 0) {
-                        try {
-                            Thread.sleep(1);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    String reply = dataInputStream.readUTF();
-                    System.out.println(reply);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    close();
-                }
+            if (!socket.isClosed()) {
+                readExecutionQueue.shutdownNow();
+                enablePinger(false);
+                socket.close();
             }
         } catch (IOException e) {
-            e.printStackTrace();
-            close();
+            //notifyObserver(new ErrorMessage(null, "Could not disconnect."));
         }
     }
 
-    public void close(){
-        try {
-            dataInputStream.close();
-            dataOutputStream.close();
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+    /**
+     * Enable a heartbeat (ping messages) between client and server sockets to keep the connection alive.
+     *
+     * @param enabled set this argument to {@code true} to enable the heartbeat.
+     *                set to {@code false} to kill the heartbeat.
+     */
+    public void enablePinger(boolean enabled) {
+        if (enabled) {
+            //pinger.scheduleAtFixedRate(() -> sendMessage(new PingMessage()), 0, 1000, TimeUnit.MILLISECONDS);
+        } else {
+            pinger.shutdownNow();
         }
     }
 }

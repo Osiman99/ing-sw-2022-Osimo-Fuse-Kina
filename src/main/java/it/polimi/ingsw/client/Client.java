@@ -1,49 +1,36 @@
 package it.polimi.ingsw.client;
 
-import java.io.IOException;
-import java.net.Socket;
-import java.util.Objects;
-import java.util.Scanner;
+import it.polimi.ingsw.network.messages.Message;
+import it.polimi.ingsw.observer.Observable;
 
-public class Client{
+import java.util.logging.Logger;
 
-    ServerHandler serverHandler;
+public abstract class Client extends Observable {
 
-    public static void main(String[] args) {
-        new Client();
-    }
+    public static final Logger LOGGER = Logger.getLogger(Client.class.getName());
 
-    public Client(){
-        try {
-            Socket server = new Socket("127.0.0.1", 10000);
-            serverHandler = new ServerHandler(server, this);
-            serverHandler.run();
-            listenForInput();
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-    }
+    /**
+     * Sends a message to the server.
+     *
+     * @param message the message to be sent.
+     */
+    public abstract void sendMessage(Message message);
 
-    public void listenForInput(){
+    /**
+     * Asynchronously reads a message from the server and notifies the ClientController.
+     */
+    public abstract void readMessage();
 
-        Scanner console = new Scanner(System.in);
+    /**
+     * Disconnects from the server.
+     */
+    public abstract void disconnect();
 
-        while (true){
-            while(!console.hasNextLine()) {
-                try {
-                    Thread.sleep(1);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            String input = console.nextLine();
-
-            if (Objects.equals(input.toLowerCase(), "quit")){
-                break;
-            }
-            serverHandler.sendStringToServer(input);
-        }
-        serverHandler.close();
-    }
+    /**
+     * Enable a heartbeat (ping messages) to keep the connection alive.
+     *
+     * @param enabled set this argument to {@code true} to enable the heartbeat.
+     *                set to {@code false} to kill the heartbeat.
+     */
+    public abstract void enablePinger(boolean enabled);
 }

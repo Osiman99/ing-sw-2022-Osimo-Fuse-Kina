@@ -1,26 +1,34 @@
 package it.polimi.ingsw.network.messages;
 
-
-
+/**
+ * This enum contains all the message type available and used by the server and clients.
+ */
 public enum MessageType {
+    LOGIN_REQUEST, LOGIN_REPLY,
+    PLAYERNUMBER_REQUEST, PLAYERNUMBER_REPLY,
+    LOBBY,
+    GODLIST,
+    PICK_FIRST_PLAYER,
+    BOARD,
+    INIT_WORKERSPOSITIONS,
+    INIT_COLORS,
+    PICK_MOVING_WORKER,
+    MOVE,
+    MOVE_FX,
+    BUILD,
+    BUILD_FX,
+    WIN,
+    WIN_FX,
+    LOSE,
 
-    //messages sent by the clients
-    CREATE_MATCH_REQUEST,
-    JOIN_MATCH_REQUEST,
-    ASSISTANT_CARD_REQUEST,
-    MOVE_STUDENT_TO_DININGROOM_REQUEST,
-    MOVE_STUDENT_TO_ISLAND_REQUEST,
-    MOVE_MOTHERNATURE_REQUEST,
-    CLOUD_REQUEST,
-
-    //messages sent by the server
-    CREATE_MATCH_RESULT,
-    JOIN_MATCH_RESULT,
-    START_PLANIFICATION,
-    ASSISTANT_IS_AVAILABLE,
-    START_ACTION,
-    MOVE_STUDENT_RESULT,
-    CLOUD_RESULT,
-    END_GAME
-
+    //utility:
+    GAME_LOAD,
+    MATCH_INFO,
+    DISCONNECTION,
+    GENERIC_MESSAGE,
+    PING,
+    ERROR,
+    ENABLE_EFFECT,
+    APPLY_EFFECT,
+    PERSISTENCE
 }

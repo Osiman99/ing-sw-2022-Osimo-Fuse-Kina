@@ -1,23 +1,18 @@
 package it.polimi.ingsw.observer;
 
-import it.polimi.ingsw.server.model.*;
-
 public interface ViewObserver {
 
-    void onUpdateCreateMatch(String nickname, int numOfPlayers);
+    /**
+     * Sends a message to the server with the player number chosen by the user.
+     *
+     * @param playersNumber the number of players.
+     */
+    void onUpdatePlayersNumber(int playersNumber);
 
-    void onUpdateJoinMatch(String nickname, int matchID);
-
-    void onUpdateAssistantCard(AssistantCard card);
-
-    void onUpdateMoveStudentToDiningRoom(Student student);
-
-    void onUpdateMoveStudentToIsland(Student student, Island island);
-
-    void onUpdateMoveMotherNature(int value);
-
-    void onUpdateCloud(Cloud cloud);
-
-    void onUpdateCharacterCard(CharacterCard card);
-
+    /**
+     * Sends a message to the server with the updated nickname.
+     *
+     * @param nickname the nickname to be sent.
+     */
+    void onUpdateNickname(String nickname);
 }

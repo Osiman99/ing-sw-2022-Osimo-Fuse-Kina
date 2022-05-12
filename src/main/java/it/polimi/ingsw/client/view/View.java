@@ -2,21 +2,13 @@ package it.polimi.ingsw.client.view;
 
 public interface View {
 
-    void askCreateMatch();
+    /**
+     * Asks the user to choose a Nickname.
+     */
+    void askNickname();
 
-    void askJoinMatch();
-
-    void askAssistantCard();
-
-    void askCharacterCard();
-
-    void askMoveStudentToDiningRoom();
-
-    void askMoveStudentToIsland();
-
-    void askMoveMotherNature();
-
-    void askCloud();
-
-
+    /**
+     * Asks the user how many players he wants to play with.
+     */
+    void askPlayersNumber();
 }

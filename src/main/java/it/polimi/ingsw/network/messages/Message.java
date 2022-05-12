@@ -1,10 +1,11 @@
 package it.polimi.ingsw.network.messages;
 
-import java.awt.*;
 import java.io.Serializable;
 
 /**
- * A generic message sent over a network link.
+ * Abstract message class which must be extended by each message type.
+ * Both server and clients will communicate using this generic type of message.
+ * This avoids the usage of the "instance of" primitive.
  */
 public abstract class Message implements Serializable {
 
@@ -34,5 +35,4 @@ public abstract class Message implements Serializable {
                 ", messageType=" + messageType +
                 '}';
     }
-
 }
