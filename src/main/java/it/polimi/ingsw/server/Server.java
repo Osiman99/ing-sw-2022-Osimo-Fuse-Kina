@@ -39,7 +39,7 @@ public class Server {
         VirtualView vv = new VirtualView(clientHandler);
 
         if (!gameController.isGameStarted()) {
-            if (gameController.checkLoginNicknamn(nickname, vv)) {
+            if (gameController.checkLoginNickname(nickname, vv)) {
                 clientHandlerMap.put(nickname, clientHandler);
                 gameController.loginHandler(nickname, vv);
             }
