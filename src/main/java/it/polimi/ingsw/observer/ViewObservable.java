@@ -18,7 +18,8 @@ public abstract class ViewObservable {
     }
 
     protected void notifyObserver(Consumer<ViewObserver> lambda) {
-
+        for (ViewObserver observer : observerList)
+            lambda.accept(observer);
     }
 
 }

@@ -11,9 +11,9 @@ public abstract class Message implements Serializable {
     private static final long serialVersionUID = 6589184250663958343L;
 
     private final String nickname;
-    private final TrayIcon.MessageType messageType;
+    private final MessageType messageType;
 
-    Message(String nickname, TrayIcon.MessageType messageType) {
+    Message(String nickname, MessageType messageType) {
         this.nickname = nickname;
         this.messageType = messageType;
     }
@@ -23,7 +23,7 @@ public abstract class Message implements Serializable {
         return nickname;
     }
 
-    public TrayIcon.MessageType getMessageType() {
+    public MessageType getMessageType() {
         return messageType;
     }
 
