@@ -86,4 +86,8 @@ public class Game extends Observable {
     public List<Player> getPlayers() {
         return players;
     }
+
+    public void setChosenPlayersNumber(int chosenPlayersNumber) {
+        this.chosenPlayersNumber = chosenPlayersNumber;
+    }
 }

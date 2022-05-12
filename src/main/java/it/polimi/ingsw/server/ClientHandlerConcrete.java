@@ -20,12 +20,7 @@ public class ClientHandlerConcrete implements ClientHandler, Runnable {
     private ObjectOutputStream output;
     private ObjectInputStream input;
 
-    /**
-     * Default constructor.
-     *
-     * @param socketServer the socket of the server.
-     * @param client       the client connecting.
-     */
+
     public ClientHandlerConcrete(SocketServer socketServer, Socket client) {
         this.socketServer = socketServer;
         this.client = client;
@@ -52,11 +47,7 @@ public class ClientHandlerConcrete implements ClientHandler, Runnable {
         }
     }
 
-    /**
-     * Handles the connection of a new client and keep listening to the socket for new messages.
-     *
-     * @throws IOException any of the usual Input/Output related exceptions.
-     */
+
     private void handleClientConnection() throws IOException {
         Server.LOGGER.info("Client connected from " + client.getInetAddress());
 
@@ -81,18 +72,12 @@ public class ClientHandlerConcrete implements ClientHandler, Runnable {
         client.close();
     }
 
-    /**
-     * Returns the current status of the connection.
-     *
-     * @return {@code true} if the connection is still active, {@code false} otherwise.
-     */
+
     public boolean isConnected() {
         return connected;
     }
 
-    /**
-     * Disconnect the socket.
-     */
+
     public void disconnect() {
         if (connected) {
             try {
@@ -109,11 +94,7 @@ public class ClientHandlerConcrete implements ClientHandler, Runnable {
         }
     }
 
-    /**
-     * Sends a message to the client via socket.
-     *
-     * @param message the message to be sent.
-     */
+
     public void sendMessage(Message message) {
         try {
             synchronized (outputLock) {
