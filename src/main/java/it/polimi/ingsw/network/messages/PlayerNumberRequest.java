@@ -1,6 +1,8 @@
 package it.polimi.ingsw.network.messages;
 
 
+import it.polimi.ingsw.server.model.Game;
+
 /**
  * Message used to ask the client the maximum number of players of the game.
  */

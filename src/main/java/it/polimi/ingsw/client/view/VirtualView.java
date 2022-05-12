@@ -32,6 +32,10 @@ public class VirtualView implements View, Observer {
         clientHandler.sendMessage(new PlayerNumberRequest());
     }
 
+    @Override
+    public void askNickname() {
+        //clientHandler.sendMessage(new LoginReply(false, true));
+    }
 
     /**
      * Receives an update message from the model.
