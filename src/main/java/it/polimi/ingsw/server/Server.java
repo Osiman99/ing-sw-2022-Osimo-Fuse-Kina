@@ -29,13 +29,9 @@ public class Server {
         this.lock = new Object();
     }
 
-    /**
-     * Adds a client to be managed by the server instance.
-     *
-     * @param nickname      the nickname associated with the client.
-     * @param clientHandler the ClientHandler associated with the client.
-     */
-    /*public void addClient(String nickname, ClientHandler clientHandler) {
+
+
+    public void addClient(String nickname, ClientHandler clientHandler) {
         VirtualView vv = new VirtualView(clientHandler);
 
         if (!gameController.isGameStarted()) {
@@ -48,7 +44,7 @@ public class Server {
             clientHandler.disconnect();
         }
 
-    }*/
+    }
 
     /**
      * Removes a client given his nickname.
@@ -58,7 +54,7 @@ public class Server {
      */
     public void removeClient(String nickname, boolean notifyEnabled) {
         clientHandlerMap.remove(nickname);
-       // gameController.removeVirtualView(nickname, notifyEnabled);
+        gameController.removeVirtualView(nickname, notifyEnabled);
         LOGGER.info(() -> "Removed " + nickname + " from the client list.");
     }
 
@@ -68,7 +64,7 @@ public class Server {
      * @param message the message to be forwarded.
      */
     public void onMessageReceived(Message message) {
-        //gameController.onMessageReceived(message);
+        gameController.onMessageReceived(message);
     }
 
     /**
@@ -80,7 +76,7 @@ public class Server {
         synchronized (lock) {
             String nickname = getNicknameFromClientHandler(clientHandler);
 
-           /* if (nickname != null) {
+            if (nickname != null) {
 
                 boolean gameStarted = gameController.isGameStarted();
                 removeClient(nickname, !gameStarted); // enable lobby notifications only if the game didn't start yet.
@@ -98,7 +94,7 @@ public class Server {
                     gameController.endGame();
                     clientHandlerMap.clear();
                 }
-            }*/
+            }
         }
     }
 
