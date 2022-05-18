@@ -1,5 +1,7 @@
 package it.polimi.ingsw.observer;
 
+import it.polimi.ingsw.server.model.*;
+
 public interface ViewObserver {
 
     /**
@@ -15,4 +17,17 @@ public interface ViewObserver {
      * @param nickname the nickname to be sent.
      */
     void onUpdateNickname(String nickname);
+
+    void onUpdateCreateMatch(String nickname, int numOfPlayers);
+
+    void onUpdateAssistantCard(AssistantCard card);
+
+    void onUpdateMoveStudentToDiningRoom(Student student);
+
+    void onUpdateMoveStudentToIsland(Student student, Island island);
+
+    void onUpdateCloud(Cloud cloud);
+
+    void onUpdateCharacterCard(CharacterCard card);
+
 }
