@@ -29,12 +29,8 @@ public class Server {
         this.lock = new Object();
     }
 
-    /**
-     * Adds a client to be managed by the server instance.
-     *
-     * @param nickname      the nickname associated with the client.
-     * @param clientHandler the ClientHandler associated with the client.
-     */
+
+
     public void addClient(String nickname, ClientHandler clientHandler) {
         VirtualView vv = new VirtualView(clientHandler);
 
@@ -68,7 +64,7 @@ public class Server {
      * @param message the message to be forwarded.
      */
     public void onMessageReceived(Message message) {
-        //gameController.onMessageReceived(message);
+        gameController.onMessageReceived(message);
     }
 
     /**
