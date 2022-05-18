@@ -8,7 +8,7 @@ import it.polimi.ingsw.server.model.Game;
 
 import java.io.Serializable;
 
-public class GameController /*implements Observer, Serializable*/ {
+public class GameController implements Observer, Serializable {
 
     private GameState state;
     private Game game;
@@ -40,5 +40,8 @@ public class GameController /*implements Observer, Serializable*/ {
     }
 
 
+    @Override
+    public void update(Message message) {
 
+    }
 }

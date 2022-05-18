@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.observer.ViewObserver;
+import it.polimi.ingsw.server.model.*;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -36,6 +37,36 @@ public class ClientController implements ViewObserver, Observer {
     public void onUpdateNickname(String nickname) {
         this.nickname = nickname;
         //client.sendMessage(new LoginRequest(this.nickname));
+    }
+
+    @Override
+    public void onUpdateCreateMatch(String nickname, int numOfPlayers) {
+
+    }
+
+    @Override
+    public void onUpdateAssistantCard(AssistantCard card) {
+
+    }
+
+    @Override
+    public void onUpdateMoveStudentToDiningRoom(Student student) {
+
+    }
+
+    @Override
+    public void onUpdateMoveStudentToIsland(Student student, Island island) {
+
+    }
+
+    @Override
+    public void onUpdateCloud(Cloud cloud) {
+
+    }
+
+    @Override
+    public void onUpdateCharacterCard(CharacterCard card) {
+
     }
 
     @Override
