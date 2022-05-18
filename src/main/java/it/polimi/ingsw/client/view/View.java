@@ -3,12 +3,21 @@ package it.polimi.ingsw.client.view;
 public interface View {
 
     /**
-     * Asks the user to choose a Nickname.
+     * The player has to choose a nickname.
      */
     void askNickname();
 
     /**
-     * Asks the user how many players he wants to play with.
+     * choose the players number.
      */
     void askPlayersNumber();
+
+    /**
+     * Shows to the user if the Login succeeded.
+     *
+     * @param nicknameAccepted     indicates if the chosen nickname has been accepted.
+     * @param connectionSuccessful indicates if the connection has been successful.
+     * @param nickname             the nickname of the player to be greeted.
+     */
+    void showLoginResult(boolean nicknameAccepted, boolean connectionSuccessful, String nickname);
 }

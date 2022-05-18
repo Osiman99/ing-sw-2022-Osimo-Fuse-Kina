@@ -14,7 +14,7 @@ import java.util.concurrent.FutureTask;
 public class EriantysCLI extends ViewObservable implements View {
 
     private final PrintStream out;
-    private static final String STR_INPUT_CANCELED = "User input canceled.";
+    private static final String CANCEL_INPUT = "User input canceled.";
 
 
     /**
@@ -60,21 +60,50 @@ public class EriantysCLI extends ViewObservable implements View {
         result.add("(_)(_)(_)(_)(_)     (_)         (_)     (_)(_)(_)     (_)         (_)     (_)         (_)           (_)                 (_)             (_)(_)(_)(_)");
         return result;
 
-        /*try {
+       /* try {
             askServerInfo();
         } catch (ExecutionException e) {
-            out.println((STR_INPUT_CANCELED));
+            out.println((CANCEL_INPUT));
         }*/
     }
-   /* public void askServerInfo() throws ExecutionException {
-        Map<String, String> serverInfo = new HashMap<>();
-        String defaultIpAddress = "127.0.0.1";
-        String defaultPort = "11001";
-        boolean validInput;
 
-        PrintStream out = null;
-        out.println("Please specify the following settings. The default value is shown between brackets.");
-    }*/
+
+    public void askServerInfo() throws ExecutionException {
+        Map<String, String> serverInfo = new HashMap<>();
+        String defaultAddress = "127.0.0.1";
+        String defaultPort = "12500";
+        boolean correctInput;
+
+        do{
+            out.print("Enter the server address :");
+            String address = readLine();
+
+            if (address.equals("")){
+                serverInfo.put("address", defaultAddress);
+                correctInput = true;
+            }else{
+                out.println("Invalid address");
+                clearCli();
+                correctInput = false;
+            }
+        } while(!correctInput);
+
+        do{
+            out.print("Enter the server port :");
+            String port = readLine();
+
+            if (port.equals("")){
+                serverInfo.put("port", defaultPort);
+                correctInput = true;
+            }else {
+                out.println("Invalid port");
+                correctInput = false;
+            }
+        }while (!correctInput);
+
+        notifyObserver(obs -> obs.onUpdateServerInfo(serverInfo));
+
+    }
 
 
     @Override
@@ -84,7 +113,7 @@ public class EriantysCLI extends ViewObservable implements View {
             String nickname = readLine();
             notifyObserver(obs -> obs.onUpdateNickname(nickname));
         } catch (ExecutionException e) {
-            out.println(STR_INPUT_CANCELED);
+            out.println(CANCEL_INPUT);
         }
     }
 
@@ -96,9 +125,28 @@ public class EriantysCLI extends ViewObservable implements View {
             playersNumber = numberInput(2, 3, null, question);
             notifyObserver(obs -> obs.onUpdatePlayersNumber(playersNumber));
         } catch (ExecutionException e) {
-            out.println((STR_INPUT_CANCELED));
+            out.println((CANCEL_INPUT));
         }
     }
+
+    @Override
+    public void showLoginResult(boolean nicknameAccepted, boolean connectionSuccessful, String nickname) {
+        clearCli();
+
+        if (nicknameAccepted && connectionSuccessful) {
+            out.println("Hi, " + nickname + "! You connected to the server.");
+        } else if (connectionSuccessful) {
+            askNickname();
+        } else if (nicknameAccepted) {
+            out.println("Max players reached. Connection refused.");
+            out.println("EXIT.");
+
+            System.exit(1);
+        }/* else {
+            showErrorAndExit("Could not contact server.");
+        }*/
+    }
+
 
     /**
      * Asks the user for a input number. The number must be between minValue and maxValue.
@@ -135,5 +183,14 @@ public class EriantysCLI extends ViewObservable implements View {
         } while (number < minValue || number > maxValue || jumpList.contains(number));
 
         return number;
+    }
+
+
+    /**
+     * Clears the EriantysCLI terminal.
+     */
+    public void clearCli() {
+        out.print(ANSIColor.CLEAR);
+        out.flush();
     }
 }

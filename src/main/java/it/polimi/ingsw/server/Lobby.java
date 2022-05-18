@@ -5,6 +5,9 @@ import it.polimi.ingsw.server.model.Player;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * it's a room where the players are put before a match(to manage multiple matches)
+ */
 public class Lobby {
     private int ID;
     private int numPlayers;
