@@ -1,11 +1,13 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.observer.Observable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class Board {
+public class Board extends Observable {
     private Game game;
     private List<Island> islands;
     private List<Cloud> clouds;

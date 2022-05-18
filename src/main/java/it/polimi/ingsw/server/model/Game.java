@@ -42,11 +42,22 @@ public class Game extends Observable {
         }
     }
 
+    public Game(){
+        this.chosenPlayersNumber = chosenPlayersNumber;
+        contPlayer = 0;
+        board = Board.getInstance();
+        players = new ArrayList<Player>();
+    }
+
     public static void setInstance(Game game){  //nel main devo evocare questo metodo
         instance = game;
     }
 
+
     public static Game getInstance(){
+        if (instance == null){
+            instance = new Game();
+        }
         return instance;
     }
 
@@ -60,6 +71,15 @@ public class Game extends Observable {
      */
 
 
+    public void addPlayer(Player player){
+        players.add(player);
+        contPlayer++;
+    }
+
+
+    public int getChosenPlayersNumber() {
+        return chosenPlayersNumber;
+    }
 
     public int getNumPlayers() {
         return chosenPlayersNumber;   //oppure return chosenPlayersNumber (in base a se vogliamo

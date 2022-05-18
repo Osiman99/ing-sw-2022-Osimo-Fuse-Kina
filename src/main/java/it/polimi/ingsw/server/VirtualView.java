@@ -1,5 +1,7 @@
-package it.polimi.ingsw.client.view;
+package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.client.view.View;
+import it.polimi.ingsw.network.messages.GenericMessage;
 import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.network.messages.PlayerNumberRequest;
 import it.polimi.ingsw.observer.Observer;
@@ -25,6 +27,10 @@ public class VirtualView implements View, Observer {
      */
     public ClientHandler getClientHandler() {
         return clientHandler;
+    }
+
+    public void showGenericMessage(String genericMessage) {
+        clientHandler.sendMessage(new GenericMessage(genericMessage));
     }
 
     @Override
