@@ -7,15 +7,16 @@ import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.TowerColor;
 
 import java.io.Serializable;
-import java.util.Map;
+import java.util.*;
 
 public class GameController implements Observer, Serializable {
 
     private GameState state;
     private Game game;
     private static final long serialVersionUID = 4951303731052728724L;
-
     private transient Map<String, VirtualView> virtualViewMap;
+    //private final List<String> nicknameQueue;
+    private String activePlayer;
 
     //private TurnController turnController;
     //private InputController inputController;
@@ -26,8 +27,8 @@ public class GameController implements Observer, Serializable {
 
     public GameController(){
         game = Game.getInstance();
-        state = GameState.PREGAME;
-
+        virtualViewMap = Collections.synchronizedMap(new HashMap<>());
+        setGameState(GameState.PREGAME);
     }
 
     public void switchState(Message receivedMessage){
@@ -57,14 +58,22 @@ public class GameController implements Observer, Serializable {
             virtualView.askPlayersNumber();
 
         } else if (virtualViewMap.size() < game.getChosenPlayersNumber()) {
-            addVirtualView(nickname, virtualView);
-            game.addPlayer(new Player(nickname));
-            //virtualView.showLoginResult(true, true, Game.SERVER_NICKNAME);
+            if (virtualViewMap.size() == 1) {
+                addVirtualView(nickname, virtualView);
+                game.addPlayer(new Player(nickname));
+                game.getPlayers().get(1).setPlayerColor(TowerColor.WHITE);
+                //virtualView.showLoginResult(true, true, Game.SERVER_NICKNAME);
+            }else if (virtualViewMap.size() == 2){
+                addVirtualView(nickname, virtualView);
+                game.addPlayer(new Player(nickname));
+                game.getPlayers().get(2).setPlayerColor(TowerColor.GREY);
+                //virtualView.showLoginResult(true, true, Game.SERVER_NICKNAME);
+            }
 
-            //PERSISTENZA FA
+
             if (game.getContPlayer() == game.getChosenPlayersNumber()) { // If all players logged
+                //PERSISTENZA FA
 
-                // check saved matches.
                 /*StorageData storageData = new StorageData();
                 GameController savedGameController = storageData.restore();
                 if (savedGameController != null &&
@@ -94,8 +103,16 @@ public class GameController implements Observer, Serializable {
         }*/
     }
 
+    public void initGame(){
+        setGameState(GameState.PLAN);
+        //nicknameQueue = new ArrayList<>(game.getPlayersNicknames());
+        //activePlayer = nicknameQueue.get(0);
+        broadcastGenericMessage("All Players are connected. " + activePlayer
+                + " is choosing the Assistant Card...");
 
-    public
+        VirtualView virtualView = virtualViewMap.get(activePlayer);
+        //virtualView.askAssistantCard();
+    }
 
     public void broadcastGenericMessage(String messageToNotify) {
         for (VirtualView vv : virtualViewMap.values()) {
@@ -103,16 +120,21 @@ public class GameController implements Observer, Serializable {
         }
     }
 
-    @Override
-    public void update(Message message) {
-
+    private void setGameState(GameState state) {
+        this.state = state;
     }
-
 
     public void addVirtualView(String nickname, VirtualView virtualView) {
         virtualViewMap.put(nickname, virtualView);
         game.addObserver(virtualView);
         game.getBoard().addObserver(virtualView);
+    }
+
+
+
+    @Override
+    public void update(Message message) {
+
     }
 
 }

@@ -3,9 +3,8 @@ package it.polimi.ingsw;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.ClientController;
 import it.polimi.ingsw.client.view.CLI.EriantysCLI;
-import it.polimi.ingsw.client.view.GUI.TestGui;
+import it.polimi.ingsw.client.view.GUI.Main;
 import javafx.application.Application;
-
 import java.util.logging.Level;
 
 public class ClientMain {
@@ -28,7 +27,7 @@ public class ClientMain {
             view.addObserver(clientcontroller);
             view.welcome();
         } else {
-            Application.launch(TestGui.class);
+            Application.launch(Main.class);
         }
     }
 }

@@ -59,7 +59,7 @@ public class Server {
      * @param message the message to be forwarded.
      */
     public void onMessageReceived(Message message) {
-        gameController.onMessageReceived(message);
+        gameController.switchState(message);
     }
 
     /**
