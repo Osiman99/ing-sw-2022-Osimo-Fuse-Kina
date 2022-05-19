@@ -152,11 +152,6 @@ public class EriantysCLI extends ViewObservable implements View {
         }*/
     }
 
-    @Override
-    public void showGenericMessage(String message) {
-
-    }
-
 
     /**
      * Asks the user for a input number. The number must be between minValue and maxValue.

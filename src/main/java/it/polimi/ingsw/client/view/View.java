@@ -12,6 +12,8 @@ public interface View {
      */
     void askPlayersNumber();
 
+    void askAssistantCard();
+
     /**
      * Shows to the user if the Login succeeded.
      *
