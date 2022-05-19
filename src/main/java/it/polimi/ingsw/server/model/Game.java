@@ -14,40 +14,19 @@ public class Game extends Observable {
     private int chosenPlayersNumber;       //servirebbe nel caso un player si scollega dal gioco (FA)
     private int contPlayer;
     public static final String SERVER_NICKNAME = "server";
+    public List<String> nicknames;
 
 
-
-    /**
-     * initialization of the game, choosing the number of players and getting their nicknames
-     * @param game
-     * @param nicknames
-     * @param chosenPlayersNumber
-     */
-    public void initGame(Game game, List<String> nicknames, int chosenPlayersNumber){
-        setInstance(game);
-        this.chosenPlayersNumber = chosenPlayersNumber;
-        contPlayer = 0;
-        board = Board.getInstance();
-        players = new ArrayList<Player>();
-        for (int i = 0; i < this.chosenPlayersNumber; i++){
-            contPlayer = contPlayer + 1;
-            players.add(new Player(nicknames.get(i)));
-            if (i == 0) {
-                players.get(i).setPlayerColor(TowerColor.BLACK);
-            }else if (i == 1){
-                players.get(i).setPlayerColor(TowerColor.WHITE);
-            }else if (i == 2){
-                players.get(i).setPlayerColor(TowerColor.GREY);
-            }
-        }
-    }
 
     public Game(){
         this.chosenPlayersNumber = chosenPlayersNumber;
         contPlayer = 0;
         board = Board.getInstance();
         players = new ArrayList<Player>();
+        nicknames = new ArrayList<String>();
     }
+
+
 
     public static void setInstance(Game game){  //nel main devo evocare questo metodo
         instance = game;
@@ -74,8 +53,12 @@ public class Game extends Observable {
     public void addPlayer(Player player){
         players.add(player);
         contPlayer++;
+        nicknames.add(player.getNickname());
     }
 
+    public List<String> getNicknames() {
+        return nicknames;
+    }
 
     public int getChosenPlayersNumber() {
         return chosenPlayersNumber;
@@ -96,6 +79,12 @@ public class Game extends Observable {
                 .filter(player -> nickname.equals(player.getNickname()))
                 .findFirst()
                 .orElse(null);
+    }
+
+
+    public boolean isNicknameTaken(String nickname) {
+        return players.stream()
+                .anyMatch(p -> nickname.equals(p.getNickname()));
     }
 
 
