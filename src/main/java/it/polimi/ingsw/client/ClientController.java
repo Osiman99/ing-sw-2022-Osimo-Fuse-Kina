@@ -6,20 +6,36 @@ import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.observer.ViewObserver;
 import it.polimi.ingsw.server.model.*;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class ClientController implements ViewObserver, Observer {
     private final View view;
+    private final ExecutorService taskQueue;
     private Client client;
     private String nickname;
-    private final ExecutorService taskQueue;
 
 
     public ClientController(View view) {
         this.view = view;
         taskQueue = Executors.newSingleThreadExecutor();
+    }
+
+
+    @Override
+    public void onUpdateServerInfo(Map<String, String> serverInfo) {
+        /*
+        try {
+            client = new ServerHandler(serverInfo.get(), )
+
+        } catch (IOException e) {
+
+        }
+
+         */
+
     }
 
 
@@ -40,10 +56,6 @@ public class ClientController implements ViewObserver, Observer {
         //client.sendMessage(new LoginRequest(this.nickname));
     }
 
-    @Override
-    public void onUpdateServerInfo(Map<String, String> serverInfo) {
-
-    }
 
     @Override
     public void onUpdateCreateMatch(String nickname, int numOfPlayers) {

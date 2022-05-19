@@ -13,8 +13,6 @@ public class LoginRequest extends Message {
 
     @Override
     public String toString() {
-        return "LoginRequest{" +
-                "nickname=" + getNickname() +
-                '}';
+        return "LoginRequest: Nickname= " + getNickname();
     }
 }

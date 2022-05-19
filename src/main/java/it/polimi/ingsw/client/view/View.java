@@ -24,4 +24,6 @@ public interface View {
     void showLoginResult(boolean nicknameAccepted, boolean connectionSuccessful, String nickname);
 
     void showGenericMessage(String genericMessage);
+
+    void showDisconnectionMessage(String nicknameDisconnected, String value);
 }

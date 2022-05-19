@@ -35,6 +35,11 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
+    public void showDisconnectionMessage(String nicknameDisconnected, String value) {
+
+    }
+
+    @Override
     public void askPlayersNumber() {
         clientHandler.sendMessage(new PlayerNumberRequest());
     }
