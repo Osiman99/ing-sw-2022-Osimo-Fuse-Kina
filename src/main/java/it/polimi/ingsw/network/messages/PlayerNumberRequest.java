@@ -16,8 +16,6 @@ public class PlayerNumberRequest extends Message{
 
     @Override
     public String toString() {
-        return "PlayerNumberRequest{" +
-                "nickname=" + getNickname() +
-                '}';
+        return "PlayerNumberRequest: Nickname= " + getNickname();
     }
 }

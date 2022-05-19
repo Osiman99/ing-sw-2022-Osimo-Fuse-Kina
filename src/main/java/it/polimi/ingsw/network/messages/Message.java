@@ -30,9 +30,6 @@ public abstract class Message implements Serializable {
 
     @Override
     public String toString() {
-        return "Message{" +
-                "nickname=" + nickname +
-                ", messageType=" + messageType +
-                '}';
+        return "Message: Nickname= " + nickname + "| messageType= " + messageType;
     }
 }

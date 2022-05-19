@@ -20,9 +20,6 @@ public class ErrorMessage extends Message{
 
     @Override
     public String toString() {
-        return "ErrorMessage{" +
-                "nickname=" + getNickname() +
-                ", error=" + error +
-                '}';
+        return "ErrorMessage: Nickname= " + getNickname() + "| Error= " + error;
     }
 }

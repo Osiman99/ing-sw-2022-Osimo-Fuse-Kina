@@ -26,10 +26,6 @@ public class LoginReply extends Message{
     }
 
     public String toString(){
-        return "LoginReply{" +
-                "nickname=" + getNickname() +
-                ", nicknameAccepted=" + nicknameAccepted +
-                ", connectionSuccessful=" + connectionSuccessful +
-                '}';
+        return "LoginReply: Nickname=" + getNickname() + "| nicknameAccepted=" + nicknameAccepted + "| connection=" + connectionSuccessful;
     }
 }
