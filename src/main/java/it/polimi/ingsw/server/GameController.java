@@ -18,10 +18,7 @@ public class GameController implements Observer, Serializable {
     private transient Map<String, VirtualView> virtualViewMap;
     private String activePlayer;
     private List<String> nicknames; //forse final
-
-    //private TurnController turnController;
     private CheckController checkController;
-
     private static final String STR_INVALID_STATE = "Invalid game state!";
     public static final String SAVED_GAME_FILE = "match.bless";
 
@@ -63,12 +60,12 @@ public class GameController implements Observer, Serializable {
                 addVirtualView(nickname, virtualView);
                 game.addPlayer(new Player(nickname));
                 game.getPlayers().get(1).setPlayerColor(TowerColor.WHITE);
-                //virtualView.showLoginResult(true, true, Game.SERVER_NICKNAME);
+                virtualView.showLoginResult(true, true, Game.SERVER_NICKNAME);
             }else if (virtualViewMap.size() == 2){
                 addVirtualView(nickname, virtualView);
                 game.addPlayer(new Player(nickname));
                 game.getPlayers().get(2).setPlayerColor(TowerColor.GREY);
-                //virtualView.showLoginResult(true, true, Game.SERVER_NICKNAME);
+                virtualView.showLoginResult(true, true, Game.SERVER_NICKNAME);
             }
 
 
@@ -114,7 +111,7 @@ public class GameController implements Observer, Serializable {
                 + " is choosing the Assistant Card...");
 
         VirtualView virtualView = virtualViewMap.get(activePlayer);
-        //virtualView.askAssistantCard();
+        virtualView.askAssistantCard();
     }
 
     public void broadcastGenericMessage(String messageToNotify) {
@@ -148,6 +145,35 @@ public class GameController implements Observer, Serializable {
         game.removeObserver(vv);
         game.getBoard().removeObserver(vv);
         game.removePlayerByNickname(nickname, notifyEnabled);
+    }
+
+    public List<String> getNicknames() {
+        return nicknames;
+    }
+
+
+    public void broadcastDisconnectionMessage(String nicknameDisconnected, String text) {
+        for (VirtualView vv : virtualViewMap.values()) {
+            vv.showDisconnectionMessage(nicknameDisconnected, text);
+        }
+    }
+
+    public void endGame() {
+        Game.resetInstance();
+
+        //PERSISTENZA FA
+        /*StorageData storageData = new StorageData();
+        storageData.delete();*/
+
+        initGameController();
+        Server.LOGGER.info("Game finished. Server ready for a new Game.");
+    }
+
+    public void initGameController() {
+        this.game = Game.getInstance();
+        this.virtualViewMap = Collections.synchronizedMap(new HashMap<>());
+        this.checkController = new CheckController(virtualViewMap, this);
+        setGameState(GameState.PREGAME);
     }
 
 

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.network.messages.LobbyMessage;
 import it.polimi.ingsw.observer.Observable;
 
 import java.io.Serializable;
@@ -87,6 +88,19 @@ public class Game extends Observable {
                 .anyMatch(p -> nickname.equals(p.getNickname()));
     }
 
+    public boolean removePlayerByNickname(String nickname, boolean notifyEnabled) {
+        boolean result = players.remove(getPlayerByNickname(nickname));
+
+        if (notifyEnabled) {
+            notifyObserver(new LobbyMessage(getNicknames(), this.chosenPlayersNumber));
+        }
+        return result;
+    }
+
+
+    public static void resetInstance(){
+        instance = null;
+    }
 
     public Board getBoard() {
         return board;
