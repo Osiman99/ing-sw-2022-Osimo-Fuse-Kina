@@ -1,5 +1,9 @@
 package it.polimi.ingsw.client.view;
 
+import it.polimi.ingsw.server.model.AssistantCard;
+
+import java.util.List;
+
 public interface View {
 
     /**
@@ -12,7 +16,7 @@ public interface View {
      */
     void askPlayersNumber();
 
-    void askAssistantCard();
+    void askAssistantCard(List<AssistantCard> deck);
 
     /**
      * Shows to the user if the Login succeeded.
