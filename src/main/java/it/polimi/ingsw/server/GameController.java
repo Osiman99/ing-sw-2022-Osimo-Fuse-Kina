@@ -16,7 +16,7 @@ public class GameController implements Observer, Serializable {
     private Game game;
     private static final long serialVersionUID = 4951303731052728724L;
     private transient Map<String, VirtualView> virtualViewMap;
-    private String activePlayer;
+    private Player activePlayer;
     private List<String> nicknames; //forse final
     private CheckController checkController;
     private static final String STR_INVALID_STATE = "Invalid game state!";
@@ -55,7 +55,7 @@ public class GameController implements Observer, Serializable {
             //virtualView.showLoginResult(true, true, Game.SERVER_NICKNAME);
             virtualView.askPlayersNumber();
 
-        } else if (virtualViewMap.size() < game.getChosenPlayersNumber()) {
+        } else if (virtualViewMap.size() < game.getNumPlayers()) {
             if (virtualViewMap.size() == 1) {
                 addVirtualView(nickname, virtualView);
                 game.addPlayer(new Player(nickname));
@@ -69,7 +69,7 @@ public class GameController implements Observer, Serializable {
             }
 
 
-            if (game.getContPlayer() == game.getChosenPlayersNumber()) { // If all players logged
+            if (game.getContPlayer() == game.getNumPlayers()) { // If all players logged
                 //PERSISTENZA FA
 
                 /*StorageData storageData = new StorageData();
@@ -106,12 +106,15 @@ public class GameController implements Observer, Serializable {
     public void initGame(){
         setGameState(GameState.PLAN);
         nicknames = new ArrayList<>(game.getNicknames());
-        activePlayer = nicknames.get(0);
+        for (int i = 0; i < game.getNumPlayers(); i++)
+            if (game.getPlayers().get(i).getNickname().equals(nicknames.get(0))) {
+                activePlayer = game.getPlayers().get(i);
+            }
         broadcastGenericMessage("All Players are connected. " + activePlayer
                 + " is choosing the Assistant Card...");
 
         VirtualView virtualView = virtualViewMap.get(activePlayer);
-        virtualView.askAssistantCard();
+        virtualView.askAssistantCard(activePlayer.getDeck().getDeck());
     }
 
     public void broadcastGenericMessage(String messageToNotify) {

@@ -61,10 +61,6 @@ public class Game extends Observable {
         return nicknames;
     }
 
-    public int getChosenPlayersNumber() {
-        return chosenPlayersNumber;
-    }
-
     public int getNumPlayers() {
         return chosenPlayersNumber;   //oppure return chosenPlayersNumber (in base a se vogliamo
                                  // fare la FA se uno si scollega dal gioco)
