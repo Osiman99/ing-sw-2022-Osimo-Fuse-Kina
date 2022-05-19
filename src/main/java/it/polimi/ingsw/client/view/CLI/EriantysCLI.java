@@ -193,4 +193,9 @@ public class EriantysCLI extends ViewObservable implements View {
         out.print(ANSIColor.CLEAR);
         out.flush();
     }
+
+    public void showGenericMessage(String genericMessage) {
+        out.println(genericMessage);
+    }
+
 }

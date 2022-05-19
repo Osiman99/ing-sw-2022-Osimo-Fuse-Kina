@@ -43,7 +43,7 @@ public class SocketServer implements Runnable {
 
 
     public void addClient(String nickname, ClientHandler clientHandler) {
-       // server.addClient(nickname, clientHandler);
+        server.addClient(nickname, clientHandler);
     }
 
 

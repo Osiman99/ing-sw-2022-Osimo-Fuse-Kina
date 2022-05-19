@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.server.model.Game;
@@ -15,11 +16,11 @@ public class GameController implements Observer, Serializable {
     private Game game;
     private static final long serialVersionUID = 4951303731052728724L;
     private transient Map<String, VirtualView> virtualViewMap;
-    //private final List<String> nicknameQueue;
     private String activePlayer;
+    private List<String> nicknames; //forse final
 
     //private TurnController turnController;
-    //private InputController inputController;
+    private CheckController checkController;
 
     private static final String STR_INVALID_STATE = "Invalid game state!";
     public static final String SAVED_GAME_FILE = "match.bless";
@@ -103,10 +104,12 @@ public class GameController implements Observer, Serializable {
         }*/
     }
 
+
+
     public void initGame(){
         setGameState(GameState.PLAN);
-        //nicknameQueue = new ArrayList<>(game.getPlayersNicknames());
-        //activePlayer = nicknameQueue.get(0);
+        nicknames = new ArrayList<>(game.getNicknames());
+        activePlayer = nicknames.get(0);
         broadcastGenericMessage("All Players are connected. " + activePlayer
                 + " is choosing the Assistant Card...");
 
@@ -128,6 +131,14 @@ public class GameController implements Observer, Serializable {
         virtualViewMap.put(nickname, virtualView);
         game.addObserver(virtualView);
         game.getBoard().addObserver(virtualView);
+    }
+
+    public boolean isGameStarted() {
+        return state != GameState.PREGAME;
+    }
+
+    public boolean checkLoginNickname(String nickname, View view) {
+        return checkController.checkLoginNickname(nickname, view);
     }
 
 

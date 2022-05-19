@@ -20,4 +20,8 @@ public interface View {
      * @param nickname             the nickname of the player to be greeted.
      */
     void showLoginResult(boolean nicknameAccepted, boolean connectionSuccessful, String nickname);
+
+    void showGenericMessage(String genericMessage);
+
+
 }
