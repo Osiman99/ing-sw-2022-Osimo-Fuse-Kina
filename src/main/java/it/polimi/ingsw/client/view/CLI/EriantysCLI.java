@@ -130,6 +130,11 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
     @Override
+    public void askAssistantCard() {
+
+    }
+
+    @Override
     public void showLoginResult(boolean nicknameAccepted, boolean connectionSuccessful, String nickname) {
         clearCli();
 
@@ -145,6 +150,11 @@ public class EriantysCLI extends ViewObservable implements View {
         }/* else {
             showErrorAndExit("Could not contact server.");
         }*/
+    }
+
+    @Override
+    public void showGenericMessage(String message) {
+
     }
 
 

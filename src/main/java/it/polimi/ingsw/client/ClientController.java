@@ -6,6 +6,7 @@ import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.observer.ViewObserver;
 import it.polimi.ingsw.server.model.*;
 
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -37,6 +38,11 @@ public class ClientController implements ViewObserver, Observer {
     public void onUpdateNickname(String nickname) {
         this.nickname = nickname;
         //client.sendMessage(new LoginRequest(this.nickname));
+    }
+
+    @Override
+    public void onUpdateServerInfo(Map<String, String> serverInfo) {
+
     }
 
     @Override

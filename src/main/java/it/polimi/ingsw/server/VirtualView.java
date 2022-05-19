@@ -2,6 +2,7 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.network.messages.GenericMessage;
+import it.polimi.ingsw.network.messages.LoginReply;
 import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.network.messages.PlayerNumberRequest;
 import it.polimi.ingsw.observer.Observer;
@@ -39,6 +40,17 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
+    public void askAssistantCard() {
+
+    }
+
+    @Override
+    public void showLoginResult(boolean nicknameAccepted, boolean connectionResult, String nickname) {
+        clientHandler.sendMessage(new LoginReply(nicknameAccepted, connectionResult));
+
+    }
+
+    @Override
     public void askNickname() {
         //clientHandler.sendMessage(new LoginReply(false, true));
     }
@@ -54,4 +66,5 @@ public class VirtualView implements View, Observer {
     public void update(Message message) {
         clientHandler.sendMessage(message);
     }
+
 }

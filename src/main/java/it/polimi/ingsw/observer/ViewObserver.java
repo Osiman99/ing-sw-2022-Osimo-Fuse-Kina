@@ -2,6 +2,8 @@ package it.polimi.ingsw.observer;
 
 import it.polimi.ingsw.server.model.*;
 
+import java.util.Map;
+
 public interface ViewObserver {
 
     /**
@@ -17,6 +19,8 @@ public interface ViewObserver {
      * @param nickname the nickname to be sent.
      */
     void onUpdateNickname(String nickname);
+
+    void onUpdateServerInfo(Map<String, String> serverInfo);
 
     void onUpdateCreateMatch(String nickname, int numOfPlayers);
 
