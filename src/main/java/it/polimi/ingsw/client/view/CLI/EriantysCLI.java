@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.view.CLI;
 
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.observer.ViewObservable;
+import it.polimi.ingsw.server.model.AssistantCard;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -47,9 +48,8 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
 
-    public ArrayList<String> welcome() {
+    public void welcome() {
         ArrayList<String> result = new ArrayList<>();
-        //result.add(ANSIColor.GREEN_BOLD_BRIGHT);
         result.add(ANSIColor.PURPLE_BOLD_BRIGHT);
         result.add("      (_)(_)(_)(_)(_)     (_)(_)(_)(_) _      (_)(_)(_)          _(_)_          (_) _       (_)     (_)(_)(_)(_)(_)     (_)_       _(_)      _(_)(_)(_)(_)_");
         result.add("     (_)                 (_)         (_)        (_)           _(_) (_)_        (_)(_)_     (_)           (_)             (_)_   _(_)       (_)          (_)");
@@ -58,13 +58,12 @@ public class EriantysCLI extends ViewObservable implements View {
         result.add("  (_)                 (_)   (_) _            (_)        (_)(_)(_)(_)(_)     (_)      (_)(_)           (_)                 (_)            _           (_)");
         result.add(" (_) _  _  _  _      (_)      (_) _       _ (_) _      (_)         (_)     (_)         (_)           (_)                 (_)           (_)_  _  _  _(_)");
         result.add("(_)(_)(_)(_)(_)     (_)         (_)     (_)(_)(_)     (_)         (_)     (_)         (_)           (_)                 (_)             (_)(_)(_)(_)");
-        return result;
 
-       /* try {
+        try {
             askServerInfo();
         } catch (ExecutionException e) {
-            out.println((CANCEL_INPUT));
-        }*/
+            out.println(CANCEL_INPUT);
+        }
     }
 
 
@@ -74,8 +73,10 @@ public class EriantysCLI extends ViewObservable implements View {
         String defaultPort = "12500";
         boolean correctInput;
 
+        out.println("The default value of address and port is shown between brackets.");
+
         do{
-            out.print("Enter the server address :");
+            out.print("Enter the server address [" + defaultAddress +"]:");
             String address = readLine();
 
             if (address.equals("")){
@@ -89,7 +90,7 @@ public class EriantysCLI extends ViewObservable implements View {
         } while(!correctInput);
 
         do{
-            out.print("Enter the server port :");
+            out.print("Enter the server port [" + defaultPort +"]:");
             String port = readLine();
 
             if (port.equals("")){
@@ -129,9 +130,20 @@ public class EriantysCLI extends ViewObservable implements View {
         }
     }
 
-    @Override
-    public void askAssistantCard() {
 
+    @Override
+    public void askAssistantCard(List<AssistantCard> deck) {
+        //clearCli();
+
+        int AssistantCardId; //
+        // == value
+
+        if(deck.size() > 1){
+            out.println("Enter one of the available AssistantCardIds : ");
+        }else if (deck.size() == 1){
+            out.println("You're the last player, your only AssistantCardId is: ");
+
+        }
     }
 
     @Override
@@ -201,6 +213,11 @@ public class EriantysCLI extends ViewObservable implements View {
 
     public void showGenericMessage(String genericMessage) {
         out.println(genericMessage);
+    }
+
+    @Override
+    public void showDisconnectionMessage(String nicknameDisconnected, String value) {
+
     }
 
 }
