@@ -1,12 +1,12 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.client.view.View;
-import it.polimi.ingsw.network.messages.GenericMessage;
-import it.polimi.ingsw.network.messages.LoginReply;
-import it.polimi.ingsw.network.messages.Message;
-import it.polimi.ingsw.network.messages.PlayerNumberRequest;
+import it.polimi.ingsw.network.messages.*;
 import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.server.ClientHandler;
+import it.polimi.ingsw.server.model.AssistantCard;
+
+import java.util.List;
 
 public class VirtualView implements View, Observer {
 
@@ -36,7 +36,7 @@ public class VirtualView implements View, Observer {
 
     @Override
     public void showDisconnectionMessage(String nicknameDisconnected, String value) {
-
+        clientHandler.sendMessage(new DisconnectionMessage(nicknameDisconnected, value));
     }
 
     @Override
@@ -45,7 +45,7 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void askAssistantCard() {
+    public void askAssistantCard(List<AssistantCard> deck) {
 
     }
 
