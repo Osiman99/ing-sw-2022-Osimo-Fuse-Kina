@@ -23,6 +23,7 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
+        /*
         List<String> nicknames = new ArrayList<String>();
 
         nicknames.add("davide");
@@ -38,6 +39,8 @@ class PlayerTest {
         cloud = game.getBoard().getClouds().get(0);
 
         //game.getBoard().moveStudentsFromBagToClouds();
+
+         */
     }
 
     @AfterEach
