@@ -142,6 +142,14 @@ public class GameController implements Observer, Serializable {
     }
 
 
+    public void removeVirtualView(String nickname, boolean notifyEnabled) {
+        VirtualView vv = virtualViewMap.remove(nickname);
+
+        game.removeObserver(vv);
+        game.getBoard().removeObserver(vv);
+        game.removePlayerByNickname(nickname, notifyEnabled);
+    }
+
 
     @Override
     public void update(Message message) {
