@@ -1,6 +1,8 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.network.messages.ErrorMessage;
 import it.polimi.ingsw.network.messages.Message;
+import it.polimi.ingsw.network.messages.PingMessage;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -44,11 +46,11 @@ public class ServerHandler extends Client {
                     message = (Message) inputStm.readObject();
                     Client.LOGGER.info("Received: " + message);
                 } catch (IOException | ClassNotFoundException e) {
-                    //message = new ErrorMessage(null, "Connection lost with the server.");
+                    message = new ErrorMessage(null, "Connection lost with the server.");
                     disconnect();
                     readExecutionQueue.shutdownNow();
                 }
-                //notifyObserver(message);
+                notifyObserver(message);
             }
         });
     }
@@ -63,7 +65,7 @@ public class ServerHandler extends Client {
             outputStm.reset();
         } catch (IOException e) {
             disconnect();
-            //notifyObserver(new ErrorMessage(null, "Could not send message."));
+            notifyObserver(new ErrorMessage(null, "Could not send message."));
         }
     }
 
@@ -79,7 +81,7 @@ public class ServerHandler extends Client {
                 socket.close();
             }
         } catch (IOException e) {
-            //notifyObserver(new ErrorMessage(null, "Could not disconnect."));
+            notifyObserver(new ErrorMessage(null, "Could not disconnect."));
         }
     }
 
@@ -91,7 +93,7 @@ public class ServerHandler extends Client {
      */
     public void enablePinger(boolean enabled) {
         if (enabled) {
-            //pinger.scheduleAtFixedRate(() -> sendMessage(new PingMessage()), 0, 1000, TimeUnit.MILLISECONDS);
+            pinger.scheduleAtFixedRate(() -> sendMessage(new PingMessage()), 0, 1000, TimeUnit.MILLISECONDS);
         } else {
             pinger.shutdownNow();
         }

@@ -4,8 +4,7 @@ import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.server.model.AssistantCard;
 
-import java.io.Console;
-import java.io.PrintStream;
+import java.io.*;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
@@ -14,6 +13,7 @@ public class EriantysCLI extends ViewObservable implements View {
 
     private final PrintStream out;
     private static final String CANCEL_INPUT = "User input canceled.";
+    BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
 
 
     /**
@@ -77,14 +77,13 @@ public class EriantysCLI extends ViewObservable implements View {
         String defaultAddress = "127.0.0.1";
         String defaultPort = "12500";
         boolean correctInput;
-        Scanner scanner = new Scanner(System.in);
-        Console cnsl = System.console();
+        //Scanner scanner = new Scanner(System.in);
 
         out.println("The default value of address and port is shown between brackets.");
 
         do{
             out.print("Enter the server address [" + defaultAddress +"]:");
-            String address = scanner.nextLine();
+            String address = nextLine();
 
             if (address.equals("") || address.equals("127.0.0.1")){
                 serverInfo.put("address", defaultAddress);
@@ -98,7 +97,7 @@ public class EriantysCLI extends ViewObservable implements View {
 
         do{
             out.print("Enter the server port [" + defaultPort +"]:");
-            String port = scanner.nextLine();
+            String port = nextLine();
 
             if (port.equals("") || port.equals("12500")){
                 serverInfo.put("port", defaultPort);
@@ -118,12 +117,9 @@ public class EriantysCLI extends ViewObservable implements View {
     @Override
     public void askNickname() {
         out.print("Enter nickname: ");
-        try {
-            String nickname = readLine();
-            notifyObserver(obs -> obs.onUpdateNickname(nickname));
-        } catch (ExecutionException e) {
-            out.println(CANCEL_INPUT);
-        }
+        String nickname = nextLine();
+        notifyObserver(obs -> obs.onUpdateNickname(nickname));
+
     }
 
     public void askPlayersNumber() {
@@ -220,6 +216,18 @@ public class EriantysCLI extends ViewObservable implements View {
 
     public void showGenericMessage(String genericMessage) {
         out.println(genericMessage);
+    }
+
+    public String nextLine(){
+        String s;
+        System.out.print("< ");
+        try {
+            s = console.readLine();
+            return s;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ("DIGIT ERROR");
+        }
     }
 
     @Override

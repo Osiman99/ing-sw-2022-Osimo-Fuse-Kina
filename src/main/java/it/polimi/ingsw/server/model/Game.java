@@ -18,13 +18,16 @@ public class Game extends Observable {
     public List<String> nicknames;
 
 
-
-    public void initGame(){
+    public Game(){
         this.chosenPlayersNumber = chosenPlayersNumber;
         contPlayer = 0;
-        board = Board.getInstance();
         players = new ArrayList<Player>();
         nicknames = new ArrayList<String>();
+        board = Board.getInstance();
+    }
+
+    public void initGame(){
+        board.initBoard();
     }
 
 

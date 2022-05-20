@@ -25,11 +25,14 @@ public class Board extends Observable {
     private int blueCont;
 
 
+    private Board(){
+        game = Game.getInstance();
+    }
+
     /**
      * Board constructor
      */
-    private Board(){
-        game = Game.getInstance();
+    public void initBoard(){
         bag = Bag.getInstance();
         professorsControlledBy = new String[5];
         for (int i = 0; i < 5; i++) {
