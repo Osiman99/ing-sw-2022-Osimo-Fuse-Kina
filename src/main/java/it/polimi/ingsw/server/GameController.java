@@ -26,7 +26,6 @@ public class GameController implements Observer, Serializable {
 
 
     public GameController(){
-        game = Game.getInstance();
         virtualViewMap = Collections.synchronizedMap(new HashMap<>());
         setGameState(GameState.PREGAME);
     }
@@ -54,7 +53,7 @@ public class GameController implements Observer, Serializable {
             game.addPlayer(new Player(nickname));
             game.getPlayers().get(0).setPlayerColor(TowerColor.BLACK);
 
-            //virtualView.showLoginResult(true, true, Game.SERVER_NICKNAME);
+            virtualView.showLoginResult(true, true, Game.SERVER_NICKNAME);
             virtualView.askPlayersNumber();
 
         } else if (virtualViewMap.size() < game.getNumPlayers()) {
@@ -112,6 +111,7 @@ public class GameController implements Observer, Serializable {
             if (game.getPlayers().get(i).getNickname().equals(nicknames.get(0))) {
                 activePlayer = game.getPlayers().get(i);
             }
+        game = Game.getInstance();
         broadcastGenericMessage("All Players are connected. " + activePlayer
                 + " is choosing the Assistant Card...");
 

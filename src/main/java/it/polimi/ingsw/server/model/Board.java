@@ -28,7 +28,7 @@ public class Board extends Observable {
     /**
      * Board constructor
      */
-    public Board(){
+    private Board(){
         game = Game.getInstance();
         bag = Bag.getInstance();
         professorsControlledBy = new String[5];

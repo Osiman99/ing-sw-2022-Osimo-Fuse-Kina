@@ -7,7 +7,7 @@ import java.util.Random;
 /**
  * in this class we have to use the character cards
  */
-public class GameExpert extends Game{
+public class GameExpert extends Game {
 
     private List<CharacterCard> threeChosenCards;
     private Random random;
@@ -15,19 +15,18 @@ public class GameExpert extends Game{
     private int tempRandomInt1;
     private int tempRandomInt2;
 
-/*
-    @Override
-    public void initGame(Game game, List<String> nicknames, int chosenPlayersNumber) {
-        super.initGame(game, nicknames, chosenPlayersNumber);
+
+    public GameExpert(Game game, List<String> nicknames, int chosenPlayersNumber) {
+        super();
         tempRandomInt1 = -1;
         tempRandomInt2 = -1;
         threeChosenCards = new ArrayList<CharacterCard>();
         random = new Random();
         for (int i = 0; i < 3; i++) {
-            if(i == 0){
+            if (i == 0) {
                 randomInt = random.nextInt(11);
                 tempRandomInt2 = randomInt;
-            }else if (i == 1){
+            } else if (i == 1) {
                 tempRandomInt1 = randomInt;
             }
 
@@ -76,9 +75,8 @@ public class GameExpert extends Game{
         }
     }
 
- */
-
     public List<CharacterCard> getThreeChosenCards() {
         return threeChosenCards;
     }
+
 }
