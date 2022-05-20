@@ -43,7 +43,9 @@ public class ServerHandler extends Client {
             while (!readExecutionQueue.isShutdown()) {
                 Message message;
                 try {
+                    System.out.println("checkClient");
                     message = (Message) inputStm.readObject();
+                    System.out.println("checkClient");
                     Client.LOGGER.info("Received: " + message);
                 } catch (IOException | ClassNotFoundException e) {
                     message = new ErrorMessage(null, "Connection lost with the server.");
