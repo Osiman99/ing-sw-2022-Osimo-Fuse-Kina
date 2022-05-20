@@ -26,6 +26,7 @@ public class GameController implements Observer, Serializable {
 
 
     public GameController(){
+        this.game = Game.getInstance();
         virtualViewMap = Collections.synchronizedMap(new HashMap<>());
         setGameState(GameState.PREGAME);
     }
@@ -105,13 +106,13 @@ public class GameController implements Observer, Serializable {
 
 
     public void initGame(){
-        setGameState(GameState.PLAN);
         nicknames = new ArrayList<>(game.getNicknames());
         for (int i = 0; i < game.getNumPlayers(); i++)
             if (game.getPlayers().get(i).getNickname().equals(nicknames.get(0))) {
                 activePlayer = game.getPlayers().get(i);
             }
-        game = Game.getInstance();
+        game.initGame();
+        setGameState(GameState.PLAN);
         broadcastGenericMessage("All Players are connected. " + activePlayer
                 + " is choosing the Assistant Card...");
 

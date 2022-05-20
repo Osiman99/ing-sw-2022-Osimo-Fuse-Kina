@@ -19,7 +19,7 @@ public class Game extends Observable {
 
 
 
-    public Game(){
+    public void initGame(){
         this.chosenPlayersNumber = chosenPlayersNumber;
         contPlayer = 0;
         board = Board.getInstance();

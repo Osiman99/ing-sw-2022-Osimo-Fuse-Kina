@@ -4,11 +4,9 @@ import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.server.model.AssistantCard;
 
+import java.io.Console;
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
@@ -72,14 +70,16 @@ public class EriantysCLI extends ViewObservable implements View {
         String defaultAddress = "127.0.0.1";
         String defaultPort = "12500";
         boolean correctInput;
+        Scanner scanner = new Scanner(System.in);
+        Console cnsl = System.console();
 
         out.println("The default value of address and port is shown between brackets.");
 
         do{
             out.print("Enter the server address [" + defaultAddress +"]:");
-            String address = readLine();
+            String address = scanner.nextLine();
 
-            if (address.equals("")){
+            if (address.equals("") || address.equals("127.0.0.1")){
                 serverInfo.put("address", defaultAddress);
                 correctInput = true;
             }else{
@@ -91,9 +91,9 @@ public class EriantysCLI extends ViewObservable implements View {
 
         do{
             out.print("Enter the server port [" + defaultPort +"]:");
-            String port = readLine();
+            String port = scanner.nextLine();
 
-            if (port.equals("")){
+            if (port.equals("") || port.equals("12500")){
                 serverInfo.put("port", defaultPort);
                 correctInput = true;
             }else {
@@ -102,6 +102,7 @@ public class EriantysCLI extends ViewObservable implements View {
             }
         }while (!correctInput);
 
+        System.out.println(serverInfo);
         notifyObserver(obs -> obs.onUpdateServerInfo(serverInfo));
 
     }
