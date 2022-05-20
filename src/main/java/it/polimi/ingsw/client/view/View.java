@@ -22,10 +22,10 @@ public interface View {
      * Shows to the user if the Login succeeded.
      *
      * @param nicknameAccepted     indicates if the chosen nickname has been accepted.
-     * @param connectionSuccessful indicates if the connection has been successful.
+     * @param connection indicates if the connection has been successful.
      * @param nickname             the nickname of the player to be greeted.
      */
-    void showLoginResult(boolean nicknameAccepted, boolean connectionSuccessful, String nickname);
+    void showLoginResult(boolean nicknameAccepted, boolean connection, String nickname);
 
     void showGenericMessage(String genericMessage);
 

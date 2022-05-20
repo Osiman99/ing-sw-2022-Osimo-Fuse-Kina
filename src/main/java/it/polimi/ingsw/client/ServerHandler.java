@@ -54,9 +54,7 @@ public class ServerHandler extends Client {
     }
 
     /**
-     * Sends a message to the server via socket.
-     *
-     * @param message the message to be sent.
+     * sends a message to the server with socket
      */
     @Override
     public void sendMessage(Message message) {
