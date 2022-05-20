@@ -1,11 +1,14 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.client.view.View;
+import it.polimi.ingsw.network.messages.Message;
+import it.polimi.ingsw.network.messages.PlayerNumberReply;
 import it.polimi.ingsw.server.model.Game;
 
+import java.io.Serializable;
 import java.util.Map;
 
-public class CheckController {
+public class CheckController implements Serializable {
 
     private static final long serialVersionUID = 7413156215358698632L;
 
@@ -39,9 +42,29 @@ public class CheckController {
         return true;
     }
 
+    public boolean verifyReceivedData(Message message) {
 
+        switch (message.getMessageType()) {
+            case LOGIN_REPLY: // server doesn't receive a LOGIN_REPLY.
+                return false;
+            case PLAYERNUMBER_REPLY:
+                return playerNumberReplyCheck(message);
+            case PLAYERNUMBER_REQUEST: // server doesn't receive a GenericErrorMessage.
+                return false;
+            default: // Never should reach this statement.
+                return false;
+        }
+    }
 
+    private boolean playerNumberReplyCheck(Message message) {
+        PlayerNumberReply playerNumberReply = (PlayerNumberReply) message;
 
-
-
+        if (playerNumberReply.getPlayerNumber() < 4 && playerNumberReply.getPlayerNumber() > 1) {
+            return true;
+        } else {
+            VirtualView virtualView = virtualViewMap.get(message.getNickname());
+            virtualView.askPlayersNumber();
+            return false;
+        }
+    }
 }

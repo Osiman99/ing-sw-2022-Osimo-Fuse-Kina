@@ -2,6 +2,8 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.network.messages.Message;
+import it.polimi.ingsw.network.messages.MessageType;
+import it.polimi.ingsw.network.messages.PlayerNumberReply;
 import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.server.model.Game;
 import it.polimi.ingsw.server.model.Player;
@@ -91,14 +93,14 @@ public class GameController implements Observer, Serializable {
     }
 
     private void login(Message receivedMessage){
-        /*if (receivedMessage.getMessageType() == MessageType.PLAYERNUMBER_REPLY) {
-            if (inputController.verifyReceivedData(receivedMessage)) {
+        if (receivedMessage.getMessageType() == MessageType.PLAYERNUMBER_REPLY) {
+            if (checkController.verifyReceivedData(receivedMessage)) {
                 game.setChosenPlayersNumber(((PlayerNumberReply) receivedMessage).getPlayerNumber());
                 broadcastGenericMessage("Waiting for other Players . . .");
             }
         } else {
             Server.LOGGER.warning("Wrong message received from client.");
-        }*/
+        }
     }
 
 
