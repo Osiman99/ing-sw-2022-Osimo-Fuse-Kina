@@ -57,6 +57,10 @@ public class EriantysCLI extends ViewObservable implements View {
         result.add(" (_) _  _  _  _      (_)      (_) _       _ (_) _      (_)         (_)     (_)         (_)           (_)                 (_)           (_)_  _  _  _(_)");
         result.add("(_)(_)(_)(_)(_)     (_)         (_)     (_)(_)(_)     (_)         (_)     (_)         (_)           (_)                 (_)             (_)(_)(_)(_)");
 
+        for(String s:result){
+            System.out.println(s);
+        }
+
         try {
             askServerInfo();
         } catch (ExecutionException e) {
