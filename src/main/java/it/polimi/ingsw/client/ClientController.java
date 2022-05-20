@@ -1,7 +1,9 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.view.View;
+import it.polimi.ingsw.network.messages.LoginRequest;
 import it.polimi.ingsw.network.messages.Message;
+import it.polimi.ingsw.network.messages.PlayerNumberReply;
 import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.observer.ViewObserver;
 import it.polimi.ingsw.server.model.*;
@@ -10,6 +12,10 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+/*
+    this class conncets network and view (cli or gui)
+ */
 
 public class ClientController implements ViewObserver, Observer {
     private final View view;
@@ -26,34 +32,29 @@ public class ClientController implements ViewObserver, Observer {
 
     @Override
     public void onUpdateServerInfo(Map<String, String> serverInfo) {
-        /*
+
         try {
-            client = new ServerHandler(serverInfo.get(), )
-
+            client = new ServerHandler(serverInfo.get("address"), Integer.parseInt(serverInfo.get("port")));
+            client.addObserver(this);
+            client.readMessage();
+            client.enablePinger(true);
+            taskQueue.execute(view::askNickname);
         } catch (IOException e) {
-
+            taskQueue.execute(() -> view.showLoginResult(false, false, this.nickname));
         }
-
-         */
 
     }
 
 
     @Override
     public void onUpdatePlayersNumber(int playersNumber) {
-
+        client.sendMessage(new PlayerNumberReply(this.nickname, playersNumber));
     }
 
-    /**
-     * Sends a message to the server with the updated nickname.
-     * The nickname is also stored locally for later usages.
-     *
-     * @param nickname the nickname to be sent.
-     */
     @Override
     public void onUpdateNickname(String nickname) {
         this.nickname = nickname;
-        //client.sendMessage(new LoginRequest(this.nickname));
+        client.sendMessage(new LoginRequest(this.nickname));
     }
 
 
