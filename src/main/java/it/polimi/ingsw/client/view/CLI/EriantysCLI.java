@@ -135,8 +135,7 @@ public class EriantysCLI extends ViewObservable implements View {
     public void askAssistantCard(List<AssistantCard> deck) {
         //clearCli();
 
-        int AssistantCardId; //
-        // == value
+        int AssistantCardId; //== value
 
         if(deck.size() > 1){
             out.println("Enter one of the available AssistantCardIds : ");

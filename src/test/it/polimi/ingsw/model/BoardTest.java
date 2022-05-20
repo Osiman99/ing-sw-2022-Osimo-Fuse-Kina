@@ -23,13 +23,15 @@ class BoardTest {
 
     @BeforeEach
     void setUp() {
-        List<String> nicknames = new ArrayList<String>();
+        /*List<String> nicknames = new ArrayList<String>();
         students = new ArrayList<Student>();
         nicknames.add("davide");
         nicknames.add("riise");
         nicknames.add("elis");
         game = new Game();
         game.initGame(game, nicknames, 3);
+
+         */
         /*
         game = new Game();
         game.addPlayer(player);

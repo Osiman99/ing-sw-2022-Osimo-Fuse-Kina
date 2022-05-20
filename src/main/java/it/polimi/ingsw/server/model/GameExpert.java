@@ -15,7 +15,7 @@ public class GameExpert extends Game{
     private int tempRandomInt1;
     private int tempRandomInt2;
 
-
+/*
     @Override
     public void initGame(Game game, List<String> nicknames, int chosenPlayersNumber) {
         super.initGame(game, nicknames, chosenPlayersNumber);
@@ -75,6 +75,8 @@ public class GameExpert extends Game{
             }
         }
     }
+
+ */
 
     public List<CharacterCard> getThreeChosenCards() {
         return threeChosenCards;
