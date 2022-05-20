@@ -25,10 +25,6 @@ public class Board extends Observable {
     private int blueCont;
 
 
-    private Board(){
-        game = Game.getInstance();
-    }
-
     /**
      * Board constructor
      */
@@ -124,6 +120,10 @@ public class Board extends Observable {
 
     public String[] getProfessorsControlledBy() {
         return professorsControlledBy;
+    }
+
+    public void setGameInstance(Game instance) {
+        game = instance;
     }
 
     /**

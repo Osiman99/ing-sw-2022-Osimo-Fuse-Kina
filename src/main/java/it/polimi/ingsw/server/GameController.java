@@ -5,6 +5,7 @@ import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.network.messages.MessageType;
 import it.polimi.ingsw.network.messages.PlayerNumberReply;
 import it.polimi.ingsw.observer.Observer;
+import it.polimi.ingsw.server.model.Board;
 import it.polimi.ingsw.server.model.Game;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.TowerColor;
@@ -49,7 +50,7 @@ public class GameController implements Observer, Serializable {
     }
 
     public void loginHandler(String nickname, VirtualView virtualView) {
-
+        game.getBoard().setGameInstance(game);
         if (virtualViewMap.isEmpty()) { // First player logged. Ask number of players.
             addVirtualView(nickname, virtualView);
             game.addPlayer(new Player(nickname));
