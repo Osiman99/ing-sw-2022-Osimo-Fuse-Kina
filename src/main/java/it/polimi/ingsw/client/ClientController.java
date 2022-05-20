@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.view.View;
+import it.polimi.ingsw.network.messages.ErrorMessage;
 import it.polimi.ingsw.network.messages.LoginRequest;
 import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.network.messages.PlayerNumberReply;
@@ -90,6 +91,16 @@ public class ClientController implements ViewObserver, Observer {
 
     @Override
     public void update(Message message) {
+        switch(message.getMessageType()) {
+            case PLAYERNUMBER_REQUEST:
+                taskQueue.execute(view::askPlayersNumber);
+                break;
+            case ERROR:
+                /*ErrorMessage em = (ErrorMessage) message;
+                view.showErrorAndExit(em.getError());
+                break;
 
+                 */
+        }
     }
 }
