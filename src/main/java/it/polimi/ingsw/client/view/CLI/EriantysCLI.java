@@ -71,6 +71,8 @@ public class EriantysCLI extends ViewObservable implements View {
 
 
     public void askServerInfo() throws ExecutionException {
+
+        System.out.println(ANSIColor.GREEN_BOLD_BRIGHT);
         Map<String, String> serverInfo = new HashMap<>();
         String defaultAddress = "127.0.0.1";
         String defaultPort = "12500";
