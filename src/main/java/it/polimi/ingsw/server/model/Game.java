@@ -28,6 +28,9 @@ public class Game extends Observable {
 
     public void initGame(){
         board.initBoard();
+        for (int i = 0; i < chosenPlayersNumber; i++) {
+            players.get(i).initPlayer();
+        }
     }
 
 

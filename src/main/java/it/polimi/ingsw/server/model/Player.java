@@ -5,20 +5,22 @@ public class Player {
     private TowerColor playerColor;
     private int supremacyCont;
     private final String nickname;
-    private final Plank plank;
+    private Plank plank;
     private PlayerState state;
-    private final AssistantDeck deck;
+    private AssistantDeck deck;
     private int numCoins;
     private int chosenCardValue;
     private Game game;
 
     public Player(String nickname){
         game = Game.getInstance();
-        numCoins = 1;
         this.nickname = nickname;
+        numCoins = 1;
         supremacyCont = 0;
-        plank = new Plank();
         state = PlayerState.SLEEP;
+    }
+    public void initPlayer(){
+        plank = new Plank();
         deck = new AssistantDeck();
     }
 

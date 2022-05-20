@@ -124,14 +124,25 @@ public class EriantysCLI extends ViewObservable implements View {
 
     public void askPlayersNumber() {
         int playersNumber;
-        String question = "How many players are going to play? (You can choose between 2 or 3 players): ";
+        out.print("How many players are going to play? (You can choose between 2 or 3 players): ");
+        playersNumber = Integer.parseInt(nextLine());
+        do {
+            try {
+                if (playersNumber < 2 || playersNumber > 3) {
+                    out.println("Invalid number! Please try again.\n");
+                }
+            } catch (NumberFormatException e) {
+                out.println("Invalid input! Please try again.\n");
+            }
+        } while (playersNumber < 2 || playersNumber > 3);
+        notifyObserver(obs -> obs.onUpdatePlayersNumber(playersNumber));
 
-        try {
+        /*try {
             playersNumber = numberInput(2, 3, null, question);
             notifyObserver(obs -> obs.onUpdatePlayersNumber(playersNumber));
         } catch (ExecutionException e) {
             out.println((CANCEL_INPUT));
-        }
+        }*/
     }
 
 
