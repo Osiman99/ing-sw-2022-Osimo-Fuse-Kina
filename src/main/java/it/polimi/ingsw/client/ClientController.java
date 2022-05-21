@@ -94,7 +94,7 @@ public class ClientController implements ViewObserver, Observer {
                 LoginReply loginReply = (LoginReply) message;
                 taskQueue.execute(() -> view.showLoginResult(loginReply.isNicknameAccepted(), loginReply.isConnectionSuccessful(), this.nickname));
                 break;
-            case ASSISTANTCARD_REQUEST:
+            case ASSISTANT_CARD:
                 AssistantCardRequest assistantCardRequest = (AssistantCardRequest) message;
                 taskQueue.execute(()-> view.askAssistantCard(assistantCardRequest.getDeck()));
             /*case ERROR:
