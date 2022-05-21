@@ -20,6 +20,6 @@ public class GenericMessage extends Message {
 
     @Override
     public String toString() {
-        return "GenericMessage: Nickname " + getNickname() + "| Message= " + message;
+        return message;
     }
 }
