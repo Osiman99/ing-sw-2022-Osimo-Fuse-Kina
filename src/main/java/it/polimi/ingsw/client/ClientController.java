@@ -1,10 +1,7 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.view.View;
-import it.polimi.ingsw.network.messages.ErrorMessage;
-import it.polimi.ingsw.network.messages.LoginRequest;
-import it.polimi.ingsw.network.messages.Message;
-import it.polimi.ingsw.network.messages.PlayerNumberReply;
+import it.polimi.ingsw.network.messages.*;
 import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.observer.ViewObserver;
 import it.polimi.ingsw.server.model.*;
@@ -101,6 +98,13 @@ public class ClientController implements ViewObserver, Observer {
                 break;
 
                  */
+            case GENERIC_MESSAGE:
+                taskQueue.execute(() -> view.showGenericMessage(((GenericMessage) message).getMessage()));
+                break;
+            case LOGIN_REPLY:
+                LoginReply loginReply = (LoginReply) message;
+                taskQueue.execute(() -> view.showLoginResult(loginReply.isNicknameAccepted(), loginReply.isConnectionSuccessful(), this.nickname));
+                break;
         }
     }
 }

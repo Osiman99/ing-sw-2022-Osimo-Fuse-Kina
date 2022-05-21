@@ -50,15 +50,10 @@ public class ClientHandlerConcrete implements ClientHandler, Runnable {
 
     private void handleClientConnection() throws IOException {
         Server.LOGGER.info("Client connected from " + client.getInetAddress());
-        System.out.println("check 1");
         try {
-            System.out.println("check 2");
             while (!Thread.currentThread().isInterrupted()) {
-                System.out.println("check 3");
                 synchronized (inputLock) {
-                    System.out.println("check 4");
                     Message message = (Message) input.readObject();
-                    System.out.println("check 5");
 
                     if (message != null && message.getMessageType() != MessageType.PING) {
                         if (message.getMessageType() == MessageType.LOGIN_REQUEST) {

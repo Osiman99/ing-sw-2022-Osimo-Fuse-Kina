@@ -44,7 +44,6 @@ public class ServerHandler extends Client {
                 Message message;
                 try {
                     message = (Message) inputStm.readObject();
-                    System.out.println(message);
                     //Client.LOGGER.info("Received: " + message);
                 } catch (IOException | ClassNotFoundException e) {
                     message = new ErrorMessage(null, "Connection lost with the server.");
