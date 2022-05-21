@@ -208,6 +208,11 @@ public class GameController implements Observer, Serializable {
         for (int i = 0; i < game.getPlayers().size(); i++){
             if (game.getPlayers().get(i).getNickname().equals(activePlayer.getNickname())) {
                 activePlayer = game.getPlayers().get((i + 1) % game.getPlayers().size());
+                turnCont++;
+                if (turnCont == game.getPlayers().size()){
+                    state = GameState.ACTION;
+                    turnCont = 0;
+                }
             }
         }
     }
