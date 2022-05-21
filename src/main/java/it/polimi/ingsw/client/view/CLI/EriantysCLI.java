@@ -165,7 +165,7 @@ public class EriantysCLI extends ViewObservable implements View {
         clearCli();
 
         if (nicknameAccepted && connection) {
-            out.println("Hi, " + nickname + "! You connected to the server.");
+            out.println("\n\n\n\n\n\n\n\n\n\nHi, " + nickname + "! You connected to the server.");
         } else if (connection) {
             askNickname();
         } else if (nicknameAccepted) {

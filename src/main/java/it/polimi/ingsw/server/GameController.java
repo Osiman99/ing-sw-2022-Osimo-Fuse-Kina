@@ -40,6 +40,7 @@ public class GameController implements Observer, Serializable {
                 login(receivedMessage);
                 break;
             case PLAN:
+                plan(receivedMessage);
                 break;
             case ACTION:
                 break;
@@ -186,6 +187,16 @@ public class GameController implements Observer, Serializable {
         this.virtualViewMap = Collections.synchronizedMap(new HashMap<>());
         this.checkController = new CheckController(virtualViewMap, this);
         setGameState(GameState.PREGAME);
+    }
+
+    public void plan(Message receivedMessage){
+        if (receivedMessage.getMessageType() == MessageType.ASSISTANT_CARD){
+
+        }
+    }
+
+    public void turnManage(){
+
     }
 
 
