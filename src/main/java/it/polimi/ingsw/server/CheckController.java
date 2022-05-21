@@ -1,9 +1,12 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.client.view.View;
+import it.polimi.ingsw.network.messages.AssistantCardResult;
 import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.network.messages.PlayerNumberReply;
+import it.polimi.ingsw.server.model.AssistantCard;
 import it.polimi.ingsw.server.model.Game;
+import it.polimi.ingsw.server.model.Player;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -51,6 +54,9 @@ public class CheckController implements Serializable {
                 return playerNumberReplyCheck(message);
             case PLAYERNUMBER_REQUEST: // server doesn't receive a GenericErrorMessage.
                 return false;
+            case ASSISTANTCARD_REQUEST:
+                return assistantCardResultCheck(message);
+
             default: // Never should reach this statement.
                 return false;
         }
@@ -66,5 +72,31 @@ public class CheckController implements Serializable {
             virtualView.askPlayersNumber();
             return false;
         }
+    }
+
+    private boolean assistantCardResultCheck(Message message) {
+        AssistantCardResult assistantCardResult = (AssistantCardResult) message;
+        try {
+            for (Player p : game.getPlayers()) {
+                if (p.getNickname().equals(assistantCardResult.getNickname())) {
+                    for (AssistantCard assistantCard : p.getDeck().getDeck()) {
+                        if (assistantCardResult.getCard() == assistantCard.getValue()) {
+                            return true;
+                        } else {
+                            VirtualView virtualView = virtualViewMap.get(message.getNickname());
+                            virtualView.askAssistantCard(p.getDeck().getDeck());
+                            return false;
+                        }
+                    }
+                } else {
+                    VirtualView virtualView = virtualViewMap.get(message.getNickname());
+                    virtualView.showGenericMessage("ERROR");
+                    return false;
+                }
+            }
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
+        return false;
     }
 }

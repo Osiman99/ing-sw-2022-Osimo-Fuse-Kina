@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.client.view.View;
+import it.polimi.ingsw.network.messages.AssistantCardResult;
 import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.network.messages.MessageType;
 import it.polimi.ingsw.network.messages.PlayerNumberReply;
@@ -24,6 +25,7 @@ public class GameController implements Observer, Serializable {
     private CheckController checkController;
     private static final String STR_INVALID_STATE = "Invalid game state!";
     public static final String SAVED_GAME_FILE = "match.bless";
+    public int turnCont;
 
 
     public GameController(){
@@ -31,6 +33,7 @@ public class GameController implements Observer, Serializable {
         virtualViewMap = Collections.synchronizedMap(new HashMap<>());
         checkController = new CheckController(virtualViewMap, this);
         setGameState(GameState.PREGAME);
+        turnCont = 0;
     }
 
     public void switchState(Message receivedMessage){
@@ -190,13 +193,23 @@ public class GameController implements Observer, Serializable {
     }
 
     public void plan(Message receivedMessage){
-        if (receivedMessage.getMessageType() == MessageType.ASSISTANT_CARD){
-
+        if (receivedMessage.getMessageType() == MessageType.ASSISTANTCARD_RESULT){
+            if (checkController.verifyReceivedData(receivedMessage)) {
+                activePlayer.chooseAssistantCard(((AssistantCardResult) receivedMessage).getCard());
+                broadcastGenericMessage(activePlayer.getNickname() + "chose the Card number " + ((AssistantCardResult) receivedMessage).getCard());
+                planTurnManager();
+            }
+        }else{
+            Server.LOGGER.warning("Wrong message received from client.");
         }
     }
 
-    public void turnManage(){
-
+    public void planTurnManager(){
+        for (int i = 0; i < game.getPlayers().size(); i++){
+            if (game.getPlayers().get(i).getNickname().equals(activePlayer.getNickname())) {
+                activePlayer = game.getPlayers().get((i + 1) % game.getPlayers().size());
+            }
+        }
     }
 
 

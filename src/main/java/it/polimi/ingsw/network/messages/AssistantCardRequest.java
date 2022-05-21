@@ -12,7 +12,7 @@ public class AssistantCardRequest extends Message{
     //
     //
 
-    public AssistantCardRequest(String nickname, List<AssistantCard> deck) {
+    public AssistantCardRequest(List<AssistantCard> deck) {
         super(Game.SERVER_NICKNAME, MessageType.ASSISTANT_CARD);
         this.deck = deck;
     }

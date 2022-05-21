@@ -23,7 +23,7 @@ public interface ViewObserver {
 
     void onUpdateServerInfo(Map<String, String> serverInfo);
 
-    void onUpdateAssistantCard(List<AssistantCard> deck);
+    void onUpdateAssistantCard(int card);
 
     void onUpdateMoveStudentToDiningRoom(Student student);
 

@@ -57,8 +57,8 @@ public class ClientController implements ViewObserver, Observer {
     }
 
     @Override
-    public void onUpdateAssistantCard(List<AssistantCard> deck) {
-        client.sendMessage(new AssistantCardRequest(this.nickname, deck));
+    public void onUpdateAssistantCard(int card) {
+        client.sendMessage(new AssistantCardResult(this.nickname, card));
     }
 
     @Override
@@ -94,7 +94,7 @@ public class ClientController implements ViewObserver, Observer {
                 LoginReply loginReply = (LoginReply) message;
                 taskQueue.execute(() -> view.showLoginResult(loginReply.isNicknameAccepted(), loginReply.isConnectionSuccessful(), this.nickname));
                 break;
-            case ASSISTANT_CARD:
+            case ASSISTANTCARD_REQUEST:
                 AssistantCardRequest assistantCardRequest = (AssistantCardRequest) message;
                 taskQueue.execute(()-> view.askAssistantCard(assistantCardRequest.getDeck()));
             /*case ERROR:
