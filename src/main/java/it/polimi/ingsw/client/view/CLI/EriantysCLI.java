@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.view.CLI;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.server.model.AssistantCard;
+import it.polimi.ingsw.server.model.StudentColor;
 
 import java.io.*;
 import java.util.*;
@@ -47,20 +48,29 @@ public class EriantysCLI extends ViewObservable implements View {
 
 
     public void welcome() {
-        ArrayList<String> result = new ArrayList<>();
-        result.add(ANSIColor.PURPLE_BOLD_BRIGHT);
-        result.add("      (_)(_)(_)(_)(_)     (_)(_)(_)(_) _      (_)(_)(_)          _(_)_          (_) _       (_)     (_)(_)(_)(_)(_)     (_)_       _(_)      _(_)(_)(_)(_)_");
-        result.add("     (_)                 (_)         (_)        (_)           _(_) (_)_        (_)(_)_     (_)           (_)             (_)_   _(_)       (_)          (_)");
-        result.add("    (_) _  _            (_) _  _  _ (_)        (_)         _(_)     (_)_      (_)  (_)_   (_)           (_)               (_)_(_)         (_)_  _  _  _");
-        result.add("   (_)(_)(_)           (_)(_)(_)(_)           (_)        (_) _  _  _ (_)     (_)    (_)_ (_)           (_)                 (_)             (_)(_)(_)(_)_");
-        result.add("  (_)                 (_)   (_) _            (_)        (_)(_)(_)(_)(_)     (_)      (_)(_)           (_)                 (_)            _           (_)");
-        result.add(" (_) _  _  _  _      (_)      (_) _       _ (_) _      (_)         (_)     (_)         (_)           (_)                 (_)           (_)_  _  _  _(_)");
-        result.add("(_)(_)(_)(_)(_)     (_)         (_)     (_)(_)(_)     (_)         (_)     (_)         (_)           (_)                 (_)             (_)(_)(_)(_)");
-        result.add(ANSIColor.RESET);
+        ArrayList<String> welcome = new ArrayList<>();
+        welcome.add(ANSIColor.PURPLE_BOLD_BRIGHT);
+        welcome.add("      (_)(_)(_)(_)(_)     (_)(_)(_)(_) _      (_)(_)(_)          _(_)_          (_) _       (_)     (_)(_)(_)(_)(_)     (_)_       _(_)      _(_)(_)(_)(_)_");
+        welcome.add("     (_)                 (_)         (_)        (_)           _(_) (_)_        (_)(_)_     (_)           (_)             (_)_   _(_)       (_)          (_)");
+        welcome.add("    (_) _  _            (_) _  _  _ (_)        (_)         _(_)     (_)_      (_)  (_)_   (_)           (_)               (_)_(_)         (_)_  _  _  _");
+        welcome.add("   (_)(_)(_)           (_)(_)(_)(_)           (_)        (_) _  _  _ (_)     (_)    (_)_ (_)           (_)                 (_)             (_)(_)(_)(_)_");
+        welcome.add("  (_)                 (_)   (_) _            (_)        (_)(_)(_)(_)(_)     (_)      (_)(_)           (_)                 (_)            _           (_)");
+        welcome.add(" (_) _  _  _  _      (_)      (_) _       _ (_) _      (_)         (_)     (_)         (_)           (_)                 (_)           (_)_  _  _  _(_)");
+        welcome.add("(_)(_)(_)(_)(_)     (_)         (_)     (_)(_)(_)     (_)         (_)     (_)         (_)           (_)                 (_)             (_)(_)(_)(_)");
+        welcome.add(ANSIColor.RESET);
 
-        for(String s:result){
-            System.out.println(s);
+        for(String w:welcome){
+            System.out.println(w);
         }
+
+
+        ArrayList<StudentColor> stampaNuvola = new ArrayList<>();
+        stampaNuvola.add(StudentColor.YELLOW);
+        stampaNuvola.add(StudentColor.RED);
+        stampaNuvola.add(StudentColor.BLUE);
+        stampaNuvola.add(StudentColor.PINK);
+        cloud(4, stampaNuvola);
+
 
         try {
             askServerInfo();
@@ -68,6 +78,49 @@ public class EriantysCLI extends ViewObservable implements View {
             out.println(CANCEL_INPUT);
         }
     }
+
+    public void cloud(int cloudSize, ArrayList<StudentColor> students){
+
+        ArrayList<String> cloud = new ArrayList<>();
+
+        ArrayList<String> coloredStudents = new ArrayList<>();
+
+
+        for(int i = 0 ; i < cloudSize; i++){
+            if(students.size() >= 1){
+                switch (students.get(i)){
+                    case YELLOW: coloredStudents.add(ANSIColor.YELLOW_BOLD_BRIGHT+ "O" +ANSIColor.RESET); break;
+                    case RED: coloredStudents.add(ANSIColor.RED+ "O" +ANSIColor.RESET); break;
+                    case PINK: coloredStudents.add(ANSIColor.PURPLE_BOLD_BRIGHT+ "O" +ANSIColor.RESET); break;
+                    case BLUE: coloredStudents.add(ANSIColor.BLUE+ "O" +ANSIColor.RESET); break;
+                    case GREEN: coloredStudents.add(ANSIColor.GREEN+ "O" +ANSIColor.RESET); break;
+                }
+            }else
+            {
+                for (int j=0; j <= 3; j++){
+                    coloredStudents.add(" ");
+                }
+            }
+        }
+
+
+        if(cloudSize==3) {
+            cloud.add(" +---------------+");
+            cloud.add(" +       " + coloredStudents.get(2) + "       +");
+            cloud.add(" +     "+coloredStudents.get(1)+"  "+coloredStudents.get(0)+"      +");
+            cloud.add(" +---------------+");
+        }else if(cloudSize==4){
+            cloud.add(" +---------------+");
+            cloud.add(" +      "+coloredStudents.get(2)+" "+coloredStudents.get(3)+"      +");
+            cloud.add(" +      "+coloredStudents.get(1)+" "+coloredStudents.get(0)+"      +");
+            cloud.add(" +---------------+");
+        }
+        for(String c:cloud){
+            System.out.println(c);
+        }
+
+    }
+
 
 
     public void askServerInfo() throws ExecutionException {
