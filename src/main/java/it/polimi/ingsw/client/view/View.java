@@ -30,4 +30,5 @@ public interface View {
     void showGenericMessage(String genericMessage);
 
     void showDisconnectionMessage(String nicknameDisconnected, String value);
+
 }
