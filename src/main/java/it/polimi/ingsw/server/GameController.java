@@ -88,9 +88,13 @@ public class GameController implements Observer, Serializable {
                     initGame();
                 }*/
                 initGame();
+            }else{
+                if (virtualViewMap.size() != 1){
+                    virtualView.showGenericMessage("Waiting for other players...");
+                }
             }
         } else {
-            //virtualView.showLoginResult(true, false, Game.SERVER_NICKNAME);
+            virtualView.showLoginResult(true, false, Game.SERVER_NICKNAME);
         }
     }
 
@@ -115,7 +119,7 @@ public class GameController implements Observer, Serializable {
             }
         game.initGame();
         setGameState(GameState.PLAN);
-        broadcastGenericMessage("All Players are connected. " + activePlayer
+        broadcastGenericMessage("All Players are connected. " + activePlayer.getNickname()
                 + " is choosing the Assistant Card...");
 
         VirtualView virtualView = virtualViewMap.get(activePlayer);
