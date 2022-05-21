@@ -2,6 +2,7 @@ package it.polimi.ingsw.observer;
 
 import it.polimi.ingsw.server.model.*;
 
+import java.util.List;
 import java.util.Map;
 
 public interface ViewObserver {
@@ -22,9 +23,7 @@ public interface ViewObserver {
 
     void onUpdateServerInfo(Map<String, String> serverInfo);
 
-    void onUpdateCreateMatch(String nickname, int numOfPlayers);
-
-    void onUpdateAssistantCard(AssistantCard card);
+    void onUpdateAssistantCard(List<AssistantCard> deck);
 
     void onUpdateMoveStudentToDiningRoom(Student student);
 

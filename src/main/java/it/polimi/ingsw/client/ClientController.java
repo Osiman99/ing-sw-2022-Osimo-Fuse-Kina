@@ -7,6 +7,7 @@ import it.polimi.ingsw.observer.ViewObserver;
 import it.polimi.ingsw.server.model.*;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -55,15 +56,9 @@ public class ClientController implements ViewObserver, Observer {
         client.sendMessage(new LoginRequest(this.nickname));
     }
 
-
     @Override
-    public void onUpdateCreateMatch(String nickname, int numOfPlayers) {
-
-    }
-
-    @Override
-    public void onUpdateAssistantCard(AssistantCard card) {
-
+    public void onUpdateAssistantCard(List<AssistantCard> deck) {
+        client.sendMessage(new AssistantCardRequest(this.nickname, deck));
     }
 
     @Override
@@ -92,12 +87,6 @@ public class ClientController implements ViewObserver, Observer {
             case PLAYERNUMBER_REQUEST:
                 taskQueue.execute(view::askPlayersNumber);
                 break;
-            case ERROR:
-                /*ErrorMessage em = (ErrorMessage) message;
-                view.showErrorAndExit(em.getError());
-                break;
-
-                 */
             case GENERIC_MESSAGE:
                 taskQueue.execute(() -> view.showGenericMessage(((GenericMessage) message).getMessage()));
                 break;
@@ -105,6 +94,14 @@ public class ClientController implements ViewObserver, Observer {
                 LoginReply loginReply = (LoginReply) message;
                 taskQueue.execute(() -> view.showLoginResult(loginReply.isNicknameAccepted(), loginReply.isConnectionSuccessful(), this.nickname));
                 break;
+            case ASSISTANT_CARD:
+                AssistantCardRequest assistantCardRequest = (AssistantCardRequest) message;
+                taskQueue.execute(()-> view.askAssistantCard(assistantCardRequest.getDeck()));
+            /*case ERROR:
+                ErrorMessage em = (ErrorMessage) message;
+                view.showErrorAndExit(em.getError());
+                break;
+             */
         }
     }
 }
