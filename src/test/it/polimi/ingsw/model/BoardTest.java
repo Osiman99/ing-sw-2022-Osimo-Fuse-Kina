@@ -127,7 +127,7 @@ class BoardTest {
 
         //salvo l'indice della nuova isola attiva
         int j=0;
-        for(; j<game.getBoard().getIslands().size(); j++)
+        for(; j<game.getBoard().getIslands().size()-1; j++)
             if(game.getBoard().getIslands().get(j).isMotherNature())
                 break;
         assertEquals(game.getBoard().getIslands().get(i+randomInt), game.getBoard().getIslands().get(j));
