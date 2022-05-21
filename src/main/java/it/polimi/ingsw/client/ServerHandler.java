@@ -7,6 +7,7 @@ import it.polimi.ingsw.network.messages.PingMessage;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
@@ -16,7 +17,6 @@ import java.util.concurrent.TimeUnit;
 
 public class ServerHandler extends Client {
     private final Socket socket;
-
     private final ObjectOutputStream outputStm;
     private final ObjectInputStream inputStm;
     private final ExecutorService readExecutionQueue;
@@ -44,7 +44,8 @@ public class ServerHandler extends Client {
                 Message message;
                 try {
                     message = (Message) inputStm.readObject();
-                    Client.LOGGER.info("Received: " + message);
+                    System.out.println(message);
+                    //Client.LOGGER.info("Received: " + message);
                 } catch (IOException | ClassNotFoundException e) {
                     message = new ErrorMessage(null, "Connection lost with the server.");
                     disconnect();
