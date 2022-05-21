@@ -23,44 +23,18 @@ class BoardTest {
 
     @BeforeEach
     void setUp() {
-        /*List<String> nicknames = new ArrayList<String>();
+        List<String> nicknames = new ArrayList<String>();
         students = new ArrayList<Student>();
         nicknames.add("davide");
         nicknames.add("riise");
         nicknames.add("elis");
-        game = new Game();
-        game.initGame(game, nicknames, 3);
-
-         */
-        /*
-        game = new Game();
-        game.addPlayer(player);
-        red = StudentColor.RED;
-        if (game.getNumPlayers() == 2) {
-            for (int i = 0; i < 2; i++) {
-                cloud = new Cloud();
-                game.getBoard().addCloud(cloud);
-                for (int j = 0; j < 3; j++) {
-                    student = new Student(red);
-                    game.getBoard().getBag().addStudent(student);
-                }
-            }
-        }else if (game.getNumPlayers() == 3) {
-            for (int i = 0; i < 3; i++) {
-                cloud = new Cloud();
-                game.getBoard().addCloud(cloud);
-                for (int j = 0; j < 4; j++) {
-                    student = new Student(red);
-                    game.getBoard().getBag().addStudent(student);
-                }
-            }
-
-        }
-    */
+        game = Game.getInstance();
+        game.initGame();
     }
 
     @AfterEach
     void tearDown() {
+        Game.resetInstance();
     }
 
     @Test

@@ -161,12 +161,12 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
     @Override
-    public void showLoginResult(boolean nicknameAccepted, boolean connectionSuccessful, String nickname) {
+    public void showLoginResult(boolean nicknameAccepted, boolean connection, String nickname) {
         clearCli();
 
-        if (nicknameAccepted && connectionSuccessful) {
+        if (nicknameAccepted && connection) {
             out.println("Hi, " + nickname + "! You connected to the server.");
-        } else if (connectionSuccessful) {
+        } else if (connection) {
             askNickname();
         } else if (nicknameAccepted) {
             out.println("Max players reached. Connection refused.");
