@@ -97,11 +97,14 @@ public class ClientController implements ViewObserver, Observer {
             case ASSISTANTCARD_REQUEST:
                 AssistantCardRequest assistantCardRequest = (AssistantCardRequest) message;
                 taskQueue.execute(()-> view.askAssistantCard(assistantCardRequest.getDeck()));
-            /*case ERROR:
-                ErrorMessage em = (ErrorMessage) message;
-                view.showErrorAndExit(em.getError());
                 break;
-             */
+            /*case ERROR:
+                ErrorMessage errorMessage = (ErrorMessage) message;
+                view.showErrorAndQuit(errorMessage.getError());
+                break;
+                */
+            default:
+                throw new IllegalStateException("Unexpected value: " + message.getMessageType());
         }
     }
 }

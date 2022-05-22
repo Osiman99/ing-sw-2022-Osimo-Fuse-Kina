@@ -31,4 +31,6 @@ public interface View {
 
     void showDisconnectionMessage(String nicknameDisconnected, String value);
 
+    //void showErrorAndQuit(String error);
+
 }
