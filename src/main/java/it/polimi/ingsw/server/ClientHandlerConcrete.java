@@ -97,6 +97,8 @@ public class ClientHandlerConcrete implements ClientHandler, Runnable {
     public void sendMessage(Message message) {
         try {
             synchronized (outputLock) {
+                System.out.println("sono appena prima della write");
+                System.out.println(message);
                 output.writeObject(message);
                 output.reset();
                 Server.LOGGER.info(() -> "Sent: " + message);
