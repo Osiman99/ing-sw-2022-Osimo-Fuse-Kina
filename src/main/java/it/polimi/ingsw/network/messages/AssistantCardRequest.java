@@ -9,12 +9,17 @@ import java.util.List;
 public class AssistantCardRequest extends Message{
     private static final long serialVersionUID = 3050646401315283892L;
     private final List<AssistantCard> deck;
+    private List<String> cardValueList;
     //
     //
 
     public AssistantCardRequest(List<AssistantCard> deck) {
         super(Game.SERVER_NICKNAME, MessageType.ASSISTANTCARD_REQUEST);
         this.deck = deck;
+        cardValueList = new ArrayList<String>();
+        for (int i = 0; i < deck.size(); i++){
+            cardValueList.add(Integer.toString(deck.get(i).getValue()));
+        }
     }
 
     public List<AssistantCard> getDeck() {
@@ -22,7 +27,7 @@ public class AssistantCardRequest extends Message{
     }
 
     public String toString(){
-        return "Assistant Card List: " + deck;
+        return "Assistant Card List: " + cardValueList;
     }
 
 }

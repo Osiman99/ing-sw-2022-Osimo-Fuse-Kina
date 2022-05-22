@@ -102,6 +102,7 @@ public class ClientHandlerConcrete implements ClientHandler, Runnable {
                 Server.LOGGER.info(() -> "Sent: " + message);
             }
         } catch (IOException e) {
+            System.out.println("NOOOOOOOOO");
             Server.LOGGER.severe(e.getMessage());
             disconnect();
         }
