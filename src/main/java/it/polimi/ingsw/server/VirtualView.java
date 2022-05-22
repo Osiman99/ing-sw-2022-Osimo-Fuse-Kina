@@ -46,7 +46,7 @@ public class VirtualView implements View, Observer {
 
     @Override
     public void askAssistantCard(List<AssistantCard> deck) {
-
+        clientHandler.sendMessage(new AssistantCardRequest(deck));
     }
 
     @Override

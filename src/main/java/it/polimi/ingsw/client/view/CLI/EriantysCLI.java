@@ -203,14 +203,10 @@ public class EriantysCLI extends ViewObservable implements View {
     @Override
     public void askAssistantCard(List<AssistantCard> deck) {
         //clearCli();
-
+        System.out.println(deck);
         int AssistantCardId; //== value
 
-        if(deck.size() > 1){
-            out.println("Enter one of the available AssistantCardIds : ");
-        }else if (deck.size() == 1){
-            out.println("You're the last player, your only AssistantCardId is: ");
-        }
+        out.println("Enter one of the available AssistantCardIds : ");
         AssistantCardId= Integer.parseInt(nextLine());
         notifyObserver(obs -> obs.onUpdateAssistantCard(AssistantCardId));
     }
