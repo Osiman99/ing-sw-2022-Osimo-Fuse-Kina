@@ -5,6 +5,7 @@ import it.polimi.ingsw.network.messages.*;
 import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.server.ClientHandler;
 import it.polimi.ingsw.server.model.AssistantCard;
+import it.polimi.ingsw.server.model.Game;
 
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class VirtualView implements View, Observer {
     @Override
     public void askAssistantCard(List<AssistantCard> deck) {
         System.out.println("l'ask la faccio");
-        clientHandler.sendMessage(new AssistantCardRequest(deck));
+        clientHandler.sendMessage(new AssistantCardRequest(Game.SERVER_NICKNAME, deck));
     }
 
     @Override
@@ -58,7 +59,7 @@ public class VirtualView implements View, Observer {
 
     @Override
     public void askNickname() {
-        //clientHandler.sendMessage(new LoginReply(false, true));
+        clientHandler.sendMessage(new LoginReply(false, true));
     }
 
     /**
