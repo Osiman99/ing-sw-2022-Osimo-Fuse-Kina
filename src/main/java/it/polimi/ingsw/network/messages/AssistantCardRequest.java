@@ -17,9 +17,10 @@ public class AssistantCardRequest extends Message{
         super(nickname, MessageType.ASSISTANTCARD_REQUEST);
         this.deck = deck;
         cardValueList = new ArrayList<String>();
-        for (int i = 0; i < deck.size(); i++){
+        for (int i = 0; i < deck.size(); i++)
             cardValueList.add(Integer.toString(deck.get(i).getValue()));
-        }
+
+
     }
 
     public List<AssistantCard> getDeck() {

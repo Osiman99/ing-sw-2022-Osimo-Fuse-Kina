@@ -203,10 +203,13 @@ public class EriantysCLI extends ViewObservable implements View {
     @Override
     public void askAssistantCard(List<AssistantCard> deck) {
         //clearCli();
-        System.out.println(deck);
+        List<String> cardValueList= new ArrayList<String>();
+        for (int i = 0; i < deck.size(); i++)
+            cardValueList.add(Integer.toString(deck.get(i).getValue()));
+
         int AssistantCardValue; //== value
 
-        out.print("Enter one of the available AssistantCard Value : ");
+        out.println("Enter one of the available AssistantCard Value : " + cardValueList);
         AssistantCardValue= Integer.parseInt(nextLine());
         notifyObserver(obs -> obs.onUpdateAssistantCard(AssistantCardValue));
     }
@@ -230,6 +233,43 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
 
+    /**
+     * Asks the user for a input number. The number must be between minValue and maxValue.
+     * A wrong number (outside the range) or a non-number will result in a new request of the input.
+     * A forbidden list of numbers inside the range can be set through jumpList parameter.
+     * An output question can be set via question parameter.
+     *
+     * @param minValue the minimum value which can be inserted (included).
+     * @param maxValue the maximum value which can be inserted (included).
+     * @param jumpList a list of forbidden values inside the range [minValue, maxValue]
+     * @param question a question which will be shown to the user.
+     * @return the number inserted by the user.
+     * @throws ExecutionException if the input stream thread is interrupted.
+     */
+    private int numberInput(int minValue, int maxValue, List<Integer> jumpList, String question) throws ExecutionException {
+        int number = minValue--;
+
+        if (jumpList == null)
+            jumpList = List.of();
+
+        do {
+            try {
+                out.print(question);
+                number = Integer.parseInt(readLine());
+
+                if (number < minValue || number > maxValue) {
+                    out.println("Invalid number! Please try again.\n");
+                } else if (jumpList.contains(number)) {
+                    out.println("This number cannot be selected! Please try again.\n");
+                }
+            } catch (NumberFormatException e) {
+                out.println("Invalid input! Please try again.\n");
+            }
+        } while (number < minValue || number > maxValue || jumpList.contains(number));
+
+        return number;
+    }
+
 
     /**
      * Clears the EriantysCLI terminal.
@@ -245,7 +285,7 @@ public class EriantysCLI extends ViewObservable implements View {
 
     public String nextLine(){
         String s;
-        System.out.print("\n< ");
+        System.out.print("< ");
         try {
             s = console.readLine();
             return s;
