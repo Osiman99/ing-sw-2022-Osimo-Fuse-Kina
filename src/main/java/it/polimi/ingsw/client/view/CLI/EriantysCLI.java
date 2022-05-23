@@ -200,11 +200,12 @@ public class EriantysCLI extends ViewObservable implements View {
         for (int i = 0; i < deck.size(); i++)
             cardValueList.add(Integer.toString(deck.get(i).getValue()));
 
-        int AssistantCardValue; //== value
+        int assistantCardValue; //== value
 
         out.println("Enter one of the available AssistantCard Value : " + cardValueList);
-        AssistantCardValue= Integer.parseInt(nextLine());
-        notifyObserver(obs -> obs.onUpdateAssistantCard(AssistantCardValue));
+
+        assistantCardValue= Integer.parseInt(nextLine());
+        notifyObserver(obs -> obs.onUpdateAssistantCard(assistantCardValue));
     }
 
     @Override
