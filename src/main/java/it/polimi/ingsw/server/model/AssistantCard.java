@@ -1,7 +1,10 @@
 package it.polimi.ingsw.server.model;
 
-public class AssistantCard {
+import java.io.Serializable;
 
+public class AssistantCard implements Serializable {
+
+    private static final long serialVersionUID = 6471988689871075538L;
     private final int value;
     private final int maxMoves;
 

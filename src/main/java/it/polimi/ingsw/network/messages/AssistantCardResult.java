@@ -6,7 +6,7 @@ import it.polimi.ingsw.server.model.Game;
 import java.util.List;
 
 public class AssistantCardResult extends Message{
-    private static final long serialVersionUID = 3050646401315283892L;
+    private static final long serialVersionUID = 3072974604481308602L;
     private final int card;
     //
     //

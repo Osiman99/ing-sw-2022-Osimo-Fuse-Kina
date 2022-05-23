@@ -2,12 +2,15 @@ package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.observer.Observable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class Board extends Observable {
+public class Board extends Observable implements Serializable {
+
+    private static final long serialVersionUID = -4480043050522641306L;
     private Game game;
     private List<Island> islands;
     private List<Cloud> clouds;

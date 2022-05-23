@@ -1,7 +1,10 @@
 package it.polimi.ingsw.server.model;
 
-public class Player {
+import java.io.Serializable;
 
+public class Player implements Serializable {
+
+    private static final long serialVersionUID = -2704011782548707041L;
     private TowerColor playerColor;
     private int supremacyCont;
     private final String nickname;
