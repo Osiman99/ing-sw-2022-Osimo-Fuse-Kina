@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.view.CLI;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.server.model.AssistantCard;
+import it.polimi.ingsw.server.model.Game;
 import it.polimi.ingsw.server.model.StudentColor;
 
 import java.io.*;
@@ -78,7 +79,22 @@ public class EriantysCLI extends ViewObservable implements View {
         }
     }
 
-    public void cloud(int cloudSize, ArrayList<StudentColor> students){
+    public void drawBoard(Game game) {
+        drawPlanks(game);
+        drawIslands(game);
+        //drawClouds
+    }
+
+    public void drawPlanks(Game game) {
+        ArrayList<String> plank = new ArrayList<>();
+    }
+
+    public void drawIslands(Game game) {
+
+    }
+
+
+    public void drawClouds(int cloudSize, ArrayList<StudentColor> students){
 
         ArrayList<String> cloud = new ArrayList<>();
         ArrayList<String> coloredStudents = new ArrayList<>();
