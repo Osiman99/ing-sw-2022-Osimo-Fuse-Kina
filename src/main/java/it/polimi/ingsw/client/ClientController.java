@@ -83,6 +83,7 @@ public class ClientController implements ViewObserver, Observer {
 
     @Override
     public void update(Message message) {
+        System.out.println(message.getMessageType().toString());
         switch(message.getMessageType()) {
             case PLAYERNUMBER_REQUEST:
                 taskQueue.execute(view::askPlayersNumber);
@@ -98,7 +99,12 @@ public class ClientController implements ViewObserver, Observer {
                 AssistantCardRequest assistantCardRequest = (AssistantCardRequest) message;
                 taskQueue.execute(()-> view.askAssistantCard(assistantCardRequest.getDeck()));
                 break;
-            /*case ERROR:
+            case BOARD:
+                BoardMessage boardMessage = (BoardMessage) message;
+                taskQueue.execute(()-> view.drawBoard(boardMessage.getGame()));
+                break;
+
+                /*case ERROR:
                 ErrorMessage errorMessage = (ErrorMessage) message;
                 view.showErrorAndQuit(errorMessage.getError());
                 break;

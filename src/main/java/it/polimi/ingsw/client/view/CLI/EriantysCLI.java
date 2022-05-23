@@ -82,7 +82,8 @@ public class EriantysCLI extends ViewObservable implements View {
     public void drawBoard(Game game) {
         drawPlanks(game);
         drawIslands(game);
-        //drawClouds
+        ArrayList<StudentColor> list = new ArrayList<>(List.of(StudentColor.BLUE, StudentColor.GREEN, StudentColor.RED, StudentColor.YELLOW));
+        drawClouds(3, list);
     }
 
     public void drawPlanks(Game game) {

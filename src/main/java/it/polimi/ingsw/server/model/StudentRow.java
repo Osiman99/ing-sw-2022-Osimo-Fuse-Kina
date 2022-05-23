@@ -1,9 +1,12 @@
 package it.polimi.ingsw.server.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentRow {
+public class StudentRow implements Serializable {
+
+    private static final long serialVersionUID = -67899734586104788L;
     private List<Student> students;
     private StudentColor rowColor;    //ROWCOLOR INUTILE
 

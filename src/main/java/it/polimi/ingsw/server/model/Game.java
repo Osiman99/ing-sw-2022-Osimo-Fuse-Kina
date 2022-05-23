@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game extends Observable implements Serializable {
+    private static final long serialVersionUID = 4004020661063976635L;
     public static final int MAX_PLAYERS = 3;
     private Board board;              //forse va fatto final (singleton o no?)
     private static Game instance;   //classe Game, per non farla singleton basta non mettere static in instance (e chiamare il setInstance per ogni game creato nel main)

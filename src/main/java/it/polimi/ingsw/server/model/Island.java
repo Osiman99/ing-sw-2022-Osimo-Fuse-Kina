@@ -1,10 +1,12 @@
 package it.polimi.ingsw.server.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Island {
+public class Island implements Serializable {
 
+    private static final long serialVersionUID = -2272232649575815385L;
     private List<Student> students;
     private List<Tower> towers;
     private boolean motherNature;

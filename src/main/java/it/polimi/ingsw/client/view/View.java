@@ -32,7 +32,7 @@ public interface View {
 
     void showDisconnectionMessage(String nicknameDisconnected, String value);
 
-    public void drawBoard(Game game);
+    void drawBoard(Game game);
 
     //void showErrorAndQuit(String error);
 

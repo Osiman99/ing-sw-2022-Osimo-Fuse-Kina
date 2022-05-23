@@ -1,10 +1,12 @@
 package it.polimi.ingsw.server.model;
 
+import java.io.Serializable;
+
 /**
  * This enum contains all possible colors that students can get and we associate
  * a number to each color to correlate with the student row
  */
-public enum StudentColor {
+public enum StudentColor implements Serializable {
     GREEN(0), RED(1), YELLOW(2), PINK(3), BLUE(4);
 
     private int code;

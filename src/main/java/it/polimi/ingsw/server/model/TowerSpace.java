@@ -1,10 +1,12 @@
 package it.polimi.ingsw.server.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TowerSpace {
+public class TowerSpace implements Serializable {
 
+    private static final long serialVersionUID = 2280687268501499016L;
     private Game game;
     private List<Tower> towers;
 

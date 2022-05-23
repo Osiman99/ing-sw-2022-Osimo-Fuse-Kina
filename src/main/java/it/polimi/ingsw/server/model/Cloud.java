@@ -1,9 +1,11 @@
 package it.polimi.ingsw.server.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cloud {
+public class Cloud implements Serializable {
+    private static final long serialVersionUID = 6633940502260451770L;
 
     private List<Student> students;
 

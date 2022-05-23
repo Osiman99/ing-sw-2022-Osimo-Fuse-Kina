@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -7,8 +8,9 @@ import java.util.Random;
 /**
  * in this class we have to use the character cards
  */
-public class GameExpert extends Game {
+public class GameExpert extends Game implements Serializable {
 
+    private static final long serialVersionUID = 3589190030673960796L;
     private List<CharacterCard> threeChosenCards;
     private Random random;
     private int randomInt;

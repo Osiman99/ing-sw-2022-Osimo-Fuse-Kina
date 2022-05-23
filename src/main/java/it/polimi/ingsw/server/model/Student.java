@@ -1,7 +1,10 @@
 package it.polimi.ingsw.server.model;
 
-public class Student {
+import java.io.Serializable;
 
+public class Student implements Serializable {
+
+    private static final long serialVersionUID = -7889859831093658879L;
     private StudentColor color;
 
     /**
