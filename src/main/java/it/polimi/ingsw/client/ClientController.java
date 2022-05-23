@@ -83,7 +83,6 @@ public class ClientController implements ViewObserver, Observer {
 
     @Override
     public void update(Message message) {
-        System.out.println(message.getMessageType());
         switch(message.getMessageType()) {
             case PLAYERNUMBER_REQUEST:
                 taskQueue.execute(view::askPlayersNumber);
