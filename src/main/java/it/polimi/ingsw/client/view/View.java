@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.view;
 
 import it.polimi.ingsw.server.model.AssistantCard;
+import it.polimi.ingsw.server.model.Game;
 
 import java.util.List;
 
@@ -30,6 +31,8 @@ public interface View {
     void showGenericMessage(String genericMessage);
 
     void showDisconnectionMessage(String nicknameDisconnected, String value);
+
+    public void drawBoard(Game game);
 
     //void showErrorAndQuit(String error);
 

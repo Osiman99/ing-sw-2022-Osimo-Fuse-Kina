@@ -1,10 +1,7 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.client.view.View;
-import it.polimi.ingsw.network.messages.AssistantCardResult;
-import it.polimi.ingsw.network.messages.Message;
-import it.polimi.ingsw.network.messages.MessageType;
-import it.polimi.ingsw.network.messages.PlayerNumberReply;
+import it.polimi.ingsw.network.messages.*;
 import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.server.model.Board;
 import it.polimi.ingsw.server.model.Game;
@@ -123,15 +120,22 @@ public class GameController implements Observer, Serializable {
             }
         game.initGame();
         setGameState(GameState.PLAN);
+        broadcastBoardMessage();
         broadcastGenericMessage("All Players are connected. " + activePlayer.getNickname() + " is choosing the Assistant Card...");
 
         VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
         virtualView.askAssistantCard(activePlayer.getDeck().getDeck());
     }
 
-    public void broadcastGenericMessage(String messageToNotify) {
-        for (VirtualView vv : virtualViewMap.values()) {
-            vv.showGenericMessage(messageToNotify);
+    public void broadcastGenericMessage(String message) {
+        for (VirtualView virtualView : virtualViewMap.values()) {
+            virtualView.showGenericMessage(message);
+        }
+    }
+
+    public void broadcastBoardMessage(){
+        for (VirtualView virtualView : virtualViewMap.values()) {
+            virtualView.drawBoard(game);
         }
     }
 

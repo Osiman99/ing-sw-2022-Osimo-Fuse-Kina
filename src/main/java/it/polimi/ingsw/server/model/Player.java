@@ -1,8 +1,11 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.network.messages.BoardMessage;
+import it.polimi.ingsw.observer.Observable;
+
 import java.io.Serializable;
 
-public class Player implements Serializable {
+public class Player extends Observable implements Serializable {
 
     private static final long serialVersionUID = -2704011782548707041L;
     private TowerColor playerColor;
@@ -106,7 +109,6 @@ public class Player implements Serializable {
             }
         }
     }
-
 
 }
 

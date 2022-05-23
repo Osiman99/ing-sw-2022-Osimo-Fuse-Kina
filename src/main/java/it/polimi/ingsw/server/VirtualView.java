@@ -61,6 +61,10 @@ public class VirtualView implements View, Observer {
         clientHandler.sendMessage(new LoginReply(false, true));
     }
 
+    public void drawBoard(Game game){
+        clientHandler.sendMessage(new BoardMessage(Game.SERVER_NICKNAME, game));
+    }
+
     /**
      * Receives an update message from the model.
      * The message is sent over the network to the client.
