@@ -214,8 +214,7 @@ public class GameController implements Observer, Serializable {
                 }if(state == GameState.PLAN) {
                     VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
                     virtualView.askAssistantCard(activePlayer.getDeck().getDeck());
-                }
-                break;
+                }break;
             }
         }
     }
