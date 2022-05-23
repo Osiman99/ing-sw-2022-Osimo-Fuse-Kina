@@ -1,10 +1,12 @@
 package it.polimi.ingsw.server.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CharacterCard {
+public class CharacterCard implements Serializable {
 
+    private static final long serialVersionUID = -5098098867984135994L;
     private Game game;
     private it.polimi.ingsw.server.model.CharacterName characterName;
     private List<Student> students;

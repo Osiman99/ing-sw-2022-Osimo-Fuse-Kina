@@ -1,6 +1,8 @@
 package it.polimi.ingsw.server.model;
 
-public enum PlayerState {
+import java.io.Serializable;
+
+public enum PlayerState implements Serializable {
     PLAN("PLAN"), ACTION("ACTION"), SLEEP("SLEEP");
 
     private String state;

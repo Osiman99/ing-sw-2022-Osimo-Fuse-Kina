@@ -98,7 +98,12 @@ public class ClientController implements ViewObserver, Observer {
                 AssistantCardRequest assistantCardRequest = (AssistantCardRequest) message;
                 taskQueue.execute(()-> view.askAssistantCard(assistantCardRequest.getDeck()));
                 break;
-            /*case ERROR:
+            case BOARD:
+                BoardMessage boardMessage = (BoardMessage) message;
+                taskQueue.execute(()-> view.drawBoard(boardMessage.getGame()));
+                break;
+
+                /*case ERROR:
                 ErrorMessage errorMessage = (ErrorMessage) message;
                 view.showErrorAndQuit(errorMessage.getError());
                 break;

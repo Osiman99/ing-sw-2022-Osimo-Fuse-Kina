@@ -1,7 +1,10 @@
 package it.polimi.ingsw.server.model;
 
-public class Tower {
+import java.io.Serializable;
 
+public class Tower implements Serializable {
+
+    private static final long serialVersionUID = 5898536984563637207L;
     private TowerColor color;
 
 

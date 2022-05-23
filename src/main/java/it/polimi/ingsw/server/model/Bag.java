@@ -1,10 +1,12 @@
 package it.polimi.ingsw.server.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Bag {
+public class Bag implements Serializable {
+    private static final long serialVersionUID = 2170486071323199195L;
 
     private List<Student> students;  //si potrebbe anche non mettere static perchè Bag è singleton
 

@@ -1,6 +1,10 @@
 package it.polimi.ingsw.server.model;
 
-public class Plank {
+import java.io.Serializable;
+
+public class Plank implements Serializable {
+
+    private static final long serialVersionUID = -1773083561094488517L;
     private TowerSpace towerSpace;
     private StudentRow diningRoom[];
     private Entrance entrance;
