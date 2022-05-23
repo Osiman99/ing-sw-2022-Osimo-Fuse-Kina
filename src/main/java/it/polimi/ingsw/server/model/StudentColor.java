@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.client.view.CLI.ANSIColor;
+
 import java.io.Serializable;
 
 /**
@@ -44,6 +46,7 @@ public enum StudentColor implements Serializable {
             return StudentColor.BLUE;
         }
     }
+
 
     /*
      * Get the color given the color code

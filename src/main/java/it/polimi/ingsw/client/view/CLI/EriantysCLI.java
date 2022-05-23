@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.server.model.AssistantCard;
 import it.polimi.ingsw.server.model.Game;
+import it.polimi.ingsw.server.model.Student;
 import it.polimi.ingsw.server.model.StudentColor;
 
 import java.io.*;
@@ -88,21 +89,65 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
     public void drawPlanks(Game game) {
-        ArrayList<String> plank = new ArrayList<>();
-        plank.add("╔════════════════════╦═══════════════════════════════════════╦═════════════════════╗");
-        plank.add("║      Entrance      ║              Dining Room              ║      Tower Space    ║");
-        plank.add("║");
+        ArrayList<String> plankBoard = new ArrayList<>();
+        ArrayList<String> studentsEntranceBoard = new ArrayList<>(9);
+
+        for(int i=0; i<game.getNumPlayers(); i++){
+
+            for(Student s : game.getPlayers().get(i).getPlank().getEntrance().getStudents())
+                studentsEntranceBoard.add(convertANSI(s.getColor()));
 
 
+            plankBoard.add("→ " + game.getPlayers().get(i).getNickname()+"'s plank");
+            plankBoard.add("╔══════════╦═══════════════════════╦═════════╦═════════════╗");
+            plankBoard.add("║ Entrance ║      Dining Room      ║Professor║ Tower Space ║");
+            plankBoard.add("╠══════════╬═══════════════════════╬═════════╬═════════════╣");
+            plankBoard.add("║       ●  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║   ■     ■   ║");
+            plankBoard.add("║  ●    ●  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║   ■     ■   ║");
+            plankBoard.add("║  ●    ●  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║   ■     ■   ║");
+            plankBoard.add("║  ●    ●  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║   ■     ■   ║");
+            plankBoard.add("║  ●    ●  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║             ║");
+            plankBoard.add("╚══════════╩═══════════════════════╩═════════╩═════════════╝");
 
+            for (String p : plankBoard)
+                System.out.println(p);
+        }
 
-        /*  ╔ ═ ═ ═ ╦ ═ ═ ═ ╗
-            ║   	║       ║       ☻ studente
-            ╠ ═ ═ ═	╬ ═ ═ ═	╣       ▲ torre
-            ║       ║       ║       •
-            ╚ ═ ═ ═ ╩ ═ ═ ═ ╝
-
+        /*
+            ╔ ═ ═ ═ ╦ ═ ═ ═ ╗       →
+            ║   	║       ║       ● studente
+            ╠ ═ ═ ═	╬ ═ ═ ═	╣       ▲ professore
+            ║       ║       ║       •  ☻ ☼
+            ╚ ═ ═ ═ ╩ ═ ═ ═ ╝       ■ torre
+                            → nickname's plank
+            "               ╔══════════╦═══════════════════════╦═════════╦═════════════╗");
+            plankBoard.add("║ Entrance ║      Dining Room      ║Professor║ Tower Space ║");
+            plankBoard.add("╠══════════╬═══════════════════════╬═════════╬═════════════╣");
+            plankBoard.add("║       ●  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║   ■     ■   ║");
+            plankBoard.add("║  ●    ●  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║   ■     ■   ║");
+            plankBoard.add("║  ●    ●  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║   ■     ■   ║");
+            plankBoard.add("║  ●    ●  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║   ■     ■   ║");
+            plankBoard.add("║  ●    ●  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║             ║");
+            plankBoard.add("╚══════════╩═══════════════════════╩═════════╩═════════════╝");
         */
+    }
+
+    private String convertANSI(StudentColor color) {
+
+        switch (color) {
+            case YELLOW: return ANSIColor.YELLOW_BOLD_BRIGHT + "●" +ANSIColor.RESET;
+
+            case RED: return ANSIColor.RED + "●" +ANSIColor.RESET;
+
+            case PINK: return ANSIColor.PURPLE_BOLD_BRIGHT + "●" +ANSIColor.RESET;
+
+            case BLUE: return ANSIColor.BLUE + "●" +ANSIColor.RESET;
+
+            case GREEN: return ANSIColor.GREEN + "●" +ANSIColor.RESET;
+
+            default: return null;
+        }
+
     }
 
     public void drawIslands(Game game) {
@@ -158,7 +203,6 @@ public class EriantysCLI extends ViewObservable implements View {
 
     public void askServerInfo() throws ExecutionException {
 
-        System.out.println(ANSIColor.GREEN_BOLD_BRIGHT);
         Map<String, String> serverInfo = new HashMap<>();
         String defaultAddress = "127.0.0.1";
         String defaultPort = "12500";
