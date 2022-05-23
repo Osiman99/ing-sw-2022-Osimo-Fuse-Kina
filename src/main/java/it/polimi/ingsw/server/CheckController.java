@@ -82,18 +82,16 @@ public class CheckController implements Serializable {
                     for (AssistantCard assistantCard : p.getDeck().getDeck()) {
                         if (assistantCardResult.getCard() == assistantCard.getValue()) {
                             return true;
-                        } else {
-                            VirtualView virtualView = virtualViewMap.get(message.getNickname());
-                            virtualView.askAssistantCard(p.getDeck().getDeck());
-                            return false;
                         }
                     }
-                } else {
                     VirtualView virtualView = virtualViewMap.get(message.getNickname());
-                    virtualView.showGenericMessage("ERROR");
+                    virtualView.askAssistantCard(p.getDeck().getDeck());
                     return false;
                 }
             }
+            VirtualView virtualView = virtualViewMap.get(message.getNickname());
+            virtualView.showGenericMessage("ERROR");
+            return false;
         }catch (NullPointerException e){
             e.printStackTrace();
         }

@@ -195,7 +195,7 @@ public class GameController implements Observer, Serializable {
         if (receivedMessage.getMessageType() == MessageType.ASSISTANTCARD_RESULT){
             if (checkController.verifyReceivedData(receivedMessage)) {
                 activePlayer.chooseAssistantCard(((AssistantCardResult) receivedMessage).getCard());
-                broadcastGenericMessage(activePlayer.getNickname() + "chose the Card number " + ((AssistantCardResult) receivedMessage).getCard());
+                broadcastGenericMessage(activePlayer.getNickname() + " chose the Card number " + ((AssistantCardResult) receivedMessage).getCard());
                 planTurnManager();
             }
         }else{
@@ -211,7 +211,11 @@ public class GameController implements Observer, Serializable {
                 if (turnCont == game.getPlayers().size()){
                     state = GameState.ACTION;
                     turnCont = 0;
+                }if(state == GameState.PLAN) {
+                    VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
+                    virtualView.askAssistantCard(activePlayer.getDeck().getDeck());
                 }
+                break;
             }
         }
     }
