@@ -54,7 +54,7 @@ public class CheckController implements Serializable {
                 return playerNumberReplyCheck(message);
             case PLAYERNUMBER_REQUEST: // server doesn't receive a GenericErrorMessage.
                 return false;
-            case ASSISTANTCARD_REQUEST:
+            case ASSISTANTCARD_RESULT:
                 return assistantCardResultCheck(message);
 
             default: // Never should reach this statement.

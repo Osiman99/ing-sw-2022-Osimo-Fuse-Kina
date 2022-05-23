@@ -98,16 +98,12 @@ public class ClientHandlerConcrete implements ClientHandler, Runnable {
     public void sendMessage(Message message) {
         try {
             synchronized (outputLock) {
-                System.out.println("1 "+message);
                 output.writeObject(message);
-                output.flush();
-                System.out.println(message);
                 output.reset();
                 Server.LOGGER.info(() -> "Sent: " + message);
             }
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("NOOOOOOOOO");
             Server.LOGGER.severe(e.getMessage());
             disconnect();
         }
