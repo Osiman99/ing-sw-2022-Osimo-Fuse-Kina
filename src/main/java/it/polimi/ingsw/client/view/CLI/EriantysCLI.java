@@ -202,7 +202,7 @@ public class EriantysCLI extends ViewObservable implements View {
 
         int assistantCardValue; //== value
 
-        out.println("Enter one of the available AssistantCard Value : " + cardValueList);
+        out.print("Enter one of the available AssistantCard Value : " + cardValueList);
 
         assistantCardValue= Integer.parseInt(nextLine());
         notifyObserver(obs -> obs.onUpdateAssistantCard(assistantCardValue));

@@ -9,6 +9,9 @@ import it.polimi.ingsw.server.model.Game;
 import it.polimi.ingsw.server.model.Player;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class CheckController implements Serializable {
@@ -18,6 +21,7 @@ public class CheckController implements Serializable {
     private final Game game;
     private transient Map<String, VirtualView> virtualViewMap;
     private final GameController gameController;
+    private List<Integer> numCardOtherPlayers;
 
     /**
      * Constructor of the Input Controller Class.
@@ -29,6 +33,7 @@ public class CheckController implements Serializable {
         game = Game.getInstance();
         this.virtualViewMap = virtualViewMap;
         this.gameController = gameController;
+        numCardOtherPlayers = new ArrayList<Integer>();
     }
 
 
@@ -81,10 +86,26 @@ public class CheckController implements Serializable {
                 if (p.getNickname().equals(assistantCardResult.getNickname())) {
                     for (AssistantCard assistantCard : p.getDeck().getDeck()) {
                         if (assistantCardResult.getCard() == assistantCard.getValue()) {
-                            return true;
+                            if (numCardOtherPlayers.size() == 0){
+                                numCardOtherPlayers.add(assistantCardResult.getCard());
+                                return true;
+                            }else{
+                                for (int i = 0; i < game.getNumPlayers(); i++){
+                                    if (assistantCardResult.getCard() == numCardOtherPlayers.get(i)){
+                                        VirtualView virtualView = virtualViewMap.get(message.getNickname());
+                                        virtualView.showGenericMessage("Card already chose by another player! Please try again.");
+                                        virtualView.askAssistantCard(p.getDeck().getDeck());
+                                        return false;
+                                    }else if (numCardOtherPlayers.size() - 1 == i) {
+                                        numCardOtherPlayers.add(assistantCardResult.getCard());
+                                        return true;
+                                    }
+                                }
+                            }return true;
                         }
                     }
                     VirtualView virtualView = virtualViewMap.get(message.getNickname());
+                    virtualView.showGenericMessage("Invalid input! Please try again.");
                     virtualView.askAssistantCard(p.getDeck().getDeck());
                     return false;
                 }
@@ -97,4 +118,7 @@ public class CheckController implements Serializable {
         }
         return false;
     }
+
+
+
 }
