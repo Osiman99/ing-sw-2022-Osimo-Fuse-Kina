@@ -75,7 +75,7 @@ public class EriantysCLI extends ViewObservable implements View {
 
 
         try {
-            askServerInfo();
+            onDemandServerInfo();
         } catch (ExecutionException e) {
             out.println(CANCEL_INPUT);
         }
@@ -223,7 +223,7 @@ public class EriantysCLI extends ViewObservable implements View {
 
 
 
-    public void askServerInfo() throws ExecutionException {
+    public void onDemandServerInfo() throws ExecutionException {
 
         Map<String, String> serverInfo = new HashMap<>();
         String defaultAddress = "127.0.0.1";
@@ -267,14 +267,14 @@ public class EriantysCLI extends ViewObservable implements View {
 
 
     @Override
-    public void askNickname() {
+    public void onDemandNickname() {
         out.print("Enter nickname: ");
         String nickname = nextLine();
         notifyObserver(obs -> obs.onUpdateNickname(nickname));
 
     }
 
-    public void askPlayersNumber() {
+    public void onDemandPlayersNumber() {
         int playersNumber;
         out.print("How many players are going to play? (You can choose between 2 or 3 players): ");
         playersNumber = Integer.parseInt(nextLine());
@@ -292,7 +292,7 @@ public class EriantysCLI extends ViewObservable implements View {
 
 
     @Override
-    public void askAssistantCard(List<AssistantCard> deck) {
+    public void onDemandAssistantCard(List<AssistantCard> deck) {
         //clearCli();
         List<String> cardValueList= new ArrayList<String>();
         for (int i = 0; i < deck.size(); i++)
@@ -313,7 +313,7 @@ public class EriantysCLI extends ViewObservable implements View {
         if (nicknameAccepted && connection) {
             out.println("\n\n\n\n\n\n\n\n\n\nHi, " + nickname + "! You connected to the server.");
         } else if (connection) {
-            askNickname();
+            onDemandNickname();
         } else if (nicknameAccepted) {
             out.println("Max players reached. Connection refused.");
             out.println("EXIT.");

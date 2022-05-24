@@ -77,7 +77,7 @@ public class CheckController implements Serializable {
             return true;
         } else {
             VirtualView virtualView = virtualViewMap.get(message.getNickname());
-            virtualView.askPlayersNumber();
+            virtualView.onDemandPlayersNumber();
             return false;
         }
     }
@@ -98,7 +98,7 @@ public class CheckController implements Serializable {
                                     if (assistantCardResult.getCard() == numCardOtherPlayers.get(i)){
                                         VirtualView virtualView = virtualViewMap.get(message.getNickname());
                                         virtualView.showGenericMessage("Card already chose by another player! Please try again.");
-                                        virtualView.askAssistantCard(p.getDeck().getDeck());
+                                        virtualView.onDemandAssistantCard(p.getDeck().getDeck());
                                         return false;
                                     }else if (numCardOtherPlayers.size() - 1 == i) {
                                         numCardOtherPlayers.add(assistantCardResult.getCard());
@@ -111,7 +111,7 @@ public class CheckController implements Serializable {
                     }
                     VirtualView virtualView = virtualViewMap.get(message.getNickname());
                     virtualView.showGenericMessage("Invalid input! Please try again.");
-                    virtualView.askAssistantCard(p.getDeck().getDeck());
+                    virtualView.onDemandAssistantCard(p.getDeck().getDeck());
                     return false;
                 }
             }

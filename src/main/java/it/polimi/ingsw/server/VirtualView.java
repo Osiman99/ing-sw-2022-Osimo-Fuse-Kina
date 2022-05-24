@@ -43,12 +43,12 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void askPlayersNumber() {
+    public void onDemandPlayersNumber() {
         clientHandler.sendMessage(new PlayerNumberRequest());
     }
 
     @Override
-    public void askAssistantCard(List<AssistantCard> deck) {
+    public void onDemandAssistantCard(List<AssistantCard> deck) {
         clientHandler.sendMessage(new AssistantCardRequest(Game.SERVER_NICKNAME, deck));
     }
 
@@ -59,7 +59,7 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void askNickname() {
+    public void onDemandNickname() {
         clientHandler.sendMessage(new LoginReply(false, true));
     }
 

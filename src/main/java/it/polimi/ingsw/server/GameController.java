@@ -56,7 +56,7 @@ public class GameController implements Observer, Serializable {
             game.getPlayers().get(0).setPlayerColor(TowerColor.BLACK);
 
             virtualView.showLoginResult(true, true, Game.SERVER_NICKNAME);
-            virtualView.askPlayersNumber();
+            virtualView.onDemandPlayersNumber();
 
         } else if (virtualViewMap.size() < game.getNumPlayers()) {
             if (virtualViewMap.size() == 1) {
@@ -122,7 +122,7 @@ public class GameController implements Observer, Serializable {
         broadcastGenericMessage("All Players are connected. " + activePlayer.getNickname() + " is choosing the Assistant Card...");
 
         VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
-        virtualView.askAssistantCard(activePlayer.getDeck().getDeck());
+        virtualView.onDemandAssistantCard(activePlayer.getDeck().getDeck());
     }
 
     public void broadcastGenericMessage(String message) {
@@ -222,7 +222,7 @@ public class GameController implements Observer, Serializable {
                     turnCont = 0;
                 }if(state == GameState.PLAN) {
                     VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
-                    virtualView.askAssistantCard(activePlayer.getDeck().getDeck());
+                    virtualView.onDemandAssistantCard(activePlayer.getDeck().getDeck());
                 }break;
             }
         }
