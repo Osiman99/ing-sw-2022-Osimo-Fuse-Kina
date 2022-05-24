@@ -11,7 +11,7 @@ public class ClientMain {
 
     public static void main(String[] args) {
 
-        boolean cliParam = false; // default value
+        boolean cliParam = true; // default value
 
         for (String arg : args) {
             if (arg.equals("--cli") || arg.equals("-c")) {

@@ -89,8 +89,8 @@ public class EriantysCLI extends ViewObservable implements View {
     public void drawPlanks(Game game) {
         ArrayList<String> plankBoard = new ArrayList<>();
         ArrayList<String> studentsEntranceBoard = new ArrayList<>(9);
-
         ArrayList<String> diningRoomBoard[] = new ArrayList[5];
+        ArrayList<String> towerBoard = new ArrayList<>();
 
         int i, j, k;
         for(i=0; i<5; i++) {
@@ -98,31 +98,38 @@ public class EriantysCLI extends ViewObservable implements View {
         }
 
         for(i=0; i<game.getNumPlayers(); i++){
-
+            Player playerBoard = game.getPlayers().get(i);
             //dalla lista degli studenti di ogni giocatore aggiungo un ● dello stesso colore in studentsEntranceBoard
 
-            for(j=0; j<game.getPlayers().get(i).getPlank().getEntrance().getStudents().size(); j++)
-                studentsEntranceBoard.add(convertANSI(game.getPlayers().get(i).getPlank().getEntrance().getStudents().get(j).getColor()));
+            for(j=0; j<playerBoard.getPlank().getEntrance().getStudents().size(); j++)
+                studentsEntranceBoard.add(convertANSI(playerBoard.getPlank().getEntrance().getStudents().get(j).getColor()));
 
             //e proseguo fino alla fine della lista (9 posizioni) settando un blanckspace per le celle vuote
             for(; j <9; j++)
                 studentsEntranceBoard.add(" ");
 
-            for(j=0; j<game.getPlayers().get(i).getPlank().getDiningRoom().length; j++) {
-                for(k=0; k< game.getPlayers().get(i).getPlank().getDiningRoom()[j].getStudents().size(); k++)
+            //salvo gli studenti della dining room con un ● colorato e poi riempio con blanckspace
+            for(j=0; j<playerBoard.getPlank().getDiningRoom().length; j++) {
+                for(k=0; k< playerBoard.getPlank().getDiningRoom()[j].getStudents().size(); k++)
                     diningRoomBoard[j].add(" ●");
                 for(;k<10;k++)
                     diningRoomBoard[j].add("  ");
             }
 
-            plankBoard.add("→ " +ANSIColor.PINK+ game.getPlayers().get(i).getNickname()+ANSIColor.RESET+"'s plank");
+            //dal towerSpace metto le torri colorate dentro a towerBoard con un ■
+            for(j=0; j<playerBoard.getPlank().getTowerSpace().getTowersList().size(); j++)
+                towerBoard.add(convertANSI(playerBoard.getPlayerColor()));
+            for(;j<8;j++)
+                towerBoard.add(" ");
+
+            plankBoard.add("→ " +ANSIColor.PINK+ playerBoard.getNickname()+ANSIColor.RESET+"'s plank");
             plankBoard.add("╔══════════╦═══════════════════════╦═════════╦═════════════╗");
             plankBoard.add("║ "+ANSIColor.RED_BACKGROUND+ANSIColor.CYAN_BOLD+"Entrance"+ANSIColor.RESET+" ║      "+ANSIColor.RED_BACKGROUND+ANSIColor.CYAN_BOLD+"Dining Room"+ANSIColor.RESET+"      ║"+ANSIColor.RED_BACKGROUND+ANSIColor.CYAN_BOLD+"Professor"+ANSIColor.RESET+"║ "+ANSIColor.RED_BACKGROUND+ANSIColor.CYAN_BOLD+"Tower Space"+ANSIColor.RESET+" ║");
             plankBoard.add("╠══════════╬═══════════════════════╬═════════╬═════════════╣");
-            plankBoard.add("║       "+studentsEntranceBoard.get(0)+"  ║ "+ANSIColor.GREEN+diningRoomBoard[0].get(0)+diningRoomBoard[0].get(1)+diningRoomBoard[0].get(2)+diningRoomBoard[0].get(3)+diningRoomBoard[0].get(4)+diningRoomBoard[0].get(5)+diningRoomBoard[0].get(6)+diningRoomBoard[0].get(7)+diningRoomBoard[0].get(8)+diningRoomBoard[0].get(9)+ANSIColor.RESET+"  ║    ▲    ║   "+convertANSI(game.getPlayers().get(i).getPlayerColor())+"■     ■"+ANSIColor.RESET+"   ║");
-            plankBoard.add("║  "+studentsEntranceBoard.get(1)+"    "+studentsEntranceBoard.get(2)+"  ║ "+ANSIColor.RED+diningRoomBoard[1].get(0)+diningRoomBoard[1].get(1)+diningRoomBoard[1].get(2)+diningRoomBoard[1].get(3)+diningRoomBoard[1].get(4)+diningRoomBoard[1].get(5)+diningRoomBoard[1].get(6)+diningRoomBoard[1].get(7)+diningRoomBoard[1].get(8)+diningRoomBoard[1].get(9)+ANSIColor.RESET+"  ║    ▲    ║   "+convertANSI(game.getPlayers().get(i).getPlayerColor())+"■     ■"+ANSIColor.RESET+"   ║");
-            plankBoard.add("║  "+studentsEntranceBoard.get(3)+"    "+studentsEntranceBoard.get(4)+"  ║ "+ANSIColor.YELLOW+diningRoomBoard[2].get(0)+diningRoomBoard[2].get(1)+diningRoomBoard[2].get(2)+diningRoomBoard[2].get(3)+diningRoomBoard[2].get(4)+diningRoomBoard[2].get(5)+diningRoomBoard[2].get(6)+diningRoomBoard[2].get(7)+diningRoomBoard[2].get(8)+diningRoomBoard[2].get(9)+ANSIColor.RESET+"  ║    ▲    ║   "+convertANSI(game.getPlayers().get(i).getPlayerColor())+"■     ■"+ANSIColor.RESET+"   ║");
-            plankBoard.add("║  "+studentsEntranceBoard.get(5)+"    "+studentsEntranceBoard.get(6)+"  ║ "+ANSIColor.PINK+diningRoomBoard[3].get(0)+diningRoomBoard[3].get(1)+diningRoomBoard[3].get(2)+diningRoomBoard[3].get(3)+diningRoomBoard[3].get(4)+diningRoomBoard[3].get(5)+diningRoomBoard[3].get(6)+diningRoomBoard[3].get(7)+diningRoomBoard[3].get(8)+diningRoomBoard[3].get(9)+ANSIColor.RESET+"  ║    ▲    ║   "+convertANSI(game.getPlayers().get(i).getPlayerColor())+"■     ■"+ANSIColor.RESET+"   ║");
+            plankBoard.add("║       "+studentsEntranceBoard.get(0)+"  ║ "+ANSIColor.GREEN+diningRoomBoard[0].get(0)+diningRoomBoard[0].get(1)+diningRoomBoard[0].get(2)+diningRoomBoard[0].get(3)+diningRoomBoard[0].get(4)+diningRoomBoard[0].get(5)+diningRoomBoard[0].get(6)+diningRoomBoard[0].get(7)+diningRoomBoard[0].get(8)+diningRoomBoard[0].get(9)+ANSIColor.RESET+"  ║    ▲    ║   "+towerBoard.get(0)+"     "+towerBoard.get(1)+"   ║");
+            plankBoard.add("║  "+studentsEntranceBoard.get(1)+"    "+studentsEntranceBoard.get(2)+"  ║ "+ANSIColor.RED+diningRoomBoard[1].get(0)+diningRoomBoard[1].get(1)+diningRoomBoard[1].get(2)+diningRoomBoard[1].get(3)+diningRoomBoard[1].get(4)+diningRoomBoard[1].get(5)+diningRoomBoard[1].get(6)+diningRoomBoard[1].get(7)+diningRoomBoard[1].get(8)+diningRoomBoard[1].get(9)+ANSIColor.RESET+"  ║    ▲    ║   "+towerBoard.get(2)+"     "+towerBoard.get(3)+"   ║");
+            plankBoard.add("║  "+studentsEntranceBoard.get(3)+"    "+studentsEntranceBoard.get(4)+"  ║ "+ANSIColor.YELLOW+diningRoomBoard[2].get(0)+diningRoomBoard[2].get(1)+diningRoomBoard[2].get(2)+diningRoomBoard[2].get(3)+diningRoomBoard[2].get(4)+diningRoomBoard[2].get(5)+diningRoomBoard[2].get(6)+diningRoomBoard[2].get(7)+diningRoomBoard[2].get(8)+diningRoomBoard[2].get(9)+ANSIColor.RESET+"  ║    ▲    ║   "+towerBoard.get(4)+"     "+towerBoard.get(5)+"   ║");
+            plankBoard.add("║  "+studentsEntranceBoard.get(5)+"    "+studentsEntranceBoard.get(6)+"  ║ "+ANSIColor.PINK+diningRoomBoard[3].get(0)+diningRoomBoard[3].get(1)+diningRoomBoard[3].get(2)+diningRoomBoard[3].get(3)+diningRoomBoard[3].get(4)+diningRoomBoard[3].get(5)+diningRoomBoard[3].get(6)+diningRoomBoard[3].get(7)+diningRoomBoard[3].get(8)+diningRoomBoard[3].get(9)+ANSIColor.RESET+"  ║    ▲    ║   "+towerBoard.get(6)+"     "+towerBoard.get(7)+"   ║");
             plankBoard.add("║  "+studentsEntranceBoard.get(7)+"    "+studentsEntranceBoard.get(8)+"  ║ "+ANSIColor.BLUE+diningRoomBoard[4].get(0)+diningRoomBoard[4].get(1)+diningRoomBoard[4].get(2)+diningRoomBoard[4].get(3)+diningRoomBoard[4].get(4)+diningRoomBoard[4].get(5)+diningRoomBoard[4].get(6)+diningRoomBoard[4].get(7)+diningRoomBoard[4].get(8)+diningRoomBoard[4].get(9)+ANSIColor.RESET+"  ║    ▲    ║             ║");
             plankBoard.add("╚══════════╩═══════════════════════╩═════════╩═════════════╝");
 
@@ -130,6 +137,7 @@ public class EriantysCLI extends ViewObservable implements View {
                 System.out.println(p);
             plankBoard.clear();
             studentsEntranceBoard.clear();
+            towerBoard.clear();
         }
 
         /*
@@ -173,18 +181,18 @@ public class EriantysCLI extends ViewObservable implements View {
                 return null;
         }
     }
+
     private String convertANSI(TowerColor color) {
 
             switch (color) {
-                case BLACK: return ANSIColor.BLACK + "●" +ANSIColor.RESET;
+                case BLACK: return ANSIColor.BLACK + "■" +ANSIColor.RESET;
 
-                case WHITE: return ANSIColor.WHITE + "●" +ANSIColor.RESET;
+                case WHITE: return ANSIColor.WHITE + "■" +ANSIColor.RESET;
 
-                case GREY: return ANSIColor.PINK + "●" +ANSIColor.RESET;
+                case GREY: return ANSIColor.PINK + "■" +ANSIColor.RESET;
 
                 default: return null;
             }
-
     }
 
     public void drawIslands(Game game) {
