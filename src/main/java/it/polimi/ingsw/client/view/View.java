@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.view;
 
 import it.polimi.ingsw.server.model.AssistantCard;
 import it.polimi.ingsw.server.model.Game;
+import it.polimi.ingsw.server.model.Island;
 import it.polimi.ingsw.server.model.StudentColor;
 
 import java.util.ArrayList;
@@ -20,8 +21,6 @@ public interface View {
     void onDemandPlayersNumber();
 
     void onDemandAssistantCard(List<AssistantCard> deck);
-
-    void onDemandMoveStudent(List<StudentColor> entranceStudentsColors);
 
     /**
      * Shows to the user if the Login succeeded.

@@ -48,6 +48,22 @@ public enum StudentColor implements Serializable {
     }
 
 
+    public String toString(StudentColor studentColor){
+        switch(studentColor){
+            case GREEN:
+                return "Green";
+            case RED:
+                return "Red";
+            case YELLOW:
+                return "Yellow";
+            case PINK:
+                return "Pink";
+            case BLUE:
+                return "Blue";
+            default: return null;
+        }
+    }
+
     /*
      * Get the color given the color code
      * @param code

@@ -25,9 +25,9 @@ public interface ViewObserver {
 
     void onUpdateAssistantCard(int card);
 
-    void onUpdateMoveStudentToDiningRoom(Student student);
+    void onUpdateMoveStudentToDiningRoom(StudentColor studentColor);
 
-    void onUpdateMoveStudentToIsland(Student student, Island island);
+    void onUpdateMoveStudentToIsland(StudentColor studentColor, Island island);
 
     void onUpdateCloud(Cloud cloud);
 

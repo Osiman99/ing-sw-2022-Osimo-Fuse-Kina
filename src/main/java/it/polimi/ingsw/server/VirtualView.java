@@ -6,6 +6,7 @@ import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.server.ClientHandler;
 import it.polimi.ingsw.server.model.AssistantCard;
 import it.polimi.ingsw.server.model.Game;
+import it.polimi.ingsw.server.model.Island;
 import it.polimi.ingsw.server.model.StudentColor;
 
 import java.util.ArrayList;
@@ -68,10 +69,6 @@ public class VirtualView implements View, Observer {
         clientHandler.sendMessage(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 
-    @Override
-    public void onDemandMoveStudent(List<StudentColor> entranceStudentsColors){
-        clientHandler.sendMessage(new MoveMessage(Game.SERVER_NICKNAME, entranceStudentsColors));
-    }
 
     /**
      * Receives an update message from the model.
