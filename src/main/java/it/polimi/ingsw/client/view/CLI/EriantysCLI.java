@@ -1,7 +1,6 @@
 package it.polimi.ingsw.client.view.CLI;
 
 import it.polimi.ingsw.client.view.View;
-import it.polimi.ingsw.network.messages.MoveMessage;
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.server.model.*;
 
@@ -347,8 +346,27 @@ public class EriantysCLI extends ViewObservable implements View {
         }*/
     }
 
-    public void onDemandMoveStudent(List<StudentColor> entranceStudentsColors){
+    public void onDemandMoveStudent(){
 
+        String colorIn = nextLine();
+
+        switch (colorIn){
+            case "green":
+                notifyObserver(obs -> obs.onUpdateMoveStudentToDiningRoom(StudentColor.GREEN));
+                break;
+            case "red":
+                notifyObserver(obs -> obs.onUpdateMoveStudentToDiningRoom(StudentColor.RED));
+                break;
+            case "yellow":
+                notifyObserver(obs -> obs.onUpdateMoveStudentToDiningRoom(StudentColor.YELLOW));
+                break;
+            case "pink":
+                notifyObserver(obs -> obs.onUpdateMoveStudentToDiningRoom(StudentColor.PINK));
+                break;
+            case "blue":
+                notifyObserver(obs -> obs.onUpdateMoveStudentToDiningRoom(StudentColor.BLUE));
+                break;
+        }
     }
 
     /**
@@ -361,6 +379,9 @@ public class EriantysCLI extends ViewObservable implements View {
 
     public void showGenericMessage(String genericMessage) {
         out.println(genericMessage);
+        if(genericMessage.equals("Choose your student to move.")){
+            onDemandMoveStudent();
+        }
     }
 
     public String nextLine(){

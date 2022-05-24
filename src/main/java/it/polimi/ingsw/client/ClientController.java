@@ -62,12 +62,11 @@ public class ClientController implements ViewObserver, Observer {
     }
 
     @Override
-    public void onUpdateMoveStudentToDiningRoom(Student student) {
-
+    public void onUpdateMoveStudentToDiningRoom(StudentColor studentColor) {
     }
 
     @Override
-    public void onUpdateMoveStudentToIsland(Student student, Island island) {
+    public void onUpdateMoveStudentToIsland(StudentColor studentColor, Island island) {
 
     }
 
@@ -102,9 +101,6 @@ public class ClientController implements ViewObserver, Observer {
                 BoardMessage boardMessage = (BoardMessage) message;
                 taskQueue.execute(()-> view.drawBoard(boardMessage.getGame()));
                 break;
-            case MOVE_STUDENT:
-                MoveMessage moveMessage = (MoveMessage) message;
-                taskQueue.execute(()-> view.onDemandMoveStudent(moveMessage.getEntranceStudentColors()));
 
                 /*case ERROR:
                 ErrorMessage errorMessage = (ErrorMessage) message;
