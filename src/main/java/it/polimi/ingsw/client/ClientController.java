@@ -37,7 +37,7 @@ public class ClientController implements ViewObserver, Observer {
             client.addObserver(this);
             client.readMessage();
             client.enablePinger(true);
-            taskQueue.execute(view::askNickname);
+            taskQueue.execute(view::onDemandNickname);
         } catch (IOException e) {
             taskQueue.execute(() -> view.showLoginResult(false, false, this.nickname));
         }
@@ -85,7 +85,7 @@ public class ClientController implements ViewObserver, Observer {
     public void update(Message message) {
         switch(message.getMessageType()) {
             case PLAYERNUMBER_REQUEST:
-                taskQueue.execute(view::askPlayersNumber);
+                taskQueue.execute(view::onDemandPlayersNumber);
                 break;
             case GENERIC_MESSAGE:
                 taskQueue.execute(() -> view.showGenericMessage(((GenericMessage) message).getMessage()));
@@ -96,7 +96,7 @@ public class ClientController implements ViewObserver, Observer {
                 break;
             case ASSISTANTCARD_REQUEST:
                 AssistantCardRequest assistantCardRequest = (AssistantCardRequest) message;
-                taskQueue.execute(()-> view.askAssistantCard(assistantCardRequest.getDeck()));
+                taskQueue.execute(()-> view.onDemandAssistantCard(assistantCardRequest.getDeck()));
                 break;
             case BOARD:
                 BoardMessage boardMessage = (BoardMessage) message;

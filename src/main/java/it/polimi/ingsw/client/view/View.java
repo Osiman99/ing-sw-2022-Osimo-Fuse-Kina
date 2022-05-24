@@ -12,14 +12,16 @@ public interface View {
     /**
      * The player has to choose a nickname.
      */
-    void askNickname();
+    void onDemandNickname();
 
     /**
      * choose the players number.
      */
-    void askPlayersNumber();
+    void onDemandPlayersNumber();
 
-    void askAssistantCard(List<AssistantCard> deck);
+    void onDemandAssistantCard(List<AssistantCard> deck);
+
+    void onDemandMoveStudent(List<StudentColor> entranceStudentsColors);
 
     /**
      * Shows to the user if the Login succeeded.
@@ -35,8 +37,6 @@ public interface View {
     void showDisconnectionMessage(String nicknameDisconnected, String value);
 
     void drawBoard(Game game);
-
-    void onDemandMoveStudent(List<StudentColor> entranceStudentsColors);
 
     //void showErrorAndQuit(String error);
 
