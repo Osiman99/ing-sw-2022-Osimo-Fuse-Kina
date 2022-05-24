@@ -88,8 +88,9 @@ public class EriantysCLI extends ViewObservable implements View {
     public void drawPlanks(Game game) {
         ArrayList<String> plankBoard = new ArrayList<>();
         ArrayList<String> studentsEntranceBoard = new ArrayList<>(9);
-        ArrayList<String> diningRoomBoard[] = new ArrayList[5];
+        ArrayList<String>[] diningRoomBoard = new ArrayList[5];
         ArrayList<String> towerBoard = new ArrayList<>();
+        ArrayList<String> professorsBoard = new ArrayList<>();
 
         int i, j, k;
         for(i=0; i<5; i++) {
@@ -121,6 +122,14 @@ public class EriantysCLI extends ViewObservable implements View {
             for(;j<8;j++)
                 towerBoard.add(" ");
 
+            //per ogni player ho una lista contenente i professori ▲ che controlla
+            /* for(j=0; j<4; j++) {
+                if(game.getBoard().getProfessorsControlledBy()[j].equals(playerBoard))
+
+            }
+             */
+
+
             plankBoard.add("→ " +ANSIColor.PINK+ playerBoard.getNickname()+ANSIColor.RESET+"'s plank");
             plankBoard.add("╔══════════╦═══════════════════════╦═════════╦═════════════╗");
             plankBoard.add("║ "+ANSIColor.RED_BACKGROUND+ANSIColor.CYAN_BOLD+"Entrance"+ANSIColor.RESET+" ║      "+ANSIColor.RED_BACKGROUND+ANSIColor.CYAN_BOLD+"Dining Room"+ANSIColor.RESET+"      ║"+ANSIColor.RED_BACKGROUND+ANSIColor.CYAN_BOLD+"Professor"+ANSIColor.RESET+"║ "+ANSIColor.RED_BACKGROUND+ANSIColor.CYAN_BOLD+"Tower Space"+ANSIColor.RESET+" ║");
@@ -132,6 +141,7 @@ public class EriantysCLI extends ViewObservable implements View {
             plankBoard.add("║  "+studentsEntranceBoard.get(7)+"    "+studentsEntranceBoard.get(8)+"  ║ "+ANSIColor.BLUE+diningRoomBoard[4].get(0)+diningRoomBoard[4].get(1)+diningRoomBoard[4].get(2)+diningRoomBoard[4].get(3)+diningRoomBoard[4].get(4)+diningRoomBoard[4].get(5)+diningRoomBoard[4].get(6)+diningRoomBoard[4].get(7)+diningRoomBoard[4].get(8)+diningRoomBoard[4].get(9)+ANSIColor.RESET+"  ║    ▲    ║             ║");
             plankBoard.add("╚══════════╩═══════════════════════╩═════════╩═════════════╝");
 
+            System.out.println("\n");
             for (String p : plankBoard)
                 System.out.println(p);
             plankBoard.clear();
