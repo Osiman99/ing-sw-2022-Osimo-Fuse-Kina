@@ -13,7 +13,7 @@ public enum MessageType {
     CHOOSE_FIRST_PLAYER,
     BOARD,
     INIT_COLORS,
-    MOVE,
+    MOVE_STUDENT,
     MOVE_FX,
     WIN,
     WIN_FX,

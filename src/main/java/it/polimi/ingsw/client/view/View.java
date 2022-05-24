@@ -2,7 +2,9 @@ package it.polimi.ingsw.client.view;
 
 import it.polimi.ingsw.server.model.AssistantCard;
 import it.polimi.ingsw.server.model.Game;
+import it.polimi.ingsw.server.model.StudentColor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface View {
@@ -33,6 +35,8 @@ public interface View {
     void showDisconnectionMessage(String nicknameDisconnected, String value);
 
     void drawBoard(Game game);
+
+    void onDemandMoveStudent(List<StudentColor> entranceStudentsColors);
 
     //void showErrorAndQuit(String error);
 

@@ -6,7 +6,7 @@ import it.polimi.ingsw.server.SocketServer;
 
 public class ServerMain {
     public static void main(String[] args) {
-        int serverPort = 12501; // default value
+        int serverPort = 12500; // default value
 
         for (int i = 0; i < args.length; i++) {
             if (args.length >= 2 && (args[i].equals("--port") || args[i].equals("-p"))) {
