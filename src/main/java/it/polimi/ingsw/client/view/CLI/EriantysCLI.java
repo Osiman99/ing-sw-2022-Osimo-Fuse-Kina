@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.view.CLI;
 
 import it.polimi.ingsw.client.view.View;
+import it.polimi.ingsw.network.messages.MoveMessage;
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.server.model.AssistantCard;
 import it.polimi.ingsw.server.model.Game;
@@ -302,7 +303,9 @@ public class EriantysCLI extends ViewObservable implements View {
         }*/
     }
 
+    public void onDemandMoveStudent(List<StudentColor> entranceStudentsColors){
 
+    }
 
     /**
      * Clears the EriantysCLI terminal.

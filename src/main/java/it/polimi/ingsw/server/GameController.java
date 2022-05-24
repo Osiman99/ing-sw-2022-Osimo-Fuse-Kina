@@ -3,10 +3,7 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.network.messages.*;
 import it.polimi.ingsw.observer.Observer;
-import it.polimi.ingsw.server.model.Board;
-import it.polimi.ingsw.server.model.Game;
-import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.TowerColor;
+import it.polimi.ingsw.server.model.*;
 
 import java.io.Serializable;
 import java.util.*;
@@ -43,6 +40,7 @@ public class GameController implements Observer, Serializable {
                 plan(receivedMessage);
                 break;
             case ACTION:
+                action(receivedMessage);
                 break;
             case ENDGAME:
                 break;
@@ -172,8 +170,8 @@ public class GameController implements Observer, Serializable {
 
 
     public void broadcastDisconnectionMessage(String nicknameDisconnected, String text) {
-        for (VirtualView vv : virtualViewMap.values()) {
-            vv.showDisconnectionMessage(nicknameDisconnected, text);
+        for (VirtualView virtualView : virtualViewMap.values()) {
+            virtualView.showDisconnectionMessage(nicknameDisconnected, text);
         }
     }
 
@@ -214,6 +212,13 @@ public class GameController implements Observer, Serializable {
                 turnCont++;
                 if (turnCont == game.getPlayers().size()){
                     state = GameState.ACTION;
+                    checkController.initializeFirstPlayerInAction();
+                    VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
+                    List<StudentColor> studentColorList = new ArrayList<>();
+                    for (int j = 0; j < activePlayer.getPlank().getEntrance().getStudents().size(); j++){
+                        studentColorList.add(activePlayer.getPlank().getEntrance().getStudents().get(j).getColor());
+                    }
+                    virtualView.onDemandMoveStudent(studentColorList);
                     turnCont = 0;
                 }if(state == GameState.PLAN) {
                     VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
@@ -221,6 +226,10 @@ public class GameController implements Observer, Serializable {
                 }break;
             }
         }
+    }
+
+    public void action(Message receivedMessage){
+
     }
 
 

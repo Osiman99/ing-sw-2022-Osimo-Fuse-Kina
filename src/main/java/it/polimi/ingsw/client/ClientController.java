@@ -102,6 +102,9 @@ public class ClientController implements ViewObserver, Observer {
                 BoardMessage boardMessage = (BoardMessage) message;
                 taskQueue.execute(()-> view.drawBoard(boardMessage.getGame()));
                 break;
+            case MOVE_STUDENT:
+                MoveMessage moveMessage = (MoveMessage) message;
+                taskQueue.execute(()-> view.onDemandMoveStudent(moveMessage.getEntranceStudentColors()));
 
                 /*case ERROR:
                 ErrorMessage errorMessage = (ErrorMessage) message;

@@ -22,6 +22,8 @@ public class CheckController implements Serializable {
     private transient Map<String, VirtualView> virtualViewMap;
     private final GameController gameController;
     private List<Integer> numCardOtherPlayers;
+    private List<String> nicknamesInChooseOrder;
+    private String firstPlayerInAction;
 
     /**
      * Constructor of the Input Controller Class.
@@ -34,6 +36,7 @@ public class CheckController implements Serializable {
         this.virtualViewMap = virtualViewMap;
         this.gameController = gameController;
         numCardOtherPlayers = new ArrayList<Integer>();
+        nicknamesInChooseOrder = new ArrayList<String>();
     }
 
 
@@ -88,6 +91,7 @@ public class CheckController implements Serializable {
                         if (assistantCardResult.getCard() == assistantCard.getValue()) {
                             if (numCardOtherPlayers.size() == 0){
                                 numCardOtherPlayers.add(assistantCardResult.getCard());
+                                nicknamesInChooseOrder.add(assistantCardResult.getNickname());
                                 return true;
                             }else{
                                 for (int i = 0; i < game.getNumPlayers(); i++){
@@ -98,6 +102,7 @@ public class CheckController implements Serializable {
                                         return false;
                                     }else if (numCardOtherPlayers.size() - 1 == i) {
                                         numCardOtherPlayers.add(assistantCardResult.getCard());
+                                        nicknamesInChooseOrder.add(assistantCardResult.getNickname());
                                         return true;
                                     }
                                 }
@@ -119,6 +124,27 @@ public class CheckController implements Serializable {
         return false;
     }
 
+    public void initializeFirstPlayerInAction(){
+        for (int i = 1; i < numCardOtherPlayers.size(); i++){
+            if(numCardOtherPlayers.get(i-1) < numCardOtherPlayers.get(i)){
+                setFirstPlayerInAction(nicknamesInChooseOrder.get(i-1));
+            }
+        }
+    }
 
+    public List<Integer> getNumCardOtherPlayers() {
+        return numCardOtherPlayers;
+    }
 
+    public String getFirstPlayerInAction() {
+        return firstPlayerInAction;
+    }
+
+    public void setFirstPlayerInAction(String firstPlayerInAction) {
+        this.firstPlayerInAction = firstPlayerInAction;
+    }
+
+    public List<String> getNicknamesInChooseOrder() {
+        return nicknamesInChooseOrder;
+    }
 }
