@@ -91,26 +91,34 @@ public class EriantysCLI extends ViewObservable implements View {
     public void drawPlanks(Game game) {
         ArrayList<String> plankBoard = new ArrayList<>();
         ArrayList<String> studentsEntranceBoard = new ArrayList<>(9);
+        int i, j;
+        for(i=0; i<game.getNumPlayers(); i++){
 
-        for(int i=0; i<game.getNumPlayers(); i++){
+            //dalla lista degli studenti di ogni giocatore aggiungo un ● dello stesso colore in studentsEntranceBoard
 
-            for(Student s : game.getPlayers().get(i).getPlank().getEntrance().getStudents())
-                studentsEntranceBoard.add(convertANSI(s.getColor()));
+            for(j=0; j<game.getPlayers().get(i).getPlank().getEntrance().getStudents().size(); j++)
+                studentsEntranceBoard.add(convertANSI(game.getPlayers().get(i).getPlank().getEntrance().getStudents().get(j).getColor()));
+
+            //e proseguo fino alla fine della lista (9 posizioni) settando un blanckspace per le celle vuote
+            for(; j <9; j++)
+                studentsEntranceBoard.add(" ");
 
 
             plankBoard.add("→ " + game.getPlayers().get(i).getNickname()+"'s plank");
             plankBoard.add("╔══════════╦═══════════════════════╦═════════╦═════════════╗");
-            plankBoard.add("║ Entrance ║      Dining Room      ║Professor║ Tower Space ║");
+            plankBoard.add("║ "+ANSIColor.RED_BACKGROUND+"Entrance"+ANSIColor.RESET+" ║      "+ANSIColor.RED_BACKGROUND+"Dining Room"+ANSIColor.RESET+"      ║"+ANSIColor.RED_BACKGROUND+"Professor"+ANSIColor.RESET+"║ "+ANSIColor.RED_BACKGROUND+"Tower Space"+ANSIColor.RESET+" ║");
             plankBoard.add("╠══════════╬═══════════════════════╬═════════╬═════════════╣");
-            plankBoard.add("║       ●  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║   ■     ■   ║");
-            plankBoard.add("║  ●    ●  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║   ■     ■   ║");
-            plankBoard.add("║  ●    ●  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║   ■     ■   ║");
-            plankBoard.add("║  ●    ●  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║   ■     ■   ║");
-            plankBoard.add("║  ●    ●  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║             ║");
+            plankBoard.add("║       "+studentsEntranceBoard.get(0)+"  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║   ■     ■   ║");
+            plankBoard.add("║  "+studentsEntranceBoard.get(1)+"    "+studentsEntranceBoard.get(2)+"  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║   ■     ■   ║");
+            plankBoard.add("║  "+studentsEntranceBoard.get(3)+"    "+studentsEntranceBoard.get(4)+"  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║   ■     ■   ║");
+            plankBoard.add("║  "+studentsEntranceBoard.get(5)+"    "+studentsEntranceBoard.get(6)+"  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║   ■     ■   ║");
+            plankBoard.add("║  "+studentsEntranceBoard.get(7)+"    "+studentsEntranceBoard.get(8)+"  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║             ║");
             plankBoard.add("╚══════════╩═══════════════════════╩═════════╩═════════════╝");
 
             for (String p : plankBoard)
                 System.out.println(p);
+            plankBoard.clear();
+            studentsEntranceBoard.clear();
         }
 
         /*
@@ -205,7 +213,7 @@ public class EriantysCLI extends ViewObservable implements View {
 
         Map<String, String> serverInfo = new HashMap<>();
         String defaultAddress = "127.0.0.1";
-        String defaultPort = "12500";
+        String defaultPort = "12501";
         boolean correctInput;
         //Scanner scanner = new Scanner(System.in);
 
