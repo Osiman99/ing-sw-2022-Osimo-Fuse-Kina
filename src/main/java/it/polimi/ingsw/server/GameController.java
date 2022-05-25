@@ -231,8 +231,6 @@ public class GameController implements Observer, Serializable {
             if(checkController.verifyReceivedData(receivedMessage)){
                 if(moveMessage.getNumIsland() == 0) {
                     activePlayer.moveStudentFromEntranceToDiningRoom(new Student(moveMessage.getStudentColor()));
-                    System.out.println(activePlayer.getPlank().getDiningRoom()[0].getStudents().size());
-                    System.out.println(activePlayer.getPlank().getDiningRoom()[0].getStudents().get(0).getColor());
                     broadcastBoardMessage();
                     broadcastGenericMessage(activePlayer.getNickname() + " moved a " + moveMessage.getStudentColor() + " student to his plank!");
                 }else{

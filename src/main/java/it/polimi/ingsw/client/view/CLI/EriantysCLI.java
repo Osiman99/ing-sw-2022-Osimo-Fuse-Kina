@@ -144,9 +144,12 @@ public class EriantysCLI extends ViewObservable implements View {
             System.out.println("\n");
             for (String p : plankBoard)
                 System.out.println(p);
+
             plankBoard.clear();
             studentsEntranceBoard.clear();
             towerBoard.clear();
+            for(j=0; j<5; j++)
+                diningRoomBoard[j].clear();
         }
 
         /*
