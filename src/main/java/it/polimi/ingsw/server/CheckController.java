@@ -3,10 +3,12 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.network.messages.AssistantCardResult;
 import it.polimi.ingsw.network.messages.Message;
+import it.polimi.ingsw.network.messages.MoveMessage;
 import it.polimi.ingsw.network.messages.PlayerNumberReply;
 import it.polimi.ingsw.server.model.AssistantCard;
 import it.polimi.ingsw.server.model.Game;
 import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.StudentColor;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
@@ -127,7 +129,27 @@ public class CheckController implements Serializable {
     }
 
     public boolean moveStudentCheck(Message message){
-        return true;
+        MoveMessage moveMessage = (MoveMessage) message;
+        VirtualView virtualView = virtualViewMap.get(message.getNickname());
+        if(moveMessage.getNumIsland() >= 0 && moveMessage.getNumIsland() < 13){
+            if (moveMessage.getNumIsland() == 0) {
+                if (game.getPlayerByNickname(moveMessage.getNickname()).getPlank().getDiningRoom()[moveMessage.getStudentColor().getCode()].getStudents().size() == 10) {
+                    virtualView.showGenericMessage("The Dining Room is full! Please try again.");
+                    virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
+                    return false;
+                }
+            }else {
+                if (moveMessage.getNumIsland() <= game.getBoard().getIslands().size()) {
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        }else{
+            virtualView.showGenericMessage("Invalid input! Please try again.");
+            virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
+            return false;
+        }return true;
     }
 
     public void initializeFirstPlayerInAction(){

@@ -215,7 +215,7 @@ public class GameController implements Observer, Serializable {
                     checkController.initializeFirstPlayerInAction();
                     activePlayer = game.getPlayerByNickname(checkController.getFirstPlayerInAction());
                     VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
-                    virtualView.showGenericMessage("Choose your student to move. [e.g. b p/b 3]");
+                    virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
                     turnCont = 0;
                 }if(state == GameState.PLAN) {
                     VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
