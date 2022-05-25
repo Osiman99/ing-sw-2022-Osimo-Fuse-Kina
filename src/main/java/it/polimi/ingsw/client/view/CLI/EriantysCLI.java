@@ -90,7 +90,7 @@ public class EriantysCLI extends ViewObservable implements View {
         ArrayList<String> studentsEntranceBoard = new ArrayList<>(9);
         ArrayList<String>[] diningRoomBoard = new ArrayList[5];
         ArrayList<String> towerBoard = new ArrayList<>();
-        ArrayList<String> professorsBoard = new ArrayList<>();
+        String[] professorsBoard = new String[5];
 
         int i, j, k;
         for(i=0; i<5; i++) {
@@ -123,22 +123,24 @@ public class EriantysCLI extends ViewObservable implements View {
                 towerBoard.add(" ");
 
             //per ogni player ho una lista contenente i professori ▲ che controlla
-            /* for(j=0; j<4; j++) {
-                if(game.getBoard().getProfessorsControlledBy()[j].equals(playerBoard))
-
+            for(j=0; j<5; j++) {
+                if(game.getBoard().getProfessorsControlledBy()[j].equals(playerBoard.getNickname()))
+                    professorsBoard[j]="▲";
+                else
+                    professorsBoard[j]=" ";
             }
-             */
+
 
 
             plankBoard.add("→ " +ANSIColor.PINK+ playerBoard.getNickname()+ANSIColor.RESET+"'s plank");
             plankBoard.add("╔══════════╦═══════════════════════╦═════════╦═════════════╗");
-            plankBoard.add("║ "+ANSIColor.RED_BACKGROUND+ANSIColor.CYAN_BOLD+"Entrance"+ANSIColor.RESET+" ║      "+ANSIColor.RED_BACKGROUND+ANSIColor.CYAN_BOLD+"Dining Room"+ANSIColor.RESET+"      ║"+ANSIColor.RED_BACKGROUND+ANSIColor.CYAN_BOLD+"Professor"+ANSIColor.RESET+"║ "+ANSIColor.RED_BACKGROUND+ANSIColor.CYAN_BOLD+"Tower Space"+ANSIColor.RESET+" ║");
+            plankBoard.add("║ "+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+"Entrance"+ANSIColor.RESET+" ║      "+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+"Dining Room"+ANSIColor.RESET+"      ║"+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+"Professor"+ANSIColor.RESET+"║ "+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+"Tower Space"+ANSIColor.RESET+" ║");
             plankBoard.add("╠══════════╬═══════════════════════╬═════════╬═════════════╣");
-            plankBoard.add("║       "+studentsEntranceBoard.get(0)+"  ║ "+ANSIColor.GREEN+diningRoomBoard[0].get(0)+diningRoomBoard[0].get(1)+diningRoomBoard[0].get(2)+diningRoomBoard[0].get(3)+diningRoomBoard[0].get(4)+diningRoomBoard[0].get(5)+diningRoomBoard[0].get(6)+diningRoomBoard[0].get(7)+diningRoomBoard[0].get(8)+diningRoomBoard[0].get(9)+ANSIColor.RESET+"  ║    ▲    ║   "+towerBoard.get(0)+"     "+towerBoard.get(1)+"   ║");
-            plankBoard.add("║  "+studentsEntranceBoard.get(1)+"    "+studentsEntranceBoard.get(2)+"  ║ "+ANSIColor.RED+diningRoomBoard[1].get(0)+diningRoomBoard[1].get(1)+diningRoomBoard[1].get(2)+diningRoomBoard[1].get(3)+diningRoomBoard[1].get(4)+diningRoomBoard[1].get(5)+diningRoomBoard[1].get(6)+diningRoomBoard[1].get(7)+diningRoomBoard[1].get(8)+diningRoomBoard[1].get(9)+ANSIColor.RESET+"  ║    ▲    ║   "+towerBoard.get(2)+"     "+towerBoard.get(3)+"   ║");
-            plankBoard.add("║  "+studentsEntranceBoard.get(3)+"    "+studentsEntranceBoard.get(4)+"  ║ "+ANSIColor.YELLOW+diningRoomBoard[2].get(0)+diningRoomBoard[2].get(1)+diningRoomBoard[2].get(2)+diningRoomBoard[2].get(3)+diningRoomBoard[2].get(4)+diningRoomBoard[2].get(5)+diningRoomBoard[2].get(6)+diningRoomBoard[2].get(7)+diningRoomBoard[2].get(8)+diningRoomBoard[2].get(9)+ANSIColor.RESET+"  ║    ▲    ║   "+towerBoard.get(4)+"     "+towerBoard.get(5)+"   ║");
-            plankBoard.add("║  "+studentsEntranceBoard.get(5)+"    "+studentsEntranceBoard.get(6)+"  ║ "+ANSIColor.PINK+diningRoomBoard[3].get(0)+diningRoomBoard[3].get(1)+diningRoomBoard[3].get(2)+diningRoomBoard[3].get(3)+diningRoomBoard[3].get(4)+diningRoomBoard[3].get(5)+diningRoomBoard[3].get(6)+diningRoomBoard[3].get(7)+diningRoomBoard[3].get(8)+diningRoomBoard[3].get(9)+ANSIColor.RESET+"  ║    ▲    ║   "+towerBoard.get(6)+"     "+towerBoard.get(7)+"   ║");
-            plankBoard.add("║  "+studentsEntranceBoard.get(7)+"    "+studentsEntranceBoard.get(8)+"  ║ "+ANSIColor.BLUE+diningRoomBoard[4].get(0)+diningRoomBoard[4].get(1)+diningRoomBoard[4].get(2)+diningRoomBoard[4].get(3)+diningRoomBoard[4].get(4)+diningRoomBoard[4].get(5)+diningRoomBoard[4].get(6)+diningRoomBoard[4].get(7)+diningRoomBoard[4].get(8)+diningRoomBoard[4].get(9)+ANSIColor.RESET+"  ║    ▲    ║             ║");
+            plankBoard.add("║       "+studentsEntranceBoard.get(0)+"  ║ "+ANSIColor.GREEN+diningRoomBoard[0].get(0)+diningRoomBoard[0].get(1)+diningRoomBoard[0].get(2)+diningRoomBoard[0].get(3)+diningRoomBoard[0].get(4)+diningRoomBoard[0].get(5)+diningRoomBoard[0].get(6)+diningRoomBoard[0].get(7)+diningRoomBoard[0].get(8)+diningRoomBoard[0].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.GREEN+professorsBoard[0]+ANSIColor.RESET+"    ║   "+towerBoard.get(0)+"     "+towerBoard.get(1)+"   ║");
+            plankBoard.add("║  "+studentsEntranceBoard.get(1)+"    "+studentsEntranceBoard.get(2)+"  ║ "+ANSIColor.RED+diningRoomBoard[1].get(0)+diningRoomBoard[1].get(1)+diningRoomBoard[1].get(2)+diningRoomBoard[1].get(3)+diningRoomBoard[1].get(4)+diningRoomBoard[1].get(5)+diningRoomBoard[1].get(6)+diningRoomBoard[1].get(7)+diningRoomBoard[1].get(8)+diningRoomBoard[1].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.RED+professorsBoard[1]+ANSIColor.RESET+"    ║   "+towerBoard.get(2)+"     "+towerBoard.get(3)+"   ║");
+            plankBoard.add("║  "+studentsEntranceBoard.get(3)+"    "+studentsEntranceBoard.get(4)+"  ║ "+ANSIColor.YELLOW+diningRoomBoard[2].get(0)+diningRoomBoard[2].get(1)+diningRoomBoard[2].get(2)+diningRoomBoard[2].get(3)+diningRoomBoard[2].get(4)+diningRoomBoard[2].get(5)+diningRoomBoard[2].get(6)+diningRoomBoard[2].get(7)+diningRoomBoard[2].get(8)+diningRoomBoard[2].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.YELLOW+professorsBoard[2]+ANSIColor.RESET+"    ║   "+towerBoard.get(4)+"     "+towerBoard.get(5)+"   ║");
+            plankBoard.add("║  "+studentsEntranceBoard.get(5)+"    "+studentsEntranceBoard.get(6)+"  ║ "+ANSIColor.PINK+diningRoomBoard[3].get(0)+diningRoomBoard[3].get(1)+diningRoomBoard[3].get(2)+diningRoomBoard[3].get(3)+diningRoomBoard[3].get(4)+diningRoomBoard[3].get(5)+diningRoomBoard[3].get(6)+diningRoomBoard[3].get(7)+diningRoomBoard[3].get(8)+diningRoomBoard[3].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.PINK+professorsBoard[3]+ANSIColor.RESET+"    ║   "+towerBoard.get(6)+"     "+towerBoard.get(7)+"   ║");
+            plankBoard.add("║  "+studentsEntranceBoard.get(7)+"    "+studentsEntranceBoard.get(8)+"  ║ "+ANSIColor.BLUE+diningRoomBoard[4].get(0)+diningRoomBoard[4].get(1)+diningRoomBoard[4].get(2)+diningRoomBoard[4].get(3)+diningRoomBoard[4].get(4)+diningRoomBoard[4].get(5)+diningRoomBoard[4].get(6)+diningRoomBoard[4].get(7)+diningRoomBoard[4].get(8)+diningRoomBoard[4].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.BLUE+professorsBoard[4]+ANSIColor.RESET+"    ║             ║");
             plankBoard.add("╚══════════╩═══════════════════════╩═════════╩═════════════╝");
 
             System.out.println("\n");
@@ -155,6 +157,7 @@ public class EriantysCLI extends ViewObservable implements View {
             ╠ ═ ═ ═	╬ ═ ═ ═	╣       ▲ professore
             ║       ║       ║       •  ☻ ☼
             ╚ ═ ═ ═ ╩ ═ ═ ═ ╝       ■ torre
+                                    ☬  ℳ madrenatura
                             → nickname's plank
             "               ╔══════════╦═══════════════════════╦═════════╦═════════════╗");
             plankBoard.add("║ Entrance ║      Dining Room      ║Professor║ Tower Space ║");
@@ -196,9 +199,9 @@ public class EriantysCLI extends ViewObservable implements View {
             switch (color) {
                 case BLACK: return ANSIColor.BLACK + "■" +ANSIColor.RESET;
 
-                case WHITE: return ANSIColor.WHITE + "■" +ANSIColor.RESET;
+                case WHITE: return ANSIColor.RESET + "■" +ANSIColor.RESET;
 
-                case GREY: return ANSIColor.PINK + "■" +ANSIColor.RESET;
+                case GREY: return ANSIColor.BLACK_BOLD_BRIGHT + "■" +ANSIColor.RESET;
 
                 default: return null;
             }
@@ -206,6 +209,20 @@ public class EriantysCLI extends ViewObservable implements View {
 
     public void drawIslands(Game game) {
 
+
+
+                // ☬  ℳ madrenatura
+        /*
+                            ╔═════════════════════════════════╦═════════╦═════════════╗");
+            plankBoard.add("║ ISLAND n° 08 ║   ║");
+            plankBoard.add("╠════════════════════════════════╬═════════╬═════════════╣");
+            plankBoard.add("║       ●  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║   ■     ■   ║");
+            plankBoard.add("║  ●    ●  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║   ■     ■   ║");
+            plankBoard.add("║  ●    ●  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║   ■     ■   ║");
+            plankBoard.add("║  ●    ●  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║   ■     ■   ║");
+            plankBoard.add("║  ●    ●  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║             ║");
+            plankBoard.add("╚══════════╩═══════════════════════╩═════════╩═════════════╝");
+         */
     }
 
 
