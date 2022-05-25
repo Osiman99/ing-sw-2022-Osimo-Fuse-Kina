@@ -63,11 +63,12 @@ public class ClientController implements ViewObserver, Observer {
 
     @Override
     public void onUpdateMoveStudentToDiningRoom(StudentColor studentColor) {
+        client.sendMessage(new MoveMessage(this.nickname, studentColor, 0));
     }
 
     @Override
-    public void onUpdateMoveStudentToIsland(StudentColor studentColor, Island island) {
-
+    public void onUpdateMoveStudentToIsland(StudentColor studentColor, int numIsland) {
+        client.sendMessage(new MoveMessage(this.nickname, studentColor, numIsland));
     }
 
     @Override

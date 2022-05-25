@@ -213,8 +213,9 @@ public class GameController implements Observer, Serializable {
                 if (turnCont == game.getPlayers().size()){
                     state = GameState.ACTION;
                     checkController.initializeFirstPlayerInAction();
+                    activePlayer = game.getPlayerByNickname(checkController.getFirstPlayerInAction());
                     VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
-                    virtualView.showGenericMessage("Choose your student to move.");
+                    virtualView.showGenericMessage("Choose your student to move. [e.g. b p/b 3]");
                     turnCont = 0;
                 }if(state == GameState.PLAN) {
                     VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
@@ -225,7 +226,22 @@ public class GameController implements Observer, Serializable {
     }
 
     public void action(Message receivedMessage){
-
+        MoveMessage moveMessage = (MoveMessage) receivedMessage;
+        if (receivedMessage.getMessageType() == MessageType.MOVE_STUDENT){
+            if(checkController.verifyReceivedData(receivedMessage)){
+                if(moveMessage.getNumIsland() == 0) {
+                    activePlayer.moveStudentFromEntranceToDiningRoom(new Student(moveMessage.getStudentColor()));
+                    System.out.println(activePlayer.getPlank().getDiningRoom()[0].getStudents().size());
+                    System.out.println(activePlayer.getPlank().getDiningRoom()[0].getStudents().get(0).getColor());
+                    broadcastBoardMessage();
+                    broadcastGenericMessage(activePlayer.getNickname() + " moved a " + moveMessage.getStudentColor() + " student to his plank!");
+                }else{
+                    activePlayer.moveStudentFromEntranceToIsland(new Student(moveMessage.getStudentColor()), game.getBoard().getIslands().get(moveMessage.getNumIsland()));
+                    broadcastBoardMessage();
+                    broadcastGenericMessage(activePlayer.getNickname() + " moved a " + moveMessage.getStudentColor() + " student to the island number " + moveMessage.getNumIsland() + "!");
+                }
+            }
+        }
     }
 
 

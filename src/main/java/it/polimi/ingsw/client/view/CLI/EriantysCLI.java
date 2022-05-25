@@ -376,24 +376,47 @@ public class EriantysCLI extends ViewObservable implements View {
     public void onDemandMoveStudent(){
 
         String colorIn = nextLine();
+        int numIsland = Character.getNumericValue((colorIn.charAt(2)));
 
         switch (colorIn){
-            case "green":
-                notifyObserver(obs -> obs.onUpdateMoveStudentToDiningRoom(StudentColor.GREEN));
+            case "g p":
+                if(numIsland < 13 && numIsland > 0){
+                    notifyObserver(obs -> obs.onUpdateMoveStudentToIsland(StudentColor.GREEN, numIsland));
+                }else{
+                    notifyObserver(obs -> obs.onUpdateMoveStudentToDiningRoom(StudentColor.GREEN));
+                }
                 break;
-            case "red":
-                notifyObserver(obs -> obs.onUpdateMoveStudentToDiningRoom(StudentColor.RED));
+            case "r p":
+                if(numIsland < 13 && numIsland > 0){
+                    notifyObserver(obs -> obs.onUpdateMoveStudentToIsland(StudentColor.RED, numIsland));
+                }else{
+                    notifyObserver(obs -> obs.onUpdateMoveStudentToDiningRoom(StudentColor.RED));
+                }
                 break;
-            case "yellow":
-                notifyObserver(obs -> obs.onUpdateMoveStudentToDiningRoom(StudentColor.YELLOW));
+            case "y p":
+                if(numIsland < 13 && numIsland > 0){
+                    notifyObserver(obs -> obs.onUpdateMoveStudentToIsland(StudentColor.YELLOW, numIsland));
+                }else{
+                    notifyObserver(obs -> obs.onUpdateMoveStudentToDiningRoom(StudentColor.YELLOW));
+                }
                 break;
-            case "pink":
-                notifyObserver(obs -> obs.onUpdateMoveStudentToDiningRoom(StudentColor.PINK));
+            case "p p":
+                if(numIsland < 13 && numIsland > 0){
+                    notifyObserver(obs -> obs.onUpdateMoveStudentToIsland(StudentColor.PINK, numIsland));
+                }else{
+                    notifyObserver(obs -> obs.onUpdateMoveStudentToDiningRoom(StudentColor.PINK));
+                }
                 break;
-            case "blue":
-                notifyObserver(obs -> obs.onUpdateMoveStudentToDiningRoom(StudentColor.BLUE));
+            case "b p":
+                if(numIsland < 13 && numIsland > 0){
+                    notifyObserver(obs -> obs.onUpdateMoveStudentToIsland(StudentColor.BLUE, numIsland));
+                }else{
+                    notifyObserver(obs -> obs.onUpdateMoveStudentToDiningRoom(StudentColor.BLUE));
+                }
                 break;
+
         }
+
     }
 
     /**
@@ -406,7 +429,7 @@ public class EriantysCLI extends ViewObservable implements View {
 
     public void showGenericMessage(String genericMessage) {
         out.println(genericMessage);
-        if(genericMessage.equals("Choose your student to move.")){
+        if(genericMessage.equals("Choose your student to move. [e.g. b p/b 3]")){
             onDemandMoveStudent();
         }
     }

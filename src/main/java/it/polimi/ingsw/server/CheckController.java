@@ -64,6 +64,8 @@ public class CheckController implements Serializable {
                 return false;
             case ASSISTANTCARD_RESULT:
                 return assistantCardResultCheck(message);
+            case MOVE_STUDENT:
+                return moveStudentCheck(message);
 
             default: // Never should reach this statement.
                 return false;
@@ -124,10 +126,17 @@ public class CheckController implements Serializable {
         return false;
     }
 
+    public boolean moveStudentCheck(Message message){
+        return true;
+    }
+
     public void initializeFirstPlayerInAction(){
+        int lowerNum = numCardOtherPlayers.get(0);
+        setFirstPlayerInAction(nicknamesInChooseOrder.get(0));
         for (int i = 1; i < numCardOtherPlayers.size(); i++){
-            if(numCardOtherPlayers.get(i-1) < numCardOtherPlayers.get(i)){
-                setFirstPlayerInAction(nicknamesInChooseOrder.get(i-1));
+            if(lowerNum > numCardOtherPlayers.get(i)){
+                lowerNum = numCardOtherPlayers.get(i);
+                setFirstPlayerInAction(nicknamesInChooseOrder.get(i));
             }
         }
     }

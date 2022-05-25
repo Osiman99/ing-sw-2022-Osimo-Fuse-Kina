@@ -27,7 +27,7 @@ public interface ViewObserver {
 
     void onUpdateMoveStudentToDiningRoom(StudentColor studentColor);
 
-    void onUpdateMoveStudentToIsland(StudentColor studentColor, Island island);
+    void onUpdateMoveStudentToIsland(StudentColor studentColor, int island);
 
     void onUpdateCloud(Cloud cloud);
 
