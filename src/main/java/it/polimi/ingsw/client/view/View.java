@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.view;
 
 import it.polimi.ingsw.server.model.AssistantCard;
 import it.polimi.ingsw.server.model.Game;
+import it.polimi.ingsw.server.model.Island;
 import it.polimi.ingsw.server.model.StudentColor;
 
 import java.util.ArrayList;
@@ -12,14 +13,14 @@ public interface View {
     /**
      * The player has to choose a nickname.
      */
-    void askNickname();
+    void onDemandNickname();
 
     /**
      * choose the players number.
      */
-    void askPlayersNumber();
+    void onDemandPlayersNumber();
 
-    void askAssistantCard(List<AssistantCard> deck);
+    void onDemandAssistantCard(List<AssistantCard> deck);
 
     /**
      * Shows to the user if the Login succeeded.
@@ -35,8 +36,6 @@ public interface View {
     void showDisconnectionMessage(String nicknameDisconnected, String value);
 
     void drawBoard(Game game);
-
-    void onDemandMoveStudent(List<StudentColor> entranceStudentsColors);
 
     //void showErrorAndQuit(String error);
 
