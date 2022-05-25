@@ -214,7 +214,7 @@ public class EriantysCLI extends ViewObservable implements View {
 
         Map<String, String> serverInfo = new HashMap<>();
         String defaultAddress = "127.0.0.1";
-        String defaultPort = "12501";
+        String defaultPort = "12500";
         boolean correctInput;
         //Scanner scanner = new Scanner(System.in);
 
