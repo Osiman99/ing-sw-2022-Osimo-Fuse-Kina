@@ -13,10 +13,9 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 
 
-public class Controller {
+public class EntryController {
 
     private Parent root;
     private Stage stage;
@@ -25,17 +24,9 @@ public class Controller {
     @FXML
     private Button loginButton;
 
-    public void exit(ActionEvent actionEvent) {
-        /*
-        exitButton.setOnAction((actionEvent1 -> {
-            Platform.exit();
-        }));
-
-         */
-    }
 
     public void login(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(new File("src/main/java/it/polimi/ingsw/client/view/GUI/connection.fxml").toURI().toURL());
+        FXMLLoader loader = new FXMLLoader(new File("src/main/java/it/polimi/ingsw/client/view/GUI/files/connection.fxml").toURI().toURL());
         root = loader.load();
 
         stage = (Stage) ((Node) loginButton).getScene().getWindow();
