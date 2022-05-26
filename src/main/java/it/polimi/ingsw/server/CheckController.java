@@ -132,7 +132,7 @@ public class CheckController implements Serializable {
         MoveMessage moveMessage = (MoveMessage) message;
         VirtualView virtualView = virtualViewMap.get(message.getNickname());
         if (moveMessage.getNumIsland() == 0) {
-            if (game.getPlayerByNickname(moveMessage.getNickname()).getPlank().getDiningRoom()[moveMessage.getStudentColor().getCode()].getStudents().size() == 10) {
+            if (game.getPlayerByNickname(moveMessage.getNickname()).getPlank().getDiningRoom()[moveMessage.getStudentColor().getCode()].getStudents().size() == 10) {                        //prima c'era if else di controllo 0 e 13
                 virtualView.showGenericMessage("The Dining Room is full! Please try again.");
                 virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
                 return false;
