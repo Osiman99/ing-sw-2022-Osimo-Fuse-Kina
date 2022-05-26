@@ -409,25 +409,47 @@ public class EriantysCLI extends ViewObservable implements View {
                     break;
                 default:
                     showGenericMessage("Invalid input! Please try again.");
-                    break;
+                    showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
             }
 
         }else if(plankOrIsland.equals("i")){
             try {                                                                                                                                                               //do while?
                 showGenericMessage("Choose your student to move. Write the first letter of the color followed by a space and then the island number. (e.g.: r 3)");
                 String colorIn = nextLine();
+                char color = colorIn.charAt(0);
+                String sColor = String.valueOf(color);
                 StringBuilder builderNumIsland = new StringBuilder();
                 for (int i = 2; i < colorIn.length(); i++) {
                     builderNumIsland.append(String.valueOf(colorIn.charAt(i)));
                 }
                 String sNumIsland = builderNumIsland.toString();
                 int numIsland = Integer.parseInt(sNumIsland);
-                notifyObserver(obs -> obs.onUpdateMoveStudentToIsland(StudentColor.BLUE, numIsland));
+                switch (sColor) {
+                    case "g":
+                        notifyObserver(obs -> obs.onUpdateMoveStudentToIsland(StudentColor.GREEN, numIsland));
+                        break;
+                    case "r":
+                        notifyObserver(obs -> obs.onUpdateMoveStudentToIsland(StudentColor.RED, numIsland));
+                        break;
+                    case "y":
+                        notifyObserver(obs -> obs.onUpdateMoveStudentToIsland(StudentColor.YELLOW, numIsland));
+                        break;
+                    case "p":
+                        notifyObserver(obs -> obs.onUpdateMoveStudentToIsland(StudentColor.PINK, numIsland));
+                        break;
+                    case "b":
+                        notifyObserver(obs -> obs.onUpdateMoveStudentToIsland(StudentColor.BLUE, numIsland));
+                        break;
+                    default:
+                        showGenericMessage("Invalid input! Please try again.");
+                        showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
+                }
             } catch (NumberFormatException e) {
                 showGenericMessage("Invalid input! Please try again.");
             }
-
-
+        }else{
+            showGenericMessage("Invalid input! Please try again.");
+            showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
         }
     }
 
