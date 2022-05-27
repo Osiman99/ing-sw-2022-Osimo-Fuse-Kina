@@ -29,10 +29,6 @@ public class ConnectionController {
     @FXML
     private Parent root;
 
-    private String ipAddress = "";
-    private String port = "";
-    private String nickname = "";
-
 
     @FXML
     public void initialize(){
@@ -41,12 +37,12 @@ public class ConnectionController {
 
     public void modalityScene(ActionEvent actionEvent) throws IOException {
 
-        ipAddress = ipAddressText.getText();
-        port = portText.getText();
-        nickname = nicknameText.getText();
-        System.out.println("IP : "+ipAddress);
-        System.out.println("PORT : "+port);
-        System.out.println("NICKNAME : "+nickname);
+        String ipAddress = ipAddressText.getText();
+        String port = portText.getText();
+        String nickname = nicknameText.getText();
+        System.out.println("IP : "+ ipAddress);
+        System.out.println("PORT : "+ port);
+        System.out.println("NICKNAME : "+ nickname);
         //fare controllo lato server
 
         //if dati inseriti validi carica nuova schermata
