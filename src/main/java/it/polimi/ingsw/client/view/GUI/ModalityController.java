@@ -2,9 +2,13 @@ package it.polimi.ingsw.client.view.GUI;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.stage.Stage;
 
 public class ModalityController {
 
@@ -17,11 +21,21 @@ public class ModalityController {
     private ChoiceBox playersChoice;
     @FXML
     private Button playButton;
+    @FXML
+    private Scene scene;
+    @FXML
+    private Stage stage;
+    @FXML
+    private Parent root;
 
     @FXML
     public void initialize(){
-        modeChoice.setValue("");
-        playersChoice.setValue("");
+        modeChoice.setItems(modeChoiceList);
+        playersChoice.setItems(playersChoiceList);
+
+    }
+
+    public void play(ActionEvent actionEvent) {
 
     }
 }
