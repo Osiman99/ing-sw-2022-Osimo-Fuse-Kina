@@ -20,6 +20,7 @@ public class GameController implements Observer, Serializable {
     private static final String STR_INVALID_STATE = "Invalid game state!";
     public static final String SAVED_GAME_FILE = "match.bless";
     public int turnCont;
+    public int moveCont;
 
 
     public GameController(){
@@ -28,6 +29,7 @@ public class GameController implements Observer, Serializable {
         checkController = new CheckController(virtualViewMap, this);
         setGameState(GameState.PREGAME);
         turnCont = 0;
+        moveCont = 0;
     }
 
     public void switchState(Message receivedMessage){
@@ -237,6 +239,36 @@ public class GameController implements Observer, Serializable {
                     activePlayer.moveStudentFromEntranceToIsland(new Student(moveMessage.getStudentColor()), game.getBoard().getIslands().get(moveMessage.getNumIsland()-1));
                     broadcastBoardMessage();
                     broadcastGenericMessage(activePlayer.getNickname() + " moved a " + moveMessage.getStudentColor() + " student to the island number " + moveMessage.getNumIsland() + "!");
+                }actionTurnManager();
+            }
+        }
+    }
+
+    public void actionTurnManager(){
+        moveCont++;
+        if(moveCont < 4) {
+            VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
+            virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
+        }else if (moveCont == 4){
+            for (int i = 0; i < checkController.getNicknamesInChooseOrder().size(); i++) {
+                if (checkController.getNicknamesInChooseOrder().get(i).equals(activePlayer.getNickname())){
+                    activePlayer = game.getPlayerByNickname(checkController.getNicknamesInChooseOrder().get((i+1) % checkController.getNicknamesInChooseOrder().size()));
+                    moveCont = 0;
+                    turnCont++;
+                    if (turnCont == game.getPlayers().size()){
+                        state = GameState.PLAN;
+                        for (int j = 0; j < checkController.getNumCardOtherPlayers().size(); j++){
+                            checkController.getNumCardOtherPlayers().remove(0);
+                            checkController.getNicknamesInChooseOrder().remove(0);
+                        }
+                        activePlayer = game.getPlayerByNickname(checkController.getFirstPlayerInAction());     //mezzo inutile
+                        VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
+                        virtualView.onDemandAssistantCard(activePlayer.getDeck().getDeck());
+                        turnCont = 0;
+                    }else {
+                        VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
+                        virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
+                    }break;
                 }
             }
         }
