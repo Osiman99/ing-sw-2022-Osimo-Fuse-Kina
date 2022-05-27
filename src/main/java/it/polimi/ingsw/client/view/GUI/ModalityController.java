@@ -36,6 +36,15 @@ public class ModalityController {
     }
 
     public void play(ActionEvent actionEvent) {
+        if(modeChoice.getSelectionModel().getSelectedItem()!=null && playersChoice.getSelectionModel().getSelectedItem()!=null ) {
+            String mode = modeChoice.getSelectionModel().getSelectedItem().toString();
+            int playerNumber = Integer.parseInt(playersChoice.getSelectionModel().getSelectedItem().toString());
+            System.out.println("MODE : "+ mode);
+            System.out.println("PLAYERS NUMBER : "+ playerNumber);
 
+        }
+        else{
+            System.out.println("Insert again!");
+        }
     }
 }

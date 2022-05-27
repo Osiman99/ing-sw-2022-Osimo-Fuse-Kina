@@ -44,9 +44,9 @@ public class ConnectionController {
         ipAddress = ipAddressText.getText();
         port = portText.getText();
         nickname = nicknameText.getText();
-        System.out.println("IP: "+ipAddress);
-        System.out.println("PORT: "+port);
-        System.out.println("NICKNAME "+nickname);
+        System.out.println("IP : "+ipAddress);
+        System.out.println("PORT : "+port);
+        System.out.println("NICKNAME : "+nickname);
         //fare controllo lato server
 
         //if dati inseriti validi carica nuova schermata
