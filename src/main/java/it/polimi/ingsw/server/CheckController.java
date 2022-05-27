@@ -5,10 +5,7 @@ import it.polimi.ingsw.network.messages.AssistantCardResult;
 import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.network.messages.MoveMessage;
 import it.polimi.ingsw.network.messages.PlayerNumberReply;
-import it.polimi.ingsw.server.model.AssistantCard;
-import it.polimi.ingsw.server.model.Game;
-import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.StudentColor;
+import it.polimi.ingsw.server.model.*;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
@@ -25,6 +22,7 @@ public class CheckController implements Serializable {
     private final GameController gameController;
     private List<Integer> numCardOtherPlayers;
     private List<String> nicknamesInChooseOrder;
+    private List<String> sortedNicknames;
     private String firstPlayerInAction;
 
     /**
@@ -128,36 +126,75 @@ public class CheckController implements Serializable {
         return false;
     }
 
-    public boolean moveStudentCheck(Message message){
+    public boolean moveStudentCheck(Message message) {
         MoveMessage moveMessage = (MoveMessage) message;
         VirtualView virtualView = virtualViewMap.get(message.getNickname());
-        if (moveMessage.getNumIsland() == 0) {
-            if (game.getPlayerByNickname(moveMessage.getNickname()).getPlank().getDiningRoom()[moveMessage.getStudentColor().getCode()].getStudents().size() == 10) {                        //prima c'era if else di controllo 0 e 13
-                virtualView.showGenericMessage("The Dining Room is full! Please try again.");
-                virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
-                return false;
-            }
-        }else {
-            if (moveMessage.getNumIsland() <= game.getBoard().getIslands().size()) {
-                return true;
-            }else{
-                virtualView.showGenericMessage("The island number " + moveMessage.getNumIsland() + " doesn't exist! Please try again.");
-                virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
-                return false;
+        for (Student student : game.getPlayerByNickname(moveMessage.getNickname()).getPlank().getEntrance().getStudents()) {
+            if (student.getColor() == moveMessage.getStudentColor()) {
+                if (moveMessage.getNumIsland() == 0) {
+                    if (game.getPlayerByNickname(moveMessage.getNickname()).getPlank().getDiningRoom()[moveMessage.getStudentColor().getCode()].getStudents().size() == 10) {                        //prima c'era if else di controllo 0 e 13
+                        virtualView.showGenericMessage("The Dining Room is full! Please try again.");
+                        virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
+                        return false;
+                    }
+                } else {
+                    if (moveMessage.getNumIsland() <= game.getBoard().getIslands().size()) {
+                        return true;
+                    } else {
+                        virtualView.showGenericMessage("The island number " + moveMessage.getNumIsland() + " doesn't exist! Please try again.");
+                        virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
+                        return false;
+                    }
+                }return true;
             }
         }
-        return true;
+        if (moveMessage.getNumIsland() <= game.getBoard().getIslands().size()) {
+            virtualView.showGenericMessage("You don't have any " + moveMessage.getStudentColor() + " student in your entrance! Please try again.");
+        }else{
+            virtualView.showGenericMessage("You don't have any " + moveMessage.getStudentColor() + " student in your entrance and the island number " + moveMessage.getNumIsland() + " doesn't exist! Please try again.");
+        }
+        virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
+        return false;
     }
 
     public void initializeFirstPlayerInAction(){
-        int lowerNum = numCardOtherPlayers.get(0);
+        sortNicknames();
         setFirstPlayerInAction(nicknamesInChooseOrder.get(0));
-        for (int i = 1; i < numCardOtherPlayers.size(); i++){
-            if(lowerNum > numCardOtherPlayers.get(i)){
-                lowerNum = numCardOtherPlayers.get(i);
-                setFirstPlayerInAction(nicknamesInChooseOrder.get(i));
+    }
+
+    public void sortNicknames(){                 //ordina i nickname dal più basso valore dell'asstant card scelta al più alto
+        for (int i = 0; i < numCardOtherPlayers.size()-1; i++){
+            int lowerNumIndex = i;
+            for (int j = i + 1; j < numCardOtherPlayers.size(); j++){
+                if(numCardOtherPlayers.get(j) < numCardOtherPlayers.get(lowerNumIndex)){
+                    lowerNumIndex = j;
+                }
             }
+
+            int tmp = numCardOtherPlayers.get(i);
+            String sTmp = nicknamesInChooseOrder.get(i);
+            numCardOtherPlayers.set(i, numCardOtherPlayers.get(lowerNumIndex));
+            nicknamesInChooseOrder.set(i, nicknamesInChooseOrder.get(lowerNumIndex));
+            numCardOtherPlayers.set(lowerNumIndex, tmp);
+            nicknamesInChooseOrder.set(lowerNumIndex, sTmp);
+
         }
+
+
+        /*if (game.getPlayers().size() == 2) {
+            int lowerNum = numCardOtherPlayers.get(0);
+            sortedNicknames.add(0, nicknamesInChooseOrder.get(0));
+            for (int i = 1; i < numCardOtherPlayers.size(); i++) {
+                if (lowerNum > numCardOtherPlayers.get(i)) {
+                    lowerNum = numCardOtherPlayers.get(i);
+                    sortedNicknames.add(0, nicknamesInChooseOrder.get(i));
+                } else {
+                    sortedNicknames.add(nicknamesInChooseOrder.get(i));
+                }
+            }
+        }else{
+
+        }*/
     }
 
     public List<Integer> getNumCardOtherPlayers() {
