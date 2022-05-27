@@ -43,7 +43,7 @@
                </VBox.margin>
             </Label>
             <ChoiceBox fx:id="playersChoice" prefHeight="26.0" prefWidth="550.0" />
-            <Button mnemonicParsing="false" prefHeight="51.0" prefWidth="600.0" text="PLAY" textFill="#610909">
+            <Button fx:id="playButton" mnemonicParsing="false" prefHeight="51.0" prefWidth="600.0" text="PLAY" textFill="#610909">
                <VBox.margin>
                   <Insets top="100.0" />
                </VBox.margin>
