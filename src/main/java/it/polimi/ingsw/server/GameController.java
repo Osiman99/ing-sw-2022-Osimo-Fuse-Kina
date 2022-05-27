@@ -246,10 +246,11 @@ public class GameController implements Observer, Serializable {
 
     public void actionTurnManager(){
         moveCont++;
-        if(moveCont < 4) {
+        if(moveCont < game.getNumPlayers()+1) {
             VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
             virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
-        }else if (moveCont == 4){
+        }else if (moveCont == game.getNumPlayers()+1){
+            //onDemandCloud da mettere in action() con un flag: ho scelto la cloud
             for (int i = 0; i < checkController.getNicknamesInChooseOrder().size(); i++) {
                 if (checkController.getNicknamesInChooseOrder().get(i).equals(activePlayer.getNickname())){
                     activePlayer = game.getPlayerByNickname(checkController.getNicknamesInChooseOrder().get((i+1) % checkController.getNicknamesInChooseOrder().size()));
