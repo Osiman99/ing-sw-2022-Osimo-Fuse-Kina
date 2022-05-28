@@ -27,19 +27,19 @@
                 <Font size="24.0" />
             </font>
         </Label>
-        <TextField />
+        <TextField fx:id="ipAddressText" />
         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="482.0" text="Port">
             <font>
                 <Font size="24.0" />
             </font>
         </Label>
-        <TextField />
+        <TextField fx:id="portText" />
         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="0.0" prefWidth="502.0" text="Nickname">
             <font>
                 <Font size="24.0" />
             </font>
         </Label>
-        <TextField />
+        <TextField fx:id="nicknameText" />
         <Button fx:id="connectButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#modalityScene" prefHeight="46.0" prefWidth="338.0" text="Connect">
             <font>
                 <Font size="18.0" />

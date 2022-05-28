@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -15,17 +16,36 @@ public class ConnectionController {
 
     @FXML
     private Scene scene;
-
     @FXML
     private Stage stage;
-
     @FXML
     private Button connectButton;
-
+    @FXML
+    private TextField ipAddressText;
+    @FXML
+    private TextField portText;
+    @FXML
+    private TextField nicknameText;
     @FXML
     private Parent root;
 
+
+    @FXML
+    public void initialize(){
+
+    }
+
     public void modalityScene(ActionEvent actionEvent) throws IOException {
+
+        String ipAddress = ipAddressText.getText();
+        String port = portText.getText();
+        String nickname = nicknameText.getText();
+        System.out.println("IP : "+ ipAddress);
+        System.out.println("PORT : "+ port);
+        System.out.println("NICKNAME : "+ nickname);
+        //fare controllo lato server
+
+        //if dati inseriti validi carica nuova schermata
         FXMLLoader loader = new FXMLLoader(new File("src/main/java/it/polimi/ingsw/client/view/GUI/files/modality.fxml").toURI().toURL());
         root = loader.load();
 
@@ -33,5 +53,6 @@ public class ConnectionController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+
     }
 }
