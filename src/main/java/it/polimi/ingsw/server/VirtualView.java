@@ -65,6 +65,11 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
+    public void onDemandMotherNatureMoves(int maxMoves){
+        clientHandler.sendMessage(new MotherNatureRequest(Game.SERVER_NICKNAME, maxMoves));
+    }
+
+    @Override
     public void drawBoard(Game game){
         clientHandler.sendMessage(new BoardMessage(Game.SERVER_NICKNAME, game));
     }

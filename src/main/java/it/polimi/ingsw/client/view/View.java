@@ -37,6 +37,8 @@ public interface View {
 
     void drawBoard(Game game);
 
+    void onDemandMotherNatureMoves(int maxMoves);
+
     //void showErrorAndQuit(String error);
 
 }

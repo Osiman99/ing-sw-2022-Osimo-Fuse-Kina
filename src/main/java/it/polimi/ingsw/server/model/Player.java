@@ -15,7 +15,7 @@ public class Player extends Observable implements Serializable {
     private PlayerState state;
     private AssistantDeck deck;
     private int numCoins;
-    private int chosenCardValue;
+    private AssistantCard chosenAssistantCard;
     private Game game;
 
     public Player(String nickname){
@@ -60,8 +60,8 @@ public class Player extends Observable implements Serializable {
         return playerColor;
     }
 
-    public int getChosenCardValue() {
-        return chosenCardValue;
+    public AssistantCard getChosenAssistantCard() {
+        return chosenAssistantCard;
     }
 
     public void setPlayerColor(TowerColor playerColor) {
@@ -94,17 +94,16 @@ public class Player extends Observable implements Serializable {
     }
 
     public void chooseAssistantCard(int value){
-        //controllo value
-        chosenCardValue = value;
+        chosenAssistantCard = new AssistantCard(value, (value-1)/2 + 1);
+        deck.getDeck().removeIf(assistantCard -> assistantCard.equals(chosenAssistantCard));
     }
 
     public void chooseNumMoves (int numMoves){
         for (int i = 0; i < deck.getDeck().size(); i++) {
-            if (deck.getDeck().get(i).getValue() == chosenCardValue) {
+            if (deck.getDeck().get(i).getValue() == chosenAssistantCard.getValue()) {
                 if (numMoves <= deck.getDeck().get(i).getMaxMoves() && numMoves > 0){
                     game.getBoard().moveMotherNature(numMoves);
-                }//else throw exception;
-                //remove AssistantCard
+                }
                 break;
             }
         }

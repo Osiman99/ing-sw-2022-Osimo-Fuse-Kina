@@ -36,6 +36,14 @@ public class Cloud implements Serializable {
         return students;
     }
 
+    public boolean isEmpty(){
+        if (students.size() == 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     // if 2 players then 3 students per cloud
     // if 3 players then 4 students per row
 

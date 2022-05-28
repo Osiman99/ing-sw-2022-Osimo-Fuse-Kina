@@ -19,8 +19,10 @@ public class GameController implements Observer, Serializable {
     private CheckController checkController;
     private static final String STR_INVALID_STATE = "Invalid game state!";
     public static final String SAVED_GAME_FILE = "match.bless";
-    public int turnCont;
-    public int moveCont;
+    private int turnCont;
+    private int moveCont;
+    private boolean cloudFlag;
+    private boolean motherNatureFlag;
 
 
     public GameController(){
@@ -30,6 +32,8 @@ public class GameController implements Observer, Serializable {
         setGameState(GameState.PREGAME);
         turnCont = 0;
         moveCont = 0;
+        cloudFlag = false;
+        motherNatureFlag = true;
     }
 
     public void switchState(Message receivedMessage){
@@ -120,6 +124,7 @@ public class GameController implements Observer, Serializable {
             }
         game.initGame();
         setGameState(GameState.PLAN);
+        game.getBoard().moveStudentsFromBagToClouds();
         broadcastBoardMessage();
         broadcastGenericMessage("All Players are connected. " + activePlayer.getNickname() + " is choosing the Assistant Card...");
 
@@ -228,8 +233,8 @@ public class GameController implements Observer, Serializable {
     }
 
     public void action(Message receivedMessage){
-        MoveMessage moveMessage = (MoveMessage) receivedMessage;
         if (receivedMessage.getMessageType() == MessageType.MOVE_STUDENT){
+            MoveMessage moveMessage = (MoveMessage) receivedMessage;
             if(checkController.verifyReceivedData(receivedMessage)){
                 if(moveMessage.getNumIsland() == 0) {
                     activePlayer.moveStudentFromEntranceToDiningRoom(new Student(moveMessage.getStudentColor()));
@@ -241,6 +246,26 @@ public class GameController implements Observer, Serializable {
                     broadcastGenericMessage(activePlayer.getNickname() + " moved a " + moveMessage.getStudentColor() + " student to the island number " + moveMessage.getNumIsland() + "!");
                 }actionTurnManager();
             }
+        }else if (receivedMessage.getMessageType() == MessageType.MOTHERNATURE_RESULT){
+            MotherNatureResult motherNatureResult = (MotherNatureResult) receivedMessage;
+            if(checkController.verifyReceivedData(receivedMessage)){
+                activePlayer.chooseNumMoves(motherNatureResult.getNumMoves());
+                broadcastBoardMessage();
+                motherNatureFlag = false;
+                cloudFlag = true;
+                moveCont--;
+                actionTurnManager();
+            }
+        }else if (receivedMessage.getMessageType() == MessageType.CLOUD){
+            CloudMessage cloudMessage = (CloudMessage) receivedMessage;
+            if(checkController.verifyReceivedData(receivedMessage)){
+                activePlayer.moveStudentsFromCloudToEntrance(game.getBoard().getClouds().get(cloudMessage.getNumCloud()-1));
+                broadcastBoardMessage();
+                broadcastGenericMessage(activePlayer.getNickname() + " chose the cloud number " + cloudMessage.getNumCloud());
+                cloudFlag = false;
+                moveCont--;
+                actionTurnManager();
+            }
         }
     }
 
@@ -250,26 +275,37 @@ public class GameController implements Observer, Serializable {
             VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
             virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
         }else if (moveCont == game.getNumPlayers()+1){
-            //onDemandCloud da mettere in action() con un flag: ho scelto la cloud
-            for (int i = 0; i < checkController.getNicknamesInChooseOrder().size(); i++) {
-                if (checkController.getNicknamesInChooseOrder().get(i).equals(activePlayer.getNickname())){
-                    activePlayer = game.getPlayerByNickname(checkController.getNicknamesInChooseOrder().get((i+1) % checkController.getNicknamesInChooseOrder().size()));
-                    moveCont = 0;
-                    turnCont++;
-                    if (turnCont == game.getPlayers().size()){
-                        state = GameState.PLAN;
-                        for (int j = 0; j < checkController.getNumCardOtherPlayers().size(); j++){
-                            checkController.getNumCardOtherPlayers().remove(0);
-                            checkController.getNicknamesInChooseOrder().remove(0);
+            if (!cloudFlag && motherNatureFlag){
+                VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
+                virtualView.onDemandMotherNatureMoves(activePlayer.getChosenAssistantCard().getMaxMoves());
+            }else if(cloudFlag && !motherNatureFlag){
+                VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
+                virtualView.showGenericMessage("Which cloud do you choose? Insert the cloud number.");
+            }else if(!cloudFlag && !motherNatureFlag){
+                for (int i = 0; i < checkController.getNicknamesInChooseOrder().size(); i++) {
+                    if (checkController.getNicknamesInChooseOrder().get(i).equals(activePlayer.getNickname())) {
+                        activePlayer = game.getPlayerByNickname(checkController.getNicknamesInChooseOrder().get((i + 1) % checkController.getNicknamesInChooseOrder().size()));
+                        moveCont = 0;
+                        turnCont++;
+                        if (turnCont == game.getPlayers().size()) {
+                            state = GameState.PLAN;
+                            for (int j = 0; j < checkController.getNumCardOtherPlayers().size(); j++) {
+                                checkController.getNumCardOtherPlayers().remove(0);
+                                checkController.getNicknamesInChooseOrder().remove(0);
+                            }
+                            game.getBoard().moveStudentsFromBagToClouds();
+                            activePlayer = game.getPlayerByNickname(checkController.getFirstPlayerInAction());    //mezzo inutile
+                            VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
+                            virtualView.onDemandAssistantCard(activePlayer.getDeck().getDeck());
+                            turnCont = 0;
+                        } else {
+                            VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
+                            virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
                         }
-                        activePlayer = game.getPlayerByNickname(checkController.getFirstPlayerInAction());     //mezzo inutile
-                        VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
-                        virtualView.onDemandAssistantCard(activePlayer.getDeck().getDeck());
-                        turnCont = 0;
-                    }else {
-                        VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
-                        virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
-                    }break;
+                        motherNatureFlag = true;
+                        cloudFlag = false;
+                        break;
+                    }
                 }
             }
         }

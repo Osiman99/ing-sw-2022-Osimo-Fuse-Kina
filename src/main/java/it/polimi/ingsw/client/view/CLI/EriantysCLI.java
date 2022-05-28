@@ -455,6 +455,17 @@ public class EriantysCLI extends ViewObservable implements View {
         }
     }
 
+    public void onDemandCloud(){
+        int numCloud = Integer.parseInt(nextLine());
+        notifyObserver(obs -> obs.onUpdateCloud(numCloud));
+    }
+
+    public void onDemandMotherNatureMoves(int maxMoves){
+        showGenericMessage("How many steps do you want Mother Nature does? Insert a number between 1 and " + maxMoves + ".");
+        int numMoves = Integer.parseInt(nextLine());
+        notifyObserver(obs -> obs.onUpdateMotherNatureMoves(numMoves));
+    }
+
     /**
      * Clears the EriantysCLI terminal.
      */
@@ -467,6 +478,8 @@ public class EriantysCLI extends ViewObservable implements View {
         out.println(genericMessage);
         if(genericMessage.equals("Do you want to move a student to your plank or island? [p/i]")){
             onDemandMoveStudent();
+        }else if (genericMessage.equals("Which cloud do you choose? Insert the cloud number.")){
+            onDemandCloud();
         }
     }
 

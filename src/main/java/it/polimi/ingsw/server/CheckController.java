@@ -1,10 +1,7 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.client.view.View;
-import it.polimi.ingsw.network.messages.AssistantCardResult;
-import it.polimi.ingsw.network.messages.Message;
-import it.polimi.ingsw.network.messages.MoveMessage;
-import it.polimi.ingsw.network.messages.PlayerNumberReply;
+import it.polimi.ingsw.network.messages.*;
 import it.polimi.ingsw.server.model.*;
 
 import java.io.Serializable;
@@ -66,6 +63,10 @@ public class CheckController implements Serializable {
                 return assistantCardResultCheck(message);
             case MOVE_STUDENT:
                 return moveStudentCheck(message);
+            case MOTHERNATURE_RESULT:
+                return motherNatureCheck(message);
+            case CLOUD:
+                return cloudCheck(message);
 
             default: // Never should reach this statement.
                 return false;
@@ -126,7 +127,7 @@ public class CheckController implements Serializable {
         return false;
     }
 
-    public boolean moveStudentCheck(Message message) {
+    private boolean moveStudentCheck(Message message) {
         MoveMessage moveMessage = (MoveMessage) message;
         VirtualView virtualView = virtualViewMap.get(message.getNickname());
         for (Student student : game.getPlayerByNickname(moveMessage.getNickname()).getPlank().getEntrance().getStudents()) {
@@ -156,6 +157,38 @@ public class CheckController implements Serializable {
         virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
         return false;
     }
+
+    private boolean cloudCheck(Message message){
+        CloudMessage cloudMessage = (CloudMessage) message;
+        VirtualView virtualView = virtualViewMap.get(message.getNickname());
+        for (int i = 0; i < game.getBoard().getClouds().size(); i++) {
+            if(cloudMessage.getNumCloud() == i+1){
+                if (!game.getBoard().getClouds().get(i).isEmpty()) {
+                    return true;
+                }else{
+                    virtualView.showGenericMessage("The cloud number " + cloudMessage.getNumCloud() + " is empty! Please try again.");
+                    virtualView.showGenericMessage("Which cloud do you choose? Insert the cloud number.");
+                    return false;
+                }
+            }
+        }
+        virtualView.showGenericMessage("The cloud number " + cloudMessage.getNumCloud() + " doesn't exist! Please try again.");
+        virtualView.showGenericMessage("Which cloud do you choose? Insert the cloud number.");
+        return false;
+    }
+
+    private boolean motherNatureCheck(Message message){
+        MotherNatureResult motherNatureMessage = (MotherNatureResult) message;
+        VirtualView virtualView = virtualViewMap.get(message.getNickname());
+        if (motherNatureMessage.getNumMoves() > 0 && motherNatureMessage.getNumMoves() <= game.getPlayerByNickname(motherNatureMessage.getNickname()).getChosenAssistantCard().getMaxMoves()){
+            return true;
+        }else{
+            virtualView.showGenericMessage("Invalid input! Please try again.");
+            virtualView.onDemandMotherNatureMoves(game.getPlayerByNickname(motherNatureMessage.getNickname()).getChosenAssistantCard().getMaxMoves());
+            return false;
+        }
+    }
+
 
     public void initializeFirstPlayerInAction(){
         sortNicknames();

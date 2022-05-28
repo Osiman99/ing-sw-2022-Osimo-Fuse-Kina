@@ -29,7 +29,9 @@ public interface ViewObserver {
 
     void onUpdateMoveStudentToIsland(StudentColor studentColor, int island);
 
-    void onUpdateCloud(Cloud cloud);
+    void onUpdateCloud(int numCloud);
+
+    void onUpdateMotherNatureMoves(int numMoves);
 
     void onUpdateCharacterCard(CharacterCard card);
 

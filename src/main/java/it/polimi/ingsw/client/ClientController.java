@@ -72,8 +72,13 @@ public class ClientController implements ViewObserver, Observer {
     }
 
     @Override
-    public void onUpdateCloud(Cloud cloud) {
+    public void onUpdateCloud(int numCloud) {
+        client.sendMessage(new CloudMessage(this.nickname, numCloud));
+    }
 
+    @Override
+    public void onUpdateMotherNatureMoves(int numMoves){
+        client.sendMessage(new MotherNatureResult(this.nickname, numMoves));
     }
 
     @Override
@@ -101,6 +106,10 @@ public class ClientController implements ViewObserver, Observer {
             case BOARD:
                 BoardMessage boardMessage = (BoardMessage) message;
                 taskQueue.execute(()-> view.drawBoard(boardMessage.getGame()));
+                break;
+            case MOTHERNATURE_REQUEST:
+                MotherNatureRequest motherNatureRequest = (MotherNatureRequest) message;
+                taskQueue.execute(()-> view.onDemandMotherNatureMoves(motherNatureRequest.getMaxMoves()));
                 break;
 
                 /*case ERROR:
