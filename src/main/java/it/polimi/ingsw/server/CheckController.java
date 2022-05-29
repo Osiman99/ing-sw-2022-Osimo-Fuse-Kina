@@ -100,7 +100,7 @@ public class CheckController implements Serializable {
                                 for (int i = 0; i < game.getNumPlayers(); i++){
                                     if (assistantCardResult.getCard() == numCardOtherPlayers.get(i)){
                                         VirtualView virtualView = virtualViewMap.get(message.getNickname());
-                                        virtualView.showGenericMessage("Card already chose by another player! Please try again.");
+                                        virtualView.showGenericMessage("Card already chosen by another player! Please try again.");
                                         virtualView.onDemandAssistantCard(p.getDeck().getDeck());
                                         return false;
                                     }else if (numCardOtherPlayers.size() - 1 == i) {
@@ -113,7 +113,7 @@ public class CheckController implements Serializable {
                         }
                     }
                     VirtualView virtualView = virtualViewMap.get(message.getNickname());
-                    virtualView.showGenericMessage("Invalid input! Please try again.");
+                    virtualView.showGenericMessage("There's no cards in your deck with this value! Please try again.");
                     virtualView.onDemandAssistantCard(p.getDeck().getDeck());
                     return false;
                 }

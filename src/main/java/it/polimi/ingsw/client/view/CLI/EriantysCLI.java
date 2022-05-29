@@ -448,6 +448,7 @@ public class EriantysCLI extends ViewObservable implements View {
                 }
             } catch (NumberFormatException e) {
                 showGenericMessage("Invalid input! Please try again.");
+                showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
             }
         }else{
             showGenericMessage("Invalid input! Please try again.");

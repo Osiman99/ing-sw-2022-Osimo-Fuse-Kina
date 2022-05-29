@@ -16,6 +16,7 @@ public class Player extends Observable implements Serializable {
     private AssistantDeck deck;
     private int numCoins;
     private AssistantCard chosenAssistantCard;
+    private int chosenACValue;
     private Game game;
 
     public Player(String nickname){
@@ -95,7 +96,8 @@ public class Player extends Observable implements Serializable {
 
     public void chooseAssistantCard(int value){
         chosenAssistantCard = new AssistantCard(value, (value-1)/2 + 1);
-        deck.getDeck().removeIf(assistantCard -> assistantCard.equals(chosenAssistantCard));
+        chosenACValue = value;
+        deck.getDeck().removeIf(assistantCard -> chosenACValue == assistantCard.getValue());
     }
 
     public void chooseNumMoves (int numMoves){
