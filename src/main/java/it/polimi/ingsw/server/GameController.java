@@ -219,13 +219,13 @@ public class GameController implements Observer, Serializable {
                 turnCont++;
                 if (turnCont == game.getPlayers().size()){
                     state = GameState.ACTION;
-                    for (int j = 0; j < checkController.getNumCardOtherPlayers().size(); j++){
-                        checkController.getNumCardOtherPlayers().remove(0);
-                    }
                     checkController.initializeFirstPlayerInAction();
                     activePlayer = game.getPlayerByNickname(checkController.getFirstPlayerInAction());
                     VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
                     virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
+                    for (int j = 0; j < checkController.getNumCardOtherPlayers().size(); j++){
+                        checkController.getNumCardOtherPlayers().remove(0);
+                    }
                     turnCont = 0;
                 }if(state == GameState.PLAN) {
                     VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
