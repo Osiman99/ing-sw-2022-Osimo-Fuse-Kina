@@ -220,8 +220,6 @@ public class GameController implements Observer, Serializable {
                 if (turnCont == game.getPlayers().size()){
                     state = GameState.ACTION;
                     checkController.initializeFirstPlayerInAction();
-                    System.out.println(checkController.getNumCardOtherPlayers());
-                    System.out.println(checkController.getNicknamesInChooseOrder());
                     activePlayer = game.getPlayerByNickname(checkController.getFirstPlayerInAction());
                     VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
                     virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
@@ -296,8 +294,6 @@ public class GameController implements Observer, Serializable {
                                 checkController.getNumCardOtherPlayers().remove(0);
                                 checkController.getNicknamesInChooseOrder().remove(0);
                             }
-                            System.out.println(checkController.getNumCardOtherPlayers());
-                            System.out.println(checkController.getNicknamesInChooseOrder());
                             game.getBoard().moveStudentsFromBagToClouds();
                             activePlayer = game.getPlayerByNickname(checkController.getFirstPlayerInAction());    //mezzo inutile
                             VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());

@@ -424,8 +424,6 @@ public class EriantysCLI extends ViewObservable implements View {
                 }
                 String sNumIsland = builderNumIsland.toString();
                 int numIsland = Integer.parseInt(sNumIsland);
-                System.out.println(sColor);
-                System.out.println(numIsland);
                 switch (sColor) {
                     case "g":
                         notifyObserver(obs -> obs.onUpdateMoveStudentToIsland(StudentColor.GREEN, numIsland));

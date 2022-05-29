@@ -95,8 +95,6 @@ public class CheckController implements Serializable {
                             if (numCardOtherPlayers.size() == 0){
                                 numCardOtherPlayers.add(assistantCardResult.getCard());
                                 nicknamesInChooseOrder.add(assistantCardResult.getNickname());
-                                System.out.println(getNumCardOtherPlayers());
-                                System.out.println(getNicknamesInChooseOrder());
                                 return true;
                             }else{
                                 for (int i = 0; i < game.getNumPlayers(); i++){
@@ -108,8 +106,6 @@ public class CheckController implements Serializable {
                                     }else if (numCardOtherPlayers.size() - 1 == i) {
                                         numCardOtherPlayers.add(assistantCardResult.getCard());
                                         nicknamesInChooseOrder.add(assistantCardResult.getNickname());
-                                        System.out.println(getNumCardOtherPlayers());
-                                        System.out.println(getNicknamesInChooseOrder());
                                         return true;
                                     }
                                 }
