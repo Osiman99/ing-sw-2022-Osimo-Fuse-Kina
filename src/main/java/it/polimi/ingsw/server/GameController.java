@@ -220,12 +220,11 @@ public class GameController implements Observer, Serializable {
                 if (turnCont == game.getPlayers().size()){
                     state = GameState.ACTION;
                     checkController.initializeFirstPlayerInAction();
+                    System.out.println(checkController.getNumCardOtherPlayers());
+                    System.out.println(checkController.getNicknamesInChooseOrder());
                     activePlayer = game.getPlayerByNickname(checkController.getFirstPlayerInAction());
                     VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
                     virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
-                    for (int j = 0; j < checkController.getNumCardOtherPlayers().size(); j++){
-                        checkController.getNumCardOtherPlayers().remove(0);
-                    }
                     turnCont = 0;
                 }if(state == GameState.PLAN) {
                     VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
@@ -292,10 +291,13 @@ public class GameController implements Observer, Serializable {
                         turnCont++;
                         if (turnCont == game.getPlayers().size()) {
                             state = GameState.PLAN;
-                            for (int j = 0; j < checkController.getNumCardOtherPlayers().size(); j++) {
+                            int getNumCardOtherPlayerSize = checkController.getNumCardOtherPlayers().size();
+                            for (int j = 0; j < getNumCardOtherPlayerSize; j++) {
                                 checkController.getNumCardOtherPlayers().remove(0);
                                 checkController.getNicknamesInChooseOrder().remove(0);
                             }
+                            System.out.println(checkController.getNumCardOtherPlayers());
+                            System.out.println(checkController.getNicknamesInChooseOrder());
                             game.getBoard().moveStudentsFromBagToClouds();
                             activePlayer = game.getPlayerByNickname(checkController.getFirstPlayerInAction());    //mezzo inutile
                             VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
