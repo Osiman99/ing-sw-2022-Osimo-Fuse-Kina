@@ -28,9 +28,13 @@ public class EntryController {
     public void login(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(new File("src/main/java/it/polimi/ingsw/client/view/GUI/files/connection.fxml").toURI().toURL());
         root = loader.load();
+        root.setId("connection");
+
 
         stage = (Stage) ((Node) loginButton).getScene().getWindow();
         scene = new Scene(root);
+
+        scene.getStylesheets().add(new File("src/main/java/it/polimi/ingsw/client/view/GUI/files/style.css").toURI().toURL().toExternalForm());
         stage.setScene(scene);
         stage.show();
     }

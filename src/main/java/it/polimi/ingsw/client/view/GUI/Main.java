@@ -10,7 +10,7 @@ import java.io.File;
 import java.net.URL;
 
 public class Main extends Application {
-
+    private Scene scene;
     public static void main(String[] args) {
         launch(args);
     }
@@ -19,7 +19,13 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         URL url = new File("src/main/java/it/polimi/ingsw/client/view/GUI/files/entry.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
-        primaryStage.setScene(new Scene(root));
+        root.setId("entry");
+
+        scene = new Scene(root);
+
+        scene.getStylesheets().add(new File("src/main/java/it/polimi/ingsw/client/view/GUI/files/style.css").toURI().toURL().toExternalForm());
+
+        primaryStage.setScene(scene);
         primaryStage.setFullScreen(false);
         primaryStage.setResizable(true);
         primaryStage.show();
