@@ -38,7 +38,7 @@
       <children>
          <ImageView fitHeight="664.0" fitWidth="467.0" layoutX="10.0" layoutY="-174.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-15.600000000000023" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="-35.77849731445315" AnchorPane.topAnchor="-174.0">
             <image>
-               <Image url="@Tartaruga.png" />
+               <Image url="@../../../../../../../../resources/Tartaruga.png" />
             </image>
          </ImageView>
       </children>
@@ -47,7 +47,7 @@
       <children>
          <ImageView fitHeight="640.0" fitWidth="553.0" layoutX="31.0" layoutY="-165.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-0.6000000000000227" AnchorPane.leftAnchor="31.0" AnchorPane.rightAnchor="-18.834716796875" AnchorPane.topAnchor="-165.0">
             <image>
-               <Image url="@Ghepardo.png" />
+               <Image url="@../../../../../../../../resources/Ghepardo.png" />
             </image>
          </ImageView>
       </children>

@@ -60,7 +60,7 @@
          <children>
             <ImageView fitHeight="584.0" fitWidth="418.0" layoutX="40.0" layoutY="-94.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@Polipo.png" />
+                  <Image url="@../../../../../../../../resources/Polipo.png" />
                </image>
             </ImageView>
          </children>
@@ -69,7 +69,7 @@
          <children>
             <ImageView fitHeight="601.0" fitWidth="470.0" layoutX="77.0" layoutY="-94.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@Volpe.png" />
+                  <Image url="@../../../../../../../../resources/Volpe.png" />
                </image>
             </ImageView>
          </children>
