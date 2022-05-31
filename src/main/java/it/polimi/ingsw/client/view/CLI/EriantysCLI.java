@@ -134,7 +134,7 @@ public class EriantysCLI extends ViewObservable implements View {
 
             plankBoard.add("→ " +ANSIColor.PINK+ playerBoard.getNickname()+ANSIColor.RESET+"'s plank");
             plankBoard.add("╔══════════╦═══════════════════════╦═════════╦═════════════╗");
-            plankBoard.add("║ "+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+"Entrance"+ANSIColor.RESET+" ║      "+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+"Dining Room"+ANSIColor.RESET+"      ║"+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+"Professor"+ANSIColor.RESET+"║ "+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+"Tower Space"+ANSIColor.RESET+" ║");
+            plankBoard.add("║"+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+" Entrance "+ANSIColor.RESET+"║"+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+"      Dining Room      "+ANSIColor.RESET+"║"+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+"Professor"+ANSIColor.RESET+"║"+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+" Tower Space "+ANSIColor.RESET+"║");
             plankBoard.add("╠══════════╬═══════════════════════╬═════════╬═════════════╣");
             plankBoard.add("║       "+studentsEntranceBoard.get(0)+"  ║ "+ANSIColor.GREEN+diningRoomBoard[0].get(0)+diningRoomBoard[0].get(1)+diningRoomBoard[0].get(2)+diningRoomBoard[0].get(3)+diningRoomBoard[0].get(4)+diningRoomBoard[0].get(5)+diningRoomBoard[0].get(6)+diningRoomBoard[0].get(7)+diningRoomBoard[0].get(8)+diningRoomBoard[0].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.GREEN+professorsBoard[0]+ANSIColor.RESET+"    ║   "+towerBoard.get(0)+"     "+towerBoard.get(1)+"   ║");
             plankBoard.add("║  "+studentsEntranceBoard.get(1)+"    "+studentsEntranceBoard.get(2)+"  ║ "+ANSIColor.RED+diningRoomBoard[1].get(0)+diningRoomBoard[1].get(1)+diningRoomBoard[1].get(2)+diningRoomBoard[1].get(3)+diningRoomBoard[1].get(4)+diningRoomBoard[1].get(5)+diningRoomBoard[1].get(6)+diningRoomBoard[1].get(7)+diningRoomBoard[1].get(8)+diningRoomBoard[1].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.RED+professorsBoard[1]+ANSIColor.RESET+"    ║   "+towerBoard.get(2)+"     "+towerBoard.get(3)+"   ║");
@@ -172,6 +172,11 @@ public class EriantysCLI extends ViewObservable implements View {
             plankBoard.add("║  ●    ●  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║             ║");
             plankBoard.add("╚══════════╩═══════════════════════╩═════════╩═════════════╝");
         */
+    }
+
+    public void gotoXY(int x, int y) {
+        System.out.print(String.format("\u001B[%d;%dH", y, x));
+        // CSI n ; m H
     }
 
     //convert studentColor into ANSIColor
@@ -232,9 +237,9 @@ public class EriantysCLI extends ViewObservable implements View {
 
             //sets the mother nature token
             if(currentIsland.isMotherNature())
-                mnBoard= "MN";
+                mnBoard= ANSIColor.ORANGE_BACKGROUND + ANSIColor.BLACK + "  MN  " + ANSIColor.RESET;
             else
-                mnBoard= "  ";
+                mnBoard= "      ";
 
             //add ■ for each tower onto the island
             for(j=0; j< currentIsland.getTowers().size(); j++)
@@ -259,7 +264,7 @@ public class EriantysCLI extends ViewObservable implements View {
             }
 
             islandBoard.add("╔═════════════════════════════════╦══════╗");
-            islandBoard.add("║       I S L A N D  n° "+ numIsolaBoard +"        ║  "+mnBoard+"  ║");
+            islandBoard.add("║"+ANSIColor.WHITE_BACKGROUND+ANSIColor.PURPLE_BOLD+"       I S L A N D  n° "+ numIsolaBoard +"        "+ ANSIColor.RESET+"║"+mnBoard+"║");
             islandBoard.add("╠═════════════════════════════════╬══════╣");
             islandBoard.add("║     TOWERS:"+towerBoard.get(0)+towerBoard.get(1)+towerBoard.get(2)+towerBoard.get(3)+towerBoard.get(4)+towerBoard.get(5)+towerBoard.get(6)+towerBoard.get(7) +"     ║  xx  ║");
             islandBoard.add("╠═════════════════════════════════╩══════╣");
