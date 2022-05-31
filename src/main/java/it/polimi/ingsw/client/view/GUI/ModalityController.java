@@ -4,11 +4,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.IOException;
 
 public class ModalityController {
 
@@ -35,7 +39,7 @@ public class ModalityController {
 
     }
 
-    public void play(ActionEvent actionEvent) {
+    public void play(ActionEvent actionEvent) throws IOException {
         if(modeChoice.getSelectionModel().getSelectedItem()!=null && playersChoice.getSelectionModel().getSelectedItem()!=null ) {
             String mode = modeChoice.getSelectionModel().getSelectedItem().toString();
             int playerNumber = Integer.parseInt(playersChoice.getSelectionModel().getSelectedItem().toString());
@@ -46,5 +50,15 @@ public class ModalityController {
         else{
             System.out.println("Insert again!");
         }
+
+
+        FXMLLoader loader = new FXMLLoader(new File("src/main/java/it/polimi/ingsw/client/view/GUI/files/play.fxml").toURI().toURL());
+        root = loader.load();
+
+        stage = (Stage) (playButton).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
     }
 }
