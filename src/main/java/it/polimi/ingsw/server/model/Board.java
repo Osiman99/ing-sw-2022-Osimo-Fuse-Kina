@@ -178,7 +178,6 @@ public class Board extends Observable implements Serializable {
      * @param numMoves
      */
     public void moveMotherNature(int numMoves){
-        System.out.println(numMoves);
         for (int i = 0; i < islands.size(); i++){
             if (islands.get(i).isMotherNature()){
                 islands.get(i).setMotherNature(false);
@@ -376,7 +375,7 @@ public class Board extends Observable implements Serializable {
                         }
                         islands.remove(islands.get(i-1));
                     }
-                }
+                }break;
             }
         }
     }

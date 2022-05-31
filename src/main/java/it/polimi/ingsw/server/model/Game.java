@@ -31,6 +31,31 @@ public class Game extends Observable implements Serializable {
         board.initBoard();
         for (int i = 0; i < chosenPlayersNumber; i++) {
             players.get(i).initPlayer();
+            if (chosenPlayersNumber == 2) {
+                if (i == 0){
+                    for (int j = 0; j < 8; j++){
+                        players.get(i).getPlank().getTowerSpace().addTower(new Tower(TowerColor.BLACK));
+                    }
+                }else if (i == 1){
+                    for (int j = 0; j < 8; j++){
+                        players.get(i).getPlank().getTowerSpace().addTower(new Tower(TowerColor.WHITE));
+                    }
+                }
+            }else if (chosenPlayersNumber == 3){
+                if (i == 0) {
+                    for (int j = 0; j < 6; j++){
+                        players.get(i).getPlank().getTowerSpace().addTower(new Tower(TowerColor.BLACK));
+                    }
+                }else if (i == 1){
+                    for (int j = 0; j < 6; j++){
+                        players.get(i).getPlank().getTowerSpace().addTower(new Tower(TowerColor.WHITE));
+                    }
+                }else if (i == 2){
+                    for (int j = 0; j < 6; j++){
+                        players.get(i).getPlank().getTowerSpace().addTower(new Tower(TowerColor.GREY));
+                    }
+                }
+            }
         }
     }
 
