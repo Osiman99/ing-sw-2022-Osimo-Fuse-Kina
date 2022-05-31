@@ -246,15 +246,20 @@ public class EriantysCLI extends ViewObservable implements View {
             for(j=0; j<currentIsland.getStudents().size(); j++) {
                 switch(currentIsland.getStudents().get(j).getColor()) {
                     case GREEN: numStudent[0]++;
+                    break;
                     case RED: numStudent[1]++;
+                    break;
                     case YELLOW: numStudent[2]++;
+                    break;
                     case PINK: numStudent[3]++;
+                    break;
                     case BLUE: numStudent[4]++;
+                    break;
                 }
             }
 
             islandBoard.add("╔═════════════════════════════════╦══════╗");
-            islandBoard.add("║       I S L A N D  n° "+ numIsolaBoard +"       ║  "+mnBoard+"  ║");
+            islandBoard.add("║       I S L A N D  n° "+ numIsolaBoard +"        ║  "+mnBoard+"  ║");
             islandBoard.add("╠═════════════════════════════════╬══════╣");
             islandBoard.add("║     TOWERS:"+towerBoard.get(0)+towerBoard.get(1)+towerBoard.get(2)+towerBoard.get(3)+towerBoard.get(4)+towerBoard.get(5)+towerBoard.get(6)+towerBoard.get(7) +"     ║  xx  ║");
             islandBoard.add("╠═════════════════════════════════╩══════╣");

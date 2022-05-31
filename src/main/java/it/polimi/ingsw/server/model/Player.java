@@ -100,16 +100,5 @@ public class Player extends Observable implements Serializable {
         deck.getDeck().removeIf(assistantCard -> chosenACValue == assistantCard.getValue());
     }
 
-    public void chooseNumMoves (int numMoves){
-        for (int i = 0; i < deck.getDeck().size(); i++) {
-            if (deck.getDeck().get(i).getValue() == chosenAssistantCard.getValue()) {
-                if (numMoves <= deck.getDeck().get(i).getMaxMoves() && numMoves > 0){
-                    game.getBoard().moveMotherNature(numMoves);
-                }
-                break;
-            }
-        }
-    }
-
 }
 

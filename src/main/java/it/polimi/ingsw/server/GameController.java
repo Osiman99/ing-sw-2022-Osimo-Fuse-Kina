@@ -249,7 +249,8 @@ public class GameController implements Observer, Serializable {
         }else if (receivedMessage.getMessageType() == MessageType.MOTHERNATURE_RESULT){
             MotherNatureResult motherNatureResult = (MotherNatureResult) receivedMessage;
             if(checkController.verifyReceivedData(receivedMessage)){
-                activePlayer.chooseNumMoves(motherNatureResult.getNumMoves());
+                System.out.println(motherNatureResult.getMessageType());
+                game.getBoard().moveMotherNature(motherNatureResult.getNumMoves());
                 broadcastBoardMessage();
                 motherNatureFlag = false;
                 cloudFlag = true;
