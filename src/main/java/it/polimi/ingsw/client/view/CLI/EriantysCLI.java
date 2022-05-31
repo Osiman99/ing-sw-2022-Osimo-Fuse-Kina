@@ -144,8 +144,8 @@ public class EriantysCLI extends ViewObservable implements View {
             plankBoard.add("╚══════════╩═══════════════════════╩═════════╩═════════════╝");
 
             System.out.println("\n");
-            for (String p : plankBoard)
-                System.out.println(p);
+            for (String b : plankBoard)
+                System.out.println(b);
 
             plankBoard.clear();
             studentsEntranceBoard.clear();
@@ -174,6 +174,7 @@ public class EriantysCLI extends ViewObservable implements View {
         */
     }
 
+    //convert studentColor into ANSIColor
     private String convertANSI(StudentColor color) {
 
         switch (color) {
@@ -197,6 +198,7 @@ public class EriantysCLI extends ViewObservable implements View {
         }
     }
 
+    //convert towerColor into ANSIColor
     private String convertANSI(TowerColor color) {
 
             switch (color) {
@@ -211,20 +213,76 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
     public void drawIslands(Game game) {
+        ArrayList<String> islandBoard = new ArrayList<>();
+        String numIsolaBoard;
+        String mnBoard= "  ";
+        ArrayList<String> towerBoard = new ArrayList<>();
+        int[] numStudent= {0, 0, 0, 0, 0};
+        int i,j;
 
+
+        for(i=0; i< game.getBoard().getIslands().size(); i++) {
+            Island currentIsland = game.getBoard().getIslands().get(i);
+
+            //sets the island number
+            if( i+1 < 10 )
+                numIsolaBoard= " " + String.valueOf(i+1);
+            else
+                numIsolaBoard=String.valueOf(i+1);
+
+            //sets the mother nature token
+            if(currentIsland.isMotherNature())
+                mnBoard= "MN";
+            else
+                mnBoard= "  ";
+
+            //add ■ for each tower onto the island
+            for(j=0; j< currentIsland.getTowers().size(); j++)
+                towerBoard.add(" "+convertANSI(currentIsland.getTowers().get(j).getColor()));
+            for(; j<8; j++)
+                towerBoard.add("  ");
+
+            //counts the students for each color
+            for(j=0; j<currentIsland.getStudents().size(); j++) {
+                switch(currentIsland.getStudents().get(j).getColor()) {
+                    case GREEN: numStudent[0]++;
+                    case RED: numStudent[1]++;
+                    case YELLOW: numStudent[2]++;
+                    case PINK: numStudent[3]++;
+                    case BLUE: numStudent[4]++;
+                }
+            }
+
+            islandBoard.add("╔═════════════════════════════════╦══════╗");
+            islandBoard.add("║       I S L A N D  n° "+ numIsolaBoard +"       ║  "+mnBoard+"  ║");
+            islandBoard.add("╠═════════════════════════════════╬══════╣");
+            islandBoard.add("║     TOWERS:"+towerBoard.get(0)+towerBoard.get(1)+towerBoard.get(2)+towerBoard.get(3)+towerBoard.get(4)+towerBoard.get(5)+towerBoard.get(6)+towerBoard.get(7) +"     ║  xx  ║");
+            islandBoard.add("╠═════════════════════════════════╩══════╣");
+            islandBoard.add("║    "+ANSIColor.GREEN+"●"+ANSIColor.RESET+" x"+numStudent[0]+"   "+ANSIColor.RED+"●"+ANSIColor.RESET+" x"+numStudent[1]+"   "+ANSIColor.YELLOW+"●"+ANSIColor.RESET+" x"+numStudent[2]+"   "+ANSIColor.PINK+"●"+ANSIColor.RESET+" x"+numStudent[3]+"   "+ANSIColor.BLUE+"●"+ANSIColor.RESET+" x"+numStudent[4]+"    ║");
+            islandBoard.add("╚════════════════════════════════════════╝");
+
+            System.out.println("\n");
+
+            for(String b : islandBoard)
+                System.out.println(b);
+
+            islandBoard.clear();
+            towerBoard.clear();
+            for(j=0; j<5; j++)
+                numStudent[j]=0;
+
+        }
 
 
                 // ☬  ℳ madrenatura
         /*
-                            ╔═════════════════════════════════╦═════════╦═════════════╗");
-            plankBoard.add("║ ISLAND n° 08 ║   ║");
-            plankBoard.add("╠════════════════════════════════╬═════════╬═════════════╣");
-            plankBoard.add("║       ●  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║   ■     ■   ║");
-            plankBoard.add("║  ●    ●  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║   ■     ■   ║");
-            plankBoard.add("║  ●    ●  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║   ■     ■   ║");
-            plankBoard.add("║  ●    ●  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║   ■     ■   ║");
-            plankBoard.add("║  ●    ●  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║             ║");
-            plankBoard.add("╚══════════╩═══════════════════════╩═════════╩═════════════╝");
+                            ╔═════════════════════════════════╦══════╗");
+            plankBoard.add("║       I S L A N D  n°  8        ║  MN  ║");
+            plankBoard.add("╠═════════════════════════════════╬══════╣");
+            plankBoard.add("║     TOWERS: ■ ■ ■ ■ ■ ■ ■ ■     ║  xx  ║");
+            plankBoard.add("╠═════════════════════════════════╩══════╣");
+            plankBoard.add("║    ● x2   ● x0   ● x0   ● x1   ● x0    ║");
+            plankBoard.add("╚════════════════════════════════════════╝");
          */
     }
 
