@@ -80,8 +80,7 @@ public class EriantysCLI extends ViewObservable implements View {
     public void drawBoard(Game game) {
         drawPlanks(game);
         drawIslands(game);
-        ArrayList<StudentColor> list = new ArrayList<>(List.of(StudentColor.BLUE, StudentColor.GREEN, StudentColor.RED, StudentColor.YELLOW));
-        drawClouds(3, list);
+        drawClouds(game);
 
     }
 
@@ -264,11 +263,11 @@ public class EriantysCLI extends ViewObservable implements View {
             }
 
             islandBoard.add("╔═════════════════════════════════╦══════╗");
-            islandBoard.add("║"+ANSIColor.WHITE_BACKGROUND+ANSIColor.PURPLE_BOLD+"       I S L A N D  n° "+ numIsolaBoard +"        "+ ANSIColor.RESET+"║"+mnBoard+"║");
+            islandBoard.add("║"+ANSIColor.WHITE_BACKGROUND+ANSIColor.BLACK+"       I S L A N D  n° "+ numIsolaBoard +"       "+ ANSIColor.RESET+"║"+mnBoard+"║");
             islandBoard.add("╠═════════════════════════════════╬══════╣");
             islandBoard.add("║     TOWERS:"+towerBoard.get(0)+towerBoard.get(1)+towerBoard.get(2)+towerBoard.get(3)+towerBoard.get(4)+towerBoard.get(5)+towerBoard.get(6)+towerBoard.get(7) +"     ║  xx  ║");
             islandBoard.add("╠═════════════════════════════════╩══════╣");
-            islandBoard.add("║    "+ANSIColor.GREEN+"●"+ANSIColor.RESET+" x"+numStudent[0]+"   "+ANSIColor.RED+"●"+ANSIColor.RESET+" x"+numStudent[1]+"   "+ANSIColor.YELLOW+"●"+ANSIColor.RESET+" x"+numStudent[2]+"   "+ANSIColor.PINK+"●"+ANSIColor.RESET+" x"+numStudent[3]+"   "+ANSIColor.BLUE+"●"+ANSIColor.RESET+" x"+numStudent[4]+"    ║");
+            islandBoard.add("║    "+ANSIColor.GREEN+"●"+ANSIColor.RESET+" x"+numStudent[0]+"   "+ANSIColor.RED+"●"+ANSIColor.RESET+" x"+numStudent[1]+"   "+ANSIColor.YELLOW_BOLD_BRIGHT+"●"+ANSIColor.RESET+" x"+numStudent[2]+"   "+ANSIColor.PINK+"●"+ANSIColor.RESET+" x"+numStudent[3]+"   "+ANSIColor.BLUE+"●"+ANSIColor.RESET+" x"+numStudent[4]+"    ║");
             islandBoard.add("╚════════════════════════════════════════╝");
 
             System.out.println("\n");
@@ -297,47 +296,43 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
 
-    public void drawClouds(int cloudSize, ArrayList<StudentColor> students){
+    public void drawClouds(Game game){
 
-        ArrayList<String> cloud = new ArrayList<>();
-        ArrayList<String> coloredStudents = new ArrayList<>();
+        ArrayList<String> cloudBoard = new ArrayList<>();
+        ArrayList<String> cloudStudents = new ArrayList<>();
+        int i;
 
-        for(int i = 0 ; i < cloudSize; i++){
-            if(students.size() >= 1){
-                switch (students.get(i)){
-                    case YELLOW: coloredStudents.add(ANSIColor.YELLOW_BOLD_BRIGHT+ "O" +ANSIColor.RESET);
-                     break;
-                    case RED: coloredStudents.add(ANSIColor.RED+ "O" +ANSIColor.RESET);
-                     break;
-                    case PINK: coloredStudents.add(ANSIColor.PURPLE_BOLD_BRIGHT+ "O" +ANSIColor.RESET);
-                     break;
-                    case BLUE: coloredStudents.add(ANSIColor.BLUE+ "O" +ANSIColor.RESET);
-                     break;
-                    case GREEN: coloredStudents.add(ANSIColor.GREEN+ "O" +ANSIColor.RESET);
-                     break;
-                }
-            }else {
-                for (int j=0; j <= 3; j++){
-                    coloredStudents.add(" ");
-                }
-            }
+        for(i=0; i< game.getBoard().getClouds().size(); i++) {
+            Cloud currentCloud= game.getBoard().getClouds().get(i);
+
+            for(int j=0; j< currentCloud.getStudentsSize(); j++)
+                cloudStudents.add(convertANSI(currentCloud.getStudents().get(j).getColor()));
+
+            if(cloudStudents.size()==3)
+                cloudStudents.add(" ");
+
+            cloudBoard.add("  ︵︶︵ Cloud "+ (i+1) +" ︵︶︵  ");
+            cloudBoard.add("(          "+cloudStudents.get(3)+"          )");
+            cloudBoard.add("  )   "+cloudStudents.get(0)+"         "+cloudStudents.get(1)+"   (  ");
+            cloudBoard.add("(          "+cloudStudents.get(2)+"          )");
+            cloudBoard.add("  ︶︵︶︵︶︵︶︵︶︵︶   ");
+
+            System.out.println("\n");
+            for(String b : cloudBoard)
+                System.out.println(b);
+
+            cloudBoard.clear();
+            cloudStudents.clear();
         }
 
 
-        if(cloudSize==3) {
-            cloud.add(" +---------------+");
-            cloud.add(" +       " + coloredStudents.get(2) + "       +");
-            cloud.add(" +     "+coloredStudents.get(1)+"  "+coloredStudents.get(0)+"      +");
-            cloud.add(" +---------------+");
-        }else if(cloudSize==4){
-            cloud.add(" +---------------+");
-            cloud.add(" +      "+coloredStudents.get(2)+" "+coloredStudents.get(3)+"      +");
-            cloud.add(" +      "+coloredStudents.get(1)+" "+coloredStudents.get(0)+"      +");
-            cloud.add(" +---------------+");
-        }
-        for(String c:cloud){
-            System.out.println(c);
-        }
+        /*
+          ︵︶︵ Cloud 1 ︵︶︵
+        (          ●          )
+          )   ●         ●   (
+        (          ●          )
+          ︶︵︶︵︶︵︶︵︶︵︶
+         */
 
     }
 
