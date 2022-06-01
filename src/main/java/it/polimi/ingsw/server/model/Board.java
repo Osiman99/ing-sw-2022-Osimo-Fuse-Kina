@@ -191,8 +191,33 @@ public class Board extends Observable implements Serializable {
     /**
      * moving the professor in cases with 2 or 3 players.
      */
-    public void moveProfessor(){
-        if (game.getNumPlayers() == 2) {
+    public void moveProfessor(Player player){
+        if(game instanceof GameExpert){
+            GameExpert gameExpert = (GameExpert) game;
+            for(CharacterCard characterCard : gameExpert.getThreeChosenCards()) {
+                if (characterCard.getCharacterName() == CharacterName.Chef && characterCard.isEnabled()){
+                    moveProfessorChef(player);
+                }
+            }
+        }else {
+            for (int i = 0; i < game.getNumPlayers(); i++) {
+                if (player == game.getPlayers().get(i)) {
+                    for (int j = (i + 1) % game.getNumPlayers(); j < game.getNumPlayers(); j++) {
+                        if (j == i) {
+                            break;
+                        } else {
+                            for (int k = 0; k < 5; k++) {
+                                if (game.getPlayers().get(i).getPlank().getDiningRoom()[k].getStudents().size() > game.getPlayers().get(j).getPlank().getDiningRoom()[k].getStudents().size()) {
+                                    professorsControlledBy[k] = game.getPlayers().get(i).getNickname();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /*if (game.getNumPlayers() == 2) {
             for (int i = 0; i < 5; i++) {
                 if (game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size()) {
                     professorsControlledBy[i] = game.getPlayers().get(0).getNickname();
@@ -210,9 +235,27 @@ public class Board extends Observable implements Serializable {
                     professorsControlledBy[i] = game.getPlayers().get(2).getNickname();
                 }
             }
-        }
+        }*/
     }
 
+
+    public void moveProfessorChef(Player player){
+        for(int i = 0; i < game.getNumPlayers(); i++){
+            if(player == game.getPlayers().get(i)) {
+                for (int j = (i + 1) % game.getNumPlayers(); j < game.getNumPlayers(); j++) {
+                    if (j == i) {
+                        break;
+                    } else {
+                        for (int k = 0; k < 5; k++) {
+                            if (game.getPlayers().get(i).getPlank().getDiningRoom()[k].getStudents().size() >= game.getPlayers().get(j).getPlank().getDiningRoom()[k].getStudents().size()) {
+                                professorsControlledBy[k] = game.getPlayers().get(i).getNickname();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * calculate the supremacy
@@ -382,13 +425,10 @@ public class Board extends Observable implements Serializable {
 
     //APPLYEFFECT
 
-    public void enableCharacterCard(CharacterCard characterCard){
-        characterCard.setEnabled(true);
-    }
 
     public void applyEffectSommelier(Player player, CharacterCard characterCard, Student student, Island island){
 
-        if (characterCard.getPrice() >= player.getNumCoins()){
+        if (characterCard.getPrice() >= player.getNumCoins()){                                                            //controllo da fare nel GameController
             for (int i = 0; i < 4; i++){
                 if (characterCard.getStudents().get(i).getColor() == student.getColor()){
                     island.addStudent(characterCard.getStudents().get(i));
@@ -396,12 +436,15 @@ public class Board extends Observable implements Serializable {
                     characterCard.getStudents().add(game.getBoard().getBag().getFirstStudent());
                     game.getBoard().getBag().removeStudent();
                 }break;
-            }player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
+            }
         }
+        player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
+        characterCard.setPrice(characterCard.getPrice() + 1);
     }
 
-    public void applyEffectChef(Player player) {
-
+    public void applyEffectChef(Player player, CharacterCard characterCard) {
+        player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
+        characterCard.setPrice(characterCard.getPrice() + 1);
     }
 
     public void applyEffectMessenger(){

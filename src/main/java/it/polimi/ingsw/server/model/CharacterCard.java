@@ -8,13 +8,13 @@ public class CharacterCard implements Serializable {
 
     private static final long serialVersionUID = -5098098867984135994L;
     private Game game;
-    private it.polimi.ingsw.server.model.CharacterName characterName;
+    private CharacterName characterName;
     private List<Student> students;
     private boolean banCards[];
     private int price;
     private boolean enabled;
 
-    public CharacterCard(it.polimi.ingsw.server.model.CharacterName characterName){
+    public CharacterCard(CharacterName characterName){
         game = GameExpert.getInstance();
         this.characterName = characterName;
 
@@ -79,7 +79,7 @@ public class CharacterCard implements Serializable {
         }
     }
 
-    public it.polimi.ingsw.server.model.CharacterName getCharacterName() {
+    public CharacterName getCharacterName() {
         return characterName;
     }
 
@@ -99,6 +99,7 @@ public class CharacterCard implements Serializable {
         return price;
     }
 
-
-
+    public void setPrice(int price) {
+        this.price = price;
+    }
 }

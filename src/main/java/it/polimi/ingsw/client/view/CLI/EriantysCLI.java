@@ -263,7 +263,7 @@ public class EriantysCLI extends ViewObservable implements View {
             }
 
             islandBoard.add("╔═════════════════════════════════╦══════╗");
-            islandBoard.add("║"+ANSIColor.WHITE_BACKGROUND+ANSIColor.BLACK+"       I S L A N D  n° "+ numIsolaBoard +"       "+ ANSIColor.RESET+"║"+mnBoard+"║");
+            islandBoard.add("║"+ANSIColor.WHITE_BACKGROUND+ANSIColor.BLACK+"       I S L A N D  n° "+ numIsolaBoard +"        "+ ANSIColor.RESET+"║"+mnBoard+"║");
             islandBoard.add("╠═════════════════════════════════╬══════╣");
             islandBoard.add("║     TOWERS:"+towerBoard.get(0)+towerBoard.get(1)+towerBoard.get(2)+towerBoard.get(3)+towerBoard.get(4)+towerBoard.get(5)+towerBoard.get(6)+towerBoard.get(7) +"     ║  xx  ║");
             islandBoard.add("╠═════════════════════════════════╩══════╣");
