@@ -317,6 +317,7 @@ public class GameController implements Observer, Serializable {
                                 checkController.getNicknamesInChooseOrder().remove(0);
                             }
                             game.getBoard().moveStudentsFromBagToClouds();
+                            broadcastBoardMessage();
                             activePlayer = game.getPlayerByNickname(checkController.getFirstPlayerInAction());    //mezzo inutile
                             VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
                             virtualView.onDemandAssistantCard(activePlayer.getDeck().getDeck());
