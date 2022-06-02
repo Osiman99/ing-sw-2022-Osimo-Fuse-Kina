@@ -65,6 +65,8 @@ public class Player extends Observable implements Serializable {
         return chosenAssistantCard;
     }
 
+
+
     public void setPlayerColor(TowerColor playerColor) {
         this.playerColor = playerColor;
     }

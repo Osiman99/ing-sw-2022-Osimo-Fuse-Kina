@@ -182,7 +182,11 @@ public class Board extends Observable implements Serializable {
             if (islands.get(i).isMotherNature()){
                 islands.get(i).setMotherNature(false);
                 islands.get((i+numMoves)%12).setMotherNature(true);
-                calculateSupremacy(islands.get((i+numMoves)%12));
+                if (!(islands.get((i+numMoves)%12).isBanCard())){
+                    calculateSupremacy(islands.get((i+numMoves)%12));
+                }else{
+                    islands.get((i+numMoves)%12).setBanCard(false);
+                }
                 break;
             }
         }
@@ -197,24 +201,13 @@ public class Board extends Observable implements Serializable {
             for(CharacterCard characterCard : gameExpert.getThreeChosenCards()) {
                 if (characterCard.getCharacterName() == CharacterName.Chef && characterCard.isEnabled()){
                     moveProfessorChef(player);
+                    break;
+                }if(gameExpert.getThreeChosenCards().get(gameExpert.getThreeChosenCards().size()-1) == characterCard){
+                    moveProfessorNormal(player);
                 }
             }
         }else {
-            for (int i = 0; i < game.getNumPlayers(); i++) {
-                if (player == game.getPlayers().get(i)) {
-                    for (int j = (i + 1) % game.getNumPlayers(); j < game.getNumPlayers(); j++) {
-                        if (j == i) {
-                            break;
-                        } else {
-                            for (int k = 0; k < 5; k++) {
-                                if (game.getPlayers().get(i).getPlank().getDiningRoom()[k].getStudents().size() > game.getPlayers().get(j).getPlank().getDiningRoom()[k].getStudents().size()) {
-                                    professorsControlledBy[k] = game.getPlayers().get(i).getNickname();
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            moveProfessorNormal(player);
         }
 
         /*if (game.getNumPlayers() == 2) {
@@ -236,6 +229,24 @@ public class Board extends Observable implements Serializable {
                 }
             }
         }*/
+    }
+
+    private void moveProfessorNormal(Player player) {
+        for (int i = 0; i < game.getNumPlayers(); i++) {
+            if (player == game.getPlayers().get(i)) {
+                for (int j = (i + 1) % game.getNumPlayers(); j < game.getNumPlayers(); j++) {
+                    if (j == i) {
+                        break;
+                    } else {
+                        for (int k = 0; k < 5; k++) {
+                            if (game.getPlayers().get(i).getPlank().getDiningRoom()[k].getStudents().size() > game.getPlayers().get(j).getPlank().getDiningRoom()[k].getStudents().size()) {
+                                professorsControlledBy[k] = game.getPlayers().get(i).getNickname();
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
 
@@ -291,15 +302,31 @@ public class Board extends Observable implements Serializable {
                         }
                     }
                 }
-            } if (island.getTowers().size() != 0){
-                for (int i = 0; i < island.getTowers().size(); i++) {
-                    for (int j = 0; j < game.getNumPlayers(); j++){
-                        if (island.getFirstTower().getColor() == game.getPlayers().get(j).getPlayerColor()) {
-                            game.getPlayers().get(j).setSupremacyCont(game.getPlayers().get(j).getSupremacyCont() + 1);
-                        }
+            } if (game instanceof GameExpert) {
+                GameExpert gameExpert = (GameExpert) game;
+                for (CharacterCard characterCard : gameExpert.getThreeChosenCards()) {
+                    if (characterCard.getCharacterName() == CharacterName.Centaur && characterCard.isEnabled()) {
+                        //disable CharacterCard
+                        break;
+                    }if(gameExpert.getThreeChosenCards().get(gameExpert.getThreeChosenCards().size()-1) == characterCard){                         //else if?
+                        towerCont(island);
                     }
                 }
+            }else{
+                towerCont(island);
             }conquerIsland(island);
+        }
+    }
+
+    private void towerCont(Island island) {
+        if (island.getTowers().size() != 0) {
+            for (int i = 0; i < island.getTowers().size(); i++) {
+                for (int j = 0; j < game.getNumPlayers(); j++) {
+                    if (island.getFirstTower().getColor() == game.getPlayers().get(j).getPlayerColor()) {
+                        game.getPlayers().get(j).setSupremacyCont(game.getPlayers().get(j).getSupremacyCont() + 1);
+                    }
+                }
+            }
         }
     }
 
@@ -426,8 +453,9 @@ public class Board extends Observable implements Serializable {
     //APPLYEFFECT
 
 
-    public void applyEffectSommelier(Player player, CharacterCard characterCard, Student student, Island island){
-
+    public void applyEffectSommelier(Player player, CharacterCard characterCard, Student student, Island island){       //FATTO
+        player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
+        characterCard.setPrice(characterCard.getPrice() + 1);
         if (characterCard.getPrice() >= player.getNumCoins()){                                                            //controllo da fare nel GameController
             for (int i = 0; i < 4; i++){
                 if (characterCard.getStudents().get(i).getColor() == student.getColor()){
@@ -438,53 +466,69 @@ public class Board extends Observable implements Serializable {
                 }break;
             }
         }
+    }
+
+    public void applyEffectChef(Player player, CharacterCard characterCard) {                                           //FATTO
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
     }
 
-    public void applyEffectChef(Player player, CharacterCard characterCard) {
+    public void applyEffectMessenger(Player player, CharacterCard characterCard, int numIsland){                        //FATTO
+        player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
+        characterCard.setPrice(characterCard.getPrice() + 1);
+        if (!(islands.get(numIsland-1).isBanCard())){
+            calculateSupremacy(islands.get(numIsland-1));
+        }else{
+            islands.get(numIsland-1).setBanCard(false);
+        }
+    }
+
+    public void applyEffectPostman(Player player, CharacterCard characterCard){                                         //FATTO
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
     }
 
-    public void applyEffectMessenger(){
+    public void applyEffectHerbalist(Player player, CharacterCard characterCard, int numIsland){                        //FATTO
+        player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
+        characterCard.setPrice(characterCard.getPrice() + 1);
+        getIslands().get(numIsland-1).setBanCard(true);
 
     }
 
-    public void applyEffectPostman(){
+    public void applyEffectCentaur(Player player, CharacterCard characterCard){                                         //FATTO
+        player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
+        characterCard.setPrice(characterCard.getPrice() + 1);
+    }
+
+    public void applyEffectJoker(Player player, CharacterCard characterCard){
+        player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
+        characterCard.setPrice(characterCard.getPrice() + 1);
 
     }
 
-    public void applyEffectHerbalist(){
-
+    public void applyEffectKnight(Player player, CharacterCard characterCard){                                          //FATTO
+        player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
+        characterCard.setPrice(characterCard.getPrice() + 1);
     }
 
-    public void applyEffectCentaur(){
-
+    public void applyEffectMerchant(Player player, CharacterCard characterCard){
+        player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
+        characterCard.setPrice(characterCard.getPrice() + 1);
     }
 
-    public void applyEffectJoker(){
-
+    public void applyEffectMusician(Player player, CharacterCard characterCard){
+        player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
+        characterCard.setPrice(characterCard.getPrice() + 1);
     }
 
-    public void applyEffectKnight(){
-
+    public void applyEffectLady(Player player, CharacterCard characterCard){
+        player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
+        characterCard.setPrice(characterCard.getPrice() + 1);
     }
 
-    public void applyEffectMerchant(){
-
-    }
-
-    public void applyEffectMusician(){
-
-    }
-
-    public void applyEffectLady(){
-
-    }
-
-    public void applyEffectSinister(){
-
+    public void applyEffectSinister(Player player, CharacterCard characterCard){
+        player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
+        characterCard.setPrice(characterCard.getPrice() + 1);
     }
 
 }

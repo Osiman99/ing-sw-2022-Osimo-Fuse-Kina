@@ -249,7 +249,17 @@ public class GameController implements Observer, Serializable {
         }else if (receivedMessage.getMessageType() == MessageType.MOTHERNATURE_RESULT){
             MotherNatureResult motherNatureResult = (MotherNatureResult) receivedMessage;
             if(checkController.verifyReceivedData(receivedMessage)){
+                if(game instanceof GameExpert) {
+                    GameExpert gameExpert = (GameExpert) game;
+                    for (CharacterCard characterCard : gameExpert.getThreeChosenCards()) {
+                        if (characterCard.getCharacterName() == CharacterName.Knight && characterCard.isEnabled()) {
+                            activePlayer.setSupremacyCont(2);
+                            break;
+                        }
+                    }
+                }
                 game.getBoard().moveMotherNature(motherNatureResult.getNumMoves());
+                //disable charactercard
                 broadcastBoardMessage();
                 motherNatureFlag = false;
                 cloudFlag = true;
@@ -277,7 +287,19 @@ public class GameController implements Observer, Serializable {
         }else if (moveCont == game.getNumPlayers()+1){
             if (!cloudFlag && motherNatureFlag){
                 VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
-                virtualView.onDemandMotherNatureMoves(activePlayer.getChosenAssistantCard().getMaxMoves());
+                if(game instanceof GameExpert) {
+                    GameExpert gameExpert = (GameExpert) game;
+                    for (CharacterCard characterCard : gameExpert.getThreeChosenCards()) {
+                        if (characterCard.getCharacterName() == CharacterName.Postman && characterCard.isEnabled()) {
+                            virtualView.onDemandMotherNatureMoves(activePlayer.getChosenAssistantCard().getMaxMoves() + 2);
+                            break;
+                        }if(gameExpert.getThreeChosenCards().get(gameExpert.getThreeChosenCards().size()-1) == characterCard){
+                            virtualView.onDemandMotherNatureMoves(activePlayer.getChosenAssistantCard().getMaxMoves());
+                        }
+                    }
+                }else {
+                    virtualView.onDemandMotherNatureMoves(activePlayer.getChosenAssistantCard().getMaxMoves());
+                }
             }else if(cloudFlag && !motherNatureFlag){
                 VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
                 virtualView.showGenericMessage("Which cloud do you choose? Insert the cloud number.");

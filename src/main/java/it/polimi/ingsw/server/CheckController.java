@@ -180,9 +180,23 @@ public class CheckController implements Serializable {
     private boolean motherNatureCheck(Message message){
         MotherNatureResult motherNatureMessage = (MotherNatureResult) message;
         VirtualView virtualView = virtualViewMap.get(message.getNickname());
+        if(game instanceof GameExpert) {
+            GameExpert gameExpert = (GameExpert) game;
+            for (CharacterCard characterCard : gameExpert.getThreeChosenCards()) {
+                if (characterCard.getCharacterName() == CharacterName.Postman && characterCard.isEnabled()) {
+                    if (motherNatureMessage.getNumMoves() > 0 && motherNatureMessage.getNumMoves() <= game.getPlayerByNickname(motherNatureMessage.getNickname()).getChosenAssistantCard().getMaxMoves() + 2) {
+                        return true;
+                    } else {
+                        virtualView.showGenericMessage("Invalid input! Please try again.");
+                        virtualView.onDemandMotherNatureMoves(game.getPlayerByNickname(motherNatureMessage.getNickname()).getChosenAssistantCard().getMaxMoves() + 2);
+                        return false;
+                    }
+                }
+            }
+        }
         if (motherNatureMessage.getNumMoves() > 0 && motherNatureMessage.getNumMoves() <= game.getPlayerByNickname(motherNatureMessage.getNickname()).getChosenAssistantCard().getMaxMoves()){
             return true;
-        }else{
+        }else {
             virtualView.showGenericMessage("Invalid input! Please try again.");
             virtualView.onDemandMotherNatureMoves(game.getPlayerByNickname(motherNatureMessage.getNickname()).getChosenAssistantCard().getMaxMoves());
             return false;

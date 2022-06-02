@@ -30,6 +30,14 @@ public class Island implements Serializable {
         this.motherNature = motherNature;
     }
 
+    public void setBanCard(boolean banCard) {
+        this.banCard = banCard;
+    }
+
+    public boolean isBanCard() {
+        return banCard;
+    }
+
     public boolean isMotherNature() {
         return motherNature;
     }
