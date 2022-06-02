@@ -6,19 +6,20 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.TilePane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fitHeight="853.0" fitWidth="1432.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="1274.0" fitWidth="2113.0" layoutX="-795.0" layoutY="-313.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../../../resources/sky-clouds-stage.png" />
+            <Image url="@../../../../../../../../resources/clouds/clouds-toony.png" />
          </image>
       </ImageView>
       <GridPane layoutX="1.0" layoutY="-5.0" prefHeight="726.0" prefWidth="1281.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="70.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="30.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="55.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="45.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -29,21 +30,241 @@
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" percentHeight="16.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" percentHeight="28.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" percentHeight="28.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" percentHeight="28.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ImageView fitHeight="165.0" fitWidth="394.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2" />
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3" />
+               </children>
+            </GridPane>
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="5.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="12.85" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="12.85" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="12.85" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="12.9" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="12.85" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="12.85" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="12.85" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="5.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" percentHeight="5.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" percentHeight="12.85" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" percentHeight="12.85" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" percentHeight="12.85" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" percentHeight="12.9" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" percentHeight="12.85" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" percentHeight="12.85" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" percentHeight="12.85" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" percentHeight="5.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <ImageView fx:id="island11" fitHeight="146.0" fitWidth="162.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2">
                      <image>
-                        <Image url="@../../../../../../../../resources/Plancia/Plancia_DEF2.png" />
+                        <Image url="@../../../../../../../../resources/islands/island2.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="165.0" fitWidth="378.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+                  <ImageView fx:id="island1" fitHeight="137.0" fitWidth="139.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="2">
                      <image>
-                        <Image url="@../../../../../../../../resources/Plancia/Plancia_DEF2.png" />
+                        <Image url="@../../../../../../../../resources/islands/island3.png" />
                      </image>
                   </ImageView>
+                  <ImageView fx:id="island10" fitHeight="142.0" fitWidth="145.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                     <image>
+                        <Image url="@../../../../../../../../resources/islands/island3.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="island2" fitHeight="137.0" fitWidth="141.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="3">
+                     <image>
+                        <Image url="@../../../../../../../../resources/islands/island2.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="island9" fitHeight="139.0" fitWidth="138.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <image>
+                        <Image url="@../../../../../../../../resources/islands/island2.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="island3" fitHeight="135.0" fitWidth="164.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="4">
+                     <image>
+                        <Image url="@../../../../../../../../resources/islands/island1.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="island8" fitHeight="133.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                     <image>
+                        <Image url="@../../../../../../../../resources/islands/island3.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="island4" fitHeight="133.0" fitWidth="164.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="5">
+                     <image>
+                        <Image url="@../../../../../../../../resources/islands/island3.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="island7" fitHeight="135.0" fitWidth="141.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="6">
+                     <image>
+                        <Image url="@../../../../../../../../resources/islands/island1.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="island5" fitHeight="135.0" fitWidth="168.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="6">
+                     <image>
+                        <Image url="@../../../../../../../../resources/islands/island2.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="island6" fitHeight="137.0" fitWidth="137.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="7">
+                     <image>
+                        <Image url="@../../../../../../../../resources/islands/island3.png" />
+                     </image>
+                  </ImageView>
+                  <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                     <children>
+                        <ImageView fx:id="island12" fitHeight="142.0" fitWidth="141.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../../../resources/islands/island1.png" />
+                           </image>
+                        </ImageView>
+                        <TilePane fx:id="tile1" prefHeight="200.0" prefWidth="200.0" />
+                     </children>
+                  </StackPane>
+                  <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                     <children>
+                        <ImageView fitHeight="119.0" fitWidth="91.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../../../resources/clouds/cloud_card.png" />
+                           </image>
+                        </ImageView>
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <image>
+                                    <Image url="@../../../../../../../../resources/students/student_blue.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <image>
+                                    <Image url="@../../../../../../../../resources/students/student_blue.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                 <image>
+                                    <Image url="@../../../../../../../../resources/students/student_blue.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                 <image>
+                                    <Image url="@../../../../../../../../resources/students/student_blue.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </StackPane>
+                  <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                     <children>
+                        <ImageView fitHeight="109.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../../../resources/clouds/cloud_card.png" />
+                           </image>
+                        </ImageView>
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <image>
+                                    <Image url="@../../../../../../../../resources/students/student_red.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="19.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                 <image>
+                                    <Image url="@../../../../../../../../resources/students/student_pink.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="21.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <image>
+                                    <Image url="@../../../../../../../../resources/students/student_green.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                 <image>
+                                    <Image url="@../../../../../../../../resources/students/student_yellow.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </StackPane>
+                  <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                     <children>
+                        <ImageView fitHeight="119.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../../../resources/clouds/cloud_card.png" />
+                           </image>
+                        </ImageView>
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <image>
+                                    <Image url="@../../../../../../../../resources/students/student_red.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="21.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <image>
+                                    <Image url="@../../../../../../../../resources/students/student_green.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="21.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                 <image>
+                                    <Image url="@../../../../../../../../resources/students/student_green.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="21.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                 <image>
+                                    <Image url="@../../../../../../../../resources/students/student_green.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </StackPane>
                </children>
             </GridPane>
          </children>
