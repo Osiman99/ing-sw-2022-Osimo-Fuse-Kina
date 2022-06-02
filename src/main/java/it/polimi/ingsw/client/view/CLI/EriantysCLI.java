@@ -78,10 +78,10 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
     public void drawBoard(Game game) {
-        drawPlanks(game);
+        clearConsole();
         drawIslands(game);
         drawClouds(game);
-
+        drawPlanks(game);
     }
 
     public void drawPlanks(Game game) {
@@ -208,7 +208,7 @@ public class EriantysCLI extends ViewObservable implements View {
             switch (color) {
                 case BLACK: return ANSIColor.BLACK + "■" +ANSIColor.RESET;
 
-                case WHITE: return ANSIColor.RESET + "■" +ANSIColor.RESET;
+                case WHITE: return ANSIColor.WHITE + "■" +ANSIColor.RESET;
 
                 case GREY: return ANSIColor.BLACK_BOLD_BRIGHT + "■" +ANSIColor.RESET;
 
@@ -262,13 +262,13 @@ public class EriantysCLI extends ViewObservable implements View {
                 }
             }
 
-            islandBoard.add("╔═════════════════════════════════╦══════╗");
-            islandBoard.add("║"+ANSIColor.WHITE_BACKGROUND+ANSIColor.BLACK+"       I S L A N D  n° "+ numIsolaBoard +"        "+ ANSIColor.RESET+"║"+mnBoard+"║");
-            islandBoard.add("╠═════════════════════════════════╬══════╣");
-            islandBoard.add("║     TOWERS:"+towerBoard.get(0)+towerBoard.get(1)+towerBoard.get(2)+towerBoard.get(3)+towerBoard.get(4)+towerBoard.get(5)+towerBoard.get(6)+towerBoard.get(7) +"     ║  xx  ║");
-            islandBoard.add("╠═════════════════════════════════╩══════╣");
-            islandBoard.add("║    "+ANSIColor.GREEN+"●"+ANSIColor.RESET+" x"+numStudent[0]+"   "+ANSIColor.RED+"●"+ANSIColor.RESET+" x"+numStudent[1]+"   "+ANSIColor.YELLOW_BOLD_BRIGHT+"●"+ANSIColor.RESET+" x"+numStudent[2]+"   "+ANSIColor.PINK+"●"+ANSIColor.RESET+" x"+numStudent[3]+"   "+ANSIColor.BLUE+"●"+ANSIColor.RESET+" x"+numStudent[4]+"    ║");
-            islandBoard.add("╚════════════════════════════════════════╝");
+            islandBoard.add("╔════════════════════════════╦══════╗");
+            islandBoard.add("║"+ANSIColor.WHITE_BACKGROUND+ANSIColor.BLACK+"I S L A N D  n° "+ numIsolaBoard +"         "+ ANSIColor.RESET+"║"+mnBoard+"║");
+            islandBoard.add("╠════════════════════════════╬══════╣");
+            islandBoard.add("║TOWERS:"+towerBoard.get(0)+towerBoard.get(1)+towerBoard.get(2)+towerBoard.get(3)+towerBoard.get(4)+towerBoard.get(5)+towerBoard.get(6)+towerBoard.get(7) +"     ║  xx  ║");
+            islandBoard.add("╠════════════════════════════╩══════╣");
+            islandBoard.add("║"+ANSIColor.GREEN+"●"+ANSIColor.RESET+" x"+numStudent[0]+"   "+ANSIColor.RED+"●"+ANSIColor.RESET+" x"+numStudent[1]+"   "+ANSIColor.YELLOW_BOLD_BRIGHT+"●"+ANSIColor.RESET+" x"+numStudent[2]+"   "+ANSIColor.PINK+"●"+ANSIColor.RESET+" x"+numStudent[3]+"   "+ANSIColor.BLUE+"●"+ANSIColor.RESET+" x"+numStudent[4]+"  ║");
+            islandBoard.add("╚═══════════════════════════════════╝");
 
             System.out.println("\n");
 

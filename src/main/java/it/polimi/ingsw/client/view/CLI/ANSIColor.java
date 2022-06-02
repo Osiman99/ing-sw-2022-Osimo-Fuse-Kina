@@ -18,7 +18,7 @@ public class ANSIColor {
     public static final String BLUE = "\u001B[34m";
     public static final String PURPLE = "\u001B[35m";
     public static final String CYAN = "\u001B[36m";
-    public static final String WHITE = "\u001B[37m";
+    public static final String WHITE = "\u001b[37;1m"; //bright white
 
 
     public static final String BLACK_BACKGROUND = "\u001B[40m";
