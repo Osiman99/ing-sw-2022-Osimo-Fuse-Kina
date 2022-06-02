@@ -305,6 +305,11 @@ public class EriantysCLI extends ViewObservable implements View {
         for(i=0; i< game.getBoard().getClouds().size(); i++) {
             Cloud currentCloud= game.getBoard().getClouds().get(i);
 
+            if(currentCloud.getStudentsSize() == 0){
+                for(int k = 0; k < 4; k++){
+                    cloudStudents.add(" ");
+                }
+            }
             for(int j=0; j< currentCloud.getStudentsSize(); j++)
                 cloudStudents.add(convertANSI(currentCloud.getStudents().get(j).getColor()));
 
