@@ -362,7 +362,7 @@ public class EriantysCLI extends ViewObservable implements View {
                 correctInput = true;
             }else{
                 out.println("Invalid address");
-                clearCli();
+                clearConsole();
                 correctInput = false;
             }
         } while(!correctInput);
@@ -413,7 +413,6 @@ public class EriantysCLI extends ViewObservable implements View {
 
     @Override
     public void onDemandAssistantCard(List<AssistantCard> deck) {
-        //clearCli();
         List<String> cardValueList= new ArrayList<String>();
         for (int i = 0; i < deck.size(); i++)
             cardValueList.add(Integer.toString(deck.get(i).getValue()));
@@ -428,10 +427,10 @@ public class EriantysCLI extends ViewObservable implements View {
 
     @Override
     public void showLoginResult(boolean nicknameAccepted, boolean connection, String nickname) {
-        clearCli();
+        clearConsole();
 
         if (nicknameAccepted && connection) {
-            out.println("\n\n\n\n\n\n\n\n\n\nHi, " + nickname + "! You connected to the server.");
+            out.println("Hi, " + nickname + "! You connected to the server.");
         } else if (connection) {
             onDemandNickname();
         } else if (nicknameAccepted) {
@@ -559,6 +558,25 @@ public class EriantysCLI extends ViewObservable implements View {
         } catch (IOException e) {
             e.printStackTrace();
             return ("DIGIT ERROR");
+        }
+    }
+
+    public static void clearConsole(){
+        try{
+            String operatingSystem = System.getProperty("os.name"); //Check the current operating system
+
+            if(operatingSystem.contains("Windows")){
+                ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "cls");
+                Process startProcess = pb.inheritIO().start();
+                startProcess.waitFor();
+            } else {
+                ProcessBuilder pb = new ProcessBuilder("clear");
+                Process startProcess = pb.inheritIO().start();
+
+                startProcess.waitFor();
+            }
+        }catch(Exception e){
+            System.out.println(e);
         }
     }
 
