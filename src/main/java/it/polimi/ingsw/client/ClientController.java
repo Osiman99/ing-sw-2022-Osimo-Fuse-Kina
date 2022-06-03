@@ -86,6 +86,10 @@ public class ClientController implements ViewObserver, Observer {
 
     }
 
+    public void onUpdateQuit(String quit){
+        client.sendMessage(new EndMessage(this.nickname, quit));
+    }
+
     @Override
     public void update(Message message) {
         switch(message.getMessageType()) {
@@ -111,6 +115,12 @@ public class ClientController implements ViewObserver, Observer {
                 MotherNatureRequest motherNatureRequest = (MotherNatureRequest) message;
                 taskQueue.execute(()-> view.onDemandMotherNatureMoves(motherNatureRequest.getMaxMoves()));
                 break;
+            case DISCONNECTION:
+                DisconnectionMessage dm = (DisconnectionMessage) message;
+                client.disconnect();
+                view.showDisconnectionMessage(dm.getNicknameDisconnected(), dm.getMessageStr());
+                break;
+
 
                 /*case ERROR:
                 ErrorMessage errorMessage = (ErrorMessage) message;

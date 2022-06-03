@@ -35,4 +35,6 @@ public interface ViewObserver {
 
     void onUpdateCharacterCard(CharacterCard card);
 
+    void onUpdateQuit(String quit);
+
 }
