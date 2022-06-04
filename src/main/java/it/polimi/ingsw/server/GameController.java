@@ -279,20 +279,8 @@ public class GameController implements Observer, Serializable {
                 }
                 game.getBoard().moveMotherNature(motherNatureResult.getNumMoves());
                 //disable charactercard
-                for (Player player : game.getPlayers()) {
-                    if (player.getPlank().getTowerSpace().getTowersList().size() == 0) {
-                        state = GameState.ENDGAME;
-                        broadcastGenericMessage(player.getNickname() + " is the WINNER!!!");
-                        broadcastGenericMessage("Type \"quit\" to leave the game.");
-                        break;
-                    }if(game.getPlayers().get(game.getPlayers().size()-1) == player){
-                        broadcastBoardMessage();
-                        motherNatureFlag = false;
-                        cloudFlag = true;
-                        moveCont--;
-                        actionTurnManager();
-                    }
-                }
+                noTowersWin();
+
             }
         }else if (receivedMessage.getMessageType() == MessageType.CLOUD){
             CloudMessage cloudMessage = (CloudMessage) receivedMessage;
@@ -301,6 +289,23 @@ public class GameController implements Observer, Serializable {
                 broadcastBoardMessage();
                 broadcastGenericMessage(activePlayer.getNickname() + " chose the cloud number " + cloudMessage.getNumCloud());
                 cloudFlag = false;
+                moveCont--;
+                actionTurnManager();
+            }
+        }
+    }
+
+    public void noTowersWin(){
+        for (Player player : game.getPlayers()) {
+            if (player.getPlank().getTowerSpace().getTowersList().size() == 0) {
+                state = GameState.ENDGAME;
+                broadcastGenericMessage(player.getNickname() + " is the WINNER!!!");
+                broadcastGenericMessage("Type \"quit\" to leave the game.");
+                break;
+            }if(game.getPlayers().get(game.getPlayers().size()-1) == player){
+                broadcastBoardMessage();
+                motherNatureFlag = false;
+                cloudFlag = true;
                 moveCont--;
                 actionTurnManager();
             }
