@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.client.ClientController;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.network.messages.*;
 import it.polimi.ingsw.observer.Observer;
@@ -23,10 +24,12 @@ public class GameController implements Observer, Serializable {
     private int moveCont;
     private boolean cloudFlag;
     private boolean motherNatureFlag;
+    private Server server;
 
 
     public GameController(){
         this.game = Game.getInstance();
+        server = Server.getInstance();
         virtualViewMap = Collections.synchronizedMap(new HashMap<>());
         checkController = new CheckController(virtualViewMap, this);
         setGameState(GameState.PREGAME);
@@ -49,6 +52,7 @@ public class GameController implements Observer, Serializable {
                 action(receivedMessage);
                 break;
             case ENDGAME:
+                end(receivedMessage);
                 break;
 
         }
@@ -169,6 +173,7 @@ public class GameController implements Observer, Serializable {
         game.removeObserver(vv);
         game.getBoard().removeObserver(vv);
         game.removePlayerByNickname(nickname, notifyEnabled);
+        nicknames.remove(nickname);
     }
 
     public List<String> getNicknames() {
@@ -182,7 +187,16 @@ public class GameController implements Observer, Serializable {
         }
     }
 
+
+    public void end(Message receivedMessage){
+        if (receivedMessage.getMessageType() == MessageType.END_MESSAGE) {
+            ClientHandler clientHandler = server.getClientHandlerMap().get(receivedMessage.getNickname());
+            clientHandler.disconnect();
+        }
+    }
+
     public void endGame() {
+
         Game.resetInstance();
 
         //PERSISTENZA FA
@@ -198,6 +212,11 @@ public class GameController implements Observer, Serializable {
         this.virtualViewMap = Collections.synchronizedMap(new HashMap<>());
         this.checkController = new CheckController(virtualViewMap, this);
         setGameState(GameState.PREGAME);
+        this.game = Game.getInstance();
+        turnCont = 0;
+        moveCont = 0;
+        cloudFlag = false;
+        motherNatureFlag = true;
     }
 
     public void plan(Message receivedMessage){
@@ -260,11 +279,8 @@ public class GameController implements Observer, Serializable {
                 }
                 game.getBoard().moveMotherNature(motherNatureResult.getNumMoves());
                 //disable charactercard
-                broadcastBoardMessage();
-                motherNatureFlag = false;
-                cloudFlag = true;
-                moveCont--;
-                actionTurnManager();
+                noTowersWin();
+
             }
         }else if (receivedMessage.getMessageType() == MessageType.CLOUD){
             CloudMessage cloudMessage = (CloudMessage) receivedMessage;
@@ -273,6 +289,23 @@ public class GameController implements Observer, Serializable {
                 broadcastBoardMessage();
                 broadcastGenericMessage(activePlayer.getNickname() + " chose the cloud number " + cloudMessage.getNumCloud());
                 cloudFlag = false;
+                moveCont--;
+                actionTurnManager();
+            }
+        }
+    }
+
+    public void noTowersWin(){
+        for (Player player : game.getPlayers()) {
+            if (player.getPlank().getTowerSpace().getTowersList().size() == 0) {
+                state = GameState.ENDGAME;
+                broadcastGenericMessage(player.getNickname() + " is the WINNER!!!");
+                broadcastGenericMessage("Type \"quit\" to leave the game.");
+                break;
+            }if(game.getPlayers().get(game.getPlayers().size()-1) == player){
+                broadcastBoardMessage();
+                motherNatureFlag = false;
+                cloudFlag = true;
                 moveCont--;
                 actionTurnManager();
             }

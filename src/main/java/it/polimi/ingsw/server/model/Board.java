@@ -152,9 +152,6 @@ public class Board extends Observable implements Serializable {
     public void moveTowerFromPlankToIsland(Player player, Island island){
         island.addTower(player.getPlank().getTowerSpace().getFirstTower());
         player.getPlank().getTowerSpace().removeTower();
-        if (player.getPlank().getTowerSpace().getTowersList().isEmpty()){
-            System.out.println("HAI VINTO!");
-        }
     }
 
     /**
@@ -181,11 +178,11 @@ public class Board extends Observable implements Serializable {
         for (int i = 0; i < islands.size(); i++){
             if (islands.get(i).isMotherNature()){
                 islands.get(i).setMotherNature(false);
-                islands.get((i+numMoves)%12).setMotherNature(true);
-                if (!(islands.get((i+numMoves)%12).isBanCard())){
-                    calculateSupremacy(islands.get((i+numMoves)%12));
+                islands.get((i+numMoves)%islands.size()).setMotherNature(true);
+                if (!(islands.get((i+numMoves)%islands.size()).isBanCard())){
+                    calculateSupremacy(islands.get((i+numMoves)%islands.size()));
                 }else{
-                    islands.get((i+numMoves)%12).setBanCard(false);
+                    islands.get((i+numMoves)%islands.size()).setBanCard(false);
                 }
                 break;
             }

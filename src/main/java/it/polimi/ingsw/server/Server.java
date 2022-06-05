@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 
 public class Server {
 
+    private static Server instance;
     private final GameController gameController;
 
     private final Map<String, ClientHandler> clientHandlerMap;
@@ -20,6 +21,7 @@ public class Server {
     private final Object lock;
 
     public Server(GameController gameController) {
+        Server.instance = this;
         this.gameController = gameController;
         this.clientHandlerMap = Collections.synchronizedMap(new HashMap<>());
         this.lock = new Object();
@@ -40,6 +42,10 @@ public class Server {
             clientHandler.disconnect();
         }
 
+    }
+
+    public static Server getInstance() {
+        return instance;
     }
 
     /**
@@ -84,16 +90,19 @@ public class Server {
 
                 // Resets server status only if the game was already started.
                 // Otherwise the server will wait for a new player to connect.
-                if (gameStarted) {
+                /*if (gameStarted) {
                     gameController.broadcastDisconnectionMessage(nickname, " disconnected from the server. GAME ENDED.");
-
                     gameController.endGame();
                     clientHandlerMap.clear();
-                }
+                }*/
             }
         }
     }
 
+
+    public Map<String, ClientHandler> getClientHandlerMap() {
+        return clientHandlerMap;
+    }
 
     /**
      * Returns the corresponding nickname of a ClientHandler.

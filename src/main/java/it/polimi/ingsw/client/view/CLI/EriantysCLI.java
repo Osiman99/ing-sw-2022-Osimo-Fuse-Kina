@@ -532,6 +532,15 @@ public class EriantysCLI extends ViewObservable implements View {
         notifyObserver(obs -> obs.onUpdateMotherNatureMoves(numMoves));
     }
 
+    public void onDemandQuit(){
+        String quit = nextLine();
+        if (quit.equals("quit")) {
+            notifyObserver(obs -> obs.onUpdateQuit(quit));
+        }else{
+            showGenericMessage("Invalid input! Please try again.");
+        }
+    }
+
     /**
      * Clears the EriantysCLI terminal.
      */
@@ -546,6 +555,8 @@ public class EriantysCLI extends ViewObservable implements View {
             onDemandMoveStudent();
         }else if (genericMessage.equals("Which cloud do you choose? Insert the cloud number.")){
             onDemandCloud();
+        }else if (genericMessage.equals("Type \"quit\" to leave the game.")){
+            onDemandQuit();
         }
     }
 
@@ -581,8 +592,10 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
     @Override
-    public void showDisconnectionMessage(String nicknameDisconnected, String value) {
+    public void showDisconnectionMessage(String nicknameDisconnected, String text) {
+        out.println("\n" + nicknameDisconnected + text);
 
+        System.exit(1);
     }
 
 }
