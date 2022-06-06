@@ -348,6 +348,36 @@
                            <image>
                               <Image url="@../../../../../../../../resources/ASSISTANTS/Assistente%20(6).png" />
                            </image></ImageView>
+                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" translateX="50.0" translateY="-70.0">
+                           <image>
+                              <Image url="@../../../../../../../../resources/Moneta_base.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" translateX="50.0" translateY="-70.0" GridPane.rowIndex="1">
+                           <image>
+                              <Image url="@../../../../../../../../resources/Moneta_base.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" translateX="50.0" translateY="-70.0" GridPane.rowIndex="2">
+                           <image>
+                              <Image url="@../../../../../../../../resources/Moneta_base.png" />
+                           </image>
+                        </ImageView>
+                        <Label text="X1" textFill="#c1ff7a" translateX="100.0" translateY="-70.0">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <Label text="X1" textFill="#c1ff7a" translateX="100.0" translateY="-70.0" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <Label text="X1" textFill="#c1ff7a" translateX="100.0" translateY="-70.0" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
                      </children>
                   </GridPane>
                </children>
