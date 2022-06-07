@@ -131,7 +131,7 @@ public class EriantysCLI extends ViewObservable implements View {
 
 
 
-            plankBoard.add("→ " +ANSIColor.PINK+ playerBoard.getNickname()+ANSIColor.RESET+"'s plank");
+            plankBoard.add("→ " +ANSIColor.PINK+ ANSIColor.UNDERLINE+ playerBoard.getNickname()+ANSIColor.RESET+"'s plank");
             plankBoard.add("╔══════════╦═══════════════════════╦═════════╦═════════════╗");
             plankBoard.add("║"+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+" Entrance "+ANSIColor.RESET+"║"+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+"      Dining Room      "+ANSIColor.RESET+"║"+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+"Professor"+ANSIColor.RESET+"║"+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+" Tower Space "+ANSIColor.RESET+"║");
             plankBoard.add("╠══════════╬═══════════════════════╬═════════╬═════════════╣");
@@ -272,8 +272,11 @@ public class EriantysCLI extends ViewObservable implements View {
 
             System.out.println("\n");
 
-            for(String b : islandBoard)
-                System.out.println(b);
+            for(int r=0; r<islandBoard.size(); r++) {
+                gotoXY(r+i*9,21);
+                System.out.println(islandBoard.get(r));
+            }
+
 
             islandBoard.clear();
             towerBoard.clear();
@@ -285,13 +288,13 @@ public class EriantysCLI extends ViewObservable implements View {
 
                 // ☬  ℳ madrenatura
         /*
-                            ╔═════════════════════════════════╦══════╗");
-            plankBoard.add("║       I S L A N D  n°  8        ║  MN  ║");
-            plankBoard.add("╠═════════════════════════════════╬══════╣");
-            plankBoard.add("║     TOWERS: ■ ■ ■ ■ ■ ■ ■ ■     ║  xx  ║");
-            plankBoard.add("╠═════════════════════════════════╩══════╣");
-            plankBoard.add("║    ● x2   ● x0   ● x0   ● x1   ● x0    ║");
-            plankBoard.add("╚════════════════════════════════════════╝");
+            ╔═══════════════════════╦══════╗
+            ║     ISLAND  n°  1     ║  MN  ║
+            ╠═══════════════════════╬══════╣
+            ║TOWERS                 ║  xx  ║
+            ╠═════╦═════╦═════╦═════╬═════╦╝
+            ║ ● 0 ║ ● 0 ║ ● 0 ║ ● 0 ║ ● 0 ║
+            ╚═════╩═════╩═════╩═════╩═════╝");
          */
     }
 

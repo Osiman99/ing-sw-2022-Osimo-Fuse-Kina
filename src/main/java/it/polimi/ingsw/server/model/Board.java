@@ -96,6 +96,10 @@ public class Board extends Observable implements Serializable {
 
     }
 
+    public void resetInstance() {
+        instance=null;
+    }
+
     public Bag getBag() {
         return bag;
     }

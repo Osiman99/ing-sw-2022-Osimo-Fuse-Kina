@@ -17,17 +17,16 @@ public class Entrance implements Serializable {
     public Entrance(){
         game = Game.getInstance();
         students = new ArrayList<Student>();
-        if(game.getNumPlayers() == 2){
-            for(int i = 0; i < 7; i++) {
-                students.add(game.getBoard().getBag().getFirstStudent());
-                game.getBoard().getBag().removeStudent();
-            }
-        }if(game.getNumPlayers() == 3) {
-            for (int i = 0; i < 9; i++) {
-                students.add(game.getBoard().getBag().getFirstStudent());
-                game.getBoard().getBag().removeStudent();
-            }
+
+        /*  y=2x+3 where x means getNumPlayer and y stands for the number of students that should be added.
+            If getNumPlayer = 2 then add 7 students to each entrance;
+            else if getNumPlayer = 3 then add 9 students to each entrance.
+         */
+        for(int i = 0; i < 2*game.getNumPlayers()+3; i++) {
+            students.add(game.getBoard().getBag().getFirstStudent());
+            game.getBoard().getBag().removeStudent();
         }
+
     }
 
     public ArrayList<Student> getStudents() {
@@ -48,14 +47,4 @@ public class Entrance implements Serializable {
     }
 
 
-
-    public Student getStudentForDiningRoom(StudentColor color) {      //tramite CLI, nel main si fa il for; student come parametro o color?
-        for (Student student : students) {
-            if (student.getColor() == color) {
-                moving_student = student;
-                break;                                                 //forse da fare con eccezioni?
-            }
-        }
-        return moving_student;
-    }
 }

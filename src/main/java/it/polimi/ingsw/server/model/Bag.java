@@ -37,6 +37,7 @@ public class Bag implements Serializable {
             students.add(new Student(StudentColor.BLUE));
         }
         Collections.shuffle(students);
+
     }
 
 
@@ -69,4 +70,6 @@ public class Bag implements Serializable {
     public List<Student> getStudents() {
         return students;
     }
+
+    public void resetInstance() {instance= null;}
 }

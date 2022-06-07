@@ -1,6 +1,8 @@
 package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.client.view.CLI.ANSIColor;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 
@@ -47,8 +49,7 @@ public enum StudentColor implements Serializable {
         }
     }
 
-
-    public String toString(StudentColor studentColor){
+    public static String toString(StudentColor studentColor){
         switch(studentColor){
             case GREEN:
                 return "Green";

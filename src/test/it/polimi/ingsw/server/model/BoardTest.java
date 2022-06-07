@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.server.model.*;
 import org.junit.jupiter.api.AfterEach;
@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class BoardTest {
 
     private Game game;
+    private String [] nicknames = {"AlanTuring", "JamesGosling", "GeorgeBoole"};
     private Student student;
     private ArrayList<Student> students;
     private StudentColor red;
@@ -23,18 +24,21 @@ class BoardTest {
 
     @BeforeEach
     void setUp() {
-        List<String> nicknames = new ArrayList<String>();
-        students = new ArrayList<Student>();
-        nicknames.add("davide");
-        nicknames.add("riise");
-        nicknames.add("elis");
         game = Game.getInstance();
+        for(int i=0; i<3; i++)
+            game.getPlayers().add(new Player(nicknames[i]));
+        game.setChosenPlayersNumber(3);
         game.initGame();
     }
 
     @AfterEach
     void tearDown() {
-        Game.resetInstance();
+        game.resetInstance();
+    }
+
+    @Test
+    void resetInstance() {
+
     }
 
     @Test

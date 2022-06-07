@@ -8,6 +8,7 @@ public class ANSIColor {
 
     public static final String RESET = "\u001B[0m";
     public static final String CLEAR = "\033[H\033[2J";
+    public static final String UNDERLINE = "\u001b[4m";
 
 
     public static final String BLACK = "\u001B[30m";
