@@ -24,17 +24,19 @@ class GameTest {
 
     @AfterEach
     void tearDown() {
-        game.resetInstance();
+        Game.resetInstance();
     }
 
     @Test
     void setInstance() {
+        Game game2 = new Game();
+        Game.setInstance(game2);
+        assertEquals(game2, Game.getInstance());
     }
-
 
     @Test
     void getContPlayer() {
-        assertEquals(0, game.getContPlayer());
+        assertEquals(3, game.getContPlayer());
     }
 
     @Test
@@ -45,33 +47,42 @@ class GameTest {
 
     @Test
     void getNumPlayers() {
+        assertEquals(3, game.getNumPlayers());
     }
 
     @Test
     void getPlayerByNickname() {
+        Player player = new Player("LinusTorvalds");
+        game.addPlayer(player);
+        assertEquals(player, game.getPlayerByNickname("LinusTorvalds"));
     }
 
     @Test
     void isNicknameTaken() {
+        assertFalse(game.isNicknameTaken("LinusTorvalds"));
+        assertTrue(game.isNicknameTaken("GeorgeBoole"));
     }
 
     @Test
     void removePlayerByNickname() {
-    }
-
-    @Test
-    void resetInstance() {
+        assertTrue(game.removePlayerByNickname("AlanTuring", true));
     }
 
     @Test
     void getBoard() {
+        Board board = game.getBoard();
+        assertEquals(board, game.getBoard());
     }
 
     @Test
     void getPlayers() {
+        for(int i=0; i<3; i++)
+            assertEquals(nicknames[i], game.getPlayers().get(i).getNickname());
     }
 
     @Test
-    void setChosenPlayersNumber() {
+    void chosenPlayersNumber() {
+        game.setChosenPlayersNumber(2);
+        assertEquals(2, game.getChosenPlayerNumber());
     }
 }

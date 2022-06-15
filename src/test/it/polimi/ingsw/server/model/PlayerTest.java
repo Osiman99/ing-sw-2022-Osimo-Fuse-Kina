@@ -40,12 +40,7 @@ class PlayerTest {
     }
 
     @Test
-    void getSupremacyCont() {
-        assertEquals(0, player.getSupremacyCont());
-    }
-
-    @Test
-    void setSupremacyCont() {
+    void supremacyCont() {
         player.setSupremacyCont(3);
         assertEquals(3, player.getSupremacyCont());
     }
@@ -78,6 +73,12 @@ class PlayerTest {
     void playerColor() {
         player.setPlayerColor(TowerColor.GREY);
         assertEquals(TowerColor.GREY, player.getPlayerColor());
+    }
+
+    @Test
+    void towerCont() {
+        player.setTowerCont(4);
+        assertEquals(4, player.getTowerCont());
     }
 
     @Test

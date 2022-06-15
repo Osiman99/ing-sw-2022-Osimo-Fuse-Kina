@@ -13,7 +13,6 @@ public class Bag implements Serializable {
     /**
      * singular instance
      */
-    private static Bag instance;
 
     /**
      * private constructor
@@ -61,5 +60,4 @@ public class Bag implements Serializable {
         return students;
     }
 
-    public void resetInstance() {instance= null;}
 }

@@ -16,7 +16,6 @@ class BoardTest {
     private Game game;
     private String [] nicknames = {"AlanTuring", "JamesGosling", "GeorgeBoole"};
     private Board board;
-    static int c=0;
 
 
     @BeforeEach
@@ -31,15 +30,11 @@ class BoardTest {
         game.initGame();
         board = game.getBoard();
 
-        System.out.println(c + " setUp");
-
     }
 
     @AfterEach
     void tearDown() {
         game.resetInstance();
-        System.out.println(c + " tearDown");
-        c++;
     }
 
     @Test
@@ -76,17 +71,14 @@ class BoardTest {
         List<Student> students = new ArrayList<Student>();
         int i,j,k;
 
-        System.out.println("bella");
         for(i=0; i< game.getNumPlayers()*(game.getNumPlayers()+1); i++)         // #nuvole x #studentiPerNuvola : sposto i primi 12 studenti dalla Bag
             students.add(game.getBoard().getBag().getStudents().get(i));
-        System.out.println("bellaz");
+
 
         game.getBoard().moveStudentsFromBagToClouds();
-        System.out.println("bellazzui");
+
 
         for(i=0, j=0; j<game.getBoard().getClouds().size(); j++){
-            System.out.println("bellaaa");
-
             for(k=0; k<game.getBoard().getClouds().get(j).getStudentsSize(); k++,i++) {
                 assertEquals(students.get(i), game.getBoard().getClouds().get(j).getStudents().get(k));
             }

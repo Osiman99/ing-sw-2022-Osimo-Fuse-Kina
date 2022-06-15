@@ -141,4 +141,6 @@ public class Game extends Observable implements Serializable {
     public void setChosenPlayersNumber(int chosenPlayersNumber) {
         this.chosenPlayersNumber = chosenPlayersNumber;
     }
+
+    public int getChosenPlayerNumber() {return chosenPlayersNumber;}
 }

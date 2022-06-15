@@ -15,17 +15,12 @@ class BagTest {
 
     @BeforeEach
     void setUp() {
-        bag = Bag.getInstance();
+        bag = new Bag();
     }
 
     @AfterEach
     void tearDown() {
-        bag.resetInstance();
-    }
-
-    @Test
-    void getInstance() {
-        assertEquals(bag, Bag.getInstance());
+        bag = null;
     }
 
     @Test
@@ -52,9 +47,4 @@ class BagTest {
         assertNotNull(bag.getStudents());
     }
 
-    @Test
-    void resetInstance() {
-        bag.resetInstance();
-        assertNotEquals(bag, Bag.getInstance());
-    }
 }
