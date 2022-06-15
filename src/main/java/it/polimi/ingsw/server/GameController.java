@@ -397,12 +397,6 @@ public class GameController implements Observer, Serializable {
         }
     }
 
-    public void professorCount(int cont){
-        if (cont == 2){
-
-        }
-    }
-
     public void actionTurnManager(){
         moveCont++;
         if(moveCont < game.getNumPlayers()+1) {
