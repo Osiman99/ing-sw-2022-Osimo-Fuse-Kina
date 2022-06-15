@@ -107,6 +107,9 @@ public class Board extends Observable implements Serializable {
         return islands;
     }
 
+    public void setProfessorsControlledBy(String[] nicknames) {
+        System.arraycopy(nicknames, 0, professorsControlledBy, 0, 5);
+    }
 
     public String[] getProfessorsControlledBy() {
         return professorsControlledBy;
@@ -116,6 +119,7 @@ public class Board extends Observable implements Serializable {
         game = instance;
     }
 
+    public Game getGameInstance() {return game;}
     /**
      * if there are 2 players Cloud gets 3 students from the Bag each round,
      * if there are 3 players it gets 4.

@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class BoardTest {
 
     private Game game;
-    private String [] nicknames = {"AlanTuring", "JamesGosling", "GeorgeBoole"};
+    private final String [] nicknames = {"AlanTuring", "JamesGosling", "GeorgeBoole"};
     private Board board;
 
 
@@ -34,7 +34,7 @@ class BoardTest {
 
     @AfterEach
     void tearDown() {
-        game.resetInstance();
+        Game.resetInstance();
     }
 
     @Test
@@ -67,20 +67,25 @@ class BoardTest {
     }
 
     @Test
+    void gameInstance() {
+        Game game2 = new Game();
+        board.setGameInstance(game2);
+        assertEquals(game2, board.getGameInstance());
+    }
+
+    @Test
     void moveStudentsFromBagToClouds() {
         List<Student> students = new ArrayList<Student>();
         int i,j,k;
 
         for(i=0; i< game.getNumPlayers()*(game.getNumPlayers()+1); i++)         // #nuvole x #studentiPerNuvola : sposto i primi 12 studenti dalla Bag
-            students.add(game.getBoard().getBag().getStudents().get(i));
+            students.add(board.getBag().getStudents().get(i));
 
+        board.moveStudentsFromBagToClouds();
 
-        game.getBoard().moveStudentsFromBagToClouds();
-
-
-        for(i=0, j=0; j<game.getBoard().getClouds().size(); j++){
-            for(k=0; k<game.getBoard().getClouds().get(j).getStudentsSize(); k++,i++) {
-                assertEquals(students.get(i), game.getBoard().getClouds().get(j).getStudents().get(k));
+        for(i=0, j=0; j< board.getClouds().size(); j++){
+            for(k=0; k< board.getClouds().get(j).getStudentsSize(); k++,i++) {
+                assertEquals(students.get(i), board.getClouds().get(j).getStudents().get(k));
             }
         }
 
@@ -91,13 +96,86 @@ class BoardTest {
     @Test
     void moveTower() {
         Tower tower = game.getPlayers().get(0).getPlank().getTowerSpace().getFirstTower();
-        game.getBoard().moveTowerFromPlankToIsland(game.getPlayers().get(0), game.getBoard().getIslands().get(0));
-        assertEquals(tower, game.getBoard().getIslands().get(0).getFirstTower());
+        board.moveTowerFromPlankToIsland(game.getPlayers().get(0), board.getIslands().get(0));
+        assertEquals(tower, board.getIslands().get(0).getFirstTower());
 
-        game.getBoard().moveTowerFromIslandToPlank(game.getBoard().getIslands().get(0));
+        board.moveTowerFromIslandToPlank(game.getBoard().getIslands().get(0));
 
         assertEquals(tower.getColor(), game.getPlayers().get(0).getPlank().getTowerSpace().getTowersList().get(game.getPlayers().get(0).getPlank().getTowerSpace().getTowersList().size()-1).getColor());
     }
 
+
+    @Test
+    void moveProfessorNormal() {
+        Student sRed=new Student(StudentColor.RED);
+
+        //player 0 ha 2 REDstudent, player 1 ha 1 REDstudents, player 2 ha 1 REDstudent
+        game.getPlayers().get(1).getPlank().getDiningRoom()[StudentColor.RED.getCode()].addStudent(sRed);
+        board.moveProfessor(game.getPlayers().get(1));
+        game.getPlayers().get(0).getPlank().getDiningRoom()[StudentColor.RED.getCode()].addStudent(sRed);
+        board.moveProfessor(game.getPlayers().get(0));
+        game.getPlayers().get(0).getPlank().getDiningRoom()[StudentColor.RED.getCode()].addStudent(sRed);
+        board.moveProfessor(game.getPlayers().get(0));
+        game.getPlayers().get(2).getPlank().getDiningRoom()[StudentColor.RED.getCode()].addStudent(sRed);
+        board.moveProfessor(game.getPlayers().get(2));
+
+        assertEquals(game.getPlayers().get(0).getNickname(), board.getProfessorsControlledBy()[StudentColor.RED.getCode()]);
+    }
+
+    @Test
+    void moveProfessorExpert() {
+
+    }
+
+    @Test
+    void moveMotherNature() {
+
+        //salvo l'indice della lista dell'isola attiva
+        int i=0;
+        for(; i<board.getIslands().size(); i++)
+            if(board.getIslands().get(i).isMotherNature())
+                break;
+
+        //genero un numero a caso da 1 a 5 che rappresenta il numero di mosse scelte dal player
+        Random random =new Random();
+        int randomInt = random.nextInt(4)+1;
+        board.moveMotherNature(randomInt);
+
+        //salvo l'indice della nuova isola attiva
+        int j=0;
+        for(; j<board.getIslands().size()-1; j++)
+            if(board.getIslands().get(j).isMotherNature())
+                break;
+        assertEquals(board.getIslands().get(i+randomInt), board.getIslands().get(j));
+
+    }
+
+    @Test
+    void calculateSupremacy() {
+        Island island = new Island();
+
+        //salvo l'isola in cui c'è MN e aggiungo una torre WHITE e aggiungo una torre BLACK all'isola successiva
+        for (int i=0; i<12; i++) {
+            if (board.getIslands().get(i).isMotherNature()) {
+                board.moveTowerFromPlankToIsland(game.getPlayerByNickname("AlanTuring"), board.getIslands().get((i+1)%12));
+                board.moveTowerFromPlankToIsland(game.getPlayerByNickname("JamesGosling"), board.getIslands().get(i));
+                island = board.getIslands().get(i);
+            }
+        }
+
+        //aggiungo all'isola 1 studente per colore e uno studente RED aggiuntivo
+        for(int i=0; i<5; i++)
+            island.addStudent(new Student(StudentColor.getStudentColor(i)));
+        island.addStudent(new Student(StudentColor.RED));
+
+        //setto manualmente quali giocatori controllani quali professori
+        board.setProfessorsControlledBy(new String[]{"AlanTuring", "AlanTuring", "AlanTuring", "JamesGosling", "GeorgeBoole"});
+
+        board.calculateSupremacy(island);
+
+        assertEquals(TowerColor.BLACK, island.getTowers().get(0).getColor());
+        assertEquals(2, island.getTowers().size());
+        assertEquals(11, board.getIslands().size());
+    }
 
 }
