@@ -24,7 +24,7 @@ public class Game extends Observable implements Serializable {
         contPlayer = 0;
         players = new ArrayList<Player>();
         nicknames = new ArrayList<String>();
-        board = Board.getInstance();
+        board = new Board();
     }
 
     public void initGame(){

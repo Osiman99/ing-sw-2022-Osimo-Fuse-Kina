@@ -30,7 +30,7 @@ public class Board extends Observable implements Serializable {
 
 
     public void initBoard(){
-        bag = Bag.getInstance();
+        bag = new Bag();
         game = Game.getInstance();
         professorsControlledBy = new String[5];
         for (int i = 0; i < 5; i++) {
@@ -96,10 +96,6 @@ public class Board extends Observable implements Serializable {
 
     }
 
-    public void resetInstance() {
-        instance=null;
-    }
-
     public Bag getBag() {
         return bag;
     }
@@ -112,17 +108,6 @@ public class Board extends Observable implements Serializable {
         return islands;
     }
 
-    /**
-     * Singleton,create the object only if it does not exist
-     *
-     * @return
-     */
-    public static Board getInstance(){
-        if (instance == null){
-            instance = new Board();
-        }
-        return instance;
-    }
 
     public String[] getProfessorsControlledBy() {
         return professorsControlledBy;

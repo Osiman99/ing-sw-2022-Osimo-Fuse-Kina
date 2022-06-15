@@ -312,6 +312,65 @@ public class GameController implements Observer, Serializable {
         }
     }
 
+    public void threeIslandEnd(){
+        if(game.getBoard().getIslands().size() == 3) {
+            int contProfessorFirstPlayer = 0;
+            int contProfessorSecondPlayer = 0;
+            int cont = 0;
+            int firstPlayerCont = game.getPlayers().get(0).getPlank().getTowerSpace().getTowersList().size();
+            int contTowersPrev;
+            int contTowersNext = game.getPlayers().get(0).getPlank().getTowerSpace().getTowersList().size();
+            game.getPlayers().get(0).setTowerCont(contTowersNext);
+            Player winner = game.getPlayers().get(0);
+
+
+            if (game.getPlayers().size() == 2){
+
+            }
+
+            if(game.getPlayers().size() == 3) {
+                for (int i = 1; i < game.getPlayers().size(); i++) {
+                    contTowersPrev = contTowersNext;
+                    contTowersNext = game.getPlayers().get(i).getPlank().getTowerSpace().getTowersList().size();
+                    if (contTowersPrev > contTowersNext && firstPlayerCont > contTowersNext) {
+                        game.getPlayers().get(i).setTowerCont(contTowersNext);
+                        winner = game.getPlayers().get(i);
+                    }else if (i == 1 && contTowersPrev == contTowersNext && contTowersNext == winner.getTowerCont()){
+                        game.getPlayers().get(i).setTowerCont(contTowersNext);
+                        for (int j = 0; j < game.getBoard().getProfessorsControlledBy().length; j++) {
+                            if(game.getBoard().getProfessorsControlledBy()[j].equals(game.getPlayers().get(0).getNickname())){
+                                contProfessorFirstPlayer++;
+                            }if(game.getBoard().getProfessorsControlledBy()[j].equals(game.getPlayers().get(1).getNickname())){
+                                contProfessorSecondPlayer++;
+                            }
+                        }
+                    }
+
+
+                    /*if (player.getPlank().getTowerSpace().getTowersList().size() == 0) {
+                        state = GameState.ENDGAME;
+                        broadcastGenericMessage(player.getNickname() + " is the WINNER!!!");
+                        broadcastGenericMessage("Type \"quit\" to leave the game.");
+                        break;
+                    }
+                    if (game.getPlayers().get(game.getPlayers().size() - 1) == player) {
+                        broadcastBoardMessage();
+                        motherNatureFlag = false;
+                        cloudFlag = true;
+                        moveCont--;
+                        actionTurnManager();
+                    }*/
+                }
+            }
+        }
+    }
+
+    public void professorCount(int cont){
+        if (cont == 2){
+
+        }
+    }
+
     public void actionTurnManager(){
         moveCont++;
         if(moveCont < game.getNumPlayers()+1) {

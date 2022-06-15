@@ -9,6 +9,7 @@ public class Player extends Observable implements Serializable {
 
     private static final long serialVersionUID = -2704011782548707041L;
     private TowerColor playerColor;
+    private int towerCont;
     private int supremacyCont;
     private final String nickname;
     private Plank plank;
@@ -65,7 +66,13 @@ public class Player extends Observable implements Serializable {
         return chosenAssistantCard;
     }
 
+    public int getTowerCont() {
+        return towerCont;
+    }
 
+    public void setTowerCont(int towerCont) {
+        this.towerCont = towerCont;
+    }
 
     public void setPlayerColor(TowerColor playerColor) {
         this.playerColor = playerColor;

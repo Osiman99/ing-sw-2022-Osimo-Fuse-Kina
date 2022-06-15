@@ -19,7 +19,7 @@ public class Bag implements Serializable {
      * private constructor
      * inside the bag initially we have 24 students of each color
      */
-    private Bag(){
+    public Bag(){
         students = new ArrayList<Student>();
         for (int i = 0; i < 24; i++) {
             students.add(new Student(StudentColor.GREEN));
@@ -41,16 +41,6 @@ public class Bag implements Serializable {
     }
 
 
-    public static Bag getInstance(){
-
-        /**
-         * create the object only if it does not exist
-         */
-        if (instance == null){
-            instance = new Bag();
-        }
-        return instance;
-    }
 
     /**
      * always remove the student in the first position of the arraylist when we need to put them in the clouds or entrance
