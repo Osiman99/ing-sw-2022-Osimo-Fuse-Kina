@@ -314,8 +314,10 @@ public class GameController implements Observer, Serializable {
 
     public void threeIslandEnd(){
         if(game.getBoard().getIslands().size() == 3) {
+            boolean pare = false;
             int contProfessorFirstPlayer = 0;
             int contProfessorSecondPlayer = 0;
+            int contProfessorThirdPlayer = 0;
             int cont = 0;
             int firstPlayerCont = game.getPlayers().get(0).getPlank().getTowerSpace().getTowersList().size();
             int contTowersPrev;
@@ -323,28 +325,60 @@ public class GameController implements Observer, Serializable {
             game.getPlayers().get(0).setTowerCont(contTowersNext);
             Player winner = game.getPlayers().get(0);
 
+            for (int i = 0; i < game.getBoard().getProfessorsControlledBy().length; i++) {
+                if(game.getBoard().getProfessorsControlledBy()[i].equals(game.getPlayers().get(0).getNickname())){
+                    contProfessorFirstPlayer++;
+                }if(game.getBoard().getProfessorsControlledBy()[i].equals(game.getPlayers().get(1).getNickname())){
+                    contProfessorSecondPlayer++;
+                }if(game.getBoard().getProfessorsControlledBy()[i].equals(game.getPlayers().get(2).getNickname())) {
+                    contProfessorThirdPlayer++;
+                }
+            }for (int i = 1; i < game.getPlayers().size(); i++) {
+                contTowersPrev = contTowersNext;
+                contTowersNext = game.getPlayers().get(i).getPlank().getTowerSpace().getTowersList().size();
 
-            if (game.getPlayers().size() == 2){
+                if (contTowersPrev > contTowersNext && firstPlayerCont > contTowersNext) {
+                    game.getPlayers().get(i).setTowerCont(contTowersNext);
+                    winner = game.getPlayers().get(i);
+                    pare = false;
 
-            }
-
-            if(game.getPlayers().size() == 3) {
-                for (int i = 1; i < game.getPlayers().size(); i++) {
-                    contTowersPrev = contTowersNext;
-                    contTowersNext = game.getPlayers().get(i).getPlank().getTowerSpace().getTowersList().size();
-                    if (contTowersPrev > contTowersNext && firstPlayerCont > contTowersNext) {
-                        game.getPlayers().get(i).setTowerCont(contTowersNext);
-                        winner = game.getPlayers().get(i);
-                    }else if (i == 1 && contTowersPrev == contTowersNext && contTowersNext == winner.getTowerCont()){
-                        game.getPlayers().get(i).setTowerCont(contTowersNext);
-                        for (int j = 0; j < game.getBoard().getProfessorsControlledBy().length; j++) {
-                            if(game.getBoard().getProfessorsControlledBy()[j].equals(game.getPlayers().get(0).getNickname())){
-                                contProfessorFirstPlayer++;
-                            }if(game.getBoard().getProfessorsControlledBy()[j].equals(game.getPlayers().get(1).getNickname())){
-                                contProfessorSecondPlayer++;
-                            }
-                        }
+                } if (i == 1 && contTowersPrev == contTowersNext && contTowersNext == winner.getTowerCont()) {
+                    game.getPlayers().get(1).setTowerCont(contTowersNext);
+                    if (contProfessorFirstPlayer > contProfessorSecondPlayer) {
+                        winner = game.getPlayers().get(0);
+                    } else if (contProfessorFirstPlayer < contProfessorSecondPlayer) {
+                        winner = game.getPlayers().get(1);
+                    } else {
+                        pare = true;
+                        //metodo di patta
+                        return;
                     }
+
+                } if (i == 2 && contTowersPrev == contTowersNext && contTowersNext == winner.getTowerCont()) {
+                    game.getPlayers().get(2).setTowerCont(contTowersNext);
+                    if (contProfessorSecondPlayer > contProfessorThirdPlayer) {
+                        winner = game.getPlayers().get(1);
+                    } else if (contProfessorSecondPlayer < contProfessorThirdPlayer) {
+                        winner = game.getPlayers().get(2);
+                    } else {
+                        pare = true;
+                        //metodo di patta
+                        return;
+                    }
+                }if (i == 2 && contTowersNext == firstPlayerCont && contTowersNext == winner.getTowerCont()) {
+                    game.getPlayers().get(2).setTowerCont(contTowersNext);
+                    if (contProfessorFirstPlayer > contProfessorThirdPlayer) {
+                        winner = game.getPlayers().get(0);
+                    } else if (contProfessorFirstPlayer < contProfessorThirdPlayer) {
+                        winner = game.getPlayers().get(2);
+                    } else {
+                        pare = true;
+                        //metodo di patta
+                        return;
+                    }
+                }
+            }
+            //metodo di vincita
 
 
                     /*if (player.getPlank().getTowerSpace().getTowersList().size() == 0) {
@@ -360,8 +394,6 @@ public class GameController implements Observer, Serializable {
                         moveCont--;
                         actionTurnManager();
                     }*/
-                }
-            }
         }
     }
 
