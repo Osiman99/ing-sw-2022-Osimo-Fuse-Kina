@@ -19,6 +19,7 @@ class PlankTest {
         game.setChosenPlayersNumber(3);
         game.initGame();
         plank = game.getPlayers().get(0).getPlank();
+        System.out.println(game.getPlayers().get(0).getPlayerColor());
     }
 
     @Test
