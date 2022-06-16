@@ -321,11 +321,11 @@ public class GameController implements Observer, Serializable {
 
     public void threeIslandEnd(){
         if(game.getBoard().getIslands().size() == 3) {
-            estabilishWin();
+            establishWin();
         }
     }
 
-    public void estabilishWin(){
+    public void establishWin(){
         broadcastBoardMessage();
         boolean tie = false;
         int contProfessorFirstPlayer = 0;
@@ -408,7 +408,7 @@ public class GameController implements Observer, Serializable {
 
     public void bagEmptyEnd(){
         if (game.getBoard().getBag().isBagEmpty()) {
-            estabilishWin();
+            establishWin();
         }
     }
 
