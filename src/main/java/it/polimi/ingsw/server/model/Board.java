@@ -448,9 +448,7 @@ public class Board extends Observable implements Serializable {
 
 
     public void applyEffectSommelier(Player player, CharacterCard characterCard, Student student, Island island){       //FATTO
-        player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
-        characterCard.setPrice(characterCard.getPrice() + 1);
-        if (characterCard.getPrice() >= player.getNumCoins()){                                                            //controllo da fare nel GameController
+        if (characterCard.getPrice() <= player.getNumCoins()){                                                            //controllo da fare nel GameController
             for (int i = 0; i < 4; i++){
                 if (characterCard.getStudents().get(i).getColor() == student.getColor()){
                     island.addStudent(characterCard.getStudents().get(i));
@@ -463,6 +461,8 @@ public class Board extends Observable implements Serializable {
                 }
             }
         }
+        player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
+        characterCard.setPrice(characterCard.getPrice() + 1);
     }
 
     public void applyEffectChef(Player player, CharacterCard characterCard) {                                           //FATTO
