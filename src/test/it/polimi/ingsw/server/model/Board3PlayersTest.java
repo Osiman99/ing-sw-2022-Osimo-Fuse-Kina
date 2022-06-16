@@ -11,7 +11,7 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class BoardTest {
+class Board3PlayersTest {
 
     private Game game;
     private final String [] nicknames = {"AlanTuring", "JamesGosling", "GeorgeBoole"};
@@ -139,6 +139,7 @@ class BoardTest {
         //genero un numero a caso da 1 a 5 che rappresenta il numero di mosse scelte dal player
         Random random =new Random();
         int randomInt = random.nextInt(4)+1;
+
         board.moveMotherNature(randomInt);
 
         //salvo l'indice della nuova isola attiva
@@ -146,7 +147,7 @@ class BoardTest {
         for(; j<board.getIslands().size()-1; j++)
             if(board.getIslands().get(j).isMotherNature())
                 break;
-        assertEquals(board.getIslands().get(i+randomInt), board.getIslands().get(j));
+        assertEquals(board.getIslands().get((i+randomInt)%12), board.getIslands().get(j));
 
     }
 
@@ -177,5 +178,6 @@ class BoardTest {
         assertEquals(2, island.getTowers().size());
         assertEquals(11, board.getIslands().size());
     }
+
 
 }

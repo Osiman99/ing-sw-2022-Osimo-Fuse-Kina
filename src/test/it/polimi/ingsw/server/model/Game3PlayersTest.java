@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class GameTest {
+class Game3PlayersTest {
     private Game game;
     private String[] nicknames = {"AlanTuring", "JamesGosling", "GeorgeBoole"};
 
