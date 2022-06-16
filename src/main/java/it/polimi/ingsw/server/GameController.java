@@ -30,7 +30,6 @@ public class GameController implements Observer, Serializable {
 
     public GameController(){
         this.game = Game.getInstance();
-        server = Server.getInstance();
         virtualViewMap = Collections.synchronizedMap(new HashMap<>());
         checkController = new CheckController(virtualViewMap, this);
         setGameState(GameState.PREGAME);
@@ -191,6 +190,7 @@ public class GameController implements Observer, Serializable {
 
 
     public void end(Message receivedMessage){
+        server = Server.getInstance();
         if (receivedMessage.getMessageType() == MessageType.END_MESSAGE) {
             ClientHandler clientHandler = server.getClientHandlerMap().get(receivedMessage.getNickname());
             clientHandler.disconnect();
