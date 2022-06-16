@@ -127,8 +127,13 @@ public class Board extends Observable implements Serializable {
     public void moveStudentsFromBagToClouds() {
         for (int i = 0; i < game.getNumPlayers(); i++) {
                 for (int j = 0; j < game.getNumPlayers()+1; j++) {
-                    clouds.get(i).addStudent(bag.getFirstStudent());
-                    bag.removeStudent();
+                    if (!(getBag().getStudents().isEmpty())) {
+                        clouds.get(i).addStudent(bag.getFirstStudent());
+                        bag.removeStudent();
+                    }else{
+                        getBag().setBagEmpty(true);
+                        return;
+                    }
                 }
         }
 
@@ -443,18 +448,20 @@ public class Board extends Observable implements Serializable {
 
 
     public void applyEffectSommelier(Player player, CharacterCard characterCard, Student student, Island island){       //FATTO
-        if (characterCard.getPrice() <= player.getNumCoins()){                                                            //controllo da fare nel GameController
+        player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
+        characterCard.setPrice(characterCard.getPrice() + 1);
+        if (characterCard.getPrice() >= player.getNumCoins()){                                                            //controllo da fare nel GameController
             for (int i = 0; i < 4; i++){
                 if (characterCard.getStudents().get(i).getColor() == student.getColor()){
                     island.addStudent(characterCard.getStudents().get(i));
                     characterCard.getStudents().remove(characterCard.getStudents().get(i));
-                    characterCard.getStudents().add(game.getBoard().getBag().getFirstStudent());
-                    game.getBoard().getBag().removeStudent();
+                    if(!(getBag().isBagEmpty())) {
+                        characterCard.getStudents().add(game.getBoard().getBag().getFirstStudent());
+                        game.getBoard().getBag().removeStudent();
+                    }
                     break;
                 }
             }
-            player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
-            characterCard.setPrice(characterCard.getPrice() + 1);
         }
     }
 

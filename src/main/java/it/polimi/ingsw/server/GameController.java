@@ -25,11 +25,11 @@ public class GameController implements Observer, Serializable {
     private boolean cloudFlag;
     private boolean motherNatureFlag;
     private Server server;
+    private boolean endgame;
 
 
     public GameController(){
         this.game = Game.getInstance();
-        server = Server.getInstance();
         virtualViewMap = Collections.synchronizedMap(new HashMap<>());
         checkController = new CheckController(virtualViewMap, this);
         setGameState(GameState.PREGAME);
@@ -37,6 +37,7 @@ public class GameController implements Observer, Serializable {
         moveCont = 0;
         cloudFlag = false;
         motherNatureFlag = true;
+        endgame = false;
     }
 
     public void switchState(Message receivedMessage){
@@ -189,6 +190,7 @@ public class GameController implements Observer, Serializable {
 
 
     public void end(Message receivedMessage){
+        server = Server.getInstance();
         if (receivedMessage.getMessageType() == MessageType.END_MESSAGE) {
             ClientHandler clientHandler = server.getClientHandlerMap().get(receivedMessage.getNickname());
             clientHandler.disconnect();
@@ -280,6 +282,15 @@ public class GameController implements Observer, Serializable {
                 game.getBoard().moveMotherNature(motherNatureResult.getNumMoves());
                 //disable charactercard
                 noTowersWin();
+                if (!endgame)
+                    threeIslandEnd();
+                if(!endgame) {
+                    broadcastBoardMessage();
+                    motherNatureFlag = false;
+                    cloudFlag = true;
+                    moveCont--;
+                    actionTurnManager();
+                }
 
             }
         }else if (receivedMessage.getMessageType() == MessageType.CLOUD){
@@ -298,102 +309,106 @@ public class GameController implements Observer, Serializable {
     public void noTowersWin(){
         for (Player player : game.getPlayers()) {
             if (player.getPlank().getTowerSpace().getTowersList().size() == 0) {
+                broadcastBoardMessage();
                 state = GameState.ENDGAME;
                 broadcastGenericMessage(player.getNickname() + " is the WINNER!!!");
                 broadcastGenericMessage("Type \"quit\" to leave the game.");
-                break;
-            }if(game.getPlayers().get(game.getPlayers().size()-1) == player){
-                broadcastBoardMessage();
-                motherNatureFlag = false;
-                cloudFlag = true;
-                moveCont--;
-                actionTurnManager();
+                endgame = true;
+                return;
             }
         }
     }
 
     public void threeIslandEnd(){
         if(game.getBoard().getIslands().size() == 3) {
-            boolean pare = false;
-            int contProfessorFirstPlayer = 0;
-            int contProfessorSecondPlayer = 0;
-            int contProfessorThirdPlayer = 0;
-            int cont = 0;
-            int firstPlayerCont = game.getPlayers().get(0).getPlank().getTowerSpace().getTowersList().size();
-            int contTowersPrev;
-            int contTowersNext = game.getPlayers().get(0).getPlank().getTowerSpace().getTowersList().size();
-            game.getPlayers().get(0).setTowerCont(contTowersNext);
-            Player winner = game.getPlayers().get(0);
+            establishWin();
+        }
+    }
 
-            for (int i = 0; i < game.getBoard().getProfessorsControlledBy().length; i++) {
-                if(game.getBoard().getProfessorsControlledBy()[i].equals(game.getPlayers().get(0).getNickname())){
-                    contProfessorFirstPlayer++;
-                }if(game.getBoard().getProfessorsControlledBy()[i].equals(game.getPlayers().get(1).getNickname())){
-                    contProfessorSecondPlayer++;
-                }if(game.getBoard().getProfessorsControlledBy()[i].equals(game.getPlayers().get(2).getNickname())) {
-                    contProfessorThirdPlayer++;
+    public void establishWin(){
+        broadcastBoardMessage();
+        boolean tie = false;
+        int contProfessorFirstPlayer = 0;
+        int contProfessorSecondPlayer = 0;
+        int contProfessorThirdPlayer = 0;
+        int cont = 0;
+        int firstPlayerCont = game.getPlayers().get(0).getPlank().getTowerSpace().getTowersList().size();
+        int contTowersPrev;
+        int contTowersNext = game.getPlayers().get(0).getPlank().getTowerSpace().getTowersList().size();
+        game.getPlayers().get(0).setTowerCont(contTowersNext);
+        Player winner = game.getPlayers().get(0);
+
+        for (int i = 0; i < game.getBoard().getProfessorsControlledBy().length; i++) {
+            if(game.getBoard().getProfessorsControlledBy()[i].equals(game.getPlayers().get(0).getNickname())){
+                contProfessorFirstPlayer++;
+            }if(game.getBoard().getProfessorsControlledBy()[i].equals(game.getPlayers().get(1).getNickname())){
+                contProfessorSecondPlayer++;
+            }if(game.getBoard().getProfessorsControlledBy()[i].equals(game.getPlayers().get(2).getNickname())) {
+                contProfessorThirdPlayer++;
+            }
+        }for (int i = 1; i < game.getPlayers().size(); i++) {
+            contTowersPrev = contTowersNext;
+            contTowersNext = game.getPlayers().get(i).getPlank().getTowerSpace().getTowersList().size();
+
+            if (contTowersPrev > contTowersNext && firstPlayerCont > contTowersNext) {
+                game.getPlayers().get(i).setTowerCont(contTowersNext);
+                winner = game.getPlayers().get(i);
+                tie = false;
+
+            } if (i == 1 && contTowersPrev == contTowersNext && contTowersNext == winner.getTowerCont()) {
+                game.getPlayers().get(1).setTowerCont(contTowersNext);
+                if (contProfessorFirstPlayer > contProfessorSecondPlayer) {
+                    winner = game.getPlayers().get(0);
+                } else if (contProfessorFirstPlayer < contProfessorSecondPlayer) {
+                    winner = game.getPlayers().get(1);
+                } else {
+                    tie = true;
+                    state = GameState.ENDGAME;
+                    broadcastGenericMessage("It's a DRAW!");
+                    broadcastGenericMessage("Type \"quit\" to leave the game.");
+                    endgame = true;
+                    return;
                 }
-            }for (int i = 1; i < game.getPlayers().size(); i++) {
-                contTowersPrev = contTowersNext;
-                contTowersNext = game.getPlayers().get(i).getPlank().getTowerSpace().getTowersList().size();
 
-                if (contTowersPrev > contTowersNext && firstPlayerCont > contTowersNext) {
-                    game.getPlayers().get(i).setTowerCont(contTowersNext);
-                    winner = game.getPlayers().get(i);
-                    pare = false;
-
-                } if (i == 1 && contTowersPrev == contTowersNext && contTowersNext == winner.getTowerCont()) {
-                    game.getPlayers().get(1).setTowerCont(contTowersNext);
-                    if (contProfessorFirstPlayer > contProfessorSecondPlayer) {
-                        winner = game.getPlayers().get(0);
-                    } else if (contProfessorFirstPlayer < contProfessorSecondPlayer) {
-                        winner = game.getPlayers().get(1);
-                    } else {
-                        pare = true;
-                        //metodo di patta
-                        return;
-                    }
-
-                } if (i == 2 && contTowersPrev == contTowersNext && contTowersNext == winner.getTowerCont()) {
-                    game.getPlayers().get(2).setTowerCont(contTowersNext);
-                    if (contProfessorSecondPlayer > contProfessorThirdPlayer) {
-                        winner = game.getPlayers().get(1);
-                    } else if (contProfessorSecondPlayer < contProfessorThirdPlayer) {
-                        winner = game.getPlayers().get(2);
-                    } else {
-                        pare = true;
-                        //metodo di patta
-                        return;
-                    }
-                }if (i == 2 && contTowersNext == firstPlayerCont && contTowersNext == winner.getTowerCont()) {
-                    game.getPlayers().get(2).setTowerCont(contTowersNext);
-                    if (contProfessorFirstPlayer > contProfessorThirdPlayer) {
-                        winner = game.getPlayers().get(0);
-                    } else if (contProfessorFirstPlayer < contProfessorThirdPlayer) {
-                        winner = game.getPlayers().get(2);
-                    } else {
-                        pare = true;
-                        //metodo di patta
-                        return;
-                    }
+            } if (i == 2 && contTowersPrev == contTowersNext && contTowersNext == winner.getTowerCont()) {
+                game.getPlayers().get(2).setTowerCont(contTowersNext);
+                if (contProfessorSecondPlayer > contProfessorThirdPlayer) {
+                    winner = game.getPlayers().get(1);
+                } else if (contProfessorSecondPlayer < contProfessorThirdPlayer) {
+                    winner = game.getPlayers().get(2);
+                } else {
+                    tie = true;
+                    state = GameState.ENDGAME;
+                    broadcastGenericMessage("It's a DRAW!");
+                    broadcastGenericMessage("Type \"quit\" to leave the game.");
+                    endgame = true;
+                    return;
+                }
+            }if (i == 2 && contTowersNext == firstPlayerCont && contTowersNext == winner.getTowerCont()) {
+                game.getPlayers().get(2).setTowerCont(contTowersNext);
+                if (contProfessorFirstPlayer > contProfessorThirdPlayer) {
+                    winner = game.getPlayers().get(0);
+                } else if (contProfessorFirstPlayer < contProfessorThirdPlayer) {
+                    winner = game.getPlayers().get(2);
+                } else {
+                    tie = true;
+                    state = GameState.ENDGAME;
+                    broadcastGenericMessage("It's a DRAW!");
+                    broadcastGenericMessage("Type \"quit\" to leave the game.");
+                    endgame = true;
+                    return;
                 }
             }
-            //metodo di vincita
+        }
+        state = GameState.ENDGAME;
+        broadcastGenericMessage(winner.getNickname() + " is the WINNER!!!");
+        broadcastGenericMessage("Type \"quit\" to leave the game.");
+        endgame = true;
+    }
 
-
-                    /*if (player.getPlank().getTowerSpace().getTowersList().size() == 0) {
-                        state = GameState.ENDGAME;
-                        broadcastGenericMessage(player.getNickname() + " is the WINNER!!!");
-                        broadcastGenericMessage("Type \"quit\" to leave the game.");
-                        break;
-                    }
-                    if (game.getPlayers().get(game.getPlayers().size() - 1) == player) {
-                        broadcastBoardMessage();
-                        motherNatureFlag = false;
-                        cloudFlag = true;
-                        moveCont--;
-                        actionTurnManager();
-                    }*/
+    public void bagEmptyEnd(){
+        if (game.getBoard().getBag().isBagEmpty()) {
+            establishWin();
         }
     }
 
@@ -428,6 +443,7 @@ public class GameController implements Observer, Serializable {
                         moveCont = 0;
                         turnCont++;
                         if (turnCont == game.getPlayers().size()) {
+                            bagEmptyEnd();
                             state = GameState.PLAN;
                             int getNumCardOtherPlayerSize = checkController.getNumCardOtherPlayers().size();
                             for (int j = 0; j < getNumCardOtherPlayerSize; j++) {

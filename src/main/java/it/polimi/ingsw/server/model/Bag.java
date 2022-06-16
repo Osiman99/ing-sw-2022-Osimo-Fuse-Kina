@@ -9,6 +9,7 @@ public class Bag implements Serializable {
     private static final long serialVersionUID = 2170486071323199195L;
 
     private List<Student> students;  //si potrebbe anche non mettere static perchè Bag è singleton
+    private boolean bagEmpty;
 
     /**
      * singular instance
@@ -19,6 +20,7 @@ public class Bag implements Serializable {
      * inside the bag initially we have 24 students of each color
      */
     public Bag(){
+        bagEmpty = false;
         students = new ArrayList<Student>();
         for (int i = 0; i < 24; i++) {
             students.add(new Student(StudentColor.GREEN));
@@ -60,4 +62,11 @@ public class Bag implements Serializable {
         return students;
     }
 
+    public boolean isBagEmpty() {
+        return bagEmpty;
+    }
+
+    public void setBagEmpty(boolean bagEmpty) {
+        this.bagEmpty = bagEmpty;
+    }
 }
