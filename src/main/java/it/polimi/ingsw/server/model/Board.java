@@ -127,8 +127,13 @@ public class Board extends Observable implements Serializable {
     public void moveStudentsFromBagToClouds() {
         for (int i = 0; i < game.getNumPlayers(); i++) {
                 for (int j = 0; j < game.getNumPlayers()+1; j++) {
-                    clouds.get(i).addStudent(bag.getFirstStudent());
-                    bag.removeStudent();
+                    if (!(getBag().getStudents().isEmpty())) {
+                        clouds.get(i).addStudent(bag.getFirstStudent());
+                        bag.removeStudent();
+                    }else{
+                        getBag().setBagEmpty(true);
+                        return;
+                    }
                 }
         }
 
@@ -450,9 +455,12 @@ public class Board extends Observable implements Serializable {
                 if (characterCard.getStudents().get(i).getColor() == student.getColor()){
                     island.addStudent(characterCard.getStudents().get(i));
                     characterCard.getStudents().remove(characterCard.getStudents().get(i));
-                    characterCard.getStudents().add(game.getBoard().getBag().getFirstStudent());
-                    game.getBoard().getBag().removeStudent();
-                }break;
+                    if(!(getBag().isBagEmpty())) {
+                        characterCard.getStudents().add(game.getBoard().getBag().getFirstStudent());
+                        game.getBoard().getBag().removeStudent();
+                    }
+                    break;
+                }
             }
         }
     }
