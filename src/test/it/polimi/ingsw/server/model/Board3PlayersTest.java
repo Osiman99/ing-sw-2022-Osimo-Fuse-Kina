@@ -128,6 +128,19 @@ class Board3PlayersTest {
     }
 
     @Test
+    void moveProfessorChef() {
+        board.setProfessorsControlledBy(new String[]{"AlanTuring", "", "AlanTuring", "JamesGosling", "GeorgeBoole"});
+
+        for(int i=0; i<4; i++) {
+            game.getPlayerByNickname("AlanTuring").getPlank().getDiningRoom()[0].addStudent(new Student(StudentColor.GREEN));
+            game.getPlayerByNickname("JamesGosling").getPlank().getDiningRoom()[0].addStudent(new Student(StudentColor.GREEN));
+        }
+
+        board.moveProfessorChef(game.getPlayerByNickname("JamesGosling"));
+        assertEquals("JamesGosling", board.getProfessorsControlledBy()[0]);
+    }
+
+    @Test
     void moveMotherNature() {
 
         //salvo l'indice della lista dell'isola attiva
@@ -177,6 +190,32 @@ class Board3PlayersTest {
         assertEquals(TowerColor.BLACK, island.getTowers().get(0).getColor());
         assertEquals(2, island.getTowers().size());
         assertEquals(11, board.getIslands().size());
+    }
+
+    @Test
+    void conquerIsland() {
+        Island island = new Island();
+
+        //salvo l'isola in cui c'è MN e aggiungo una torre WHITE e aggiungo una torre BLACK all'isola successiva
+        for (int i=0; i<12; i++) {
+            if (board.getIslands().get(i).isMotherNature()) {
+                island = board.getIslands().get(i);
+            }
+        }
+
+        //aggiungo all'isola 1 studente per colore e uno studente RED aggiuntivo
+        for(int i=0; i<5; i++)
+            island.addStudent(new Student(StudentColor.getStudentColor(i)));
+        island.addStudent(new Student(StudentColor.RED));
+
+        //setto manualmente quali giocatori controllani quali professori
+        board.setProfessorsControlledBy(new String[]{"JamesGosling", "JamesGosling", "AlanTuring", "JamesGosling", "GeorgeBoole"});
+
+        board.calculateSupremacy(island);
+
+        assertEquals(TowerColor.WHITE, island.getTowers().get(0).getColor());
+        assertEquals(1, island.getTowers().size());
+
     }
 
     @Test
