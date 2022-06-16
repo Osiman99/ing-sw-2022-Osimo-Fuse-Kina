@@ -179,5 +179,41 @@ class Board3PlayersTest {
         assertEquals(11, board.getIslands().size());
     }
 
+    @Test
+    void applyEffectSommelier() {
+        CharacterCard characterCard = new CharacterCard(CharacterName.Sommelier);
+        Student student = characterCard.getStudents().get(0);
+        Player player = game.getPlayerByNickname("AlanTuring");
+        Island island = board.getIslands().get(0);
+        int numStudents = island.getStudents().size();
+        player.setNumCoins(10);
+
+        board.applyEffectSommelier(player, characterCard, student, island);
+
+        assertEquals(numStudents+1, island.getStudents().size());
+        assertEquals(student, board.getIslands().get(0).getStudents().get(board.getIslands().get(0).getStudents().size()-1));
+        assertEquals(4, characterCard.getStudents().size());
+        assertEquals(2, characterCard.getPrice());
+    }
+
+    @Test
+    void applyEffectMessenger() {
+        CharacterCard characterCard = new CharacterCard(CharacterName.Messenger);
+        Island island = board.getIslands().get(0);
+        Player player = game.getPlayerByNickname("AlanTuring");
+
+        player.setNumCoins(10);
+
+        for(int i=0; i<5; i++)
+            island.addStudent(new Student(StudentColor.getStudentColor(i)));
+
+        //setto manualmente quali giocatori controllani quali professori
+        board.setProfessorsControlledBy(new String[]{"AlanTuring", "AlanTuring", "AlanTuring", "JamesGosling", "GeorgeBoole"});
+
+        board.applyEffectMessenger(player, characterCard, 1);
+
+        assertEquals(TowerColor.BLACK, island.getFirstTower().getColor());
+    }
+
 
 }
