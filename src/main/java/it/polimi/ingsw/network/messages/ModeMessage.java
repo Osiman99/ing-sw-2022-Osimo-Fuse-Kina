@@ -6,12 +6,8 @@ public class ModeMessage extends Message{
     //
 
     public ModeMessage(String nickname, String mode) {
-        super(nickname, MessageType.END_MESSAGE);
-        if (mode.equals("e")){
-            this.mode = "Expert";
-        }else if (mode.equals("n")){
-            this.mode = "Normal";
-        }
+        super(nickname, MessageType.MODE_MESSAGE);
+        this.mode = mode;
     }
 
     public String getMode() {

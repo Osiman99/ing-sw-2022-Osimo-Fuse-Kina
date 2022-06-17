@@ -42,7 +42,7 @@ public class CheckController implements Serializable {
             view.showGenericMessage("Forbidden name.");
             view.showLoginResult(false, true, null);
             return false;
-        } else if (game.isNicknameTaken(nickname)) {
+        } else if (gameController.getLobby().isNicknameTaken(nickname)) {
             view.showGenericMessage("Nickname already taken.");
             view.showLoginResult(false, true, null);
             return false;
@@ -67,6 +67,8 @@ public class CheckController implements Serializable {
                 return motherNatureCheck(message);
             case CLOUD:
                 return cloudCheck(message);
+            case MODE_MESSAGE:
+                return modeCheck(message);
 
             default: // Never should reach this statement.
                 return false;
@@ -203,6 +205,15 @@ public class CheckController implements Serializable {
         }
     }
 
+    public boolean modeCheck(Message message){
+        ModeMessage modeMessage = (ModeMessage) message;
+        VirtualView virtualView = virtualViewMap.get(message.getNickname());
+        if (modeMessage.getMode().equals("n") || modeMessage.getMode().equals("e")){
+            return true;
+        }virtualView.showGenericMessage("Invalid input! Please try again.");
+        virtualView.showGenericMessage("Do you want to play in Normal or Expert mode? [n/e]");
+        return false;
+    }
 
     public void initializeFirstPlayerInAction(){
         sortNicknames();

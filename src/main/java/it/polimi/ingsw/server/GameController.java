@@ -62,31 +62,26 @@ public class GameController implements Observer, Serializable {
 
     public void loginHandler(String nickname, VirtualView virtualView) {
         game.getBoard().setGameInstance(game);
-        if (virtualViewMap.isEmpty()) { // First player logged. Ask number of players.
-            lobby = new Lobby();
-            lobby.addPlayer(nickname);
+        if (virtualViewMap.isEmpty()) { // First player logged. Ask the game mode.
+            lobby = new Lobby(this);
             addVirtualView(nickname, virtualView);
-            game.addPlayer(new Player(nickname));
-            game.getPlayers().get(0).setPlayerColor(TowerColor.BLACK);
+            lobby.addPlayer(nickname);
+            lobby.getPlayers().get(0).setPlayerColor(TowerColor.BLACK);
             virtualView.showLoginResult(true, true, Game.SERVER_NICKNAME);
             virtualView.showGenericMessage("Do you want to play in Normal or Expert mode? [n/e]");
-            // virtualView.onDemandPlayersNumber();
 
-        } else if (virtualViewMap.size() < game.getNumPlayers()) {
-            if (virtualViewMap.size() == 1) {
-                addVirtualView(nickname, virtualView);
-                game.addPlayer(new Player(nickname));
-                game.getPlayers().get(1).setPlayerColor(TowerColor.WHITE);
-                virtualView.showLoginResult(true, true, Game.SERVER_NICKNAME);
-            }else if (virtualViewMap.size() == 2){
-                addVirtualView(nickname, virtualView);
-                game.addPlayer(new Player(nickname));
-                game.getPlayers().get(2).setPlayerColor(TowerColor.GREY);
-                virtualView.showLoginResult(true, true, Game.SERVER_NICKNAME);
+        } else if (!lobby.isFull()) {
+            addVirtualView(nickname, virtualView);
+            lobby.addPlayer(nickname);
+            if (virtualViewMap.size() == 2) {
+                lobby.getPlayers().get(1).setPlayerColor(TowerColor.WHITE);
+            }else if (virtualViewMap.size() == 3){
+                lobby.getPlayers().get(2).setPlayerColor(TowerColor.GREY);
             }
+            virtualView.showLoginResult(true, true, Game.SERVER_NICKNAME);
 
 
-            if (game.getContPlayer() == game.getNumPlayers()) { // If all players logged
+            if (lobby.isFull()) { // If all players logged
                 //PERSISTENZA FA
 
                 /*StorageData storageData = new StorageData();
@@ -112,10 +107,27 @@ public class GameController implements Observer, Serializable {
     }
 
     private void login(Message receivedMessage){
+        if(receivedMessage.getMessageType() == MessageType.MODE_MESSAGE){
+            ModeMessage modeMessage = (ModeMessage) receivedMessage;
+            if(checkController.verifyReceivedData(modeMessage)){  //check Controller
+                lobby.setMode(modeMessage.getMode());
+                VirtualView virtualView = virtualViewMap.get(modeMessage.getNickname());
+                virtualView.onDemandPlayersNumber();
+            }
+        }
+
         if (receivedMessage.getMessageType() == MessageType.PLAYERNUMBER_REPLY) {
+            PlayerNumberReply playerNumberReply = (PlayerNumberReply) receivedMessage;
             if (checkController.verifyReceivedData(receivedMessage)) {
-                game.setChosenPlayersNumber(((PlayerNumberReply) receivedMessage).getPlayerNumber());
-                broadcastGenericMessage("Waiting for other Players . . .");
+                lobby.setNumPlayers(playerNumberReply.getPlayerNumber());
+                //game.setChosenPlayersNumber(((PlayerNumberReply) receivedMessage).getPlayerNumber());
+                if (lobby.checkStart()){
+                    lobby.deleteExtraPlayers();
+                    lobby.setFull(true);
+                    initGame();
+                }else {
+                    broadcastGenericMessage("Waiting for other Players . . .");
+                }
             }
         } else {
             Server.LOGGER.warning("Wrong message received from client.");
@@ -125,6 +137,17 @@ public class GameController implements Observer, Serializable {
 
 
     public void initGame(){
+        if (lobby.getMode().equals("n")){
+            game = new Game();
+        }else{
+            game = new GameExpert();
+        }
+
+        for(int i = 0; i < lobby.getNumPlayers(); i++){
+            game.addPlayer(lobby.getPlayers().get(i));
+        }
+        game.setChosenPlayersNumber(lobby.getNumPlayers());
+
         nicknames = new ArrayList<>(game.getNicknames());
         for (int i = 0; i < game.getNumPlayers(); i++)
             if (game.getPlayers().get(i).getNickname().equals(nicknames.get(0))) {
@@ -472,6 +495,13 @@ public class GameController implements Observer, Serializable {
         }
     }
 
+    public Lobby getLobby() {
+        return lobby;
+    }
+
+    public Map<String, VirtualView> getVirtualViewMap() {
+        return virtualViewMap;
+    }
 
     @Override
     public void update(Message message) {
