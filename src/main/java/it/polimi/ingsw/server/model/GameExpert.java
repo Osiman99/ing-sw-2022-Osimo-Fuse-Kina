@@ -18,7 +18,7 @@ public class GameExpert extends Game implements Serializable {
     private int tempRandomInt2;
 
 
-    public GameExpert(Game game, List<String> nicknames, int chosenPlayersNumber) {
+    public GameExpert() {
         super();
         tempRandomInt1 = -1;
         tempRandomInt2 = -1;
