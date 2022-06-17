@@ -86,8 +86,14 @@ public class ClientController implements ViewObserver, Observer {
 
     }
 
+    @Override
     public void onUpdateQuit(String quit){
         client.sendMessage(new EndMessage(this.nickname, quit));
+    }
+
+    @Override
+    public void onUpdateMode(String mode){
+        client.sendMessage(new ModeMessage(this.nickname, mode));
     }
 
     @Override

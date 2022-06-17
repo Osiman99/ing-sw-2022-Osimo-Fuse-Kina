@@ -26,6 +26,7 @@ public class GameController implements Observer, Serializable {
     private boolean motherNatureFlag;
     private Server server;
     private boolean endgame;
+    private Lobby lobby;
 
 
     public GameController(){
@@ -62,12 +63,14 @@ public class GameController implements Observer, Serializable {
     public void loginHandler(String nickname, VirtualView virtualView) {
         game.getBoard().setGameInstance(game);
         if (virtualViewMap.isEmpty()) { // First player logged. Ask number of players.
+            lobby = new Lobby();
+            lobby.addPlayer(nickname);
             addVirtualView(nickname, virtualView);
             game.addPlayer(new Player(nickname));
             game.getPlayers().get(0).setPlayerColor(TowerColor.BLACK);
-
             virtualView.showLoginResult(true, true, Game.SERVER_NICKNAME);
-            virtualView.onDemandPlayersNumber();
+            virtualView.showGenericMessage("Do you want to play in Normal or Expert mode? [n/e]");
+            // virtualView.onDemandPlayersNumber();
 
         } else if (virtualViewMap.size() < game.getNumPlayers()) {
             if (virtualViewMap.size() == 1) {

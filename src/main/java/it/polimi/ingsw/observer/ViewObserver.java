@@ -37,4 +37,6 @@ public interface ViewObserver {
 
     void onUpdateQuit(String quit);
 
+    void onUpdateMode(String mode);
+
 }

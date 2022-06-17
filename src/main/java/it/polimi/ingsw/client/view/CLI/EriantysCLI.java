@@ -544,6 +544,11 @@ public class EriantysCLI extends ViewObservable implements View {
         }
     }
 
+    public void onDemandMode(){
+        String mode = nextLine();
+        notifyObserver(obs -> obs.onUpdateMode(mode));
+    }
+
     /**
      * Clears the EriantysCLI terminal.
      */
@@ -560,6 +565,8 @@ public class EriantysCLI extends ViewObservable implements View {
             onDemandCloud();
         }else if (genericMessage.equals("Type \"quit\" to leave the game.")){
             onDemandQuit();
+        }else if (genericMessage.equals(("Do you want to play in Normal or Expert mode? [n/e]"))){
+            onDemandMode();
         }
     }
 

@@ -15,15 +15,19 @@ public class Lobby {
     private List<Player> players;
     private boolean full;
 
-    public Lobby(int numPlayers){
+    public Lobby(){
         //ID = ?
-        this.numPlayers = numPlayers;
         players = new ArrayList<Player>();
         realTimeNumPlayer = 0;
     }
 
+    public void setNumPlayers(int numPlayers) {
+        this.numPlayers = numPlayers;
+    }
+
     public void addPlayer(String nickname){
         players.add(new Player(nickname));
+        increaseRealTimeNumPlayer();
     }
 
     public int getNumPlayers() {
@@ -44,7 +48,7 @@ public class Lobby {
     public void increaseRealTimeNumPlayer(){
         if (realTimeNumPlayer == 0){
             realTimeNumPlayer = 1;
-        }else if (realTimeNumPlayer == 1){
+        }else if (realTimeNumPlayer == 1 && numPlayers == 2){
             realTimeNumPlayer = 2;
         }else if (realTimeNumPlayer == 2 && numPlayers == 3){
             realTimeNumPlayer = 3;
