@@ -15,7 +15,7 @@ public class CharacterCard implements Serializable {
     private boolean enabled;
 
     public CharacterCard(CharacterName characterName){
-        game = GameExpert.getInstance();
+        game = GameExpert.getInstance();          //da spostare e da mattere in un initMethod
         this.characterName = characterName;
 
         switch (characterName){

@@ -23,7 +23,7 @@ class GameExpertTest {
         game.getPlayers().get(2).setPlayerColor(TowerColor.GREY);
         game.initGame();
 
-        gameExpert = new GameExpert(game, nicknames, 3);
+        gameExpert = new GameExpert();
     }
 
     @Test

@@ -30,7 +30,7 @@ public class GameController implements Observer, Serializable {
 
 
     public GameController(){
-        this.game = Game.getInstance();
+        lobby = new Lobby(this);
         virtualViewMap = Collections.synchronizedMap(new HashMap<>());
         checkController = new CheckController(virtualViewMap, this);
         setGameState(GameState.PREGAME);
@@ -61,9 +61,7 @@ public class GameController implements Observer, Serializable {
     }
 
     public void loginHandler(String nickname, VirtualView virtualView) {
-        game.getBoard().setGameInstance(game);
         if (virtualViewMap.isEmpty()) { // First player logged. Ask the game mode.
-            lobby = new Lobby(this);
             addVirtualView(nickname, virtualView);
             lobby.addPlayer(nickname);
             lobby.getPlayers().get(0).setPlayerColor(TowerColor.BLACK);
@@ -142,24 +140,39 @@ public class GameController implements Observer, Serializable {
         }else{
             game = new GameExpert();
         }
+        Game.setInstance(game);
+
+        for (Map.Entry<String, VirtualView> entry : virtualViewMap.entrySet()) {
+            game.addObserver(entry.getValue());
+            game.getBoard().addObserver(entry.getValue());
+        }
 
         for(int i = 0; i < lobby.getNumPlayers(); i++){
             game.addPlayer(lobby.getPlayers().get(i));
+            System.out.println(game.getPlayers().get(i).getNickname());
         }
         game.setChosenPlayersNumber(lobby.getNumPlayers());
 
         nicknames = new ArrayList<>(game.getNicknames());
+        System.out.println(game.getNicknames());
         for (int i = 0; i < game.getNumPlayers(); i++)
             if (game.getPlayers().get(i).getNickname().equals(nicknames.get(0))) {
                 activePlayer = game.getPlayers().get(i);
             }
+        System.out.println(activePlayer.getNickname());
         game.initGame();
+        for(int i = 0; i < game.getNumPlayers(); i++){
+            System.out.println(game.getPlayers().get(i).getNickname());
+        }
         setGameState(GameState.PLAN);
         game.getBoard().moveStudentsFromBagToClouds();
         broadcastBoardMessage();
         broadcastGenericMessage("All Players are connected. " + activePlayer.getNickname() + " is choosing the Assistant Card...");
 
+
         VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
+        System.out.println(activePlayer.getNickname());
+        System.out.println(game);
         virtualView.onDemandAssistantCard(activePlayer.getDeck().getDeck());
     }
 
@@ -181,8 +194,6 @@ public class GameController implements Observer, Serializable {
 
     public void addVirtualView(String nickname, VirtualView virtualView) {
         virtualViewMap.put(nickname, virtualView);
-        game.addObserver(virtualView);
-        game.getBoard().addObserver(virtualView);
     }
 
     public boolean isGameStarted() {
@@ -240,7 +251,6 @@ public class GameController implements Observer, Serializable {
         this.virtualViewMap = Collections.synchronizedMap(new HashMap<>());
         this.checkController = new CheckController(virtualViewMap, this);
         setGameState(GameState.PREGAME);
-        this.game = Game.getInstance();
         turnCont = 0;
         moveCont = 0;
         cloudFlag = false;
@@ -248,6 +258,11 @@ public class GameController implements Observer, Serializable {
     }
 
     public void plan(Message receivedMessage){
+        System.out.println(game);
+        System.out.println(game.getNumPlayers());
+        for(int i = 0; i < game.getNumPlayers(); i++){
+            System.out.println(game.getPlayers().get(i).getNickname());
+        }
         if (receivedMessage.getMessageType() == MessageType.ASSISTANTCARD_RESULT){
             if (checkController.verifyReceivedData(receivedMessage)) {
                 activePlayer.chooseAssistantCard(((AssistantCardResult) receivedMessage).getCard());

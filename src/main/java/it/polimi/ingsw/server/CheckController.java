@@ -14,7 +14,7 @@ public class CheckController implements Serializable {
 
     private static final long serialVersionUID = 7413156215358698632L;
 
-    private final Game game;
+    private Game game;
     private transient Map<String, VirtualView> virtualViewMap;
     private final GameController gameController;
     private List<Integer> numCardOtherPlayers;
@@ -29,7 +29,6 @@ public class CheckController implements Serializable {
      * @param gameController Game Controller.
      */
     public CheckController(Map<String, VirtualView> virtualViewMap, GameController gameController) {
-        game = Game.getInstance();
         this.virtualViewMap = virtualViewMap;
         this.gameController = gameController;
         numCardOtherPlayers = new ArrayList<Integer>();
@@ -90,8 +89,16 @@ public class CheckController implements Serializable {
     private boolean assistantCardResultCheck(Message message) {
         AssistantCardResult assistantCardResult = (AssistantCardResult) message;
         try {
+            game = Game.getInstance();
+            System.out.println(virtualViewMap);
+            System.out.println(assistantCardResult.getCard());
+            System.out.println(game.getPlayers());
+            System.out.println(game.getPlayers().size());
             for (Player p : game.getPlayers()) {
+                System.out.println(p.getNickname());
+                System.out.println(assistantCardResult.getNickname());
                 if (p.getNickname().equals(assistantCardResult.getNickname())) {
+                    System.out.println("ciao");
                     for (AssistantCard assistantCard : p.getDeck().getDeck()) {
                         if (assistantCardResult.getCard() == assistantCard.getValue()) {
                             if (numCardOtherPlayers.size() == 0){
