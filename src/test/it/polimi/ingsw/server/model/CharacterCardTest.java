@@ -27,8 +27,8 @@ class CharacterCardTest {
     }
 
     @Test
-    void isHasStudents() {
-        assertTrue(characterCard.isHasStudents());
+    void hasStudents() {
+        assertTrue(characterCard.hasStudents());
     }
 
     @Test

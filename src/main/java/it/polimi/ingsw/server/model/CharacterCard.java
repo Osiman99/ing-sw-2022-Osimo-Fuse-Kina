@@ -66,7 +66,7 @@ public class CharacterCard implements Serializable {
         }
     }
 
-    public boolean isHasStudents() {
+    public boolean hasStudents() {
         return hasStudents;
     }
 
