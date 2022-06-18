@@ -9,19 +9,21 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameExpertTest {
     private static GameExpert gameExpert;
-    private static final List<String> nicknames = List.of(new String[]{"AlanTuring", "JamesGosling", "GeorgeBoole"});
+    private static Game game;
+    private static List<String> nicknames = List.of(new String[]{"AlanTuring", "JamesGosling", "GeorgeBoole"});
 
     @BeforeAll
     static void setUp() {
-        gameExpert = (GameExpert) Game.getInstance();
+        game = Game.getInstance();
         for(int i=0; i<3; i++)
-            gameExpert.getPlayers().add(new Player(nicknames.get(i)));
-        gameExpert.setChosenPlayersNumber(3);
-        gameExpert.getPlayers().get(0).setPlayerColor(TowerColor.BLACK);
-        gameExpert.getPlayers().get(1).setPlayerColor(TowerColor.WHITE);
-        gameExpert.getPlayers().get(2).setPlayerColor(TowerColor.GREY);
-        gameExpert.initGame();
+            game.getPlayers().add(new Player(nicknames.get(i)));
+        game.setChosenPlayersNumber(3);
+        game.getPlayers().get(0).setPlayerColor(TowerColor.BLACK);
+        game.getPlayers().get(1).setPlayerColor(TowerColor.WHITE);
+        game.getPlayers().get(2).setPlayerColor(TowerColor.GREY);
+        game.initGame();
 
+        gameExpert = new GameExpert();
     }
 
     @Test

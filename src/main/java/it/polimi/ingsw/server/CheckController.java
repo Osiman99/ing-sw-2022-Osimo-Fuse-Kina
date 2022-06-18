@@ -14,7 +14,7 @@ public class CheckController implements Serializable {
 
     private static final long serialVersionUID = 7413156215358698632L;
 
-    private final Game game;
+    private Game game;
     private transient Map<String, VirtualView> virtualViewMap;
     private final GameController gameController;
     private List<Integer> numCardOtherPlayers;
@@ -29,7 +29,6 @@ public class CheckController implements Serializable {
      * @param gameController Game Controller.
      */
     public CheckController(Map<String, VirtualView> virtualViewMap, GameController gameController) {
-        game = Game.getInstance();
         this.virtualViewMap = virtualViewMap;
         this.gameController = gameController;
         numCardOtherPlayers = new ArrayList<Integer>();
@@ -42,7 +41,7 @@ public class CheckController implements Serializable {
             view.showGenericMessage("Forbidden name.");
             view.showLoginResult(false, true, null);
             return false;
-        } else if (game.isNicknameTaken(nickname)) {
+        } else if (gameController.getLobby().isNicknameTaken(nickname)) {
             view.showGenericMessage("Nickname already taken.");
             view.showLoginResult(false, true, null);
             return false;
@@ -67,6 +66,8 @@ public class CheckController implements Serializable {
                 return motherNatureCheck(message);
             case CLOUD:
                 return cloudCheck(message);
+            case MODE_MESSAGE:
+                return modeCheck(message);
 
             default: // Never should reach this statement.
                 return false;
@@ -88,6 +89,7 @@ public class CheckController implements Serializable {
     private boolean assistantCardResultCheck(Message message) {
         AssistantCardResult assistantCardResult = (AssistantCardResult) message;
         try {
+            game = Game.getInstance();
             for (Player p : game.getPlayers()) {
                 if (p.getNickname().equals(assistantCardResult.getNickname())) {
                     for (AssistantCard assistantCard : p.getDeck().getDeck()) {
@@ -203,6 +205,15 @@ public class CheckController implements Serializable {
         }
     }
 
+    public boolean modeCheck(Message message){
+        ModeMessage modeMessage = (ModeMessage) message;
+        VirtualView virtualView = virtualViewMap.get(message.getNickname());
+        if (modeMessage.getMode().equals("n") || modeMessage.getMode().equals("e")){
+            return true;
+        }virtualView.showGenericMessage("Invalid input! Please try again.");
+        virtualView.showGenericMessage("Do you want to play in Normal or Expert mode? [n/e]");
+        return false;
+    }
 
     public void initializeFirstPlayerInAction(){
         sortNicknames();
