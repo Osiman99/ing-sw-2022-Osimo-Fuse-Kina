@@ -238,7 +238,7 @@ public class GameController implements Observer, Serializable {
         /*StorageData storageData = new StorageData();
         storageData.delete();*/
 
-        initGameController();
+        //initGameController();
         Server.LOGGER.info("Game finished. Server ready for a new Game.");
     }
 
