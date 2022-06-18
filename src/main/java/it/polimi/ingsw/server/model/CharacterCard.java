@@ -13,6 +13,7 @@ public class CharacterCard implements Serializable {
     private boolean banCards[];
     private int price;
     private boolean enabled;
+    private boolean hasStudents = false;
 
     public CharacterCard(CharacterName characterName){
         game = GameExpert.getInstance();          //da spostare e da mattere in un initMethod
@@ -22,6 +23,7 @@ public class CharacterCard implements Serializable {
             case Sommelier:
                 price = 1;
                 students = new ArrayList<Student>();
+                hasStudents = true;
                 for (int i = 0; i < 4; i++) {
                     students.add(game.getBoard().getBag().getFirstStudent());
                     game.getBoard().getBag().removeStudent();
@@ -46,6 +48,7 @@ public class CharacterCard implements Serializable {
             case Joker:
                 price = 1;
                 students = new ArrayList<Student>();
+                hasStudents = true;
                 for (int i = 0; i < 6; i++) {
                     students.add(game.getBoard().getBag().getFirstStudent());
                     game.getBoard().getBag().removeStudent();
@@ -54,12 +57,17 @@ public class CharacterCard implements Serializable {
             case Lady:
                 price = 2;
                 students = new ArrayList<Student>();
+                hasStudents = true;
                 for (int i = 0; i < 4; i++) {
                     students.add(game.getBoard().getBag().getFirstStudent());
                     game.getBoard().getBag().removeStudent();
                 }
                 break;
         }
+    }
+
+    public boolean isHasStudents() {
+        return hasStudents;
     }
 
     public CharacterName getCharacterName() {
