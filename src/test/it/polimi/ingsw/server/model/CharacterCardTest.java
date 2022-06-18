@@ -8,20 +8,27 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CharacterCardTest {
-    private static final CharacterCard characterCard = new CharacterCard(CharacterName.Lady);
-    private static Game game;
-    private static final String [] nicknames = {"AlanTuring", "JamesGosling"};
-
+    private static CharacterCard characterCard;
+    private static GameExpert game;
+    private static List<String> nicknames = List.of(new String[]{"AlanTuring", "JamesGosling", "GeorgeBoole"});
 
     @BeforeAll
     static void setUp() {
-        game = Game.getInstance();
-        for(int i=0; i<2; i++)
-            game.addPlayer(new Player(nicknames[i]));
-        game.setChosenPlayersNumber(2);
+        game = new GameExpert();
+        for(int i=0; i<3; i++)
+            game.getPlayers().add(new Player(nicknames.get(i)));
+        game.setChosenPlayersNumber(3);
         game.getPlayers().get(0).setPlayerColor(TowerColor.BLACK);
         game.getPlayers().get(1).setPlayerColor(TowerColor.WHITE);
+        game.getPlayers().get(2).setPlayerColor(TowerColor.GREY);
         game.initGame();
+        game.initGameExpert();
+        characterCard = new CharacterCard(CharacterName.Lady);
+    }
+
+    @Test
+    void isHasStudents() {
+        assertTrue(characterCard.isHasStudents());
     }
 
     @Test
@@ -43,12 +50,7 @@ class CharacterCardTest {
     }
 
     @Test
-    void getPrice() {
-        assertEquals(2, characterCard.getPrice());
-    }
-
-    @Test
-    void setPrice() {
+    void price() {
         characterCard.setPrice(6);
         assertEquals(6, characterCard.getPrice());
     }

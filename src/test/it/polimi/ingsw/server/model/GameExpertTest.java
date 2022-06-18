@@ -28,6 +28,9 @@ class GameExpertTest {
 
     @Test
     void getThreeChosenCards() {
+        for(int i=1; i<3; i++)
+            assertNotEquals(game.getThreeChosenCards().get(i-1), game.getThreeChosenCards().get(i));
+
         assertEquals(3, game.getThreeChosenCards().size());
     }
 }
