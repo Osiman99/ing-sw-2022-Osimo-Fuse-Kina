@@ -22,7 +22,6 @@ class CharacterCardTest {
         game.getPlayers().get(0).setPlayerColor(TowerColor.BLACK);
         game.getPlayers().get(1).setPlayerColor(TowerColor.WHITE);
         game.initGame();
-
     }
 
     @Test
