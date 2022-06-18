@@ -545,8 +545,10 @@ public class EriantysCLI extends ViewObservable implements View {
         String quit = nextLine();
         if (quit.equals("quit")) {
             notifyObserver(obs -> obs.onUpdateQuit(quit));
+            System.exit(1);
         }else{
             showGenericMessage("Invalid input! Please try again.");
+            showGenericMessage("Type \"quit\" to leave the game.");
         }
     }
 

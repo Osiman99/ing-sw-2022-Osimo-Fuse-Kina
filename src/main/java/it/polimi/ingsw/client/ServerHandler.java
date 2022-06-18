@@ -48,7 +48,7 @@ public class ServerHandler extends Client {
                 } catch (IOException | ClassNotFoundException e) {
                     message = new ErrorMessage(null, "Connection lost with the server.");
                     disconnect();
-                    readExecutionQueue.shutdownNow();
+                    //readExecutionQueue.shutdownNow();
                 }
                 notifyObserver(message);
             }

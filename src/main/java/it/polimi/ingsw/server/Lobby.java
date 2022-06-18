@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * it's a room where the players are put before a match(to manage multiple matches)
+ * it's a room where the players are put before a match
  */
 public class Lobby {
     private int ID;
@@ -85,16 +85,5 @@ public class Lobby {
             }
         }
     }
-
-    /*public void increaseRealTimeNumPlayer(){
-        if (realTimeNumPlayer == 0){
-            realTimeNumPlayer = 1;
-        }else if (realTimeNumPlayer == 1 && numPlayers == 2){
-            realTimeNumPlayer = 2;
-        }else if (realTimeNumPlayer == 2 && numPlayers == 3){
-            realTimeNumPlayer = 3;
-            setFull(true);
-        }
-    }*/
 
 }
