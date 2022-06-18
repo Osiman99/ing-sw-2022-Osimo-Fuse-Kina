@@ -140,7 +140,6 @@ public class GameController implements Observer, Serializable {
         }else{
             game = new GameExpert();
         }
-        Game.setInstance(game);
 
         for (Map.Entry<String, VirtualView> entry : virtualViewMap.entrySet()) {
             game.addObserver(entry.getValue());

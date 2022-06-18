@@ -21,13 +21,13 @@ public class Player extends Observable implements Serializable {
     private Game game;
 
     public Player(String nickname){
+        game = Game.getInstance();
         this.nickname = nickname;
         numCoins = 1;
         supremacyCont = 0;
         state = PlayerState.SLEEP;
     }
     public void initPlayer(){
-        game = Game.getInstance();
         plank = new Plank();
         deck = new AssistantDeck();
     }
