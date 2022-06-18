@@ -38,7 +38,7 @@ public class Server {
                 gameController.loginHandler(nickname, vv);
             }
         } else {
-            vv.showLoginResult(true, false, null);
+            //vv.showLoginResult(true, false, null);
             clientHandler.disconnect();
         }
 
