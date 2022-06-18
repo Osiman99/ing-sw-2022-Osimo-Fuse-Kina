@@ -24,6 +24,9 @@ public class GameExpert extends Game implements Serializable {
         tempRandomInt2 = -1;
         threeChosenCards = new ArrayList<CharacterCard>();
         random = new Random();
+    }
+
+    public void initGameExpert(){
         for (int i = 0; i < 3; i++) {
             if (i == 0) {
                 randomInt = random.nextInt(11);

@@ -90,15 +90,8 @@ public class CheckController implements Serializable {
         AssistantCardResult assistantCardResult = (AssistantCardResult) message;
         try {
             game = Game.getInstance();
-            System.out.println(virtualViewMap);
-            System.out.println(assistantCardResult.getCard());
-            System.out.println(game.getPlayers());
-            System.out.println(game.getPlayers().size());
             for (Player p : game.getPlayers()) {
-                System.out.println(p.getNickname());
-                System.out.println(assistantCardResult.getNickname());
                 if (p.getNickname().equals(assistantCardResult.getNickname())) {
-                    System.out.println("ciao");
                     for (AssistantCard assistantCard : p.getDeck().getDeck()) {
                         if (assistantCardResult.getCard() == assistantCard.getValue()) {
                             if (numCardOtherPlayers.size() == 0){

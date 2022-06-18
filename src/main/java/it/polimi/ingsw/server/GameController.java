@@ -148,21 +148,20 @@ public class GameController implements Observer, Serializable {
 
         for(int i = 0; i < lobby.getNumPlayers(); i++){
             game.addPlayer(lobby.getPlayers().get(i));
-            System.out.println(game.getPlayers().get(i).getNickname());
         }
         game.setChosenPlayersNumber(lobby.getNumPlayers());
 
         nicknames = new ArrayList<>(game.getNicknames());
-        System.out.println(game.getNicknames());
         for (int i = 0; i < game.getNumPlayers(); i++)
             if (game.getPlayers().get(i).getNickname().equals(nicknames.get(0))) {
                 activePlayer = game.getPlayers().get(i);
             }
-        System.out.println(activePlayer.getNickname());
         game.initGame();
-        for(int i = 0; i < game.getNumPlayers(); i++){
-            System.out.println(game.getPlayers().get(i).getNickname());
+        if (game instanceof GameExpert){
+            GameExpert gameExpert = (GameExpert) game;
+            gameExpert.initGameExpert();
         }
+
         setGameState(GameState.PLAN);
         game.getBoard().moveStudentsFromBagToClouds();
         broadcastBoardMessage();
@@ -170,8 +169,6 @@ public class GameController implements Observer, Serializable {
 
 
         VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
-        System.out.println(activePlayer.getNickname());
-        System.out.println(game);
         virtualView.onDemandAssistantCard(activePlayer.getDeck().getDeck());
     }
 
@@ -257,11 +254,6 @@ public class GameController implements Observer, Serializable {
     }
 
     public void plan(Message receivedMessage){
-        System.out.println(game);
-        System.out.println(game.getNumPlayers());
-        for(int i = 0; i < game.getNumPlayers(); i++){
-            System.out.println(game.getPlayers().get(i).getNickname());
-        }
         if (receivedMessage.getMessageType() == MessageType.ASSISTANTCARD_RESULT){
             if (checkController.verifyReceivedData(receivedMessage)) {
                 activePlayer.chooseAssistantCard(((AssistantCardResult) receivedMessage).getCard());
