@@ -29,13 +29,13 @@ public class CharacterCard implements Serializable {
                     game.getBoard().getBag().removeStudent();
                 }
                 break;
-            case Chef:
+            case Chef, Knight:
                 price = 2;
                 break;
-            case Messenger:
+            case Messenger, Centaur, Merchant, Sinister:
                 price = 3;
                 break;
-            case Postman:
+            case Postman, Musician:
                 price = 1;
                 break;
             case Herbalist:
@@ -44,9 +44,6 @@ public class CharacterCard implements Serializable {
                 for (int i = 0; i < 4; i++) {
                     banCards[i] = true;
                 }
-                break;
-            case Centaur:
-                price = 3;
                 break;
             case Joker:
                 price = 1;
@@ -57,15 +54,6 @@ public class CharacterCard implements Serializable {
                     game.getBoard().getBag().removeStudent();
                 }
                 break;
-            case Knight:
-                price = 2;
-                break;
-            case Merchant:
-                price = 3;
-                break;
-            case Musician:
-                price = 1;
-                break;
             case Lady:
                 price = 2;
                 students = new ArrayList<Student>();
@@ -75,11 +63,6 @@ public class CharacterCard implements Serializable {
                     game.getBoard().getBag().removeStudent();
                 }
                 break;
-            case Sinister:
-                price = 3;
-                break;
-
-
         }
     }
 
