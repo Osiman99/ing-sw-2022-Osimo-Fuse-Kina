@@ -457,7 +457,11 @@ public class EriantysCLI extends ViewObservable implements View {
 
         String plankOrIsland = nextLine();
 
-        if(plankOrIsland.equals("p")) {
+        if(plankOrIsland.equals("cc") || plankOrIsland.equals("card") || plankOrIsland.equals("character card")){
+            notifyObserver(obs -> obs.onUpdateCharacterCardsDescription(plankOrIsland));
+        }
+
+        else if(plankOrIsland.equals("p")) {
             showGenericMessage("Choose your student to move. [g/r/y/p/b]");
             String colorIn;
             colorIn = nextLine();
@@ -525,14 +529,24 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
     public void onDemandCloud(){
-        int numCloud = Integer.parseInt(nextLine());
-        notifyObserver(obs -> obs.onUpdateCloud(numCloud));
+        String cc = nextLine();
+        if(cc.equals("cc") || cc.equals("card") || cc.equals("character card")){
+            notifyObserver(obs -> obs.onUpdateCharacterCardsDescription(cc));
+        }else {
+            int numCloud = Integer.parseInt(cc);
+            notifyObserver(obs -> obs.onUpdateCloud(numCloud));
+        }
     }
 
     public void onDemandMotherNatureMoves(int maxMoves){
         showGenericMessage("How many steps do you want Mother Nature does? Insert a number between 1 and " + maxMoves + ".");
-        int numMoves = Integer.parseInt(nextLine());
-        notifyObserver(obs -> obs.onUpdateMotherNatureMoves(numMoves));
+        String cc = nextLine();
+        if(cc.equals("cc") || cc.equals("card") || cc.equals("character card")){
+            notifyObserver(obs -> obs.onUpdateCharacterCardsDescription(cc));
+        }else {
+            int numMoves = Integer.parseInt(nextLine());
+            notifyObserver(obs -> obs.onUpdateMotherNatureMoves(numMoves));
+        }
     }
 
     public void onDemandQuit(){
@@ -557,6 +571,15 @@ public class EriantysCLI extends ViewObservable implements View {
     public void clearCli() {
         out.print(ANSIColor.CLEAR);
         out.flush();
+    }
+
+    public void onDemandCharacterCard(String[] text){
+        for(int i = 0; i < text.length; i++) {
+            out.println("\n" + text[i]);
+        }
+        showGenericMessage("\nWhich card do you choose? Insert the complete name of the card.");
+        String card = nextLine();
+        notifyObserver(obs -> obs.onUpdateCharacterCard(card));
     }
 
     public void showGenericMessage(String genericMessage) {

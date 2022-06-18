@@ -74,6 +74,11 @@ public class VirtualView implements View, Observer {
         clientHandler.sendMessage(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 
+    @Override
+    public void onDemandCharacterCard(String[] text){
+        clientHandler.sendMessage(new CharacterCardsDescriptionReply(Game.SERVER_NICKNAME, text));
+    }
+
 
     /**
      * Receives an update message from the model.
