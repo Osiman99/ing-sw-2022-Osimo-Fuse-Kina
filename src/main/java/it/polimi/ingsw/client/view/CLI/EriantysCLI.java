@@ -219,7 +219,8 @@ public class EriantysCLI extends ViewObservable implements View {
     public void drawIslands(Game game) {
         ArrayList<String> islandBoard = new ArrayList<>();
         String numIsolaBoard;
-        String mnBoard= "  ";
+        String mnBoard;
+        String banBoard;
         ArrayList<String> towerBoard = new ArrayList<>();
         int[] numStudent= {0, 0, 0, 0, 0};
         int i,j;
@@ -246,6 +247,11 @@ public class EriantysCLI extends ViewObservable implements View {
             for(; j<8; j++)
                 towerBoard.add("  ");
 
+            if(currentIsland.isBanCard())
+                banBoard = ANSIColor.RED_BACKGROUND+ANSIColor.WHITE+"  XX  "+ANSIColor.RESET;
+            else
+                banBoard = "      ";
+
             //counts the students for each color
             for(j=0; j<currentIsland.getStudents().size(); j++) {
                 switch(currentIsland.getStudents().get(j).getColor()) {
@@ -265,7 +271,7 @@ public class EriantysCLI extends ViewObservable implements View {
             islandBoard.add("╔═══════════════════════╦══════╗");
             islandBoard.add("║"+ANSIColor.WHITE_BACKGROUND+ANSIColor.BLACK+"     ISLAND  n° "+ numIsolaBoard +"     "+ ANSIColor.RESET+"║"+mnBoard+"║");
             islandBoard.add("╠═══════════════════════╬══════╣");
-            islandBoard.add("║TOWERS"+towerBoard.get(0)+towerBoard.get(1)+towerBoard.get(2)+towerBoard.get(3)+towerBoard.get(4)+towerBoard.get(5)+towerBoard.get(6)+towerBoard.get(7) +" ║  xx  ║");
+            islandBoard.add("║TOWERS"+towerBoard.get(0)+towerBoard.get(1)+towerBoard.get(2)+towerBoard.get(3)+towerBoard.get(4)+towerBoard.get(5)+towerBoard.get(6)+towerBoard.get(7) +" ║"+banBoard+"║");
             islandBoard.add("╠═════╦═════╦═════╦═════╬═════╦╝");
             islandBoard.add("║ "+ANSIColor.GREEN+"●"+ANSIColor.RESET+" "+numStudent[0]+" ║ "+ANSIColor.RED+"●"+ANSIColor.RESET+" "+numStudent[1]+" ║ "+ANSIColor.YELLOW_BOLD_BRIGHT+"●"+ANSIColor.RESET+" "+numStudent[2]+" ║ "+ANSIColor.PINK+"●"+ANSIColor.RESET+" "+numStudent[3]+" ║ "+ANSIColor.BLUE+"●"+ANSIColor.RESET+" "+numStudent[4]+" ║");
             islandBoard.add("╚═════╩═════╩═════╩═════╩═════╝");
@@ -291,7 +297,7 @@ public class EriantysCLI extends ViewObservable implements View {
             ╔═══════════════════════╦══════╗
             ║     ISLAND  n°  1     ║  MN  ║
             ╠═══════════════════════╬══════╣
-            ║TOWERS                 ║  xx  ║
+            ║TOWERS                 ║  XX  ║
             ╠═════╦═════╦═════╦═════╬═════╦╝
             ║ ● 0 ║ ● 0 ║ ● 0 ║ ● 0 ║ ● 0 ║
             ╚═════╩═════╩═════╩═════╩═════╝");
