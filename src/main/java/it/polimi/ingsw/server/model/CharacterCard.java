@@ -86,6 +86,8 @@ public class CharacterCard implements Serializable {
         return students;
     }
 
+    public boolean[] getBanCards() { return banCards;}
+
     public int getPrice() {
         return price;
     }

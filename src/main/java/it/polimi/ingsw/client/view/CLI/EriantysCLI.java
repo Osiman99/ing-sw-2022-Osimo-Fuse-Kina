@@ -78,10 +78,53 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
     public void drawBoard(Game game) {
+
         clearConsole();
+        if(game instanceof GameExpert) {
+            GameExpert gameExpert = (GameExpert) game;
+            drawCharacterCards(gameExpert);
+        }
         drawIslands(game);
         drawClouds(game);
         drawPlanks(game);
+    }
+
+    private void drawCharacterCards(GameExpert game) {
+        List<String> characterNames =  new ArrayList<>();
+        List<String> characterPrice = new ArrayList<>();
+        ArrayList<String> characterMarkers = new ArrayList<>();
+
+        for(int i=0; i<3; i++) {
+            CharacterCard c = game.getThreeChosenCards().get(i);
+            characterNames.add(c.getCharacterName().toString());
+            characterPrice.add(String.valueOf(c.getPrice()));
+
+            if (c.hasStudents()) {
+                List<String> students = new ArrayList<>();
+                for(Student s : c.getStudents())
+                    students.add(convertANSI(s.getColor()) + " ");
+                characterMarkers.add(String.valueOf(students));
+            }
+
+            else if(c.getCharacterName()==CharacterName.Herbalist) {
+                List<String> banCards = new ArrayList<>();
+                for(Boolean b : c.getBanCards()) {
+                    if (b)
+                        banCards.add(ANSIColor.RED_BACKGROUND + ANSIColor.WHITE + "XX  " + ANSIColor.RESET);
+                }
+                characterMarkers.add(String.valueOf(banCards));
+            }
+
+            else
+                characterMarkers.add("\n");
+        }
+
+        System.out.println(ANSIColor.UNDERLINE+ANSIColor.PURPLE_BOLD_BRIGHT+"Character cards"+ANSIColor.RESET);
+        for(int i=0; i<3; i++) {
+            System.out.println(ANSIColor.YELLOW_BACKGROUND + ANSIColor.BLACK +(i+1)+") " + characterNames.get(i)+ANSIColor.RESET+" price: "+ANSIColor.UNDERLINE+ characterPrice.get(i)+ANSIColor.RESET);
+            System.out.println(characterMarkers.get(i));
+        }
+
     }
 
     public void drawPlanks(Game game) {
@@ -177,6 +220,7 @@ public class EriantysCLI extends ViewObservable implements View {
         System.out.print(String.format("\u001B[%d;%dH", y, x));
         // CSI n ; m H
     }
+
 
     //convert studentColor into ANSIColor
     private String convertANSI(StudentColor color) {
@@ -279,7 +323,7 @@ public class EriantysCLI extends ViewObservable implements View {
             System.out.println("\n");
 
             for(int r=0; r<islandBoard.size(); r++) {
-                gotoXY(r+i*9,21);
+                gotoXY(21,r+i*9);
                 System.out.println(islandBoard.get(r));
             }
 
