@@ -82,8 +82,8 @@ public class ClientController implements ViewObserver, Observer {
     }
 
     @Override
-    public void onUpdateCharacterCard(CharacterCard card) {
-
+    public void onUpdateCharacterCardsDescription(String cc) {
+        client.sendMessage(new CharacterCardsDescriptionRequest(this.nickname, cc));
     }
 
     @Override
@@ -95,6 +95,12 @@ public class ClientController implements ViewObserver, Observer {
     public void onUpdateMode(String mode){
         client.sendMessage(new ModeMessage(this.nickname, mode));
     }
+
+    @Override
+    public void onUpdateCharacterCard(String card){
+        client.sendMessage(new CharacterCardRequest(this.nickname, card));
+    }
+
 
     @Override
     public void update(Message message) {
@@ -126,7 +132,10 @@ public class ClientController implements ViewObserver, Observer {
                 client.disconnect();
                 view.showDisconnectionMessage(dm.getNicknameDisconnected(), dm.getMessageStr());
                 break;
-
+            case CHARACTERCARDS_DESCRIPTION_REPLY:
+                CharacterCardsDescriptionReply characterCardsDescriptionReply = (CharacterCardsDescriptionReply) message;
+                taskQueue.execute(()-> view.onDemandCharacterCard(characterCardsDescriptionReply.getText()));
+                break;
 
                 /*case ERROR:
                 ErrorMessage errorMessage = (ErrorMessage) message;

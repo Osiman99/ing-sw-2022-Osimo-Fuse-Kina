@@ -33,7 +33,9 @@ public interface ViewObserver {
 
     void onUpdateMotherNatureMoves(int numMoves);
 
-    void onUpdateCharacterCard(CharacterCard card);
+    void onUpdateCharacterCardsDescription(String cc);
+
+    void onUpdateCharacterCard(String card);
 
     void onUpdateQuit(String quit);
 

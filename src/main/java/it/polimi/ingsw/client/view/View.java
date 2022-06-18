@@ -39,6 +39,8 @@ public interface View {
 
     void onDemandMotherNatureMoves(int maxMoves);
 
+    void onDemandCharacterCard(String[] text);
+
     //void showErrorAndQuit(String error);
 
 }
