@@ -119,9 +119,12 @@ public class EriantysCLI extends ViewObservable implements View {
                 characterMarkers.add("\n");
         }
 
+        gotoXY(138, 1);
         System.out.println(ANSIColor.UNDERLINE+ANSIColor.PURPLE_BOLD_BRIGHT+"Character cards"+ANSIColor.RESET);
         for(int i=0; i<3; i++) {
+            gotoXY(138,3+3*i);
             System.out.println(ANSIColor.YELLOW_BACKGROUND + ANSIColor.BLACK +(i+1)+") " + characterNames.get(i)+ANSIColor.RESET+" price: "+ANSIColor.UNDERLINE+ characterPrice.get(i)+ANSIColor.RESET);
+            gotoXY(138,4+3*i);
             System.out.println(characterMarkers.get(i));
         }
 
@@ -133,6 +136,7 @@ public class EriantysCLI extends ViewObservable implements View {
         ArrayList<String>[] diningRoomBoard = new ArrayList[5];
         ArrayList<String> towerBoard = new ArrayList<>();
         String[] professorsBoard = new String[5];
+        String coins = "";
 
         int i, j, k;
         for(i=0; i<5; i++) {
@@ -172,9 +176,12 @@ public class EriantysCLI extends ViewObservable implements View {
                     professorsBoard[j]=" ";
             }
 
+            if(game instanceof GameExpert) {
+                coins= " - "+ ANSIColor.YELLOW_BACKGROUND + ANSIColor.BLACK +"Coins: " + playerBoard.getNumCoins()+ ANSIColor.RESET;
+            }
 
 
-            plankBoard.add("→ " +ANSIColor.PINK+ ANSIColor.UNDERLINE+ playerBoard.getNickname()+ANSIColor.RESET+"'s plank");
+            plankBoard.add("→ " +ANSIColor.PINK+ ANSIColor.UNDERLINE+ playerBoard.getNickname().toUpperCase()+ANSIColor.RESET+coins);
             plankBoard.add("╔══════════╦═══════════════════════╦═════════╦═════════════╗");
             plankBoard.add("║"+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+" Entrance "+ANSIColor.RESET+"║"+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+"      Dining Room      "+ANSIColor.RESET+"║"+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+"Professor"+ANSIColor.RESET+"║"+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+" Tower Space "+ANSIColor.RESET+"║");
             plankBoard.add("╠══════════╬═══════════════════════╬═════════╬═════════════╣");
@@ -185,9 +192,11 @@ public class EriantysCLI extends ViewObservable implements View {
             plankBoard.add("║  "+studentsEntranceBoard.get(7)+"    "+studentsEntranceBoard.get(8)+"  ║ "+ANSIColor.BLUE+diningRoomBoard[4].get(0)+diningRoomBoard[4].get(1)+diningRoomBoard[4].get(2)+diningRoomBoard[4].get(3)+diningRoomBoard[4].get(4)+diningRoomBoard[4].get(5)+diningRoomBoard[4].get(6)+diningRoomBoard[4].get(7)+diningRoomBoard[4].get(8)+diningRoomBoard[4].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.BLUE+professorsBoard[4]+ANSIColor.RESET+"    ║             ║");
             plankBoard.add("╚══════════╩═══════════════════════╩═════════╩═════════════╝");
 
-            System.out.println("\n");
-            for (String b : plankBoard)
-                System.out.println(b);
+
+            for (int r=0; r<plankBoard.size(); r++){
+                gotoXY(2+i*63, 37+r);
+                System.out.println(plankBoard.get(r));
+            }
 
             plankBoard.clear();
             studentsEntranceBoard.clear();
@@ -323,10 +332,23 @@ public class EriantysCLI extends ViewObservable implements View {
             System.out.println("\n");
 
             for(int r=0; r<islandBoard.size(); r++) {
-                gotoXY(21,r+i*9);
-                System.out.println(islandBoard.get(r));
+                if(i<4) {
+                    gotoXY(2 + 33 * i, r+1);
+                    System.out.println(islandBoard.get(r));
+                }
+                else if(i>=4 && i<7) {
+                    gotoXY(101,r+9*(i-3));
+                    System.out.println(islandBoard.get(r));
+                }
+                else if(i>=7 && i<10) {
+                    gotoXY(101 - 33*(i-6),r+27);
+                    System.out.println(islandBoard.get(r));
+                }
+                else if(i>=10 && i<12) {
+                    gotoXY(2, r+18-9*(i-10));
+                    System.out.println(islandBoard.get(r));
+                }
             }
-
 
             islandBoard.clear();
             towerBoard.clear();
@@ -369,27 +391,35 @@ public class EriantysCLI extends ViewObservable implements View {
             if(cloudStudents.size()==3)
                 cloudStudents.add(" ");
 
-            cloudBoard.add("  ︵︶︵ Cloud "+ (i+1) +" ︵︶︵  ");
-            cloudBoard.add("(          "+cloudStudents.get(3)+"          )");
-            cloudBoard.add("  )   "+cloudStudents.get(0)+"         "+cloudStudents.get(1)+"   (  ");
-            cloudBoard.add("(          "+cloudStudents.get(2)+"          )");
-            cloudBoard.add("  ︶︵︶︵︶︵︶︵︶︵︶   ");
+            cloudBoard.add("┌─────────────────┐");
+            cloudBoard.add("│        "+cloudStudents.get(3)+"        │");
+            cloudBoard.add("│ "+cloudStudents.get(0)+"   Cloud "+(i+1)+"   "+cloudStudents.get(1)+" │");
+            cloudBoard.add("│        "+cloudStudents.get(2)+"        │");
+            cloudBoard.add("└─────────────────┘");
 
-            System.out.println("\n");
-            for(String b : cloudBoard)
-                System.out.println(b);
 
+            for(int r=0; r<cloudBoard.size(); r++) {
+                if(i<2) {
+                    gotoXY(46 + (i * 21), 11 + r);
+                    System.out.println(cloudBoard.get(r));
+                }
+                else if(i==2){
+                    gotoXY(56, 20 + r);
+                    System.out.println(cloudBoard.get(r));
+                }
+            }
             cloudBoard.clear();
             cloudStudents.clear();
         }
 
 
         /*
-          ︵︶︵ Cloud 1 ︵︶︵
-        (          ●          )
-          )   ●         ●   (
-        (          ●          )
-          ︶︵︶︵︶︵︶︵︶︵︶
+        ─┌─────└┐┘
+        ┌─────────────────┐
+        │        ●        │
+        │ ●   Cloud 1   ● │
+        │        ●        │
+        └─────────────────┘
          */
 
     }
