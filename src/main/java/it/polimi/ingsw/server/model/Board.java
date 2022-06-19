@@ -448,17 +448,16 @@ public class Board extends Observable implements Serializable {
 
 
     public void applyEffectSommelier(Player player, CharacterCard characterCard, Student student, Island island){       //FATTO
-        if (characterCard.getPrice() <= player.getNumCoins()){                                                            //controllo da fare nel GameController
-            for (int i = 0; i < 4; i++){
-                if (characterCard.getStudents().get(i).getColor() == student.getColor()){
-                    island.addStudent(characterCard.getStudents().get(i));
-                    characterCard.getStudents().remove(characterCard.getStudents().get(i));
-                    if(!(getBag().isBagEmpty())) {
-                        characterCard.getStudents().add(game.getBoard().getBag().getFirstStudent());
-                        game.getBoard().getBag().removeStudent();
-                    }
-                    break;
+        characterCard.setEnabled(true);
+        for (int i = 0; i < 4; i++){
+            if (characterCard.getStudents().get(i).getColor() == student.getColor()){
+                island.addStudent(characterCard.getStudents().get(i));
+                characterCard.getStudents().remove(characterCard.getStudents().get(i));
+                if(!(getBag().isBagEmpty())) {
+                    characterCard.getStudents().add(game.getBoard().getBag().getFirstStudent());
+                    game.getBoard().getBag().removeStudent();
                 }
+                break;
             }
         }
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
@@ -466,11 +465,13 @@ public class Board extends Observable implements Serializable {
     }
 
     public void applyEffectChef(Player player, CharacterCard characterCard) {                                           //FATTO
+        characterCard.setEnabled(true);
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
     }
 
     public void applyEffectMessenger(Player player, CharacterCard characterCard, int numIsland){                        //FATTO
+        characterCard.setEnabled(true);
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
         if (!(islands.get(numIsland-1).isBanCard())){
@@ -481,11 +482,13 @@ public class Board extends Observable implements Serializable {
     }
 
     public void applyEffectPostman(Player player, CharacterCard characterCard){                                         //FATTO
+        characterCard.setEnabled(true);
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
     }
 
     public void applyEffectHerbalist(Player player, CharacterCard characterCard, int numIsland){                        //FATTO
+        characterCard.setEnabled(true);
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
         getIslands().get(numIsland-1).setBanCard(true);
@@ -493,37 +496,44 @@ public class Board extends Observable implements Serializable {
     }
 
     public void applyEffectCentaur(Player player, CharacterCard characterCard){                                         //FATTO
+        characterCard.setEnabled(true);
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
     }
 
     public void applyEffectJoker(Player player, CharacterCard characterCard){
+        characterCard.setEnabled(true);
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
 
     }
 
     public void applyEffectKnight(Player player, CharacterCard characterCard){                                          //FATTO
+        characterCard.setEnabled(true);
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
     }
 
     public void applyEffectMerchant(Player player, CharacterCard characterCard){
+        characterCard.setEnabled(true);
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
     }
 
     public void applyEffectMusician(Player player, CharacterCard characterCard){
+        characterCard.setEnabled(true);
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
     }
 
     public void applyEffectLady(Player player, CharacterCard characterCard){
+        characterCard.setEnabled(true);
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
     }
 
     public void applyEffectSinister(Player player, CharacterCard characterCard){
+        characterCard.setEnabled(true);
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
     }

@@ -82,8 +82,8 @@ public class ClientController implements ViewObserver, Observer {
     }
 
     @Override
-    public void onUpdateCharacterCardsDescription(String cc) {
-        client.sendMessage(new CharacterCardsDescriptionRequest(this.nickname, cc));
+    public void onUpdateCharacterCardsDescription(String askInterrupted) {
+        client.sendMessage(new CharacterCardsDescriptionRequest(this.nickname, askInterrupted));
     }
 
     @Override
@@ -98,7 +98,7 @@ public class ClientController implements ViewObserver, Observer {
 
     @Override
     public void onUpdateCharacterCard(String card){
-        client.sendMessage(new CharacterCardRequest(this.nickname, card));
+        client.sendMessage(new CharacterCardMessage(this.nickname, card));
     }
 
 

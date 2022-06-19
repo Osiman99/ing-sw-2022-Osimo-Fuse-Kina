@@ -68,6 +68,8 @@ public class CheckController implements Serializable {
                 return cloudCheck(message);
             case MODE_MESSAGE:
                 return modeCheck(message);
+            case CHARACTERCARDS_REQUEST:
+                return characterCardCheck(message);
 
             default: // Never should reach this statement.
                 return false;
@@ -213,6 +215,117 @@ public class CheckController implements Serializable {
         }virtualView.showGenericMessage("Invalid input! Please try again.");
         virtualView.showGenericMessage("Do you want to play in Normal or Expert mode? [n/e]");
         return false;
+    }
+
+    public boolean characterCardCheck(Message message){
+        GameExpert gameExpert = (GameExpert) game;
+        VirtualView virtualView = virtualViewMap.get(message.getNickname());
+        Player activePlayer = game.getPlayerByNickname(message.getNickname());
+        CharacterCardMessage characterCardMessage = (CharacterCardMessage) message;
+        switch (characterCardMessage.getCard()) {
+            case "Sommelier", "sommelier":
+                for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
+                    if (cc.getCharacterName() == CharacterName.Sommelier) {
+                        return eachCharCardCheck(virtualView, activePlayer, cc);
+                    }
+                }
+                break;
+            case "Chef", "chef":
+                for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
+                    if (cc.getCharacterName() == CharacterName.Chef) {
+                        return eachCharCardCheck(virtualView, activePlayer, cc);
+                    }
+                }
+                break;
+            case "Messenger", "messenger":
+                for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
+                    if (cc.getCharacterName() == CharacterName.Messenger) {
+                        return eachCharCardCheck(virtualView, activePlayer, cc);
+                    }
+                }
+                break;
+            case "Postman", "postman":
+                for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
+                    if (cc.getCharacterName() == CharacterName.Postman) {
+                        return eachCharCardCheck(virtualView, activePlayer, cc);
+                    }
+                }
+                break;
+            case "Herbalist", "herbalist":
+                for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
+                    if (cc.getCharacterName() == CharacterName.Herbalist) {
+                        return eachCharCardCheck(virtualView, activePlayer, cc);
+                    }
+                }
+                break;
+            case "Centaur", "centaur":
+                for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
+                    if (cc.getCharacterName() == CharacterName.Centaur) {
+                        return eachCharCardCheck(virtualView, activePlayer, cc);
+                    }
+                }
+                break;
+            case "Joker", "joker":
+                for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
+                    if (cc.getCharacterName() == CharacterName.Joker) {
+                        return eachCharCardCheck(virtualView, activePlayer, cc);
+                    }
+                }
+                break;
+            case "Knight", "knight":
+                for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
+                    if (cc.getCharacterName() == CharacterName.Knight) {
+                        return eachCharCardCheck(virtualView, activePlayer, cc);
+                    }
+                }
+                break;
+            case "Merchant", "merchant":
+                for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
+                    if (cc.getCharacterName() == CharacterName.Merchant) {
+                        return eachCharCardCheck(virtualView, activePlayer, cc);
+                    }
+                }
+                break;
+            case "Musician", "musician":
+                for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
+                    if (cc.getCharacterName() == CharacterName.Musician) {
+                        return eachCharCardCheck(virtualView, activePlayer, cc);
+                    }
+                }
+                break;
+            case "Lady", "lady":
+                for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
+                    if (cc.getCharacterName() == CharacterName.Lady) {
+                        return eachCharCardCheck(virtualView, activePlayer, cc);
+                    }
+                }
+                break;
+            case "Sinister", "sinister":
+                for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
+                    if (cc.getCharacterName() == CharacterName.Sinister) {
+                        return eachCharCardCheck(virtualView, activePlayer, cc);
+                    }
+                }
+                break;
+        }virtualView.showGenericMessage("Invalid input! Please try again.");
+        virtualView.onDemandCharacterCard(gameController.getText());
+        return false;
+    }
+
+    private boolean eachCharCardCheck(VirtualView virtualView, Player activePlayer, CharacterCard cc) {
+        if (cc.getPrice() <= activePlayer.getNumCoins()) {
+            return true;
+        } else {
+            virtualView.showGenericMessage("You have not enough coins for this card!");
+            if (gameController.getAskInterrupted().equals("s")){
+                virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
+            }else if(gameController.getAskInterrupted().equals("m")){
+                virtualView.onDemandMotherNatureMoves(activePlayer.getChosenAssistantCard().getMaxMoves());
+            }else if(gameController.getAskInterrupted().equals("c")){
+                virtualView.showGenericMessage("Which cloud do you choose? Insert the cloud number.");
+            }
+            return false;
+        }
     }
 
     public void initializeFirstPlayerInAction(){

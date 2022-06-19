@@ -538,10 +538,8 @@ public class EriantysCLI extends ViewObservable implements View {
         String plankOrIsland = nextLine();
 
         if(plankOrIsland.equals("cc") || plankOrIsland.equals("card") || plankOrIsland.equals("character card")){
-            notifyObserver(obs -> obs.onUpdateCharacterCardsDescription(plankOrIsland));
-        }
-
-        else if(plankOrIsland.equals("p")) {
+            notifyObserver(obs -> obs.onUpdateCharacterCardsDescription("s"));
+        } else if(plankOrIsland.equals("p")) {
             showGenericMessage("Choose your student to move. [g/r/y/p/b]");
             String colorIn;
             colorIn = nextLine();
@@ -611,7 +609,7 @@ public class EriantysCLI extends ViewObservable implements View {
     public void onDemandCloud(){
         String cc = nextLine();
         if(cc.equals("cc") || cc.equals("card") || cc.equals("character card")){
-            notifyObserver(obs -> obs.onUpdateCharacterCardsDescription(cc));
+            notifyObserver(obs -> obs.onUpdateCharacterCardsDescription("c"));
         }else {
             int numCloud = Integer.parseInt(cc);
             notifyObserver(obs -> obs.onUpdateCloud(numCloud));
@@ -620,11 +618,12 @@ public class EriantysCLI extends ViewObservable implements View {
 
     public void onDemandMotherNatureMoves(int maxMoves){
         showGenericMessage("How many steps do you want Mother Nature does? Insert a number between 1 and " + maxMoves + ".");
+        System.out.println("ciao");
         String cc = nextLine();
         if(cc.equals("cc") || cc.equals("card") || cc.equals("character card")){
-            notifyObserver(obs -> obs.onUpdateCharacterCardsDescription(cc));
+            notifyObserver(obs -> obs.onUpdateCharacterCardsDescription("m"));
         }else {
-            int numMoves = Integer.parseInt(nextLine());
+            int numMoves = Integer.parseInt(cc);
             notifyObserver(obs -> obs.onUpdateMotherNatureMoves(numMoves));
         }
     }
@@ -659,7 +658,7 @@ public class EriantysCLI extends ViewObservable implements View {
         }
         showGenericMessage("\nWhich card do you choose? Insert the complete name of the card.");
         String card = nextLine();
-        notifyObserver(obs -> obs.onUpdateCharacterCard(card));
+        notifyObserver(obs -> obs.onUpdateCharacterCard(card.toLowerCase()));
     }
 
     public void showGenericMessage(String genericMessage) {

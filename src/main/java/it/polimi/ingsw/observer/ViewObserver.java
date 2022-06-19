@@ -33,7 +33,7 @@ public interface ViewObserver {
 
     void onUpdateMotherNatureMoves(int numMoves);
 
-    void onUpdateCharacterCardsDescription(String cc);
+    void onUpdateCharacterCardsDescription(String askInterrupted);
 
     void onUpdateCharacterCard(String card);
 
