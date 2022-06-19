@@ -28,7 +28,7 @@
         </font>
     </Label>
     <VBox alignment="CENTER" prefHeight="460.0" prefWidth="444.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-        <Button fx:id="loginButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#login" prefHeight="84.0" prefWidth="238.0" style="-fx-background-color: #FF9933;" text="LOGIN" textFill="#0c0276">
+        <Button fx:id="loginButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#login" prefHeight="46.0" prefWidth="338.0" style="-fx-background-color: #FF9933;" text="LOGIN" textFill="#0c0276">
             <font>
                 <Font size="36.0" />
             </font>
@@ -36,7 +36,7 @@
     </VBox>
    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
       <children>
-         <ImageView fitHeight="634.0" fitWidth="430.0" layoutX="-16.0" layoutY="-171.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-6.832067871093727" AnchorPane.leftAnchor="-16.0" AnchorPane.rightAnchor="12.399999999999977" AnchorPane.topAnchor="-171.0">
+         <ImageView fitHeight="605.0" fitWidth="415.0" layoutX="-16.0" layoutY="-161.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-16.832067871093727" AnchorPane.leftAnchor="-16.0" AnchorPane.rightAnchor="12.399999999999977" AnchorPane.topAnchor="-161.0">
             <image>
                <Image url="@../../../../../../../../resources/Tartaruga.png" />
             </image>

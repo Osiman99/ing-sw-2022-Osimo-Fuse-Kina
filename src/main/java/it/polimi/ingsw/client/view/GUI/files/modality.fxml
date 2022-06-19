@@ -58,7 +58,7 @@
       </VBox>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
          <children>
-            <ImageView fitHeight="584.0" fitWidth="418.0" layoutX="40.0" layoutY="-94.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="605.0" fitWidth="415.0" layoutX="40.0" layoutY="-94.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../../../../../resources/Polipo.png" />
                </image>
@@ -67,7 +67,7 @@
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
          <children>
-            <ImageView fitHeight="601.0" fitWidth="470.0" layoutX="77.0" layoutY="-94.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="605.0" fitWidth="415.0" layoutX="77.0" layoutY="-94.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../../../../../resources/Volpe.png" />
                </image>

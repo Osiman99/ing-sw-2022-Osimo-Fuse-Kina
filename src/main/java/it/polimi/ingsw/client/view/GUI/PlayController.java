@@ -2,13 +2,25 @@ package it.polimi.ingsw.client.view.GUI;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.IOException;
 
 
 public class PlayController {
+
+    private Parent root;
+    private Stage stage;
+    private Scene scene;
 
     @FXML
     private HBox charactersBox;
@@ -33,9 +45,11 @@ public class PlayController {
     private ImageView retroAssistantTerzo;
     @FXML
     private ImageView plankTerzo;
+    @FXML
+    private ImageView assistantOne;
 
     @FXML
-    public void initialize(){
+    public void initialize() {
 
         /* 2 players
 
@@ -64,8 +78,6 @@ public class PlayController {
         charactersBox.setManaged(false);   */
 
 
-
-
         //coins1.setText("X");
 
 
@@ -73,9 +85,24 @@ public class PlayController {
     }
 
 
-
-    public void play(ActionEvent actionEvent){
+    public void play(ActionEvent actionEvent) {
 
 
     }
+
+    public void deck(MouseEvent mouseEvent) throws IOException {
+/*
+        FXMLLoader loader = new FXMLLoader(new File("src/main/java/it/polimi/ingsw/client/view/GUI/files/deck.fxml").toURI().toURL());
+        root = loader.load();
+        root.setId("connection");
+
+        stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+
+        scene.getStylesheets().add(new File("src/main/java/it/polimi/ingsw/client/view/GUI/files/style.css").toURI().toURL().toExternalForm());
+        stage.setScene(scene);
+        stage.show();
+
+*/
+    }
+
 }
