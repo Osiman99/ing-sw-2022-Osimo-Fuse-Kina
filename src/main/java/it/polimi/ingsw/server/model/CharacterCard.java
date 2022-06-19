@@ -14,6 +14,7 @@ public class CharacterCard implements Serializable {
     private int price;
     private boolean enabled;
     private boolean hasStudents = false;
+    private String description;
 
     public CharacterCard(CharacterName characterName){
         game = GameExpert.getInstance();          //da spostare e da mattere in un initMethod
@@ -74,6 +75,10 @@ public class CharacterCard implements Serializable {
         return characterName;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public boolean isEnabled() {
         return enabled;
     }
@@ -94,5 +99,9 @@ public class CharacterCard implements Serializable {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
