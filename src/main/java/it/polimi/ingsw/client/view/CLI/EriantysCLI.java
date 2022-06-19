@@ -628,7 +628,7 @@ public class EriantysCLI extends ViewObservable implements View {
         }
         showGenericMessage("\nWhich card do you choose? Insert the complete name of the card.");
         String card = nextLine();
-        notifyObserver(obs -> obs.onUpdateCharacterCard(card));
+        notifyObserver(obs -> obs.onUpdateCharacterCard(card.toLowerCase()));
     }
 
     public void showGenericMessage(String genericMessage) {

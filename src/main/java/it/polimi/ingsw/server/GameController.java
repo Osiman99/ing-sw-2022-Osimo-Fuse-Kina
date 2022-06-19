@@ -327,64 +327,64 @@ public class GameController implements Observer, Serializable {
             CharacterCardMessage characterCardMessage = (CharacterCardMessage) receivedMessage;
             if(checkController.verifyReceivedData(receivedMessage)) {            //DA IMPLEMENTARE IL CONTROLLO
                 switch (characterCardMessage.getCard()) {
-                    case "Sommelier", "sommelier":
+                    case "sommelier":
                         for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                             if (cc.getCharacterName() == CharacterName.Sommelier){
                                 //gameExpert.getBoard().applyEffectSommelier(activePlayer, cc);
                             }
                         }
                         break;
-                    case "Chef", "chef":
+                    case "chef":
                         for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                             if (cc.getCharacterName() == CharacterName.Chef){
                                 gameExpert.getBoard().applyEffectChef(activePlayer, cc);
                             }
                         }
                         break;
-                    case "Messenger", "messenger":
+                    case "messenger":
                         for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                             if (cc.getCharacterName() == CharacterName.Messenger){
                                 //gameExpert.getBoard().applyEffectMessenger(activePlayer, cc);
                             }
                         }
                         break;
-                    case "Postman", "postman":
+                    case "postman":
                         for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                             if (cc.getCharacterName() == CharacterName.Postman){
                                 gameExpert.getBoard().applyEffectPostman(activePlayer, cc);
                             }
                         }
                         break;
-                    case "Herbalist", "herbalist":
+                    case "herbalist":
                         for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                             if (cc.getCharacterName() == CharacterName.Herbalist){
                                 //gameExpert.getBoard().applyEffectHerbalist(activePlayer, cc);
                             }
                         }
                         break;
-                    case "Centaur", "centaur":
+                    case "centaur":
                         for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                             if (cc.getCharacterName() == CharacterName.Centaur){
                                 gameExpert.getBoard().applyEffectCentaur(activePlayer, cc);
                             }
                         }
                         break;
-                    case "Joker", "joker":
+                    case "joker":
                         break;
-                    case "Knight", "knight":
+                    case "knight":
                         for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                             if (cc.getCharacterName() == CharacterName.Knight){
                                 gameExpert.getBoard().applyEffectKnight(activePlayer, cc);
                             }
                         }
                         break;
-                    case "Merchant", "merchant":
+                    case "merchant":
                         break;
-                    case "Musician", "musician":
+                    case "musician":
                         break;
-                    case "Lady", "lady":
+                    case "lady":
                         break;
-                    case "Sinister", "sinister":
+                    case "sinister":
                         break;
                 }
                 if (askInterrupted.equals("s")){
