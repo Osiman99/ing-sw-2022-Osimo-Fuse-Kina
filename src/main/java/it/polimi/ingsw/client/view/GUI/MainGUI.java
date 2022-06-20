@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.net.URL;
 
-public class Main extends Application {
+public class MainGUI extends Application {
     private Scene scene;
     public static void main(String[] args) {
         launch(args);
