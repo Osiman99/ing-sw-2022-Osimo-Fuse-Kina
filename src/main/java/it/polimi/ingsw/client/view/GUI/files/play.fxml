@@ -49,47 +49,47 @@
                       <RowConstraints minHeight="10.0" percentHeight="5.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <ImageView fx:id="island1" fitHeight="133.0" fitWidth="170.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <ImageView fx:id="island12" fitHeight="133.0" fitWidth="170.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <image>
                               <Image url="@../../../../../../../../resources/islands/island3.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="island10" fitHeight="132.0" fitWidth="195.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <ImageView fx:id="island11" fitHeight="132.0" fitWidth="195.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <image>
                               <Image url="@../../../../../../../../resources/islands/island3.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="island2" fitHeight="132.0" fitWidth="199.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                        <ImageView fx:id="island3" fitHeight="132.0" fitWidth="199.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1">
                            <image>
                               <Image url="@../../../../../../../../resources/islands/island2.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="island9" fitHeight="132.0" fitWidth="174.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <ImageView fx:id="island10" fitHeight="132.0" fitWidth="174.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <image>
                               <Image url="@../../../../../../../../resources/islands/island2.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="island3" fitHeight="131.0" fitWidth="139.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                        <ImageView fx:id="island4" fitHeight="131.0" fitWidth="139.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1">
                            <image>
                               <Image url="@../../../../../../../../resources/islands/island1.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="island8" fitHeight="129.0" fitWidth="192.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                        <ImageView fx:id="island7" fitHeight="129.0" fitWidth="192.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="4">
                            <image>
                               <Image url="@../../../../../../../../resources/islands/island3.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="island4" fitHeight="131.0" fitWidth="172.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                        <ImageView fx:id="island6" fitHeight="131.0" fitWidth="172.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="3">
                            <image>
                               <Image url="@../../../../../../../../resources/islands/island3.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="island7" fitHeight="130.0" fitWidth="207.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                        <ImageView fx:id="island8" fitHeight="130.0" fitWidth="207.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="4">
                            <image>
                               <Image url="@../../../../../../../../resources/islands/island1.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="island12" fitHeight="130.0" fitWidth="264.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <ImageView fx:id="island1" fitHeight="130.0" fitWidth="264.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <image>
                               <Image url="@../../../../../../../../resources/islands/island1.png" />
                            </image>
@@ -99,7 +99,7 @@
                               <Image url="@../../../../../../../../resources/islands/island2.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="island6" fitHeight="128.0" fitWidth="220.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                        <ImageView fx:id="island9" fitHeight="128.0" fitWidth="220.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="4">
                            <image>
                               <Image url="@../../../../../../../../resources/islands/island3.png" />
                            </image>
@@ -241,7 +241,7 @@
                         </StackPane>
                         <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                            <children>
-                              <ImageView fx:id="island11" fitHeight="130.0" fitWidth="189.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="island2" fitHeight="130.0" fitWidth="189.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../../../../../../../resources/islands/island2.png" />
                                  </image>
