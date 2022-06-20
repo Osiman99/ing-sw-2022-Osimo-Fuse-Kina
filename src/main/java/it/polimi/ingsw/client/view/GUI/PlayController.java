@@ -51,7 +51,7 @@ public class PlayController {
     @FXML
     public void initialize() {
 
-        /* 2 players
+
 
         coinTerzo.setVisible(false);
         assistantTerzo.setVisible(false);
@@ -65,7 +65,7 @@ public class PlayController {
         plankTerzo.setDisable(true);
         numeroMoneteTerzo.setDisable(true);
         nomeTerzo.setDisable(true);
-        plankBox.setManaged(false);    */
+        plankBox.setManaged(false);
 
         /* normal mode
 
