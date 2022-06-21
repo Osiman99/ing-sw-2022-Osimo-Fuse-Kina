@@ -227,7 +227,7 @@ class Board3PlayersTest {
         int numStudents = island.getStudents().size();
         player.setNumCoins(10);
 
-        board.applyEffectSommelier(player, characterCard, student, island);
+        board.applyEffectSommelier(player, characterCard, student.getColor(), 1);
 
         assertEquals(numStudents+1, island.getStudents().size());
         assertEquals(student, board.getIslands().get(0).getStudents().get(board.getIslands().get(0).getStudents().size()-1));

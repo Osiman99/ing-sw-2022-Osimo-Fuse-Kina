@@ -223,90 +223,93 @@ public class CheckController implements Serializable {
         Player activePlayer = game.getPlayerByNickname(message.getNickname());
         CharacterCardMessage characterCardMessage = (CharacterCardMessage) message;
         switch (characterCardMessage.getCard()) {
-            case "Sommelier", "sommelier":
+            case "sommelier":
                 for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                     if (cc.getCharacterName() == CharacterName.Sommelier) {
                         return eachCharCardCheck(virtualView, activePlayer, cc);
                     }
                 }
                 break;
-            case "Chef", "chef":
+            case "chef":
                 for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                     if (cc.getCharacterName() == CharacterName.Chef) {
                         return eachCharCardCheck(virtualView, activePlayer, cc);
                     }
                 }
                 break;
-            case "Messenger", "messenger":
+            case "messenger":
                 for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                     if (cc.getCharacterName() == CharacterName.Messenger) {
                         return eachCharCardCheck(virtualView, activePlayer, cc);
                     }
                 }
                 break;
-            case "Postman", "postman":
+            case "postman":
                 for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                     if (cc.getCharacterName() == CharacterName.Postman) {
                         return eachCharCardCheck(virtualView, activePlayer, cc);
                     }
                 }
                 break;
-            case "Herbalist", "herbalist":
+            case "herbalist":
                 for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                     if (cc.getCharacterName() == CharacterName.Herbalist) {
                         return eachCharCardCheck(virtualView, activePlayer, cc);
                     }
                 }
                 break;
-            case "Centaur", "centaur":
+            case "centaur":
                 for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                     if (cc.getCharacterName() == CharacterName.Centaur) {
                         return eachCharCardCheck(virtualView, activePlayer, cc);
                     }
                 }
                 break;
-            case "Joker", "joker":
+            /*case "joker":
                 for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                     if (cc.getCharacterName() == CharacterName.Joker) {
                         return eachCharCardCheck(virtualView, activePlayer, cc);
                     }
                 }
                 break;
-            case "Knight", "knight":
+            */
+            case "knight":
                 for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                     if (cc.getCharacterName() == CharacterName.Knight) {
                         return eachCharCardCheck(virtualView, activePlayer, cc);
                     }
                 }
                 break;
-            case "Merchant", "merchant":
+            /*case "merchant":
                 for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                     if (cc.getCharacterName() == CharacterName.Merchant) {
                         return eachCharCardCheck(virtualView, activePlayer, cc);
                     }
                 }
                 break;
-            case "Musician", "musician":
+            case "musician":
                 for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                     if (cc.getCharacterName() == CharacterName.Musician) {
                         return eachCharCardCheck(virtualView, activePlayer, cc);
                     }
                 }
                 break;
-            case "Lady", "lady":
+            */
+            case "lady":
                 for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                     if (cc.getCharacterName() == CharacterName.Lady) {
                         return eachCharCardCheck(virtualView, activePlayer, cc);
                     }
                 }
                 break;
-            case "Sinister", "sinister":
+            /*case "sinister":
                 for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                     if (cc.getCharacterName() == CharacterName.Sinister) {
                         return eachCharCardCheck(virtualView, activePlayer, cc);
                     }
                 }
                 break;
+            */
         }virtualView.showGenericMessage("Invalid input! Please try again.");
         virtualView.onDemandCharacterCard(gameController.getText());
         return false;

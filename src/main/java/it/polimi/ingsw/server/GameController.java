@@ -272,22 +272,33 @@ public class GameController implements Observer, Serializable {
     }
 
     public void planTurnManager(){
-        for (int i = 0; i < game.getPlayers().size(); i++){
-            if (game.getPlayers().get(i).getNickname().equals(activePlayer.getNickname())) {
-                activePlayer = game.getPlayers().get((i + 1) % game.getPlayers().size());
-                turnCont++;
-                if (turnCont == game.getPlayers().size()){
-                    state = GameState.ACTION;
-                    checkController.initializeFirstPlayerInAction();
-                    activePlayer = game.getPlayerByNickname(checkController.getFirstPlayerInAction());
-                    VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
-                    virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
-                    turnCont = 0;
-                }if(state == GameState.PLAN) {
-                    VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
-                    virtualView.onDemandAssistantCard(activePlayer.getDeck().getDeck());
-                }break;
+        assistantCardEnd();
+        if(!endgame) {
+            for (int i = 0; i < game.getPlayers().size(); i++) {
+                if (game.getPlayers().get(i).getNickname().equals(activePlayer.getNickname())) {
+                    activePlayer = game.getPlayers().get((i + 1) % game.getPlayers().size());
+                    turnCont++;
+                    if (turnCont == game.getPlayers().size()) {
+                        state = GameState.ACTION;
+                        checkController.initializeFirstPlayerInAction();
+                        activePlayer = game.getPlayerByNickname(checkController.getFirstPlayerInAction());
+                        VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
+                        virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
+                        turnCont = 0;
+                    }
+                    if (state == GameState.PLAN) {
+                        VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
+                        virtualView.onDemandAssistantCard(activePlayer.getDeck().getDeck());
+                    }
+                    break;
+                }
             }
+        }
+    }
+
+    public void assistantCardEnd(){
+        if(activePlayer.getDeck().getDeck().size() == 0){
+            establishWin();
         }
     }
 
@@ -330,7 +341,7 @@ public class GameController implements Observer, Serializable {
                     case "sommelier":
                         for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                             if (cc.getCharacterName() == CharacterName.Sommelier){
-                                //gameExpert.getBoard().applyEffectSommelier(activePlayer, cc);
+                                gameExpert.getBoard().applyEffectSommelier(activePlayer, cc, characterCardMessage.getStudentColor(), characterCardMessage.getNumIsland());
                             }
                         }
                         break;
@@ -344,7 +355,7 @@ public class GameController implements Observer, Serializable {
                     case "messenger":
                         for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                             if (cc.getCharacterName() == CharacterName.Messenger){
-                                //gameExpert.getBoard().applyEffectMessenger(activePlayer, cc);
+                                gameExpert.getBoard().applyEffectMessenger(activePlayer, cc, characterCardMessage.getNumIsland());
                             }
                         }
                         break;
@@ -358,7 +369,7 @@ public class GameController implements Observer, Serializable {
                     case "herbalist":
                         for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                             if (cc.getCharacterName() == CharacterName.Herbalist){
-                                //gameExpert.getBoard().applyEffectHerbalist(activePlayer, cc);
+                                gameExpert.getBoard().applyEffectHerbalist(activePlayer, cc, characterCardMessage.getNumIsland());
                             }
                         }
                         break;
@@ -369,8 +380,8 @@ public class GameController implements Observer, Serializable {
                             }
                         }
                         break;
-                    case "joker":
-                        break;
+                    //case "joker":
+                        //break;
                     case "knight":
                         for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                             if (cc.getCharacterName() == CharacterName.Knight){
@@ -378,14 +389,19 @@ public class GameController implements Observer, Serializable {
                             }
                         }
                         break;
-                    case "merchant":
-                        break;
-                    case "musician":
-                        break;
+                    //case "merchant":
+                        //break;
+                    //case "musician":
+                        //break;
                     case "lady":
+                        for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
+                            if (cc.getCharacterName() == CharacterName.Lady){
+                                gameExpert.getBoard().applyEffectLady(activePlayer, cc, characterCardMessage.getStudentColor());
+                            }
+                        }
                         break;
-                    case "sinister":
-                        break;
+                    //case "sinister":
+                        //break;
                 }
                 if (askInterrupted.equals("s")){
                     virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
@@ -421,6 +437,9 @@ public class GameController implements Observer, Serializable {
                 if(game instanceof GameExpert) {
                     GameExpert gameExpert = (GameExpert) game;
                     for (CharacterCard characterCard : gameExpert.getThreeChosenCards()) {
+                        if (characterCard.getCharacterName() == CharacterName.Postman && characterCard.isEnabled()) {
+                            characterCard.setEnabled(false);
+                        }
                         if (characterCard.getCharacterName() == CharacterName.Knight && characterCard.isEnabled()) {
                             activePlayer.setSupremacyCont(2);
                             break;
@@ -428,7 +447,14 @@ public class GameController implements Observer, Serializable {
                     }
                 }
                 game.getBoard().moveMotherNature(motherNatureResult.getNumMoves());
-                //disable charactercard
+                if(game instanceof GameExpert) {
+                    GameExpert gameExpert = (GameExpert) game;
+                    for (CharacterCard characterCard : gameExpert.getThreeChosenCards()) {
+                        if (characterCard.getCharacterName() == CharacterName.Knight && characterCard.isEnabled()) {
+                            characterCard.setEnabled(false);
+                        }
+                    }
+                }
                 noTowersWin();
                 if (!endgame)
                     threeIslandEnd();
@@ -585,6 +611,14 @@ public class GameController implements Observer, Serializable {
                 VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
                 virtualView.showGenericMessage("Which cloud do you choose? Insert the cloud number.");
             }else if(!cloudFlag && !motherNatureFlag){
+                if (game instanceof GameExpert){
+                    GameExpert gameExpert = (GameExpert) game;
+                    for (CharacterCard characterCard : gameExpert.getThreeChosenCards()) {
+                        if (characterCard.getCharacterName() == CharacterName.Chef && characterCard.isEnabled()) {
+                            characterCard.setEnabled(false);
+                        }
+                    }
+                }
                 for (int i = 0; i < checkController.getNicknamesInChooseOrder().size(); i++) {
                     if (checkController.getNicknamesInChooseOrder().get(i).equals(activePlayer.getNickname())) {
                         activePlayer = game.getPlayerByNickname(checkController.getNicknamesInChooseOrder().get((i + 1) % checkController.getNicknamesInChooseOrder().size()));
@@ -592,18 +626,20 @@ public class GameController implements Observer, Serializable {
                         turnCont++;
                         if (turnCont == game.getPlayers().size()) {
                             bagEmptyEnd();
-                            state = GameState.PLAN;
-                            int getNumCardOtherPlayerSize = checkController.getNumCardOtherPlayers().size();
-                            for (int j = 0; j < getNumCardOtherPlayerSize; j++) {
-                                checkController.getNumCardOtherPlayers().remove(0);
-                                checkController.getNicknamesInChooseOrder().remove(0);
+                            if(!endgame) {
+                                state = GameState.PLAN;
+                                int getNumCardOtherPlayerSize = checkController.getNumCardOtherPlayers().size();
+                                for (int j = 0; j < getNumCardOtherPlayerSize; j++) {
+                                    checkController.getNumCardOtherPlayers().remove(0);
+                                    checkController.getNicknamesInChooseOrder().remove(0);
+                                }
+                                game.getBoard().moveStudentsFromBagToClouds();
+                                broadcastBoardMessage();
+                                activePlayer = game.getPlayerByNickname(checkController.getFirstPlayerInAction());    //mezzo inutile
+                                VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
+                                virtualView.onDemandAssistantCard(activePlayer.getDeck().getDeck());
+                                turnCont = 0;
                             }
-                            game.getBoard().moveStudentsFromBagToClouds();
-                            broadcastBoardMessage();
-                            activePlayer = game.getPlayerByNickname(checkController.getFirstPlayerInAction());    //mezzo inutile
-                            VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
-                            virtualView.onDemandAssistantCard(activePlayer.getDeck().getDeck());
-                            turnCont = 0;
                         } else {
                             VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
                             virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");

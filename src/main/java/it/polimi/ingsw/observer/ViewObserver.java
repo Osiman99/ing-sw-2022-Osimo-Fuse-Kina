@@ -35,7 +35,7 @@ public interface ViewObserver {
 
     void onUpdateCharacterCardsDescription(String askInterrupted);
 
-    void onUpdateCharacterCard(String card);
+    void onUpdateCharacterCard(String card, StudentColor studentColor, int numIsland);
 
     void onUpdateQuit(String quit);
 

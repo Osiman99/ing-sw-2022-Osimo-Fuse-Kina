@@ -97,8 +97,8 @@ public class ClientController implements ViewObserver, Observer {
     }
 
     @Override
-    public void onUpdateCharacterCard(String card){
-        client.sendMessage(new CharacterCardMessage(this.nickname, card));
+    public void onUpdateCharacterCard(String card, StudentColor studentColor, int numIsland){
+        client.sendMessage(new CharacterCardMessage(this.nickname, card, studentColor, numIsland));
     }
 
 

@@ -14,6 +14,11 @@ public class EriantysCLI extends ViewObservable implements View {
     private final PrintStream out;
     private static final String CANCEL_INPUT = "User input canceled.";
     BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
+    int assistantCardValue;
+    int numCloud;
+    int numMoves;
+    int playersNumber;
+    int i = 0;
 
 
     /**
@@ -478,19 +483,24 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
     public void onDemandPlayersNumber() {
-        int playersNumber;
+        playersNumber = 0;
         out.print("How many players are going to play? (You can choose between 2 or 3 players): ");
-        playersNumber = Integer.parseInt(nextLine());
-        do {
-            try {
-                if (playersNumber < 2 || playersNumber > 3) {
-                    out.println("Invalid number! Please try again.");
-                }
-            } catch (NumberFormatException e) {
-                out.println("Invalid input! Please try again.");
+        try {
+            playersNumber = Integer.parseInt(nextLine());
+            if (playersNumber < 2 || playersNumber > 3) {
+                out.println("Invalid number! Please try again.");
+                onDemandPlayersNumber();
             }
-        } while (playersNumber < 2 || playersNumber > 3);
-        notifyObserver(obs -> obs.onUpdatePlayersNumber(playersNumber));
+        } catch (NumberFormatException e) {
+            i++;
+            out.println("Invalid input! Please try again.");
+            onDemandPlayersNumber();
+            i--;
+        }
+        if (i == 0) {
+            notifyObserver(obs -> obs.onUpdatePlayersNumber(playersNumber));
+            i = 0;
+        }
     }
 
 
@@ -500,12 +510,22 @@ public class EriantysCLI extends ViewObservable implements View {
         for (int i = 0; i < deck.size(); i++)
             cardValueList.add(Integer.toString(deck.get(i).getValue()));
 
-        int assistantCardValue; //== value
+        assistantCardValue = 0; //== value
 
         out.print("Enter one of the available Assistant Card Value : " + cardValueList);
 
-        assistantCardValue= Integer.parseInt(nextLine());
-        notifyObserver(obs -> obs.onUpdateAssistantCard(assistantCardValue));
+        try{
+            assistantCardValue= Integer.parseInt(nextLine());
+        }catch(NumberFormatException e){
+            i++;
+            showGenericMessage("Invalid input! Please try again.");
+            onDemandAssistantCard(deck);
+            i--;
+        }
+        if (i == 0) {
+            notifyObserver(obs -> obs.onUpdateAssistantCard(assistantCardValue));
+            i = 0;
+        }
     }
 
     @Override
@@ -535,9 +555,9 @@ public class EriantysCLI extends ViewObservable implements View {
         String sNumIsland = builderNumIsland.toString();
         int numIsland = Integer.parseInt(sNumIsland);*/
 
-        String plankOrIsland = nextLine();
+        String plankOrIsland = nextLine().toLowerCase();
 
-        if(plankOrIsland.equals("cc") || plankOrIsland.equals("card") || plankOrIsland.equals("character card")){
+        if(plankOrIsland.equals("cc")){
             notifyObserver(obs -> obs.onUpdateCharacterCardsDescription("s"));
         } else if(plankOrIsland.equals("p")) {
             showGenericMessage("Choose your student to move. [g/r/y/p/b]");
@@ -607,24 +627,46 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
     public void onDemandCloud(){
-        String cc = nextLine();
-        if(cc.equals("cc") || cc.equals("card") || cc.equals("character card")){
+        numCloud = 0;
+        String cc = nextLine().toLowerCase();
+        if(cc.equals("cc")){
             notifyObserver(obs -> obs.onUpdateCharacterCardsDescription("c"));
         }else {
-            int numCloud = Integer.parseInt(cc);
-            notifyObserver(obs -> obs.onUpdateCloud(numCloud));
+            try {
+                numCloud = Integer.parseInt(cc);
+            }catch(NumberFormatException e){
+                i++;
+                showGenericMessage("Invalid input. Please try again.");
+                showGenericMessage("Which cloud do you choose? Insert the cloud number.");
+                i--;
+            }
+            if (i == 0) {
+                notifyObserver(obs -> obs.onUpdateCloud(numCloud));
+                i = 0;
+            }
         }
+
     }
 
     public void onDemandMotherNatureMoves(int maxMoves){
+        numMoves = 0;
         showGenericMessage("How many steps do you want Mother Nature does? Insert a number between 1 and " + maxMoves + ".");
-        System.out.println("ciao");
-        String cc = nextLine();
-        if(cc.equals("cc") || cc.equals("card") || cc.equals("character card")){
+        String cc = nextLine().toLowerCase();
+        if(cc.equals("cc")){
             notifyObserver(obs -> obs.onUpdateCharacterCardsDescription("m"));
         }else {
-            int numMoves = Integer.parseInt(cc);
-            notifyObserver(obs -> obs.onUpdateMotherNatureMoves(numMoves));
+            try{
+                numMoves = Integer.parseInt(cc);
+            }catch (NumberFormatException e) {
+                i++;
+                showGenericMessage("Invalid input. Please try again.");
+                onDemandMotherNatureMoves(maxMoves);
+                i--;
+            }
+            if (i == 0) {
+                notifyObserver(obs -> obs.onUpdateMotherNatureMoves(numMoves));
+                i = 0;
+            }
         }
     }
 
@@ -657,8 +699,76 @@ public class EriantysCLI extends ViewObservable implements View {
             out.println("\n" + text[i]);
         }
         showGenericMessage("\nWhich card do you choose? Insert the complete name of the card.");
-        String card = nextLine();
-        notifyObserver(obs -> obs.onUpdateCharacterCard(card.toLowerCase()));
+        String card = nextLine().toLowerCase(Locale.ROOT);
+        StudentColor studentColor = null;
+        int numIsland = 0;
+        try {
+            switch (card) {
+                case "sommelier":
+                    showGenericMessage("Choose your student to move. Write the first letter of the color followed by a space and then the island number. (e.g.: r 3)");
+                    String sStudentColor = nextLine();
+                    char color = sStudentColor.charAt(0);
+                    String sColor = String.valueOf(color);
+                    StringBuilder builderNumIsland = new StringBuilder();
+                    for (int i = 2; i < sStudentColor.length(); i++) {
+                        builderNumIsland.append(String.valueOf(sStudentColor.charAt(i)));
+                    }
+                    String sNumIsland = builderNumIsland.toString();
+                    numIsland = Integer.parseInt(sNumIsland);
+                    studentColor = chooseStudent(text, studentColor, sColor);
+                    break;
+
+                case "messenger", "herbalist":
+                    showGenericMessage("Which island do you choose? Write its number.");
+                    numIsland = Integer.parseInt(nextLine());
+                    break;
+                //case "joker":
+                    //break;
+                //case "merchant":
+                    //break;
+                //case "musician":
+                    //break;
+                case "lady":
+                    showGenericMessage("Choose your student to move. [g/r/y/p/b]");
+                    String colorIn = nextLine();
+                    studentColor = chooseStudent(text, studentColor, colorIn);
+                    break;
+                //case "sinister":
+                //break;
+                default:
+                    notifyObserver(obs -> obs.onUpdateCharacterCard(card, null, 0));
+                    break;
+
+            }
+        }catch (NumberFormatException e) {
+            showGenericMessage("Invalid input! Please try again.");
+            onDemandCharacterCard(text);
+        }
+    }
+
+    private StudentColor chooseStudent(String[] text, StudentColor studentColor, String sColor) {
+        switch(sColor) {
+            case "g":
+                studentColor = StudentColor.GREEN;
+                break;
+            case "r":
+                studentColor = StudentColor.RED;
+                break;
+            case "y":
+                studentColor = StudentColor.YELLOW;
+                break;
+            case "p":
+                studentColor = StudentColor.PINK;
+                break;
+            case "b":
+                studentColor = StudentColor.BLUE;
+                break;
+            default:
+                showGenericMessage("Invalid input! Please try again.");
+                onDemandCharacterCard(text);
+                break;
+        }
+        return studentColor;
     }
 
     public void showGenericMessage(String genericMessage) {

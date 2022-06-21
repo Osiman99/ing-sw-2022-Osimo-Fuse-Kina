@@ -300,7 +300,7 @@ public class Board extends Observable implements Serializable {
                 GameExpert gameExpert = (GameExpert) game;
                 for (CharacterCard characterCard : gameExpert.getThreeChosenCards()) {
                     if (characterCard.getCharacterName() == CharacterName.Centaur && characterCard.isEnabled()) {
-                        //disable CharacterCard
+                        characterCard.setEnabled(false);
                         break;
                     }if(gameExpert.getThreeChosenCards().get(gameExpert.getThreeChosenCards().size()-1) == characterCard){                         //else if?
                         towerCont(island);
@@ -447,11 +447,11 @@ public class Board extends Observable implements Serializable {
     //APPLYEFFECT
 
 
-    public void applyEffectSommelier(Player player, CharacterCard characterCard, Student student, Island island){       //FATTO
+    public void applyEffectSommelier(Player player, CharacterCard characterCard, StudentColor studentColor, int numIsland){       //FATTO
         characterCard.setEnabled(true);
         for (int i = 0; i < 4; i++){
-            if (characterCard.getStudents().get(i).getColor() == student.getColor()){
-                island.addStudent(characterCard.getStudents().get(i));
+            if (characterCard.getStudents().get(i).getColor() == studentColor){
+                islands.get(numIsland-1).addStudent(characterCard.getStudents().get(i));
                 characterCard.getStudents().remove(characterCard.getStudents().get(i));
                 if(!(getBag().isBagEmpty())) {
                     characterCard.getStudents().add(game.getBoard().getBag().getFirstStudent());
@@ -462,6 +462,7 @@ public class Board extends Observable implements Serializable {
         }
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
+        characterCard.setEnabled(false);
     }
 
     public void applyEffectChef(Player player, CharacterCard characterCard) {                                           //FATTO
@@ -479,6 +480,7 @@ public class Board extends Observable implements Serializable {
         }else{
             islands.get(numIsland-1).setBanCard(false);
         }
+        characterCard.setEnabled(false);
     }
 
     public void applyEffectPostman(Player player, CharacterCard characterCard){                                         //FATTO
@@ -492,7 +494,7 @@ public class Board extends Observable implements Serializable {
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
         getIslands().get(numIsland-1).setBanCard(true);
-
+        characterCard.setEnabled(false);
     }
 
     public void applyEffectCentaur(Player player, CharacterCard characterCard){                                         //FATTO
@@ -526,10 +528,22 @@ public class Board extends Observable implements Serializable {
         characterCard.setPrice(characterCard.getPrice() + 1);
     }
 
-    public void applyEffectLady(Player player, CharacterCard characterCard){
+    public void applyEffectLady(Player player, CharacterCard characterCard, StudentColor studentColor){                 //FATTO
         characterCard.setEnabled(true);
+        for (int i = 0; i < 4; i++){
+            if (characterCard.getStudents().get(i).getColor() == studentColor){
+                player.getPlank().getDiningRoom()[studentColor.getCode()].addStudent(characterCard.getStudents().get(i));
+                characterCard.getStudents().remove(characterCard.getStudents().get(i));
+                if(!(getBag().isBagEmpty())) {
+                    characterCard.getStudents().add(game.getBoard().getBag().getFirstStudent());
+                    game.getBoard().getBag().removeStudent();
+                }
+                break;
+            }
+        }
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
+        characterCard.setEnabled(false);
     }
 
     public void applyEffectSinister(Player player, CharacterCard characterCard){
