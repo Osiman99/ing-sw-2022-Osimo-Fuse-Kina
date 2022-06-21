@@ -34,6 +34,16 @@
           <artifactId>picocli</artifactId>
           <version>4.6.3</version>
     </dependency>
+      <dependency>
+          <groupId>org.openjfx</groupId>
+          <artifactId>javafx-graphics</artifactId>
+          <version>17-ea+11</version>
+      </dependency>
+      <dependency>
+          <groupId>org.openjfx</groupId>
+          <artifactId>javafx-fxml</artifactId>
+          <version>17-ea+11</version>
+      </dependency>
   </dependencies>
 
   <build>

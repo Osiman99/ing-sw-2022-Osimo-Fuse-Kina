@@ -34,7 +34,7 @@ public class PlayController {
     private ImageView card3;
 
     @FXML
-    private Label nomeTerzo;
+    private Label nickname3;
     @FXML
     private Label numeroMoneteTerzo;
     @FXML
@@ -58,13 +58,13 @@ public class PlayController {
         retroAssistantTerzo.setVisible(false);
         plankTerzo.setVisible(false);
         numeroMoneteTerzo.setVisible(false);
-        nomeTerzo.setVisible(false);
+        nickname3.setVisible(false);
         coinTerzo.setDisable(true);
         assistantTerzo.setDisable(true);
         retroAssistantTerzo.setDisable(true);
         plankTerzo.setDisable(true);
         numeroMoneteTerzo.setDisable(true);
-        nomeTerzo.setDisable(true);
+        nickname3.setDisable(true);
         plankBox.setManaged(false);
 
         /* normal mode

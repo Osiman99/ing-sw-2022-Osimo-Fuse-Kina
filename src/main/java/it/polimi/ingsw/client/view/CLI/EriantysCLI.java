@@ -284,58 +284,77 @@ public class EriantysCLI extends ViewObservable implements View {
         int i,j;
 
 
-        for(i=0; i< game.getBoard().getIslands().size(); i++) {
-            Island currentIsland = game.getBoard().getIslands().get(i);
+        for(i=0; i< 12; i++) {
 
-            //sets the island number
-            if( i+1 < 10 )
-                numIsolaBoard= " " + String.valueOf(i+1);
-            else
-                numIsolaBoard=String.valueOf(i+1);
+            if(i<game.getBoard().getIslands().size()) {
+                Island currentIsland = game.getBoard().getIslands().get(i);
 
-            //sets the mother nature token
-            if(currentIsland.isMotherNature())
-                mnBoard= ANSIColor.ORANGE_BACKGROUND + ANSIColor.BLACK + "  MN  " + ANSIColor.RESET;
-            else
-                mnBoard= "      ";
+                //sets the island number
+                if (i + 1 < 10)
+                    numIsolaBoard = " " + String.valueOf(i + 1);
+                else
+                    numIsolaBoard = String.valueOf(i + 1);
 
-            //add ■ for each tower onto the island
-            for(j=0; j< currentIsland.getTowers().size(); j++)
-                towerBoard.add(" "+convertANSI(currentIsland.getTowers().get(j).getColor()));
-            for(; j<8; j++)
-                towerBoard.add("  ");
+                //sets the mother nature token
+                if (currentIsland.isMotherNature())
+                    mnBoard = ANSIColor.ORANGE_BACKGROUND + ANSIColor.BLACK + "  MN  " + ANSIColor.RESET;
+                else
+                    mnBoard = "      ";
 
-            if(currentIsland.isBanCard())
-                banBoard = ANSIColor.RED_BACKGROUND+ANSIColor.WHITE+"  XX  "+ANSIColor.RESET;
-            else
-                banBoard = "      ";
+                //add ■ for each tower onto the island
+                for (j = 0; j < currentIsland.getTowers().size(); j++)
+                    towerBoard.add(" " + convertANSI(currentIsland.getTowers().get(j).getColor()));
+                for (; j < 8; j++)
+                    towerBoard.add("  ");
 
-            //counts the students for each color
-            for(j=0; j<currentIsland.getStudents().size(); j++) {
-                switch(currentIsland.getStudents().get(j).getColor()) {
-                    case GREEN: numStudent[0]++;
-                    break;
-                    case RED: numStudent[1]++;
-                    break;
-                    case YELLOW: numStudent[2]++;
-                    break;
-                    case PINK: numStudent[3]++;
-                    break;
-                    case BLUE: numStudent[4]++;
-                    break;
+
+                if(!(game instanceof GameExpert))
+                    banBoard = ANSIColor.BLACK_BOLD_BRIGHT+ "▒▒▒▒▒▒" +ANSIColor.RESET;
+                else if (currentIsland.isBanCard())
+                    banBoard = ANSIColor.RED_BACKGROUND + ANSIColor.WHITE + "  XX  " + ANSIColor.RESET;
+                else
+                    banBoard = "      ";
+
+                //counts the students for each color
+                for (j = 0; j < currentIsland.getStudents().size(); j++) {
+                    switch (currentIsland.getStudents().get(j).getColor()) {
+                        case GREEN:
+                            numStudent[0]++;
+                            break;
+                        case RED:
+                            numStudent[1]++;
+                            break;
+                        case YELLOW:
+                            numStudent[2]++;
+                            break;
+                        case PINK:
+                            numStudent[3]++;
+                            break;
+                        case BLUE:
+                            numStudent[4]++;
+                            break;
+                    }
                 }
+
+                islandBoard.add("╔═══════════════════════╦══════╗");
+                islandBoard.add("║" + ANSIColor.WHITE_BACKGROUND + ANSIColor.BLACK + "     ISLAND  n° " + numIsolaBoard + "     " + ANSIColor.RESET + "║" + mnBoard + "║");
+                islandBoard.add("╠═══════════════════════╬══════╣");
+                islandBoard.add("║TOWERS" + towerBoard.get(0) + towerBoard.get(1) + towerBoard.get(2) + towerBoard.get(3) + towerBoard.get(4) + towerBoard.get(5) + towerBoard.get(6) + towerBoard.get(7) + " ║" + banBoard + "║");
+                islandBoard.add("╠═════╦═════╦═════╦═════╬═════╦╝");
+                islandBoard.add("║ " + ANSIColor.GREEN + "●" + ANSIColor.RESET + " " + numStudent[0] + " ║ " + ANSIColor.RED + "●" + ANSIColor.RESET + " " + numStudent[1] + " ║ " + ANSIColor.YELLOW_BOLD_BRIGHT + "●" + ANSIColor.RESET + " " + numStudent[2] + " ║ " + ANSIColor.PINK + "●" + ANSIColor.RESET + " " + numStudent[3] + " ║ " + ANSIColor.BLUE + "●" + ANSIColor.RESET + " " + numStudent[4] + " ║");
+                islandBoard.add("╚═════╩═════╩═════╩═════╩═════╝");
             }
 
-            islandBoard.add("╔═══════════════════════╦══════╗");
-            islandBoard.add("║"+ANSIColor.WHITE_BACKGROUND+ANSIColor.BLACK+"     ISLAND  n° "+ numIsolaBoard +"     "+ ANSIColor.RESET+"║"+mnBoard+"║");
-            islandBoard.add("╠═══════════════════════╬══════╣");
-            islandBoard.add("║TOWERS"+towerBoard.get(0)+towerBoard.get(1)+towerBoard.get(2)+towerBoard.get(3)+towerBoard.get(4)+towerBoard.get(5)+towerBoard.get(6)+towerBoard.get(7) +" ║"+banBoard+"║");
-            islandBoard.add("╠═════╦═════╦═════╦═════╬═════╦╝");
-            islandBoard.add("║ "+ANSIColor.GREEN+"●"+ANSIColor.RESET+" "+numStudent[0]+" ║ "+ANSIColor.RED+"●"+ANSIColor.RESET+" "+numStudent[1]+" ║ "+ANSIColor.YELLOW_BOLD_BRIGHT+"●"+ANSIColor.RESET+" "+numStudent[2]+" ║ "+ANSIColor.PINK+"●"+ANSIColor.RESET+" "+numStudent[3]+" ║ "+ANSIColor.BLUE+"●"+ANSIColor.RESET+" "+numStudent[4]+" ║");
-            islandBoard.add("╚═════╩═════╩═════╩═════╩═════╝");
+            else{
+                islandBoard.add(ANSIColor.BLACK_BOLD_BRIGHT+"┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄"+ANSIColor.RESET);
+                islandBoard.add(ANSIColor.BLACK_BOLD_BRIGHT+"┇░░░░░░░░░░░░░░░░░░░░░░░░░░░░░┇"+ANSIColor.RESET);
+                islandBoard.add(ANSIColor.BLACK_BOLD_BRIGHT+"┆░                           ░┆"+ANSIColor.RESET);
+                islandBoard.add(ANSIColor.BLACK_BOLD_BRIGHT+"┇░       not available       ░┇"+ANSIColor.RESET);
+                islandBoard.add(ANSIColor.BLACK_BOLD_BRIGHT+"┆░                           ░┆"+ANSIColor.RESET);
+                islandBoard.add(ANSIColor.BLACK_BOLD_BRIGHT+"┇░░░░░░░░░░░░░░░░░░░░░░░░░░░░░┇"+ANSIColor.RESET);
+                islandBoard.add(ANSIColor.BLACK_BOLD_BRIGHT+"┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄"+ANSIColor.RESET);
 
-            System.out.println("\n");
-
+            }
             for(int r=0; r<islandBoard.size(); r++) {
                 if(i<4) {
                     gotoXY(2 + 33 * i, r+1);
@@ -365,6 +384,7 @@ public class EriantysCLI extends ViewObservable implements View {
 
                 // ☬  ℳ madrenatura
         /*
+            ┄┆┅┇░
             ╔═══════════════════════╦══════╗
             ║     ISLAND  n°  1     ║  MN  ║
             ╠═══════════════════════╬══════╣
@@ -396,11 +416,11 @@ public class EriantysCLI extends ViewObservable implements View {
             if(cloudStudents.size()==3)
                 cloudStudents.add(" ");
 
-            cloudBoard.add("┌─────────────────┐");
+            cloudBoard.add("╭─────────────────╮");
             cloudBoard.add("│        "+cloudStudents.get(3)+"        │");
             cloudBoard.add("│ "+cloudStudents.get(0)+"   Cloud "+(i+1)+"   "+cloudStudents.get(1)+" │");
             cloudBoard.add("│        "+cloudStudents.get(2)+"        │");
-            cloudBoard.add("└─────────────────┘");
+            cloudBoard.add("╰─────────────────╯");
 
 
             for(int r=0; r<cloudBoard.size(); r++) {
@@ -419,12 +439,12 @@ public class EriantysCLI extends ViewObservable implements View {
 
 
         /*
-        ─┌─────└┐┘
-        ┌─────────────────┐
+        ─┌─────└┐┘ ╭╯╮╰
+        ╭─────────────────╮
         │        ●        │
         │ ●   Cloud 1   ● │
         │        ●        │
-        └─────────────────┘
+        ╰─────────────────╯
          */
 
     }
