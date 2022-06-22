@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.client.ClientController;
+import it.polimi.ingsw.client.view.CLI.ANSIColor;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.network.messages.*;
 import it.polimi.ingsw.observer.Observer;
@@ -71,7 +72,7 @@ public class GameController implements Observer, Serializable {
             lobby.addPlayer(nickname);
             lobby.getPlayers().get(0).setPlayerColor(TowerColor.BLACK);
             virtualView.showLoginResult(true, true, Game.SERVER_NICKNAME);
-            virtualView.showGenericMessage("Do you want to play in Normal or Expert mode? [n/e]");
+            virtualView.showGenericMessage("Do you want to play in " + ANSIColor.UNDERLINE +"Normal" +ANSIColor.RESET+  " or " +ANSIColor.UNDERLINE+  "Expert" +ANSIColor.RESET+ " mode? [n/e]");
 
         } else if (!lobby.isFull()) {
             addVirtualView(nickname, virtualView);
@@ -172,7 +173,7 @@ public class GameController implements Observer, Serializable {
         game.setState(GameState.PLAN);
         game.getBoard().moveStudentsFromBagToClouds();
         broadcastBoardMessage();
-        broadcastGenericMessage("All Players are connected. " + activePlayer.getNickname() + " is choosing the Assistant Card...");
+        broadcastGenericMessage("All Players are connected. " + ANSIColor.PURPLE_BOLD_BRIGHT+ activePlayer.getNickname().toUpperCase() +ANSIColor.RESET + " is choosing the Assistant Card...");
 
 
         VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
@@ -264,7 +265,7 @@ public class GameController implements Observer, Serializable {
         if (receivedMessage.getMessageType() == MessageType.ASSISTANTCARD_RESULT){
             if (checkController.verifyReceivedData(receivedMessage)) {
                 activePlayer.chooseAssistantCard(((AssistantCardResult) receivedMessage).getCard());
-                broadcastGenericMessage(activePlayer.getNickname() + " chose the Card number " + ((AssistantCardResult) receivedMessage).getCard());
+                broadcastGenericMessage(ANSIColor.PURPLE_BOLD_BRIGHT+ activePlayer.getNickname().toUpperCase() +ANSIColor.CYAN_BOLD +  " chose the Card number " + ((AssistantCardResult) receivedMessage).getCard() +ANSIColor.RESET );
                 planTurnManager();
             }
         }else{
@@ -320,13 +321,13 @@ public class GameController implements Observer, Serializable {
                 virtualView.onDemandCharacterCard(text);
             }else{
                 if(characterCardsDescriptionRequest.getAskInterrupted().equals("s")) {
-                    virtualView.showGenericMessage("Invalid input! Please try again.");
+                    virtualView.showGenericMessage(ANSIColor.RED+"Invalid input! Please try again."+ANSIColor.RESET);
                     virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
                 }else if(characterCardsDescriptionRequest.getAskInterrupted().equals("m")){
-                    virtualView.showGenericMessage("Invalid input! Please try again.");
+                    virtualView.showGenericMessage(ANSIColor.RED+"Invalid input! Please try again."+ANSIColor.RESET);
                     virtualView.onDemandMotherNatureMoves(activePlayer.getChosenAssistantCard().getMaxMoves());
                 }else if(characterCardsDescriptionRequest.getAskInterrupted().equals("c")){
-                    virtualView.showGenericMessage("Invalid input! Please try again.");
+                    virtualView.showGenericMessage(ANSIColor.RED+"Invalid input! Please try again."+ANSIColor.RESET);
                     virtualView.showGenericMessage("Which cloud do you choose? Insert the cloud number.");
                 }
             }
@@ -431,11 +432,11 @@ public class GameController implements Observer, Serializable {
                 if(moveMessage.getNumIsland() == 0) {
                     activePlayer.moveStudentFromEntranceToDiningRoom(new Student(moveMessage.getStudentColor()));
                     broadcastBoardMessage();
-                    broadcastGenericMessage(activePlayer.getNickname() + " moved a " + moveMessage.getStudentColor() + " student to his plank!");
+                    broadcastGenericMessage( ANSIColor.PURPLE_BOLD_BRIGHT+ activePlayer.getNickname().toUpperCase() +ANSIColor.CYAN_BOLD + " moved a " + moveMessage.getStudentColor() + " student to his plank!"+ANSIColor.RESET);
                 }else{
                     activePlayer.moveStudentFromEntranceToIsland(new Student(moveMessage.getStudentColor()), game.getBoard().getIslands().get(moveMessage.getNumIsland()-1));
                     broadcastBoardMessage();
-                    broadcastGenericMessage(activePlayer.getNickname() + " moved a " + moveMessage.getStudentColor() + " student to the island number " + moveMessage.getNumIsland() + "!");
+                    broadcastGenericMessage(ANSIColor.PURPLE_BOLD_BRIGHT+ activePlayer.getNickname().toUpperCase() +ANSIColor.CYAN_BOLD +" moved a " + moveMessage.getStudentColor() + " student to the island number " + moveMessage.getNumIsland() + "!"+ANSIColor.RESET);
                 }actionTurnManager();
             }
         }else if (receivedMessage.getMessageType() == MessageType.MOTHERNATURE_RESULT){
@@ -479,7 +480,7 @@ public class GameController implements Observer, Serializable {
             if(checkController.verifyReceivedData(receivedMessage)){
                 activePlayer.moveStudentsFromCloudToEntrance(game.getBoard().getClouds().get(cloudMessage.getNumCloud()-1));
                 broadcastBoardMessage();
-                broadcastGenericMessage(activePlayer.getNickname() + " chose the cloud number " + cloudMessage.getNumCloud());
+                broadcastGenericMessage(ANSIColor.PURPLE_BOLD_BRIGHT+ activePlayer.getNickname().toUpperCase() +ANSIColor.CYAN_BOLD + " chose the cloud number " + cloudMessage.getNumCloud()+ANSIColor.RESET);
                 cloudFlag = false;
                 moveCont--;
                 actionTurnManager();
@@ -493,7 +494,7 @@ public class GameController implements Observer, Serializable {
                 broadcastBoardMessage();
                 state = GameState.ENDGAME;
                 game.setState(GameState.ENDGAME);
-                broadcastGenericMessage(player.getNickname() + " is the WINNER!!!");
+                broadcastGenericMessage(ANSIColor.PURPLE_BOLD_BRIGHT+ player.getNickname().toUpperCase() +ANSIColor.CYAN_BOLD+ " is the WINNER!!!"+ANSIColor.RESET);
                 broadcastGenericMessage("Type \"quit\" to leave the game.");
                 endgame = true;
                 return;
@@ -547,7 +548,7 @@ public class GameController implements Observer, Serializable {
                     tie = true;
                     state = GameState.ENDGAME;
                     game.setState(GameState.ENDGAME);
-                    broadcastGenericMessage("It's a DRAW!");
+                    broadcastGenericMessage(ANSIColor.CYAN_BOLD +"It's a DRAW!"+ANSIColor.RESET);
                     broadcastGenericMessage("Type \"quit\" to leave the game.");
                     endgame = true;
                     return;
@@ -563,7 +564,7 @@ public class GameController implements Observer, Serializable {
                     tie = true;
                     state = GameState.ENDGAME;
                     game.setState(GameState.ENDGAME);
-                    broadcastGenericMessage("It's a DRAW!");
+                    broadcastGenericMessage(ANSIColor.CYAN_BOLD +"It's a DRAW!"+ANSIColor.RESET);
                     broadcastGenericMessage("Type \"quit\" to leave the game.");
                     endgame = true;
                     return;
@@ -578,7 +579,7 @@ public class GameController implements Observer, Serializable {
                     tie = true;
                     state = GameState.ENDGAME;
                     game.setState(GameState.ENDGAME);
-                    broadcastGenericMessage("It's a DRAW!");
+                    broadcastGenericMessage(ANSIColor.CYAN_BOLD +"It's a DRAW!"+ANSIColor.RESET);
                     broadcastGenericMessage("Type \"quit\" to leave the game.");
                     endgame = true;
                     return;
@@ -587,7 +588,7 @@ public class GameController implements Observer, Serializable {
         }
         state = GameState.ENDGAME;
         game.setState(GameState.ENDGAME);
-        broadcastGenericMessage(winner.getNickname() + " is the WINNER!!!");
+        broadcastGenericMessage(ANSIColor.PURPLE_BOLD_BRIGHT+ winner.getNickname().toUpperCase()+ANSIColor.CYAN_BOLD + " is the WINNER!!!"+ANSIColor.RESET);
         broadcastGenericMessage("Type \"quit\" to leave the game.");
         endgame = true;
     }

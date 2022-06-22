@@ -132,7 +132,7 @@ public class EriantysCLI extends ViewObservable implements View {
                 List<String> banCards = new ArrayList<>();
                 for(Boolean b : c.getBanCards()) {
                     if (b)
-                        banCards.add(ANSIColor.RED_BACKGROUND + ANSIColor.WHITE + "XX  " + ANSIColor.RESET);
+                        banCards.add(ANSIColor.RED_BACKGROUND + ANSIColor.WHITE + " XX " + ANSIColor.RESET);
                 }
                 characterMarkers.add(String.valueOf(banCards));
             }
@@ -147,7 +147,7 @@ public class EriantysCLI extends ViewObservable implements View {
         System.out.println("During your "+ ANSIColor.CYAN_BOLD+ "Action Phase"+ANSIColor.RESET+ ", type "+ANSIColor.UNDERLINE+ ANSIColor.PURPLE_BOLD_BRIGHT+ "cc" +ANSIColor.RESET+ " to use one of these Character cards.");
         for(int i=0; i<3; i++) {
             gotoXY(138,4+3*i);
-            System.out.println(ANSIColor.YELLOW_BACKGROUND + ANSIColor.BLACK +(i+1)+") " + characterNames.get(i)+ANSIColor.RESET+" price: "+ANSIColor.UNDERLINE+ characterPrice.get(i)+ANSIColor.RESET);
+            System.out.println(ANSIColor.ORANGE_BACKGROUND + ANSIColor.BLACK +(i+1)+") " + characterNames.get(i)+ANSIColor.RESET+" price: "+ANSIColor.UNDERLINE+ characterPrice.get(i)+ANSIColor.RESET);
             gotoXY(138,5+3*i);
             System.out.println(characterMarkers.get(i));
         }
@@ -201,7 +201,7 @@ public class EriantysCLI extends ViewObservable implements View {
             }
 
             if(game instanceof GameExpert) {
-                coins= " - "+ ANSIColor.YELLOW_BACKGROUND + ANSIColor.BLACK +"Coins: " + playerBoard.getNumCoins()+ ANSIColor.RESET;
+                coins= " - "+ ANSIColor.YELLOW_BOLD_BRIGHT  +"Coins: " + playerBoard.getNumCoins()+ ANSIColor.RESET;
             }
 
 
@@ -718,7 +718,7 @@ public class EriantysCLI extends ViewObservable implements View {
             System.exit(1);
         }else{
             showGenericMessage(ANSIColor.RED+"Invalid input! Please try again."+ANSIColor.RESET);
-            showGenericMessage("Type "+ ANSIColor.CYAN_BOLD+ "quit"+ ANSIColor.RESET+ " to leave the game.");
+            showGenericMessage("Type \"quit\" to leave the game.");
         }
     }
 
@@ -827,7 +827,7 @@ public class EriantysCLI extends ViewObservable implements View {
             onDemandCloud();
         }else if (genericMessage.equals("Type \"quit\" to leave the game.")){
             onDemandQuit();
-        }else if (genericMessage.equals(("Do you want to play in Normal or Expert mode? [n/e]"))){
+        }else if (genericMessage.equals(("Do you want to play in " + ANSIColor.UNDERLINE +"Normal" +ANSIColor.RESET+  " or " +ANSIColor.UNDERLINE+  "Expert" +ANSIColor.RESET+ " mode? [n/e]"))){
             onDemandMode();
         }
     }
