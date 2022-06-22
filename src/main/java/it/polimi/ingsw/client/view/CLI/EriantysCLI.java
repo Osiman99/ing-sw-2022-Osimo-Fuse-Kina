@@ -28,13 +28,7 @@ public class EriantysCLI extends ViewObservable implements View {
         out = System.out;
     }
 
-
-    /**
-     * Reads a line from the standard input.
-     *
-     * @return the string read from the input.
-     * @throws ExecutionException if the input stream thread is interrupted.
-     */
+    /*
     public String readLine() throws ExecutionException {
         FutureTask<String> futureTask = new FutureTask<>(new InputReadTask());
         Thread inputThread = new Thread(futureTask);
@@ -49,7 +43,7 @@ public class EriantysCLI extends ViewObservable implements View {
         }
         return input;
     }
-
+*/
 
     public void welcome() {
         ArrayList<String> welcome = new ArrayList<>();
@@ -66,14 +60,6 @@ public class EriantysCLI extends ViewObservable implements View {
         for(String w:welcome){
             System.out.println(w);
         }
-
-      /* ArrayList<StudentColor> printCloud = new ArrayList<>();
-        printCloud.add(StudentColor.YELLOW);
-        printCloud.add(StudentColor.RED);
-        printCloud.add(StudentColor.BLUE);
-        printCloud.add(StudentColor.PINK);
-        cloud(4, printCloud);*/
-
 
         try {
             onDemandServerInfo();
@@ -740,6 +726,9 @@ public class EriantysCLI extends ViewObservable implements View {
                     String sNumIsland = builderNumIsland.toString();
                     numIsland = Integer.parseInt(sNumIsland);
                     studentColor = chooseStudent(text, studentColor, sColor);
+                    if (i == -1){
+                        return;
+                    }
                     break;
 
                 case "messenger", "herbalist":
@@ -756,14 +745,17 @@ public class EriantysCLI extends ViewObservable implements View {
                     showGenericMessage("Choose your student to move. [g/r/y/p/b]");
                     String colorIn = nextLine();
                     studentColor = chooseStudent(text, studentColor, colorIn);
+                    if (i == 0){
+                        return;
+                    }
                     break;
                 //case "sinister":
                 //break;
-                default:
-                    notifyObserver(obs -> obs.onUpdateCharacterCard(card, null, 0));
-                    break;
 
             }
+            StudentColor finalStudentColor = studentColor;
+            int finalNumIsland = numIsland;
+            notifyObserver(obs -> obs.onUpdateCharacterCard(card, finalStudentColor, finalNumIsland));
         }catch (NumberFormatException e) {
             showGenericMessage("Invalid input! Please try again.");
             onDemandCharacterCard(text);
@@ -788,9 +780,11 @@ public class EriantysCLI extends ViewObservable implements View {
                 studentColor = StudentColor.BLUE;
                 break;
             default:
+                i++;
                 showGenericMessage("Invalid input! Please try again.");
                 onDemandCharacterCard(text);
-                break;
+                i = -1;
+                return studentColor;
         }
         return studentColor;
     }

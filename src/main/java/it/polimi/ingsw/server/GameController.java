@@ -169,6 +169,7 @@ public class GameController implements Observer, Serializable {
         }
 
         setGameState(GameState.PLAN);
+        game.setState(GameState.PLAN);
         game.getBoard().moveStudentsFromBagToClouds();
         broadcastBoardMessage();
         broadcastGenericMessage("All Players are connected. " + activePlayer.getNickname() + " is choosing the Assistant Card...");
@@ -280,6 +281,7 @@ public class GameController implements Observer, Serializable {
                     turnCont++;
                     if (turnCont == game.getPlayers().size()) {
                         state = GameState.ACTION;
+                        game.setState(GameState.ACTION);
                         checkController.initializeFirstPlayerInAction();
                         activePlayer = game.getPlayerByNickname(checkController.getFirstPlayerInAction());
                         VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
@@ -485,6 +487,7 @@ public class GameController implements Observer, Serializable {
             if (player.getPlank().getTowerSpace().getTowersList().size() == 0) {
                 broadcastBoardMessage();
                 state = GameState.ENDGAME;
+                game.setState(GameState.ENDGAME);
                 broadcastGenericMessage(player.getNickname() + " is the WINNER!!!");
                 broadcastGenericMessage("Type \"quit\" to leave the game.");
                 endgame = true;
@@ -538,6 +541,7 @@ public class GameController implements Observer, Serializable {
                 } else {
                     tie = true;
                     state = GameState.ENDGAME;
+                    game.setState(GameState.ENDGAME);
                     broadcastGenericMessage("It's a DRAW!");
                     broadcastGenericMessage("Type \"quit\" to leave the game.");
                     endgame = true;
@@ -553,6 +557,7 @@ public class GameController implements Observer, Serializable {
                 } else {
                     tie = true;
                     state = GameState.ENDGAME;
+                    game.setState(GameState.ENDGAME);
                     broadcastGenericMessage("It's a DRAW!");
                     broadcastGenericMessage("Type \"quit\" to leave the game.");
                     endgame = true;
@@ -567,6 +572,7 @@ public class GameController implements Observer, Serializable {
                 } else {
                     tie = true;
                     state = GameState.ENDGAME;
+                    game.setState(GameState.ENDGAME);
                     broadcastGenericMessage("It's a DRAW!");
                     broadcastGenericMessage("Type \"quit\" to leave the game.");
                     endgame = true;
@@ -575,6 +581,7 @@ public class GameController implements Observer, Serializable {
             }
         }
         state = GameState.ENDGAME;
+        game.setState(GameState.ENDGAME);
         broadcastGenericMessage(winner.getNickname() + " is the WINNER!!!");
         broadcastGenericMessage("Type \"quit\" to leave the game.");
         endgame = true;
@@ -628,6 +635,7 @@ public class GameController implements Observer, Serializable {
                             bagEmptyEnd();
                             if(!endgame) {
                                 state = GameState.PLAN;
+                                game.setState(GameState.PLAN);
                                 int getNumCardOtherPlayerSize = checkController.getNumCardOtherPlayers().size();
                                 for (int j = 0; j < getNumCardOtherPlayerSize; j++) {
                                     checkController.getNumCardOtherPlayers().remove(0);

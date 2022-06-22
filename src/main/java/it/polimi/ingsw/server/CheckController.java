@@ -226,7 +226,22 @@ public class CheckController implements Serializable {
             case "sommelier":
                 for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                     if (cc.getCharacterName() == CharacterName.Sommelier) {
-                        return eachCharCardCheck(virtualView, activePlayer, cc);
+                        if (eachCharCardCheck(virtualView, activePlayer, cc)) {
+                            for (int i = 0; i < cc.getStudents().size(); i++) {
+                                if (characterCardMessage.getStudentColor() == cc.getStudents().get(i).getColor()) {
+                                    System.out.println(characterCardMessage.getNumIsland());
+                                    if (characterCardMessage.getNumIsland() <= game.getBoard().getIslands().size() && characterCardMessage.getNumIsland() > 0) {
+                                        return true;
+                                    } else {
+                                        virtualView.showGenericMessage("The island number " + characterCardMessage.getNumIsland() + " doesn't exist! Please try again.");
+                                        virtualView.onDemandCharacterCard(gameController.getText());
+                                        return false;
+                                    }
+                                }
+                            }virtualView.showGenericMessage("There's no " + characterCardMessage.getStudentColor() +" student on this card! Please try again.");
+                            virtualView.onDemandCharacterCard(gameController.getText());
+                        }
+                        return false;
                     }
                 }
                 break;
@@ -240,7 +255,7 @@ public class CheckController implements Serializable {
             case "messenger":
                 for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                     if (cc.getCharacterName() == CharacterName.Messenger) {
-                        return eachCharCardCheck(virtualView, activePlayer, cc);
+                        return numIslandCheck(virtualView, activePlayer, characterCardMessage, cc);
                     }
                 }
                 break;
@@ -254,7 +269,7 @@ public class CheckController implements Serializable {
             case "herbalist":
                 for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                     if (cc.getCharacterName() == CharacterName.Herbalist) {
-                        return eachCharCardCheck(virtualView, activePlayer, cc);
+                        return numIslandCheck(virtualView, activePlayer, characterCardMessage, cc);
                     }
                 }
                 break;
@@ -298,7 +313,15 @@ public class CheckController implements Serializable {
             case "lady":
                 for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                     if (cc.getCharacterName() == CharacterName.Lady) {
-                        return eachCharCardCheck(virtualView, activePlayer, cc);
+                        if (eachCharCardCheck(virtualView, activePlayer, cc)) {
+                            for (int i = 0; i < cc.getStudents().size(); i++) {
+                                if (characterCardMessage.getStudentColor() == cc.getStudents().get(i).getColor()) {
+                                    return true;
+                                }
+                            }virtualView.showGenericMessage("There's no " + characterCardMessage.getStudentColor() +" student on this card! Please try again.");
+                            virtualView.onDemandCharacterCard(gameController.getText());
+                        }
+                        return false;
                     }
                 }
                 break;
@@ -315,6 +338,20 @@ public class CheckController implements Serializable {
         return false;
     }
 
+    private boolean numIslandCheck(VirtualView virtualView, Player activePlayer, CharacterCardMessage characterCardMessage, CharacterCard cc) {
+        if (eachCharCardCheck(virtualView, activePlayer, cc)){
+            if (characterCardMessage.getNumIsland() > 0 && characterCardMessage.getNumIsland() <= game.getBoard().getIslands().size()){
+                return true;
+            }else{
+                virtualView.showGenericMessage("The island number " + characterCardMessage.getNumIsland() + " doesn't exist! Please try again.");
+                virtualView.onDemandCharacterCard(gameController.getText());
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
     private boolean eachCharCardCheck(VirtualView virtualView, Player activePlayer, CharacterCard cc) {
         if (cc.getPrice() <= activePlayer.getNumCoins()) {
             return true;
@@ -327,7 +364,7 @@ public class CheckController implements Serializable {
             }else if(gameController.getAskInterrupted().equals("c")){
                 virtualView.showGenericMessage("Which cloud do you choose? Insert the cloud number.");
             }
-            return false;
+            return true;
         }
     }
 

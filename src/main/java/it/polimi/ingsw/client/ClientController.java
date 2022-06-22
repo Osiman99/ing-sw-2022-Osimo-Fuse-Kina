@@ -12,10 +12,9 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-/*
-    this class conncets network and view (cli or gui)
+/**
+ * this class connects network and view (cli or gui)
  */
-
 public class ClientController implements ViewObserver, Observer {
     private final View view;
     private final ExecutorService taskQueue;
