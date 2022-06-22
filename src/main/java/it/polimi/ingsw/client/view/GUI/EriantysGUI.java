@@ -4,13 +4,14 @@ import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.server.model.AssistantCard;
 import it.polimi.ingsw.server.model.Game;
+ import javafx.application.Platform;
 
 import java.util.List;
 
 public class EriantysGUI extends ViewObservable implements View {
     @Override
     public void onDemandNickname() {
-
+        //Platform.runLater();
     }
 
     @Override
