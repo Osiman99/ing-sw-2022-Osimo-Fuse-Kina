@@ -29,7 +29,7 @@ public class GameExpert extends Game implements Serializable {
     public void initGameExpert(){
         for (int i = 0; i < 3; i++) {
             if (i == 0) {
-                randomInt = random.nextInt(11);
+                randomInt = random.nextInt(7);
                 tempRandomInt2 = randomInt;
             } else if (i == 1) {
                 tempRandomInt1 = randomInt;
@@ -55,27 +55,15 @@ public class GameExpert extends Game implements Serializable {
                     threeChosenCards.add(new CharacterCard(CharacterName.Centaur));
                     break;
                 case 6:
-                    threeChosenCards.add(new CharacterCard(CharacterName.Joker));
-                    break;
-                case 7:
                     threeChosenCards.add(new CharacterCard(CharacterName.Knight));
                     break;
-                case 8:
-                    threeChosenCards.add(new CharacterCard(CharacterName.Merchant));
-                    break;
-                case 9:
-                    threeChosenCards.add(new CharacterCard(CharacterName.Musician));
-                    break;
-                case 10:
+                case 7:
                     threeChosenCards.add(new CharacterCard(CharacterName.Lady));
                     break;
-                case 11:
-                    threeChosenCards.add(new CharacterCard(CharacterName.Sinister));
-                    break;
             }
-            randomInt = random.nextInt(11);
+            randomInt = random.nextInt(7);
             while (tempRandomInt1 == randomInt || tempRandomInt2 == randomInt) {
-                randomInt = random.nextInt(11);
+                randomInt = random.nextInt(7);
             }
         }fillCcDescription();
     }

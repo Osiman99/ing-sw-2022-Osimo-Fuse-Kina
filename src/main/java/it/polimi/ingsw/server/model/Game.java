@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.network.messages.LobbyMessage;
 import it.polimi.ingsw.observer.Observable;
+import it.polimi.ingsw.server.GameState;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class Game extends Observable implements Serializable {
     private int contPlayer;
     public static final String SERVER_NICKNAME = "server";
     public List<String> nicknames;
+    public GameState state;
 
 
     public Game(){
@@ -126,6 +128,13 @@ public class Game extends Observable implements Serializable {
         return result;
     }
 
+    public GameState getState() {
+        return state;
+    }
+
+    public void setState(GameState state) {
+        this.state = state;
+    }
 
     public static void resetInstance(){
         instance = null;
