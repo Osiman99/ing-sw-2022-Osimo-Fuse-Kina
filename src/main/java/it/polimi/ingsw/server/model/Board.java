@@ -25,9 +25,11 @@ public class Board extends Observable implements Serializable {
     private int yellowCont;
     private int pinkCont;
     private int blueCont;
+    private boolean cardActivated;
 
-
-
+    /**
+     * initialize the game board
+     */
     public void initBoard(){
         bag = new Bag();
         game = Game.getInstance();
@@ -36,6 +38,7 @@ public class Board extends Observable implements Serializable {
             professorsControlledBy[i] = "";
         }
 
+        cardActivated = false;
         greenCont = 0;
         redCont = 0;
         yellowCont = 0;
@@ -95,6 +98,10 @@ public class Board extends Observable implements Serializable {
 
     }
 
+    /**
+     * setters and getters
+     */
+
     public Bag getBag() {
         return bag;
     }
@@ -106,6 +113,7 @@ public class Board extends Observable implements Serializable {
     public List<Island> getIslands() {
         return islands;
     }
+
 
     public void setProfessorsControlledBy(String[] nicknames) {
         System.arraycopy(nicknames, 0, professorsControlledBy, 0, 5);
@@ -119,7 +127,11 @@ public class Board extends Observable implements Serializable {
         game = instance;
     }
 
-    public Game getGameInstance() {return game;}
+    public Game getGameInstance() {
+        return game;
+    }
+
+
     /**
      * if there are 2 players Cloud gets 3 students from the Bag each round,
      * if there are 3 players it gets 4.
@@ -187,21 +199,22 @@ public class Board extends Observable implements Serializable {
     }
 
     /**
-     * moving the professor in cases with 2 or 3 players.
+     * moving the professor in case of an expert game.
      */
-    public void moveProfessor(Player player){
+    public void moveProfessor(){
         if(game instanceof GameExpert){
             GameExpert gameExpert = (GameExpert) game;
             for(CharacterCard characterCard : gameExpert.getThreeChosenCards()) {
                 if (characterCard.getCharacterName() == CharacterName.Chef && characterCard.isEnabled()){
-                    moveProfessorChef(player);
+                    System.out.println("ciao");
+                    moveProfessorChef();
                     break;
                 }if(gameExpert.getThreeChosenCards().get(gameExpert.getThreeChosenCards().size()-1) == characterCard){
-                    moveProfessorNormal(player);
+                    moveProfessorNormal();
                 }
             }
         }else {
-            moveProfessorNormal(player);
+            moveProfessorNormal();
         }
 
         /*if (game.getNumPlayers() == 2) {
@@ -225,38 +238,49 @@ public class Board extends Observable implements Serializable {
         }*/
     }
 
-    private void moveProfessorNormal(Player player) {
-        for (int i = 0; i < game.getNumPlayers(); i++) {
-            if (player == game.getPlayers().get(i)) {
-                for (int j = (i + 1) % game.getNumPlayers(); j < game.getNumPlayers(); j++) {
-                    if (j == i) {
-                        break;
-                    } else {
-                        for (int k = 0; k < 5; k++) {
-                            if (game.getPlayers().get(i).getPlank().getDiningRoom()[k].getStudents().size() > game.getPlayers().get(j).getPlank().getDiningRoom()[k].getStudents().size()) {
-                                professorsControlledBy[k] = game.getPlayers().get(i).getNickname();
-                            }
-                        }
-                    }
+    /**
+     * moving the professor in case of a normal game.
+     */
+    private void moveProfessorNormal() {
+        if (game.getNumPlayers() == 2) {
+            for (int i = 0; i < 5; i++) {
+                if (game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size()) {
+                    professorsControlledBy[i] = game.getPlayers().get(0).getNickname();
+                } else if (game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size()) {
+                    professorsControlledBy[i] = game.getPlayers().get(1).getNickname();
+                }
+            }
+        } else if (game.getNumPlayers() == 3) {
+            for (int i = 0; i < 5; i++) {
+                if (game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() && game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size()) {
+                    professorsControlledBy[i] = game.getPlayers().get(0).getNickname();
+                } else if (game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() && game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size()) {
+                    professorsControlledBy[i] = game.getPlayers().get(1).getNickname();
+                } else if (game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() && game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size()) {
+                    professorsControlledBy[i] = game.getPlayers().get(2).getNickname();
                 }
             }
         }
     }
 
 
-    public void moveProfessorChef(Player player){
-        for(int i = 0; i < game.getNumPlayers(); i++){
-            if(player == game.getPlayers().get(i)) {
-                for (int j = (i + 1) % game.getNumPlayers(); j < game.getNumPlayers(); j++) {
-                    if (j == i) {
-                        break;
-                    } else {
-                        for (int k = 0; k < 5; k++) {
-                            if (game.getPlayers().get(i).getPlank().getDiningRoom()[k].getStudents().size() >= game.getPlayers().get(j).getPlank().getDiningRoom()[k].getStudents().size()) {
-                                professorsControlledBy[k] = game.getPlayers().get(i).getNickname();
-                            }
-                        }
-                    }
+    public void moveProfessorChef(){
+        if (game.getNumPlayers() == 2) {
+            for (int i = 0; i < 5; i++) {
+                if (game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() >= game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size()) {
+                    professorsControlledBy[i] = game.getPlayers().get(0).getNickname();
+                } else if (game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() >= game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size()) {
+                    professorsControlledBy[i] = game.getPlayers().get(1).getNickname();
+                }
+            }
+        } else if (game.getNumPlayers() == 3) {
+            for (int i = 0; i < 5; i++) {
+                if (game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() >= game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() && game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size()) {
+                    professorsControlledBy[i] = game.getPlayers().get(0).getNickname();
+                } else if (game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() >= game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() && game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size()) {
+                    professorsControlledBy[i] = game.getPlayers().get(1).getNickname();
+                } else if (game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size() >= game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() && game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size()) {
+                    professorsControlledBy[i] = game.getPlayers().get(2).getNickname();
                 }
             }
         }
@@ -312,6 +336,10 @@ public class Board extends Observable implements Serializable {
         }
     }
 
+    /**
+     * count the tower in the supremacy calculation
+     * @param island
+     */
     private void towerCont(Island island) {
         if (island.getTowers().size() != 0) {
             for (int i = 0; i < island.getTowers().size(); i++) {
@@ -444,11 +472,25 @@ public class Board extends Observable implements Serializable {
         }
     }
 
-    //APPLYEFFECT
+    public boolean isCardActivated() {
+        return cardActivated;
+    }
 
+    public void setCardActivated(boolean cardActivated) {
+        this.cardActivated = cardActivated;
+    }
+
+    /**
+     * Applying the effects of the character cards
+     * @param player
+     * @param characterCard
+     * @param studentColor
+     * @param numIsland
+     */
 
     public void applyEffectSommelier(Player player, CharacterCard characterCard, StudentColor studentColor, int numIsland){       //FATTO
         characterCard.setEnabled(true);
+        cardActivated = true;
         for (int i = 0; i < 4; i++){
             if (characterCard.getStudents().get(i).getColor() == studentColor){
                 islands.get(numIsland-1).addStudent(characterCard.getStudents().get(i));
@@ -467,12 +509,14 @@ public class Board extends Observable implements Serializable {
 
     public void applyEffectChef(Player player, CharacterCard characterCard) {                                           //FATTO
         characterCard.setEnabled(true);
+        cardActivated = true;
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
     }
 
     public void applyEffectMessenger(Player player, CharacterCard characterCard, int numIsland){                        //FATTO
         characterCard.setEnabled(true);
+        cardActivated = true;
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
         if (!(islands.get(numIsland-1).isBanCard())){
@@ -485,12 +529,14 @@ public class Board extends Observable implements Serializable {
 
     public void applyEffectPostman(Player player, CharacterCard characterCard){                                         //FATTO
         characterCard.setEnabled(true);
+        cardActivated = true;
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
     }
 
     public void applyEffectHerbalist(Player player, CharacterCard characterCard, int numIsland){                        //FATTO
         characterCard.setEnabled(true);
+        cardActivated = true;
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
         getIslands().get(numIsland-1).setBanCard(true);
@@ -499,24 +545,26 @@ public class Board extends Observable implements Serializable {
 
     public void applyEffectCentaur(Player player, CharacterCard characterCard){                                         //FATTO
         characterCard.setEnabled(true);
+        cardActivated = true;
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
     }
 
-    public void applyEffectJoker(Player player, CharacterCard characterCard){
+    /*public void applyEffectJoker(Player player, CharacterCard characterCard){
         characterCard.setEnabled(true);
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
 
-    }
+    }*/
 
     public void applyEffectKnight(Player player, CharacterCard characterCard){                                          //FATTO
         characterCard.setEnabled(true);
+        cardActivated = true;
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
     }
 
-    public void applyEffectMerchant(Player player, CharacterCard characterCard){
+    /*public void applyEffectMerchant(Player player, CharacterCard characterCard){
         characterCard.setEnabled(true);
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
@@ -526,10 +574,11 @@ public class Board extends Observable implements Serializable {
         characterCard.setEnabled(true);
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
-    }
+    }*/
 
     public void applyEffectLady(Player player, CharacterCard characterCard, StudentColor studentColor){                 //FATTO
         characterCard.setEnabled(true);
+        cardActivated = true;
         for (int i = 0; i < 4; i++){
             if (characterCard.getStudents().get(i).getColor() == studentColor){
                 player.getPlank().getDiningRoom()[studentColor.getCode()].addStudent(characterCard.getStudents().get(i));
@@ -546,10 +595,10 @@ public class Board extends Observable implements Serializable {
         characterCard.setEnabled(false);
     }
 
-    public void applyEffectSinister(Player player, CharacterCard characterCard){
+    /*public void applyEffectSinister(Player player, CharacterCard characterCard){
         characterCard.setEnabled(true);
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
-    }
+    }*/
 
 }

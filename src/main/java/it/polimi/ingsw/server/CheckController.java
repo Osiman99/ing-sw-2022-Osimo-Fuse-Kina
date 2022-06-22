@@ -222,6 +222,10 @@ public class CheckController implements Serializable {
         VirtualView virtualView = virtualViewMap.get(message.getNickname());
         Player activePlayer = game.getPlayerByNickname(message.getNickname());
         CharacterCardMessage characterCardMessage = (CharacterCardMessage) message;
+        if(game.getBoard().isCardActivated()){
+            virtualView.showGenericMessage("You already activated a card in this turn!");
+            return askInterrupted(virtualView, activePlayer);
+        }
         switch (characterCardMessage.getCard()) {
             case "sommelier":
                 for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
@@ -333,8 +337,22 @@ public class CheckController implements Serializable {
                 }
                 break;
             */
+            case "back":
+                askInterrupted(virtualView, activePlayer);
+                return false;
         }virtualView.showGenericMessage("Invalid input! Please try again.");
         virtualView.onDemandCharacterCard(gameController.getText());
+        return false;
+    }
+
+    private boolean askInterrupted(VirtualView virtualView, Player activePlayer) {
+        if (gameController.getAskInterrupted().equals("s")){
+            virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
+        }else if(gameController.getAskInterrupted().equals("m")){
+            virtualView.onDemandMotherNatureMoves(activePlayer.getChosenAssistantCard().getMaxMoves());
+        }else if(gameController.getAskInterrupted().equals("c")){
+            virtualView.showGenericMessage("Which cloud do you choose? Insert the cloud number.");
+        }
         return false;
     }
 
@@ -357,14 +375,7 @@ public class CheckController implements Serializable {
             return true;
         } else {
             virtualView.showGenericMessage("You have not enough coins for this card!");
-            if (gameController.getAskInterrupted().equals("s")){
-                virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
-            }else if(gameController.getAskInterrupted().equals("m")){
-                virtualView.onDemandMotherNatureMoves(activePlayer.getChosenAssistantCard().getMaxMoves());
-            }else if(gameController.getAskInterrupted().equals("c")){
-                virtualView.showGenericMessage("Which cloud do you choose? Insert the cloud number.");
-            }
-            return true;
+            return askInterrupted(virtualView, activePlayer);
         }
     }
 

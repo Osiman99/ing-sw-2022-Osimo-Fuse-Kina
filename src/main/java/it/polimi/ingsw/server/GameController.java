@@ -408,7 +408,12 @@ public class GameController implements Observer, Serializable {
                 if (askInterrupted.equals("s")){
                     virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
                 }else if(askInterrupted.equals("m")){
-                    virtualView.onDemandMotherNatureMoves(activePlayer.getChosenAssistantCard().getMaxMoves());
+                    for (CharacterCard characterCard : gameExpert.getThreeChosenCards()) {
+                        if (characterCard.getCharacterName() == CharacterName.Postman && characterCard.isEnabled()) {
+                            virtualView.onDemandMotherNatureMoves(activePlayer.getChosenAssistantCard().getMaxMoves() + 2);
+                            return;
+                        }
+                    }virtualView.onDemandMotherNatureMoves(activePlayer.getChosenAssistantCard().getMaxMoves());
                 }else if(askInterrupted.equals("c")){
                     virtualView.showGenericMessage("Which cloud do you choose? Insert the cloud number.");
                 }
@@ -497,7 +502,7 @@ public class GameController implements Observer, Serializable {
     }
 
     public void threeIslandEnd(){
-        if(game.getBoard().getIslands().size() == 3) {
+        if(game.getBoard().getIslands().size() <= 3) {
             establishWin();
         }
     }
@@ -628,6 +633,7 @@ public class GameController implements Observer, Serializable {
                 }
                 for (int i = 0; i < checkController.getNicknamesInChooseOrder().size(); i++) {
                     if (checkController.getNicknamesInChooseOrder().get(i).equals(activePlayer.getNickname())) {
+                        game.getBoard().setCardActivated(false);
                         activePlayer = game.getPlayerByNickname(checkController.getNicknamesInChooseOrder().get((i + 1) % checkController.getNicknamesInChooseOrder().size()));
                         moveCont = 0;
                         turnCont++;

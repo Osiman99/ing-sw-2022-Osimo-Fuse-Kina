@@ -11,6 +11,7 @@ import java.io.Serializable;
  * a number to each color to correlate with the student row
  */
 public enum StudentColor implements Serializable {
+
     GREEN(0), RED(1), YELLOW(2), PINK(3), BLUE(4);
 
     private int code;
@@ -31,6 +32,11 @@ public enum StudentColor implements Serializable {
         return this.code;
     }
 
+    /**
+     * gets the student color given its code
+     * @param code
+     * @return
+     */
     public static StudentColor getStudentColor(int code) {
         if (StudentColor.GREEN.getCode() == code) {
             return StudentColor.GREEN;

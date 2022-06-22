@@ -29,7 +29,7 @@ public class EriantysCLI extends ViewObservable implements View {
         out = System.out;
     }
 
-    /*
+
     public String readLine() throws ExecutionException {
         FutureTask<String> futureTask = new FutureTask<>(new InputReadTask());
         Thread inputThread = new Thread(futureTask);
@@ -44,7 +44,7 @@ public class EriantysCLI extends ViewObservable implements View {
         }
         return input;
     }
-*/
+
 
     public void welcome() {
         ArrayList<String> welcome = new ArrayList<>();
@@ -739,7 +739,7 @@ public class EriantysCLI extends ViewObservable implements View {
         for(int i = 0; i < text.length; i++) {
             out.println("\n" + text[i]);
         }
-        showGenericMessage("\nWhich card do you choose? Insert the complete name of the card.");
+        showGenericMessage("\nWhich card do you choose? Insert the complete name of the card or type \"back\" to undo.");
         String card = nextLine().toLowerCase(Locale.ROOT);
         StudentColor studentColor = null;
         int numIsland = 0;
@@ -782,7 +782,6 @@ public class EriantysCLI extends ViewObservable implements View {
                     break;
                 //case "sinister":
                 //break;
-
             }
             StudentColor finalStudentColor = studentColor;
             int finalNumIsland = numIsland;

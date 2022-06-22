@@ -16,6 +16,10 @@ public class CharacterCard implements Serializable {
     private boolean hasStudents = false;
     private String description;
 
+    /**
+     * class constructor, takes in input the character name and initializes it
+     * @param characterName
+     */
     public CharacterCard(CharacterName characterName){
         game = GameExpert.getInstance();          //da spostare e da mattere in un initMethod
         this.characterName = characterName;
