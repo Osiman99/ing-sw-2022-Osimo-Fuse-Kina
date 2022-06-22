@@ -28,13 +28,7 @@ public class EriantysCLI extends ViewObservable implements View {
         out = System.out;
     }
 
-
-    /**
-     * Reads a line from the standard input.
-     *
-     * @return the string read from the input.
-     * @throws ExecutionException if the input stream thread is interrupted.
-     */
+    /*
     public String readLine() throws ExecutionException {
         FutureTask<String> futureTask = new FutureTask<>(new InputReadTask());
         Thread inputThread = new Thread(futureTask);
@@ -49,7 +43,7 @@ public class EriantysCLI extends ViewObservable implements View {
         }
         return input;
     }
-
+*/
 
     public void welcome() {
         ArrayList<String> welcome = new ArrayList<>();
@@ -66,14 +60,6 @@ public class EriantysCLI extends ViewObservable implements View {
         for(String w:welcome){
             System.out.println(w);
         }
-
-      /* ArrayList<StudentColor> printCloud = new ArrayList<>();
-        printCloud.add(StudentColor.YELLOW);
-        printCloud.add(StudentColor.RED);
-        printCloud.add(StudentColor.BLUE);
-        printCloud.add(StudentColor.PINK);
-        cloud(4, printCloud);*/
-
 
         try {
             onDemandServerInfo();
