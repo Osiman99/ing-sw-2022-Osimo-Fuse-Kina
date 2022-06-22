@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.view.CLI;
 
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.observer.ViewObservable;
+import it.polimi.ingsw.server.GameState;
 import it.polimi.ingsw.server.model.*;
 
 import java.io.*;
@@ -77,7 +78,37 @@ public class EriantysCLI extends ViewObservable implements View {
         }
         drawIslands(game);
         drawClouds(game);
+        drawPhase(game);
         drawPlanks(game);
+    }
+
+    private void drawPhase(Game game) {
+        String phase="";
+        List<String> row= new ArrayList<>();
+        int x=61;
+        if(game.getState( )== GameState.PLAN) {
+            phase= "PLANNING PHASE";
+            x=61;
+        }
+        else if(game.getState() == GameState.ACTION) {
+            phase= "ACTION PHASE";
+            x=62;
+        }
+
+        for(int i=0; i<phase.length()+2; i++)
+            row.add(ANSIColor.GREEN_BOLD_BRIGHT + "-" + ANSIColor.RESET);
+
+        for(int i=0; i<row.size(); i++) {
+            gotoXY(x-1+i, 16);
+            System.out.println(row.get(i));
+        }
+        gotoXY(x,17);
+        System.out.println(ANSIColor.CYAN_BOLD + phase + ANSIColor.RESET);
+        for (int i=0; i< row.size(); i++) {
+            gotoXY(x-1+i, 18);
+            System.out.println(row.get(i));
+        }
+
     }
 
     private void drawCharacterCards(GameExpert game) {
@@ -498,12 +529,12 @@ public class EriantysCLI extends ViewObservable implements View {
         try {
             playersNumber = Integer.parseInt(nextLine());
             if (playersNumber < 2 || playersNumber > 3) {
-                out.println("Invalid number! Please try again.");
+                out.println(ANSIColor.RED+ "Invalid number! Please try again." +ANSIColor.RESET);
                 onDemandPlayersNumber();
             }
         } catch (NumberFormatException e) {
             i++;
-            out.println("Invalid input! Please try again.");
+            out.println(ANSIColor.RED+"Invalid input! Please try again."+ANSIColor.RESET);
             onDemandPlayersNumber();
             i--;
         }
@@ -528,7 +559,7 @@ public class EriantysCLI extends ViewObservable implements View {
             assistantCardValue= Integer.parseInt(nextLine());
         }catch(NumberFormatException e){
             i++;
-            showGenericMessage("Invalid input! Please try again.");
+            showGenericMessage(ANSIColor.RED+"Invalid input! Please try again."+ANSIColor.RESET);
             onDemandAssistantCard(deck);
             i--;
         }
@@ -543,12 +574,12 @@ public class EriantysCLI extends ViewObservable implements View {
         clearConsole();
 
         if (nicknameAccepted && connection) {
-            out.println("Hi, " + nickname + "! You connected to the server.");
+            out.println("Hi, " + ANSIColor.PURPLE_BOLD_BRIGHT+ ANSIColor.UNDERLINE+ nickname +ANSIColor.RESET+ "! You connected to the server.");
         } else if (connection) {
             onDemandNickname();
         } else if (nicknameAccepted) {
             out.println("Max players reached. Connection refused.");
-            out.println("EXIT.");
+            out.println(ANSIColor.RED+ "EXIT." + ANSIColor.RESET);
 
             System.exit(1);
         }/* else {
@@ -590,7 +621,7 @@ public class EriantysCLI extends ViewObservable implements View {
                     notifyObserver(obs -> obs.onUpdateMoveStudentToDiningRoom(StudentColor.BLUE));
                     break;
                 default:
-                    showGenericMessage("Invalid input! Please try again.");
+                    showGenericMessage(ANSIColor.RED+"Invalid input! Please try again."+ANSIColor.RESET);
                     showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
             }
 
@@ -623,15 +654,15 @@ public class EriantysCLI extends ViewObservable implements View {
                         notifyObserver(obs -> obs.onUpdateMoveStudentToIsland(StudentColor.BLUE, numIsland));
                         break;
                     default:
-                        showGenericMessage("Invalid input! Please try again.");
+                        showGenericMessage(ANSIColor.RED+"Invalid input! Please try again."+ANSIColor.RESET);
                         showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
                 }
             } catch (NumberFormatException e) {
-                showGenericMessage("Invalid input! Please try again.");
+                showGenericMessage(ANSIColor.RED+"Invalid input! Please try again."+ANSIColor.RESET);
                 showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
             }
         }else{
-            showGenericMessage("Invalid input! Please try again.");
+            showGenericMessage(ANSIColor.RED+"Invalid input! Please try again."+ANSIColor.RESET);
             showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
         }
     }
@@ -646,7 +677,7 @@ public class EriantysCLI extends ViewObservable implements View {
                 numCloud = Integer.parseInt(cc);
             }catch(NumberFormatException e){
                 i++;
-                showGenericMessage("Invalid input. Please try again.");
+                showGenericMessage(ANSIColor.RED+"Invalid input! Please try again."+ANSIColor.RESET);
                 showGenericMessage("Which cloud do you choose? Insert the cloud number.");
                 i--;
             }
@@ -669,7 +700,7 @@ public class EriantysCLI extends ViewObservable implements View {
                 numMoves = Integer.parseInt(cc);
             }catch (NumberFormatException e) {
                 i++;
-                showGenericMessage("Invalid input. Please try again.");
+                showGenericMessage(ANSIColor.RED+"Invalid input! Please try again."+ANSIColor.RESET);
                 onDemandMotherNatureMoves(maxMoves);
                 i--;
             }
@@ -686,8 +717,8 @@ public class EriantysCLI extends ViewObservable implements View {
             notifyObserver(obs -> obs.onUpdateQuit(quit));
             System.exit(1);
         }else{
-            showGenericMessage("Invalid input! Please try again.");
-            showGenericMessage("Type \"quit\" to leave the game.");
+            showGenericMessage(ANSIColor.RED+"Invalid input! Please try again."+ANSIColor.RESET);
+            showGenericMessage("Type "+ ANSIColor.CYAN_BOLD+ "quit"+ ANSIColor.RESET+ " to leave the game.");
         }
     }
 
@@ -757,7 +788,7 @@ public class EriantysCLI extends ViewObservable implements View {
             int finalNumIsland = numIsland;
             notifyObserver(obs -> obs.onUpdateCharacterCard(card, finalStudentColor, finalNumIsland));
         }catch (NumberFormatException e) {
-            showGenericMessage("Invalid input! Please try again.");
+            showGenericMessage(ANSIColor.RED+"Invalid input! Please try again."+ANSIColor.RESET);
             onDemandCharacterCard(text);
         }
     }
@@ -781,7 +812,7 @@ public class EriantysCLI extends ViewObservable implements View {
                 break;
             default:
                 i++;
-                showGenericMessage("Invalid input! Please try again.");
+                showGenericMessage(ANSIColor.RED+"Invalid input! Please try again."+ANSIColor.RESET);
                 onDemandCharacterCard(text);
                 i = -1;
                 return studentColor;
