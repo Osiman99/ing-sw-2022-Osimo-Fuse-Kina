@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cloud implements Serializable {
+
     private static final long serialVersionUID = 6633940502260451770L;
 
     private List<Student> students;
@@ -36,6 +37,9 @@ public class Cloud implements Serializable {
         return students;
     }
 
+    /**
+     * @return true if the cloud is empty, false if it's not.
+     */
     public boolean isEmpty(){
         if (students.size() == 0){
             return true;
@@ -43,8 +47,4 @@ public class Cloud implements Serializable {
             return false;
         }
     }
-
-    // if 2 players then 3 students per cloud
-    // if 3 players then 4 students per row
-
 }

@@ -54,6 +54,10 @@ public class Bag implements Serializable {
         students.add(student);
     }
 
+    /**
+     * get the first student in the array
+     * @return
+     */
     public Student getFirstStudent(){
         return students.get(0);
     }
@@ -62,6 +66,10 @@ public class Bag implements Serializable {
         return students;
     }
 
+    /**
+     * checks if the bag is empty or not
+     * @return
+     */
     public boolean isBagEmpty() {
         return bagEmpty;
     }
