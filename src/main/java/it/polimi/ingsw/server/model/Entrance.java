@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Entrance implements Serializable {
+
     private static final long serialVersionUID = 5329747176187404122L;
 
     private Game game;

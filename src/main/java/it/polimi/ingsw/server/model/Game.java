@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game extends Observable implements Serializable {
+
     private static final long serialVersionUID = 4004020661063976635L;
+
     public static final int MAX_PLAYERS = 3;
     private Board board;              //forse va fatto final (singleton o no?)
     private static Game instance;   //classe Game, per non farla singleton basta non mettere static in instance (e chiamare il setInstance per ogni game creato nel main)
@@ -20,7 +22,9 @@ public class Game extends Observable implements Serializable {
     public List<String> nicknames;
     public GameState state;
 
-
+    /**
+     * Game constructor
+     */
     public Game(){
         instance = this;
         this.chosenPlayersNumber = chosenPlayersNumber;
@@ -30,6 +34,10 @@ public class Game extends Observable implements Serializable {
         board = new Board();
     }
 
+
+    /**
+     * initializes the game(the board & the players)
+     */
     public void initGame(){
         board.initBoard();
         for (int i = 0; i < chosenPlayersNumber; i++) {
@@ -114,11 +122,22 @@ public class Game extends Observable implements Serializable {
     }
 
 
+    /**
+     * controls if the nickname is occupied
+     * @param nickname
+     * @return
+     */
     public boolean isNicknameTaken(String nickname) {
         return players.stream()
                 .anyMatch(p -> nickname.equals(p.getNickname()));
     }
 
+    /**
+     * in case the player disconnects
+     * @param nickname
+     * @param notifyEnabled
+     * @return
+     */
     public boolean removePlayerByNickname(String nickname, boolean notifyEnabled) {
         boolean result = players.remove(getPlayerByNickname(nickname));
 

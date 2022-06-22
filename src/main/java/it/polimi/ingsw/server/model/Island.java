@@ -12,6 +12,9 @@ public class Island implements Serializable {
     private boolean motherNature;
     private boolean banCard;
 
+    /**
+     * class constructor
+     */
     public Island(){
         students = new ArrayList<Student>();
         towers = new ArrayList<Tower>();
@@ -34,6 +37,10 @@ public class Island implements Serializable {
         this.banCard = banCard;
     }
 
+    /**
+     * checks if there is a ban card on an island(effect of the Herbalist)
+     * @return
+     */
     public boolean isBanCard() {
         return banCard;
     }

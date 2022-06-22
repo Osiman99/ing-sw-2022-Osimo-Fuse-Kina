@@ -28,7 +28,7 @@ public class EriantysCLI extends ViewObservable implements View {
         out = System.out;
     }
 
-    /*
+
     public String readLine() throws ExecutionException {
         FutureTask<String> futureTask = new FutureTask<>(new InputReadTask());
         Thread inputThread = new Thread(futureTask);
@@ -43,7 +43,7 @@ public class EriantysCLI extends ViewObservable implements View {
         }
         return input;
     }
-*/
+
 
     public void welcome() {
         ArrayList<String> welcome = new ArrayList<>();
@@ -111,11 +111,13 @@ public class EriantysCLI extends ViewObservable implements View {
         }
 
         gotoXY(138, 1);
-        System.out.println(ANSIColor.UNDERLINE+ANSIColor.PURPLE_BOLD_BRIGHT+"Character cards"+ANSIColor.RESET);
+        System.out.println(ANSIColor.UNDERLINE+ANSIColor.PURPLE_BOLD_BRIGHT+"CHARACTER CARDS"+ANSIColor.RESET);
+        gotoXY(138, 2);
+        System.out.println("During your "+ ANSIColor.CYAN_BOLD+ "Action Phase"+ANSIColor.RESET+ ", type "+ANSIColor.UNDERLINE+ ANSIColor.PURPLE_BOLD_BRIGHT+ "cc" +ANSIColor.RESET+ " to use one of these Character cards.");
         for(int i=0; i<3; i++) {
-            gotoXY(138,3+3*i);
-            System.out.println(ANSIColor.YELLOW_BACKGROUND + ANSIColor.BLACK +(i+1)+") " + characterNames.get(i)+ANSIColor.RESET+" price: "+ANSIColor.UNDERLINE+ characterPrice.get(i)+ANSIColor.RESET);
             gotoXY(138,4+3*i);
+            System.out.println(ANSIColor.YELLOW_BACKGROUND + ANSIColor.BLACK +(i+1)+") " + characterNames.get(i)+ANSIColor.RESET+" price: "+ANSIColor.UNDERLINE+ characterPrice.get(i)+ANSIColor.RESET);
+            gotoXY(138,5+3*i);
             System.out.println(characterMarkers.get(i));
         }
 
@@ -182,6 +184,8 @@ public class EriantysCLI extends ViewObservable implements View {
             plankBoard.add("║  "+studentsEntranceBoard.get(5)+"    "+studentsEntranceBoard.get(6)+"  ║ "+ANSIColor.PINK+diningRoomBoard[3].get(0)+diningRoomBoard[3].get(1)+diningRoomBoard[3].get(2)+diningRoomBoard[3].get(3)+diningRoomBoard[3].get(4)+diningRoomBoard[3].get(5)+diningRoomBoard[3].get(6)+diningRoomBoard[3].get(7)+diningRoomBoard[3].get(8)+diningRoomBoard[3].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.PINK+professorsBoard[3]+ANSIColor.RESET+"    ║   "+towerBoard.get(6)+"     "+towerBoard.get(7)+"   ║");
             plankBoard.add("║  "+studentsEntranceBoard.get(7)+"    "+studentsEntranceBoard.get(8)+"  ║ "+ANSIColor.BLUE+diningRoomBoard[4].get(0)+diningRoomBoard[4].get(1)+diningRoomBoard[4].get(2)+diningRoomBoard[4].get(3)+diningRoomBoard[4].get(4)+diningRoomBoard[4].get(5)+diningRoomBoard[4].get(6)+diningRoomBoard[4].get(7)+diningRoomBoard[4].get(8)+diningRoomBoard[4].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.BLUE+professorsBoard[4]+ANSIColor.RESET+"    ║             ║");
             plankBoard.add("╚══════════╩═══════════════════════╩═════════╩═════════════╝");
+
+
 
 
             for (int r=0; r<plankBoard.size(); r++){
@@ -411,7 +415,7 @@ public class EriantysCLI extends ViewObservable implements View {
 
             for(int r=0; r<cloudBoard.size(); r++) {
                 if(i<2) {
-                    gotoXY(46 + (i * 21), 11 + r);
+                    gotoXY(46 + (i * 21), 10 + r);
                     System.out.println(cloudBoard.get(r));
                 }
                 else if(i==2){

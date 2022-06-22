@@ -20,17 +20,29 @@ public class Player extends Observable implements Serializable {
     private int chosenACValue;
     private Game game;
 
+    /**
+     * class constructor(in the beginning the player has 1 coin & is in SLEEP State
+     * @param nickname
+     */
     public Player(String nickname){
         this.nickname = nickname;
         numCoins = 1;
         supremacyCont = 0;
         state = PlayerState.SLEEP;
     }
+
+    /**
+     * initializes the Player
+     */
     public void initPlayer(){
         game = Game.getInstance();
         plank = new Plank();
         deck = new AssistantDeck();
     }
+
+    /**
+     * getters and setters
+     */
 
     public String getNickname(){
         return nickname;
@@ -82,6 +94,7 @@ public class Player extends Observable implements Serializable {
         this.numCoins = numCoins;
     }
 
+
     public void moveStudentsFromCloudToEntrance(Cloud cloud) {
         int studentsSize = cloud.getStudentsSize();
         for (int i = 0; i < studentsSize; i++) {
@@ -103,6 +116,10 @@ public class Player extends Observable implements Serializable {
         plank.getEntrance().removeStudent(student);
     }
 
+    /**
+     * you can choose one Assistant Card based on its value and then it's removed from the deck
+     * @param value
+     */
     public void chooseAssistantCard(int value){
         chosenAssistantCard = new AssistantCard(value, (value-1)/2 + 1);
         chosenACValue = value;

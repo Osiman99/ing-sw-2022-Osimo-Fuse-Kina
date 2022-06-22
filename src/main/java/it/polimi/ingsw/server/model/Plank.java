@@ -9,6 +9,9 @@ public class Plank implements Serializable {
     private StudentRow diningRoom[];
     private Entrance entrance;
 
+    /**
+     * class constructor
+     */
     public Plank(){
         towerSpace = new TowerSpace();
         diningRoom = new StudentRow[5];
@@ -18,6 +21,10 @@ public class Plank implements Serializable {
         entrance = new Entrance();
     }
 
+    /**
+     * checks if the tower space is empty or not
+     * @return
+     */
     public boolean isTowerSpaceEmpty(){
         if(towerSpace.getTowersList().size() == 0)
             return true;

@@ -18,6 +18,9 @@ public class GameExpert extends Game implements Serializable {
     private int tempRandomInt2;
 
 
+    /**
+     * class constructor
+     */
     public GameExpert() {
         super();
         tempRandomInt1 = -1;
@@ -26,6 +29,10 @@ public class GameExpert extends Game implements Serializable {
         random = new Random();
     }
 
+    /**
+     * initializes the game in expert mode,
+     * creates 3 character cards in the beginning of the game
+     */
     public void initGameExpert(){
         for (int i = 0; i < 3; i++) {
             if (i == 0) {
@@ -68,6 +75,9 @@ public class GameExpert extends Game implements Serializable {
         }fillCcDescription();
     }
 
+    /**
+     * fills the description of the character cards that you can visualize during the game
+     */
     public void fillCcDescription(){
         for (CharacterCard cc : threeChosenCards) {
             switch (cc.getCharacterName()) {
