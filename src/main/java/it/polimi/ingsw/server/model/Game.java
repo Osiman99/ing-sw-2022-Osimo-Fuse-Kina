@@ -35,6 +35,9 @@ public class Game extends Observable implements Serializable {
     }
 
 
+    /**
+     * initializes the game(the board & the players)
+     */
     public void initGame(){
         board.initBoard();
         for (int i = 0; i < chosenPlayersNumber; i++) {
@@ -119,11 +122,22 @@ public class Game extends Observable implements Serializable {
     }
 
 
+    /**
+     * controls if the nickname is occupied
+     * @param nickname
+     * @return
+     */
     public boolean isNicknameTaken(String nickname) {
         return players.stream()
                 .anyMatch(p -> nickname.equals(p.getNickname()));
     }
 
+    /**
+     * in case the player disconnects
+     * @param nickname
+     * @param notifyEnabled
+     * @return
+     */
     public boolean removePlayerByNickname(String nickname, boolean notifyEnabled) {
         boolean result = players.remove(getPlayerByNickname(nickname));
 

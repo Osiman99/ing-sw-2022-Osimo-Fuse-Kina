@@ -11,11 +11,18 @@ public class StudentRow implements Serializable {
     private StudentColor rowColor;    //ROWCOLOR INUTILE
 
 
-
+    /**
+     * class constructor
+     * @param code
+     */
     public StudentRow(int code) {
         students = new ArrayList<Student>();
         rowColor = StudentColor.getStudentColor(code);   //ROWCOLOR INUTILE
     }
+
+    /**
+     * getters and setters
+     */
 
     public List<Student> getStudents() {
         return students;

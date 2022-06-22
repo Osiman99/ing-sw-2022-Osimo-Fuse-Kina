@@ -28,7 +28,7 @@ public class EriantysCLI extends ViewObservable implements View {
         out = System.out;
     }
 
-    /*
+
     public String readLine() throws ExecutionException {
         FutureTask<String> futureTask = new FutureTask<>(new InputReadTask());
         Thread inputThread = new Thread(futureTask);
@@ -43,7 +43,7 @@ public class EriantysCLI extends ViewObservable implements View {
         }
         return input;
     }
-*/
+
 
     public void welcome() {
         ArrayList<String> welcome = new ArrayList<>();
