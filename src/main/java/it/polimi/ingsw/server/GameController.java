@@ -147,14 +147,18 @@ public class GameController implements Observer, Serializable {
             game = new GameExpert();
         }
 
-        for (Map.Entry<String, VirtualView> entry : virtualViewMap.entrySet()) {
-            game.addObserver(entry.getValue());
-            game.getBoard().addObserver(entry.getValue());
-        }
-
         for(int i = 0; i < lobby.getNumPlayers(); i++){
             game.addPlayer(lobby.getPlayers().get(i));
         }
+
+        for (Map.Entry<String, VirtualView> entry : virtualViewMap.entrySet()) {
+            game.addObserver(entry.getValue());
+            game.getBoard().addObserver(entry.getValue());
+            for(int j = 0; j < game.getNumPlayers(); j++) {
+                game.getPlayers().get(j).addObserver(entry.getValue());
+            }
+        }
+
         game.setChosenPlayersNumber(lobby.getNumPlayers());
 
         nicknames = new ArrayList<>(game.getNicknames());

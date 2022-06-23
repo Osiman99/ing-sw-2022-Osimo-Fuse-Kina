@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.network.messages.BoardMessage;
 import it.polimi.ingsw.observer.Observable;
 
 import java.io.Serializable;
@@ -25,6 +26,7 @@ public class Board extends Observable implements Serializable {
     private int yellowCont;
     private int pinkCont;
     private int blueCont;
+    private int contJoin;
     private boolean cardActivated;
 
     /**
@@ -44,6 +46,7 @@ public class Board extends Observable implements Serializable {
         yellowCont = 0;
         pinkCont = 0;
         blueCont = 0;
+        contJoin = 0;
 
         /**
          * creation of the 12 islands
@@ -148,6 +151,7 @@ public class Board extends Observable implements Serializable {
                     }
                 }
         }
+        notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
 
     }
 
@@ -196,6 +200,7 @@ public class Board extends Observable implements Serializable {
                 break;
             }
         }
+        notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 
     /**
@@ -216,26 +221,6 @@ public class Board extends Observable implements Serializable {
         }else {
             moveProfessorNormal();
         }
-
-        /*if (game.getNumPlayers() == 2) {
-            for (int i = 0; i < 5; i++) {
-                if (game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size()) {
-                    professorsControlledBy[i] = game.getPlayers().get(0).getNickname();
-                } else if (game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size()) {
-                    professorsControlledBy[i] = game.getPlayers().get(1).getNickname();
-                }
-            }
-        } else if (game.getNumPlayers() == 3) {
-            for (int i = 0; i < 5; i++) {
-                if (game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() && game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size()) {
-                    professorsControlledBy[i] = game.getPlayers().get(0).getNickname();
-                } else if (game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() && game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size()) {
-                    professorsControlledBy[i] = game.getPlayers().get(1).getNickname();
-                } else if (game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() && game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size()) {
-                    professorsControlledBy[i] = game.getPlayers().get(2).getNickname();
-                }
-            }
-        }*/
     }
 
     /**
@@ -440,6 +425,14 @@ public class Board extends Observable implements Serializable {
                         island.addStudent(islands.get((i+1)%islands.size()).getFirstStudent());
                         islands.get((i+1)%islands.size()).removeStudent();
                     }
+                    if (game instanceof GameExpert) {
+                        GameExpert gameExpert = (GameExpert) game;
+                        for (CharacterCard characterCard : gameExpert.getThreeChosenCards()) {
+                            if (characterCard.getCharacterName() == CharacterName.Messenger && characterCard.isEnabled()) {
+                                contJoin++;
+                            }
+                        }
+                    }
                     islands.remove(islands.get((i+1)%islands.size()));
                 }if ((i-1) == -1) {
                     if (!(islands.get(islands.size()-1).getTowers().size() == 0  || islands.get(islands.size()-1).getFirstTower().getColor() != island.getFirstTower().getColor())) {
@@ -451,6 +444,14 @@ public class Board extends Observable implements Serializable {
                         for (int j = 0; j < numStudentsLastIsland; j++) {
                             island.addStudent(islands.get(islands.size()-1).getFirstStudent());
                             islands.get(islands.size()-1).removeStudent();
+                        }
+                        if (game instanceof GameExpert) {
+                            GameExpert gameExpert = (GameExpert) game;
+                            for (CharacterCard characterCard : gameExpert.getThreeChosenCards()) {
+                                if (characterCard.getCharacterName() == CharacterName.Messenger && characterCard.isEnabled()) {
+                                    contJoin++;
+                                }
+                            }
                         }
                         islands.remove(islands.get(islands.size()-1));
                     }
@@ -464,6 +465,14 @@ public class Board extends Observable implements Serializable {
                         for (int j = 0; j < numStudentsPrevIsland; j++) {
                             island.addStudent(islands.get(i-1).getFirstStudent());
                             islands.get(i-1).removeStudent();
+                        }
+                        if (game instanceof GameExpert) {
+                            GameExpert gameExpert = (GameExpert) game;
+                            for (CharacterCard characterCard : gameExpert.getThreeChosenCards()) {
+                                if (characterCard.getCharacterName() == CharacterName.Messenger && characterCard.isEnabled()) {
+                                    contJoin++;
+                                }
+                            }
                         }
                         islands.remove(islands.get(i-1));
                     }
@@ -517,13 +526,36 @@ public class Board extends Observable implements Serializable {
     public void applyEffectMessenger(Player player, CharacterCard characterCard, int numIsland){                        //FATTO
         characterCard.setEnabled(true);
         cardActivated = true;
+        int prevIsland = 0;
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
         if (!(islands.get(numIsland-1).isBanCard())){
+            for (int i = 0; i < islands.size(); i++) {
+                if (islands.get(i).isMotherNature()) {
+                    prevIsland = i;
+                    islands.get(i).setMotherNature(false);
+                    islands.get(numIsland - 1).setMotherNature(true);
+                    break;
+                }
+            }
             calculateSupremacy(islands.get(numIsland-1));
+            if((prevIsland+1) > numIsland){
+                for (int i = 0; i < islands.size(); i++) {
+                    if (islands.get(i).isMotherNature()) {
+                        islands.get(i).setMotherNature(false);
+                    }
+                }islands.get(prevIsland-contJoin).setMotherNature(true);
+            }else{
+                for (int i = 0; i < islands.size(); i++) {
+                    if (islands.get(i).isMotherNature()) {
+                        islands.get(i).setMotherNature(false);
+                    }
+                }islands.get(prevIsland).setMotherNature(true);
+            }
         }else{
             islands.get(numIsland-1).setBanCard(false);
         }
+        notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
         characterCard.setEnabled(false);
     }
 
@@ -542,6 +574,27 @@ public class Board extends Observable implements Serializable {
         getIslands().get(numIsland-1).setBanCard(true);
         characterCard.setEnabled(false);
     }
+
+    /*if (islands.get(numIsland%islandSize).isMotherNature()){
+        islands.get(numIsland%islandSize).setMotherNature(false);
+        islands.get((i+numMoves)%islands.size()).setMotherNature(true);
+    }
+            else if (islands.get((((numIsland-2)%islandSize)+islandSize)%islandSize).isMotherNature()){
+        for (int i = 0; i < islands.size(); i++) {
+            if (islands.get(i).isMotherNature()) {
+                islands.get(i).setMotherNature(false);
+                islands.get((i + numMoves) % islands.size()).setMotherNature(true);
+            }
+        }
+    }
+            else if (islands.get(numIsland-1).isMotherNature()){
+        for (int i = 0; i < islands.size(); i++) {
+            if (islands.get(i).isMotherNature()) {
+                islands.get(i).setMotherNature(false);
+                islands.get((i + numMoves) % islands.size()).setMotherNature(true);
+            }
+        }
+    }*/
 
     public void applyEffectCentaur(Player player, CharacterCard characterCard){                                         //FATTO
         characterCard.setEnabled(true);
