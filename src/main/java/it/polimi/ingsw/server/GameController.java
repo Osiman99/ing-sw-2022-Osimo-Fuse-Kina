@@ -176,6 +176,7 @@ public class GameController implements Observer, Serializable {
         setGameState(GameState.PLAN);
         game.setState(GameState.PLAN);
         game.getBoard().moveStudentsFromBagToClouds();
+        broadcastBoardMessage();
         broadcastGenericMessage("All Players are connected. " + ANSIColor.PURPLE_BOLD_BRIGHT+ activePlayer.getNickname().toUpperCase() +ANSIColor.RESET + " is choosing the Assistant Card...");
 
 
@@ -190,9 +191,9 @@ public class GameController implements Observer, Serializable {
     }
 
     public void broadcastBoardMessage(){
-        for (VirtualView virtualView : virtualViewMap.values()) {
+        /*for (VirtualView virtualView : virtualViewMap.values()) {
             virtualView.drawBoard(game);
-        }
+        }*/
     }
 
     private void setGameState(GameState state) {
@@ -434,9 +435,11 @@ public class GameController implements Observer, Serializable {
             if(checkController.verifyReceivedData(receivedMessage)){
                 if(moveMessage.getNumIsland() == 0) {
                     activePlayer.moveStudentFromEntranceToDiningRoom(new Student(moveMessage.getStudentColor()));
+                    broadcastBoardMessage();
                     broadcastGenericMessage( ANSIColor.PURPLE_BOLD_BRIGHT+ activePlayer.getNickname().toUpperCase() +ANSIColor.CYAN_BOLD + " moved a " + moveMessage.getStudentColor() + " student to his plank!"+ANSIColor.RESET);
                 }else{
                     activePlayer.moveStudentFromEntranceToIsland(new Student(moveMessage.getStudentColor()), game.getBoard().getIslands().get(moveMessage.getNumIsland()-1));
+                    broadcastBoardMessage();
                     broadcastGenericMessage(ANSIColor.PURPLE_BOLD_BRIGHT+ activePlayer.getNickname().toUpperCase() +ANSIColor.CYAN_BOLD +" moved a " + moveMessage.getStudentColor() + " student to the island number " + moveMessage.getNumIsland() + "!"+ANSIColor.RESET);
                 }actionTurnManager();
             }
@@ -468,6 +471,7 @@ public class GameController implements Observer, Serializable {
                 if (!endgame)
                     threeIslandEnd();
                 if(!endgame) {
+                    broadcastBoardMessage();
                     motherNatureFlag = false;
                     cloudFlag = true;
                     moveCont--;
@@ -479,6 +483,7 @@ public class GameController implements Observer, Serializable {
             CloudMessage cloudMessage = (CloudMessage) receivedMessage;
             if(checkController.verifyReceivedData(receivedMessage)){
                 activePlayer.moveStudentsFromCloudToEntrance(game.getBoard().getClouds().get(cloudMessage.getNumCloud()-1));
+                broadcastBoardMessage();
                 broadcastGenericMessage(ANSIColor.PURPLE_BOLD_BRIGHT+ activePlayer.getNickname().toUpperCase() +ANSIColor.CYAN_BOLD + " chose the cloud number " + cloudMessage.getNumCloud()+ANSIColor.RESET);
                 cloudFlag = false;
                 moveCont--;
@@ -648,6 +653,7 @@ public class GameController implements Observer, Serializable {
                                     checkController.getNicknamesInChooseOrder().remove(0);
                                 }
                                 game.getBoard().moveStudentsFromBagToClouds();
+                                broadcastBoardMessage();
                                 activePlayer = game.getPlayerByNickname(checkController.getFirstPlayerInAction());    //mezzo inutile
                                 VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
                                 virtualView.onDemandAssistantCard(activePlayer.getDeck().getDeck());
