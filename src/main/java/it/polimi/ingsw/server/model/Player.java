@@ -101,6 +101,7 @@ public class Player extends Observable implements Serializable {
             plank.getEntrance().addStudent(cloud.getFirstStudent());
             cloud.removeStudent();
         }
+        notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 
     public void moveStudentFromEntranceToDiningRoom(Student student){    //la for si fa nel main (GUI)
@@ -109,11 +110,13 @@ public class Player extends Observable implements Serializable {
         if (plank.getDiningRoom()[student.getColor().getCode()].getStudents().size() == 3 || plank.getDiningRoom()[student.getColor().getCode()].getStudents().size() == 6 || plank.getDiningRoom()[student.getColor().getCode()].getStudents().size() == 9){
             numCoins++;
         } game.getBoard().moveProfessor();
+        notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 
     public void moveStudentFromEntranceToIsland(Student student, Island island){    //la for si fa nel main (GUI)
         island.addStudent(student);
         plank.getEntrance().removeStudent(student);
+        notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 
     /**

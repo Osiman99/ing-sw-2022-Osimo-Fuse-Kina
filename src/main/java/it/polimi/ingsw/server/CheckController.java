@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.client.view.CLI.ANSIColor;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.network.messages.*;
 import it.polimi.ingsw.server.model.*;
@@ -38,11 +39,11 @@ public class CheckController implements Serializable {
 
     public boolean checkLoginNickname(String nickname, View view) {
         if (nickname.isEmpty() || nickname.equalsIgnoreCase(Game.SERVER_NICKNAME)) {
-            view.showGenericMessage("Forbidden name.");
+            view.showGenericMessage(ANSIColor.RED+"Forbidden name."+ANSIColor.RESET);
             view.showLoginResult(false, true, null);
             return false;
         } else if (gameController.getLobby().isNicknameTaken(nickname)) {
-            view.showGenericMessage("Nickname already taken.");
+            view.showGenericMessage(ANSIColor.RED+ "Nickname already taken."+ANSIColor.RESET);
             view.showLoginResult(false, true, null);
             return false;
         }
@@ -104,7 +105,7 @@ public class CheckController implements Serializable {
                                 for (int i = 0; i < game.getNumPlayers(); i++){
                                     if (assistantCardResult.getCard() == numCardOtherPlayers.get(i)){
                                         VirtualView virtualView = virtualViewMap.get(message.getNickname());
-                                        virtualView.showGenericMessage("Card already chosen by another player! Please try again.");
+                                        virtualView.showGenericMessage(ANSIColor.RED+ "Card already chosen by another player! Please try again."+ANSIColor.RESET);
                                         virtualView.onDemandAssistantCard(p.getDeck().getDeck());
                                         return false;
                                     }else if (numCardOtherPlayers.size() - 1 == i) {
@@ -117,13 +118,13 @@ public class CheckController implements Serializable {
                         }
                     }
                     VirtualView virtualView = virtualViewMap.get(message.getNickname());
-                    virtualView.showGenericMessage("There's no cards in your deck with this value! Please try again.");
+                    virtualView.showGenericMessage(ANSIColor.RED+ "There's no cards in your deck with this value! Please try again."+ANSIColor.RESET);
                     virtualView.onDemandAssistantCard(p.getDeck().getDeck());
                     return false;
                 }
             }
             VirtualView virtualView = virtualViewMap.get(message.getNickname());
-            virtualView.showGenericMessage("ERROR");
+            virtualView.showGenericMessage(ANSIColor.RED+ "ERROR"+ ANSIColor.RESET);
             return false;
         }catch (NullPointerException e){
             e.printStackTrace();
@@ -138,7 +139,7 @@ public class CheckController implements Serializable {
             if (student.getColor() == moveMessage.getStudentColor()) {
                 if (moveMessage.getNumIsland() == 0) {
                     if (game.getPlayerByNickname(moveMessage.getNickname()).getPlank().getDiningRoom()[moveMessage.getStudentColor().getCode()].getStudents().size() == 10) {                        //prima c'era if else di controllo 0 e 13
-                        virtualView.showGenericMessage("The Dining Room is full! Please try again.");
+                        virtualView.showGenericMessage(ANSIColor.RED+ "The Dining Room is full! Please try again."+ANSIColor.RESET);
                         virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
                         return false;
                     }
@@ -146,7 +147,7 @@ public class CheckController implements Serializable {
                     if (moveMessage.getNumIsland() <= game.getBoard().getIslands().size()) {
                         return true;
                     } else {
-                        virtualView.showGenericMessage("The island number " + moveMessage.getNumIsland() + " doesn't exist! Please try again.");
+                        virtualView.showGenericMessage(ANSIColor.RED+ "The island number " + moveMessage.getNumIsland() + " doesn't exist! Please try again."+ANSIColor.RESET);
                         virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
                         return false;
                     }
@@ -154,9 +155,9 @@ public class CheckController implements Serializable {
             }
         }
         if (moveMessage.getNumIsland() <= game.getBoard().getIslands().size()) {
-            virtualView.showGenericMessage("You don't have any " + moveMessage.getStudentColor() + " student in your entrance! Please try again.");
+            virtualView.showGenericMessage(ANSIColor.RED+ "You don't have any " + moveMessage.getStudentColor() + " student in your entrance! Please try again."+ANSIColor.RESET);
         }else{
-            virtualView.showGenericMessage("You don't have any " + moveMessage.getStudentColor() + " student in your entrance and the island number " + moveMessage.getNumIsland() + " doesn't exist! Please try again.");
+            virtualView.showGenericMessage(ANSIColor.RED+ "You don't have any " + moveMessage.getStudentColor() + " student in your entrance and the island number " + moveMessage.getNumIsland() + " doesn't exist! Please try again."+ANSIColor.RESET);
         }
         virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
         return false;
@@ -170,13 +171,13 @@ public class CheckController implements Serializable {
                 if (!game.getBoard().getClouds().get(i).isEmpty()) {
                     return true;
                 }else{
-                    virtualView.showGenericMessage("The cloud number " + cloudMessage.getNumCloud() + " is empty! Please try again.");
+                    virtualView.showGenericMessage(ANSIColor.RED+ "The cloud number " + cloudMessage.getNumCloud() + " is empty! Please try again."+ANSIColor.RESET);
                     virtualView.showGenericMessage("Which cloud do you choose? Insert the cloud number.");
                     return false;
                 }
             }
         }
-        virtualView.showGenericMessage("The cloud number " + cloudMessage.getNumCloud() + " doesn't exist! Please try again.");
+        virtualView.showGenericMessage(ANSIColor.RED+ "The cloud number " + cloudMessage.getNumCloud() + " doesn't exist! Please try again."+ANSIColor.RESET);
         virtualView.showGenericMessage("Which cloud do you choose? Insert the cloud number.");
         return false;
     }
@@ -191,7 +192,7 @@ public class CheckController implements Serializable {
                     if (motherNatureMessage.getNumMoves() > 0 && motherNatureMessage.getNumMoves() <= game.getPlayerByNickname(motherNatureMessage.getNickname()).getChosenAssistantCard().getMaxMoves() + 2) {
                         return true;
                     } else {
-                        virtualView.showGenericMessage("Invalid input! Please try again.");
+                        virtualView.showGenericMessage(ANSIColor.RED+"Invalid input! Please try again."+ANSIColor.RESET);
                         virtualView.onDemandMotherNatureMoves(game.getPlayerByNickname(motherNatureMessage.getNickname()).getChosenAssistantCard().getMaxMoves() + 2);
                         return false;
                     }
@@ -201,7 +202,7 @@ public class CheckController implements Serializable {
         if (motherNatureMessage.getNumMoves() > 0 && motherNatureMessage.getNumMoves() <= game.getPlayerByNickname(motherNatureMessage.getNickname()).getChosenAssistantCard().getMaxMoves()){
             return true;
         }else {
-            virtualView.showGenericMessage("Invalid input! Please try again.");
+            virtualView.showGenericMessage(ANSIColor.RED+"Invalid input! Please try again."+ANSIColor.RESET);
             virtualView.onDemandMotherNatureMoves(game.getPlayerByNickname(motherNatureMessage.getNickname()).getChosenAssistantCard().getMaxMoves());
             return false;
         }
@@ -212,8 +213,8 @@ public class CheckController implements Serializable {
         VirtualView virtualView = virtualViewMap.get(message.getNickname());
         if (modeMessage.getMode().equals("n") || modeMessage.getMode().equals("e")){
             return true;
-        }virtualView.showGenericMessage("Invalid input! Please try again.");
-        virtualView.showGenericMessage("Do you want to play in Normal or Expert mode? [n/e]");
+        }virtualView.showGenericMessage(ANSIColor.RED+"Invalid input! Please try again."+ANSIColor.RESET);
+        virtualView.showGenericMessage("Do you want to play in " + ANSIColor.UNDERLINE +"Normal" +ANSIColor.RESET+  " or " +ANSIColor.UNDERLINE+  "Expert" +ANSIColor.RESET+ " mode? [n/e]");
         return false;
     }
 
@@ -223,7 +224,7 @@ public class CheckController implements Serializable {
         Player activePlayer = game.getPlayerByNickname(message.getNickname());
         CharacterCardMessage characterCardMessage = (CharacterCardMessage) message;
         if(game.getBoard().isCardActivated()){
-            virtualView.showGenericMessage("You already activated a card in this turn!");
+            virtualView.showGenericMessage(ANSIColor.RED+ "You already activated a card in this turn!"+ANSIColor.RESET);
             return askInterrupted(virtualView, activePlayer);
         }
         switch (characterCardMessage.getCard()) {
@@ -237,12 +238,12 @@ public class CheckController implements Serializable {
                                     if (characterCardMessage.getNumIsland() <= game.getBoard().getIslands().size() && characterCardMessage.getNumIsland() > 0) {
                                         return true;
                                     } else {
-                                        virtualView.showGenericMessage("The island number " + characterCardMessage.getNumIsland() + " doesn't exist! Please try again.");
+                                        virtualView.showGenericMessage(ANSIColor.RED+ "The island number " + characterCardMessage.getNumIsland() + " doesn't exist! Please try again."+ANSIColor.RESET);
                                         virtualView.onDemandCharacterCard(gameController.getText());
                                         return false;
                                     }
                                 }
-                            }virtualView.showGenericMessage("There's no " + characterCardMessage.getStudentColor() +" student on this card! Please try again.");
+                            }virtualView.showGenericMessage(ANSIColor.RED+ "There's no " + characterCardMessage.getStudentColor() +" student on this card! Please try again."+ANSIColor.RESET);
                             virtualView.onDemandCharacterCard(gameController.getText());
                         }
                         return false;
@@ -322,7 +323,7 @@ public class CheckController implements Serializable {
                                 if (characterCardMessage.getStudentColor() == cc.getStudents().get(i).getColor()) {
                                     return true;
                                 }
-                            }virtualView.showGenericMessage("There's no " + characterCardMessage.getStudentColor() +" student on this card! Please try again.");
+                            }virtualView.showGenericMessage(ANSIColor.RED+ "There's no " + characterCardMessage.getStudentColor() +" student on this card! Please try again."+ANSIColor.RESET);
                             virtualView.onDemandCharacterCard(gameController.getText());
                         }
                         return false;
@@ -340,7 +341,7 @@ public class CheckController implements Serializable {
             case "back":
                 askInterrupted(virtualView, activePlayer);
                 return false;
-        }virtualView.showGenericMessage("Invalid input! Please try again.");
+        }virtualView.showGenericMessage(ANSIColor.RED+"Invalid input! Please try again."+ANSIColor.RESET);
         virtualView.onDemandCharacterCard(gameController.getText());
         return false;
     }
@@ -361,7 +362,7 @@ public class CheckController implements Serializable {
             if (characterCardMessage.getNumIsland() > 0 && characterCardMessage.getNumIsland() <= game.getBoard().getIslands().size()){
                 return true;
             }else{
-                virtualView.showGenericMessage("The island number " + characterCardMessage.getNumIsland() + " doesn't exist! Please try again.");
+                virtualView.showGenericMessage(ANSIColor.RED+ "The island number " + characterCardMessage.getNumIsland() + " doesn't exist! Please try again."+ANSIColor.RESET);
                 virtualView.onDemandCharacterCard(gameController.getText());
                 return false;
             }
@@ -374,7 +375,7 @@ public class CheckController implements Serializable {
         if (cc.getPrice() <= activePlayer.getNumCoins()) {
             return true;
         } else {
-            virtualView.showGenericMessage("You have not enough coins for this card!");
+            virtualView.showGenericMessage(ANSIColor.RED+ "You have not enough coins for this card!"+ANSIColor.RESET);
             return askInterrupted(virtualView, activePlayer);
         }
     }
