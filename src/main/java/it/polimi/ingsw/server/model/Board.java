@@ -249,6 +249,9 @@ public class Board extends Observable implements Serializable {
     }
 
 
+    /**
+     * moving the professor in case che Chef card effect is applied
+     */
     public void moveProfessorChef(){
         if (game.getNumPlayers() == 2) {
             for (int i = 0; i < 5; i++) {
