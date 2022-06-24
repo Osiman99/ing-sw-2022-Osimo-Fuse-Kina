@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.network.messages.BoardMessage;
 import it.polimi.ingsw.observer.Observable;
+import it.polimi.ingsw.server.GameState;
 
 import java.io.Serializable;
 
@@ -127,6 +128,22 @@ public class Player extends Observable implements Serializable {
         chosenAssistantCard = new AssistantCard(value, (value-1)/2 + 1);
         chosenACValue = value;
         deck.getDeck().removeIf(assistantCard -> chosenACValue == assistantCard.getValue());
+    }
+
+    public boolean isTowerSpaceEmpty(){
+        if(plank.getTowerSpace().getTowersList().isEmpty()){
+            notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isDeckEmpty(){
+        if(deck.getDeck().isEmpty()){
+            notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
+            return true;
+        }
+        return false;
     }
 
 }

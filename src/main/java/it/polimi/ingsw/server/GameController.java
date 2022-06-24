@@ -154,7 +154,7 @@ public class GameController implements Observer, Serializable {
         for (Map.Entry<String, VirtualView> entry : virtualViewMap.entrySet()) {
             game.addObserver(entry.getValue());
             game.getBoard().addObserver(entry.getValue());
-            for(int j = 0; j < game.getNumPlayers(); j++) {
+            for(int j = 0; j < game.getPlayers().size(); j++) {
                 game.getPlayers().get(j).addObserver(entry.getValue());
             }
         }
@@ -287,6 +287,7 @@ public class GameController implements Observer, Serializable {
                     if (turnCont == game.getPlayers().size()) {
                         state = GameState.ACTION;
                         game.setState(GameState.ACTION);
+                        game.notifyBoard();
                         checkController.initializeFirstPlayerInAction();
                         activePlayer = game.getPlayerByNickname(checkController.getFirstPlayerInAction());
                         VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
@@ -304,7 +305,7 @@ public class GameController implements Observer, Serializable {
     }
 
     public void assistantCardEnd(){
-        if(activePlayer.getDeck().getDeck().size() == 0){
+        if(activePlayer.isDeckEmpty()){
             establishWin();
         }
     }
@@ -494,7 +495,7 @@ public class GameController implements Observer, Serializable {
 
     public void noTowersWin(){
         for (Player player : game.getPlayers()) {
-            if (player.getPlank().getTowerSpace().getTowersList().size() == 0) {
+            if (player.isTowerSpaceEmpty()) {
                 broadcastBoardMessage();
                 state = GameState.ENDGAME;
                 game.setState(GameState.ENDGAME);
@@ -507,7 +508,7 @@ public class GameController implements Observer, Serializable {
     }
 
     public void threeIslandEnd(){
-        if(game.getBoard().getIslands().size() <= 3) {
+        if(game.getBoard().areIslandsLessThanThree()) {
             establishWin();
         }
     }
@@ -598,7 +599,7 @@ public class GameController implements Observer, Serializable {
     }
 
     public void bagEmptyEnd(){
-        if (game.getBoard().getBag().isBagEmpty()) {
+        if (game.getBoard().isBagEmptyGC()) {
             establishWin();
         }
     }

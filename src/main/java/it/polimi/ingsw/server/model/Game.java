@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.network.messages.BoardMessage;
 import it.polimi.ingsw.network.messages.LobbyMessage;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.GameState;
@@ -172,4 +173,8 @@ public class Game extends Observable implements Serializable {
     }
 
     public int getChosenPlayerNumber() {return chosenPlayersNumber;}
+
+    public void notifyBoard(){
+        notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, this));
+    }
 }

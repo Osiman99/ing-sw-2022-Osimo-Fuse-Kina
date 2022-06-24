@@ -492,6 +492,22 @@ public class Board extends Observable implements Serializable {
         this.cardActivated = cardActivated;
     }
 
+    public boolean areIslandsLessThanThree(){
+        if(islands.size() <= 3){
+            notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isBagEmptyGC(){
+        if(bag.isBagEmpty()){
+            notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Applying the effects of the character cards
      * @param player
