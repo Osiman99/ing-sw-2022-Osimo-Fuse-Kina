@@ -206,28 +206,46 @@ public class Board extends Observable implements Serializable {
     /**
      * moving the professor in case of an expert game.
      */
-    public void moveProfessor(){
+    public void moveProfessor(Player player){
         if(game instanceof GameExpert){
             GameExpert gameExpert = (GameExpert) game;
             for(CharacterCard characterCard : gameExpert.getThreeChosenCards()) {
                 if (characterCard.getCharacterName() == CharacterName.Chef && characterCard.isEnabled()){
                     System.out.println("ciao");
-                    moveProfessorChef();
+                    moveProfessorChef(player);
                     break;
                 }if(gameExpert.getThreeChosenCards().get(gameExpert.getThreeChosenCards().size()-1) == characterCard){
-                    moveProfessorNormal();
+                    moveProfessorNormal(player);
                 }
             }
         }else {
-            moveProfessorNormal();
+            moveProfessorNormal(player);
         }
     }
 
     /**
      * moving the professor in case of a normal game.
      */
-    private void moveProfessorNormal() {
-        if (game.getNumPlayers() == 2) {
+    private void moveProfessorNormal(Player player) {
+        Player playerTemp = null;
+        for (Player p : game.getPlayers()) {
+            if (player != p) {
+                if(player == game.getPlayers().get(0) && p == game.getPlayers().get(1)) {
+                    playerTemp = p;
+                }if(p == game.getPlayers().get(0)){
+                    playerTemp = p;
+                }
+                for (int i = 0; i < 5; i++) {
+                    if (player.getPlank().getDiningRoom()[i].getStudents().size() > playerTemp.getPlank().getDiningRoom()[i].getStudents().size() && player.getPlank().getDiningRoom()[i].getStudents().size() > p.getPlank().getDiningRoom()[i].getStudents().size()) {
+                        professorsControlledBy[i] = player.getNickname();
+                    }else{
+                        professorsControlledBy[i] = p.getNickname();
+                    }
+                }
+            }
+        }
+
+        /*if (game.getNumPlayers() == 2) {
             for (int i = 0; i < 5; i++) {
                 if (game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size()) {
                     professorsControlledBy[i] = game.getPlayers().get(0).getNickname();
@@ -245,30 +263,28 @@ public class Board extends Observable implements Serializable {
                     professorsControlledBy[i] = game.getPlayers().get(2).getNickname();
                 }
             }
-        }
+        }*/
     }
 
 
     /**
      * moving the professor in case che Chef card effect is applied
      */
-    public void moveProfessorChef(){
-        if (game.getNumPlayers() == 2) {
-            for (int i = 0; i < 5; i++) {
-                if (game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() >= game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size()) {
-                    professorsControlledBy[i] = game.getPlayers().get(0).getNickname();
-                } else if (game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() >= game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size()) {
-                    professorsControlledBy[i] = game.getPlayers().get(1).getNickname();
+    public void moveProfessorChef(Player player){
+        Player playerTemp = null;
+        for (Player p : game.getPlayers()) {
+            if (player != p) {
+                if(player == game.getPlayers().get(0) && p == game.getPlayers().get(1)) {
+                    playerTemp = p;
+                }if(p == game.getPlayers().get(0)){
+                    playerTemp = p;
                 }
-            }
-        } else if (game.getNumPlayers() == 3) {
-            for (int i = 0; i < 5; i++) {
-                if (game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() >= game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() && game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() >= game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size()) {
-                    professorsControlledBy[i] = game.getPlayers().get(0).getNickname();
-                } else if (game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() >= game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() && game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() >= game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size()) {
-                    professorsControlledBy[i] = game.getPlayers().get(1).getNickname();
-                } else if (game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size() >= game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() && game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size() >= game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size()) {
-                    professorsControlledBy[i] = game.getPlayers().get(2).getNickname();
+                for (int i = 0; i < 5; i++) {
+                    if (player.getPlank().getDiningRoom()[i].getStudents().size() >= playerTemp.getPlank().getDiningRoom()[i].getStudents().size() && player.getPlank().getDiningRoom()[i].getStudents().size() >= p.getPlank().getDiningRoom()[i].getStudents().size()) {
+                        professorsControlledBy[i] = player.getNickname();
+                    }else{
+                        professorsControlledBy[i] = p.getNickname();
+                    }
                 }
             }
         }

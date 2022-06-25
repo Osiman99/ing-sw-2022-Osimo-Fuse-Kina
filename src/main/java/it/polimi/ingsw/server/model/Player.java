@@ -110,7 +110,7 @@ public class Player extends Observable implements Serializable {
         plank.getEntrance().removeStudent(student);
         if (plank.getDiningRoom()[student.getColor().getCode()].getStudents().size() == 3 || plank.getDiningRoom()[student.getColor().getCode()].getStudents().size() == 6 || plank.getDiningRoom()[student.getColor().getCode()].getStudents().size() == 9){
             numCoins++;
-        } game.getBoard().moveProfessor();
+        } game.getBoard().moveProfessor(this);
         notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 

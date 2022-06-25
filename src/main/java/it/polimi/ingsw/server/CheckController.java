@@ -274,7 +274,16 @@ public class CheckController implements Serializable {
             case "herbalist":
                 for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                     if (cc.getCharacterName() == CharacterName.Herbalist) {
-                        return numIslandCheck(virtualView, activePlayer, characterCardMessage, cc);
+                        if (numIslandCheck(virtualView, activePlayer, characterCardMessage, cc)){
+                            for(int i = 3; i >=0; i--){
+                                if (cc.getBanCards()[i]){
+                                    return true;
+                                }
+                            }
+                            virtualView.showGenericMessage("There are no more BanCards on this card! Please try again.");
+                            virtualView.onDemandCharacterCard(gameController.getText());
+                            return false;
+                        }return false;
                     }
                 }
                 break;

@@ -111,13 +111,13 @@ class Board3PlayersTest {
 
         //player 0 ha 2 REDstudent, player 1 ha 1 REDstudents, player 2 ha 1 REDstudent
         game.getPlayers().get(1).getPlank().getDiningRoom()[StudentColor.RED.getCode()].addStudent(sRed);
-        board.moveProfessor();
+        board.moveProfessor(game.getPlayers().get(1));
         game.getPlayers().get(0).getPlank().getDiningRoom()[StudentColor.RED.getCode()].addStudent(sRed);
-        board.moveProfessor();
+        board.moveProfessor(game.getPlayers().get(0));
         game.getPlayers().get(0).getPlank().getDiningRoom()[StudentColor.RED.getCode()].addStudent(sRed);
-        board.moveProfessor();
+        board.moveProfessor(game.getPlayers().get(0));
         game.getPlayers().get(2).getPlank().getDiningRoom()[StudentColor.RED.getCode()].addStudent(sRed);
-        board.moveProfessor();
+        board.moveProfessor(game.getPlayers().get(2));
 
         assertEquals(game.getPlayers().get(0).getNickname(), board.getProfessorsControlledBy()[StudentColor.RED.getCode()]);
     }
@@ -136,7 +136,7 @@ class Board3PlayersTest {
             game.getPlayerByNickname("JamesGosling").getPlank().getDiningRoom()[0].addStudent(new Student(StudentColor.GREEN));
         }
 
-        board.moveProfessorChef();
+        board.moveProfessorChef(game.getPlayerByNickname("JamesGosling"));
         assertEquals("JamesGosling", board.getProfessorsControlledBy()[0]);
     }
 
