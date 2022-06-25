@@ -284,11 +284,13 @@ public class GameController implements Observer, Serializable {
                         game.notifyBoard();
                         checkController.initializeFirstPlayerInAction();
                         activePlayer = game.getPlayerByNickname(checkController.getFirstPlayerInAction());
+                        broadcastWaitingMessage(activePlayer);
                         VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
                         virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
                         turnCont = 0;
                     }
                     if (state == GameState.PLAN) {
+                        broadcastWaitingMessage(activePlayer);
                         VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
                         virtualView.onDemandAssistantCard(activePlayer.getDeck().getDeck());
                     }
@@ -431,9 +433,11 @@ public class GameController implements Observer, Serializable {
                 if(moveMessage.getNumIsland() == 0) {
                     activePlayer.moveStudentFromEntranceToDiningRoom(new Student(moveMessage.getStudentColor()));
                     broadcastGenericMessage( ANSIColor.PURPLE_BOLD_BRIGHT+ activePlayer.getNickname().toUpperCase() +ANSIColor.CYAN_BOLD + " moved a " + moveMessage.getStudentColor() + " student to his plank!"+ANSIColor.RESET);
+                    broadcastWaitingMessage(activePlayer);
                 }else{
                     activePlayer.moveStudentFromEntranceToIsland(new Student(moveMessage.getStudentColor()), game.getBoard().getIslands().get(moveMessage.getNumIsland()-1));
                     broadcastGenericMessage(ANSIColor.PURPLE_BOLD_BRIGHT+ activePlayer.getNickname().toUpperCase() +ANSIColor.CYAN_BOLD +" moved a " + moveMessage.getStudentColor() + " student to the island number " + moveMessage.getNumIsland() + "!"+ANSIColor.RESET);
+                    broadcastWaitingMessage(activePlayer);
                 }actionTurnManager();
             }
         }else if (receivedMessage.getMessageType() == MessageType.MOTHERNATURE_RESULT){
@@ -460,6 +464,8 @@ public class GameController implements Observer, Serializable {
                         }
                     }
                 }
+                broadcastGenericMessage(ANSIColor.PURPLE_BOLD_BRIGHT + activePlayer.getNickname() + ANSIColor.RESET + ANSIColor.CYAN_BOLD + " moved MotherNature by " + motherNatureResult.getNumMoves() + " steps" + ANSIColor.RESET);
+                broadcastWaitingMessage(activePlayer);
                 noTowersWin();
                 if (!endgame)
                     threeIslandEnd();
@@ -643,11 +649,13 @@ public class GameController implements Observer, Serializable {
                                 }
                                 game.getBoard().moveStudentsFromBagToClouds();
                                 activePlayer = game.getPlayerByNickname(checkController.getFirstPlayerInAction());    //mezzo inutile
+                                broadcastWaitingMessage(activePlayer);
                                 VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
                                 virtualView.onDemandAssistantCard(activePlayer.getDeck().getDeck());
                                 turnCont = 0;
                             }
                         } else {
+                            broadcastWaitingMessage(activePlayer);
                             VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
                             virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
                         }
@@ -656,6 +664,14 @@ public class GameController implements Observer, Serializable {
                         break;
                     }
                 }
+            }
+        }
+    }
+
+    public void broadcastWaitingMessage(Player activePlayer){
+        for (VirtualView vv : virtualViewMap.values()){
+            if (vv != virtualViewMap.get(activePlayer.getNickname())){
+                vv.showGenericMessage("Waiting for " + ANSIColor.PURPLE_BOLD_BRIGHT + activePlayer.getNickname().toUpperCase(Locale.ROOT) + ANSIColor.RESET + "...");
             }
         }
     }

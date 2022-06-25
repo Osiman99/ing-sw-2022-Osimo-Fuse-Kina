@@ -5,6 +5,7 @@ import it.polimi.ingsw.server.model.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * it's a room where the players are put before a match
@@ -73,7 +74,7 @@ public class Lobby {
 
     public boolean isNicknameTaken(String nickname) {
         return players.stream()
-                .anyMatch(p -> nickname.equals(p.getNickname()));
+                .anyMatch(p -> nickname.equals(p.getNickname().toUpperCase(Locale.ROOT)));
     }
 
     public void deleteExtraPlayers(){

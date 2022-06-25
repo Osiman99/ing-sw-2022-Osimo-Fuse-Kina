@@ -266,7 +266,7 @@ public class Board extends Observable implements Serializable {
 
 
     /**
-     * moving the professor in case che Chef card effect is applied
+     * moving the professor in case Chef card effect is applied
      */
     public void moveProfessorChef(Player player){
         Player playerTemp = null;

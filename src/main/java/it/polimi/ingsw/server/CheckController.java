@@ -42,7 +42,7 @@ public class CheckController implements Serializable {
             view.showGenericMessage(ANSIColor.RED+"Forbidden name."+ANSIColor.RESET);
             view.showLoginResult(false, true, null);
             return false;
-        } else if (gameController.getLobby().isNicknameTaken(nickname)) {
+        } else if (gameController.getLobby().isNicknameTaken(nickname.toUpperCase())) {
             view.showGenericMessage(ANSIColor.RED+ "Nickname already taken."+ANSIColor.RESET);
             view.showLoginResult(false, true, null);
             return false;
