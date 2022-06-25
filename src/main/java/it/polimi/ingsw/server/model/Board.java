@@ -280,8 +280,6 @@ public class Board extends Observable implements Serializable {
                 for (int i = 0; i < 5; i++) {
                     if (player.getPlank().getDiningRoom()[i].getStudents().size() >= playerTemp.getPlank().getDiningRoom()[i].getStudents().size() && player.getPlank().getDiningRoom()[i].getStudents().size() >= p.getPlank().getDiningRoom()[i].getStudents().size()) {
                         professorsControlledBy[i] = player.getNickname();
-                    }else{
-                        professorsControlledBy[i] = p.getNickname();
                     }
                 }
             }
