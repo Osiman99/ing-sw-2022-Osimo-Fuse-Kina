@@ -15,8 +15,8 @@ class PlayerTest {
     private static Player player;
 
 
-    @BeforeAll
-    static void setUp() {
+    @BeforeEach
+    void setUp() {
         game = Game.getInstance();
         for(int i=0; i<3; i++)
             game.addPlayer(new Player(nicknames[i]));
@@ -29,8 +29,8 @@ class PlayerTest {
 
     }
 
-    @AfterAll
-    static void tearDown() {
+    @AfterEach
+    void tearDown() {
         Game.resetInstance();
     }
 
@@ -125,4 +125,13 @@ class PlayerTest {
         assertEquals(3, player.getDeck().getDeck().get(3).getMaxMoves());
     }
 
+    @Test
+    void isTowerSpaceEmpty() {
+        assertFalse(game.getPlayerByNickname("AlanTuring").isTowerSpaceEmpty());
+    }
+
+    @Test
+    void isDeckEmpty() {
+        assertFalse(game.getPlayerByNickname("AlanTuring").isDeckEmpty());
+    }
 }

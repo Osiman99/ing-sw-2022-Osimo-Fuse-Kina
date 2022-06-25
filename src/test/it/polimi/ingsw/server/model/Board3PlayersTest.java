@@ -74,6 +74,22 @@ class Board3PlayersTest {
     }
 
     @Test
+    void cardActivated() {
+        board.setCardActivated(true);
+        assertTrue(board.isCardActivated());
+    }
+
+    @Test
+    void areIslandsLessThanThree() {
+        assertFalse(board.areIslandsLessThanThree());
+    }
+
+    @Test
+    void isBagEmptyGC() {
+        assertFalse(board.isBagEmptyGC());
+    }
+
+    @Test
     void moveStudentsFromBagToClouds() {
         List<Student> students = new ArrayList<Student>();
         int i,j,k;
@@ -236,6 +252,19 @@ class Board3PlayersTest {
     }
 
     @Test
+    void applyEffectChef() {
+        CharacterCard characterCard = new CharacterCard(CharacterName.Chef);
+        Player player = game.getPlayerByNickname("AlanTuring");
+
+        player.setNumCoins(10);
+
+        board.applyEffectChef(player, characterCard);
+        assertEquals(8, player.getNumCoins());
+        assertEquals(3, characterCard.getPrice());
+    }
+
+
+    @Test
     void applyEffectMessenger() {
         CharacterCard characterCard = new CharacterCard(CharacterName.Messenger);
         Island island = board.getIslands().get(0);
@@ -246,7 +275,6 @@ class Board3PlayersTest {
         for(int i=0; i<5; i++)
             island.addStudent(new Student(StudentColor.getStudentColor(i)));
 
-        //setto manualmente quali giocatori controllani quali professori
         board.setProfessorsControlledBy(new String[]{"AlanTuring", "AlanTuring", "AlanTuring", "JamesGosling", "GeorgeBoole"});
 
         board.applyEffectMessenger(player, characterCard, 1);
@@ -254,5 +282,67 @@ class Board3PlayersTest {
         assertEquals(TowerColor.BLACK, island.getFirstTower().getColor());
     }
 
+    @Test
+    void applyEffectPostman() {
+        CharacterCard characterCard = new CharacterCard(CharacterName.Postman);
+        Player player = game.getPlayerByNickname("AlanTuring");
+
+        player.setNumCoins(10);
+
+        board.applyEffectChef(player, characterCard);
+        assertEquals(9, player.getNumCoins());
+        assertEquals(2, characterCard.getPrice());
+    }
+
+    @Test
+    void applyEffectHerbalist() {
+        CharacterCard characterCard = new CharacterCard(CharacterName.Herbalist);
+        Player player = game.getPlayerByNickname("AlanTuring");
+        Island island = board.getIslands().get(0);
+
+        player.setNumCoins(10);
+
+        board.applyEffectHerbalist(player, characterCard, 1);
+
+        assertTrue(island.isBanCard());
+        assertEquals(8, player.getNumCoins());
+    }
+
+    @Test
+    void applyEffectCentaur() {
+        CharacterCard characterCard = new CharacterCard(CharacterName.Centaur);
+        Player player = game.getPlayerByNickname("AlanTuring");
+
+        player.setNumCoins(10);
+
+        board.applyEffectChef(player, characterCard);
+        assertEquals(7, player.getNumCoins());
+        assertEquals(4, characterCard.getPrice());
+    }
+
+    @Test
+    void applyEffectKnight() {
+        CharacterCard characterCard = new CharacterCard(CharacterName.Knight);
+        Player player = game.getPlayerByNickname("AlanTuring");
+
+        player.setNumCoins(10);
+
+        board.applyEffectChef(player, characterCard);
+        assertEquals(8, player.getNumCoins());
+        assertEquals(3, characterCard.getPrice());
+    }
+
+    @Test
+    void applyEffectLady() {
+        CharacterCard characterCard = new CharacterCard(CharacterName.Lady);
+        Player player = game.getPlayerByNickname("AlanTuring");
+        Student student = characterCard.getStudents().get(0);
+
+        player.setNumCoins(10);
+        board.applyEffectLady(player, characterCard, student.getColor());
+
+        assertEquals(1, player.getPlank().getDiningRoom()[student.getColor().getCode()].getStudents().size());
+        assertEquals(4, characterCard.getStudents().size());
+    }
 
 }
