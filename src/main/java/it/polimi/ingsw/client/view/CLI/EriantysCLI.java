@@ -6,20 +6,31 @@ import it.polimi.ingsw.server.GameState;
 import it.polimi.ingsw.server.model.*;
 
 import java.io.*;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class EriantysCLI extends ViewObservable implements View {
 
     private final PrintStream out;
     private static final String CANCEL_INPUT = "User input canceled.";
     BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
-    int assistantCardValue;
-    int numCloud;
-    int numMoves;
-    int playersNumber;
-    int i = 0;
+    private int assistantCardValue;
+    private int numCloud;
+    private int numMoves;
+    private int playersNumber;
+    private int i = 0;
+    private static final String IPV4_REGEX =
+            "^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
+                    "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
+                    "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
+                    "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
+
+    private static final Pattern IPv4_PATTERN = Pattern.compile(IPV4_REGEX);
 
 
     /**
@@ -470,6 +481,17 @@ public class EriantysCLI extends ViewObservable implements View {
 
     }
 
+    public static boolean isValidInet4Address(String ip)
+    {
+        if (ip == null) {
+            return false;
+        }
+
+        Matcher matcher = IPv4_PATTERN.matcher(ip);
+
+        return matcher.matches();
+    }
+
 
 
     public void onDemandServerInfo() throws ExecutionException {
@@ -483,11 +505,18 @@ public class EriantysCLI extends ViewObservable implements View {
         out.println("The default value of address and port is shown between brackets.");
 
         do{
-            out.print("Enter the server address [" + defaultAddress +"]:");
+            out.print("Enter the server address you want to connect or push Enter for the Localhost:");
             String address = nextLine();
 
-            if (address.equals("") || address.equals("127.0.0.1") || address.equals("192.168.1.245") || address.equals("192.168.1.155") || address.equals("192.168.42.89")){
-                serverInfo.put("address", "192.168.1.245");
+            if (isValidInet4Address(address)) {
+                if(address.equals("127.0.0.1")) {
+                    serverInfo.put("address", defaultAddress);
+                }else{
+                    serverInfo.put("address", address);
+                }
+                correctInput = true;
+            }else if (address.equals("")){
+                serverInfo.put("address", defaultAddress);
                 correctInput = true;
             }else{
                 out.println("Invalid address");
@@ -497,7 +526,7 @@ public class EriantysCLI extends ViewObservable implements View {
         } while(!correctInput);
 
         do{
-            out.print("Enter the server port [" + defaultPort +"]:");
+            out.print("Enter the server port [" + defaultPort +"] or push Enter:");
             String port = nextLine();
 
             if (port.equals("") || port.equals("12500")){
