@@ -486,8 +486,8 @@ public class EriantysCLI extends ViewObservable implements View {
             out.print("Enter the server address [" + defaultAddress +"]:");
             String address = nextLine();
 
-            if (address.equals("") || address.equals("127.0.0.1") || address.equals("192.168.1.245")){
-                serverInfo.put("address", defaultAddress);
+            if (address.equals("") || address.equals("127.0.0.1") || address.equals("192.168.1.245") || address.equals("192.168.1.155") || address.equals("192.168.42.89")){
+                serverInfo.put("address", "192.168.1.245");
                 correctInput = true;
             }else{
                 out.println("Invalid address");
