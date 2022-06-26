@@ -322,12 +322,15 @@ public class GameController implements Observer, Serializable {
                 virtualView.onDemandCharacterCard(text);
             }else{
                 if(characterCardsDescriptionRequest.getAskInterrupted().equals("s")) {
+                    game.notifyBoard();
                     virtualView.showGenericMessage(ANSIColor.RED+"Invalid input! Please try again."+ANSIColor.RESET);
                     virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
                 }else if(characterCardsDescriptionRequest.getAskInterrupted().equals("m")){
+                    game.notifyBoard();
                     virtualView.showGenericMessage(ANSIColor.RED+"Invalid input! Please try again."+ANSIColor.RESET);
                     virtualView.onDemandMotherNatureMoves(activePlayer.getChosenAssistantCard().getMaxMoves());
                 }else if(characterCardsDescriptionRequest.getAskInterrupted().equals("c")){
+                    game.notifyBoard();
                     virtualView.showGenericMessage(ANSIColor.RED+"Invalid input! Please try again."+ANSIColor.RESET);
                     virtualView.showGenericMessage("Which cloud do you choose? Insert the cloud number.");
                 }
@@ -408,6 +411,7 @@ public class GameController implements Observer, Serializable {
                         //break;
                 }
                 if (askInterrupted.equals("s")){
+                    game.notifyBoard();
                     virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
                 }else if(askInterrupted.equals("m")){
                     for (CharacterCard characterCard : gameExpert.getThreeChosenCards()) {
@@ -415,8 +419,10 @@ public class GameController implements Observer, Serializable {
                             virtualView.onDemandMotherNatureMoves(activePlayer.getChosenAssistantCard().getMaxMoves() + 2);
                             return;
                         }
-                    }virtualView.onDemandMotherNatureMoves(activePlayer.getChosenAssistantCard().getMaxMoves());
+                    }game.notifyBoard();
+                    virtualView.onDemandMotherNatureMoves(activePlayer.getChosenAssistantCard().getMaxMoves());
                 }else if(askInterrupted.equals("c")){
+                    game.notifyBoard();
                     virtualView.showGenericMessage("Which cloud do you choose? Insert the cloud number.");
                 }
             }
