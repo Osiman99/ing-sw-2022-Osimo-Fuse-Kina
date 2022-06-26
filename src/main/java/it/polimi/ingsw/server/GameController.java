@@ -626,9 +626,7 @@ public class GameController implements Observer, Serializable {
                 if (game instanceof GameExpert){
                     GameExpert gameExpert = (GameExpert) game;
                     for (CharacterCard characterCard : gameExpert.getThreeChosenCards()) {
-                        if (characterCard.getCharacterName() == CharacterName.Chef && characterCard.isEnabled()) {
-                            characterCard.setEnabled(false);
-                        }
+                        characterCard.setEnabled(false);
                     }
                 }
                 for (int i = 0; i < checkController.getNicknamesInChooseOrder().size(); i++) {

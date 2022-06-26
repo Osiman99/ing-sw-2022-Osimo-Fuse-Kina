@@ -24,6 +24,7 @@ public class EriantysCLI extends ViewObservable implements View {
     private int numMoves;
     private int playersNumber;
     private int i = 0;
+    private boolean ccFlag = false;
     private static final String IPV4_REGEX =
             "^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
                     "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
@@ -701,8 +702,10 @@ public class EriantysCLI extends ViewObservable implements View {
         String cc = nextLine().toLowerCase();
         if(cc.equals("cc")){
             notifyObserver(obs -> obs.onUpdateCharacterCardsDescription("c"));
+            ccFlag = true;
         }else {
             try {
+                ccFlag = false;
                 numCloud = Integer.parseInt(cc);
             }catch(NumberFormatException e){
                 i++;
@@ -710,7 +713,7 @@ public class EriantysCLI extends ViewObservable implements View {
                 showGenericMessage("Which cloud do you choose? Insert the cloud number.");
                 i--;
             }
-            if (i == 0) {
+            if (i == 0 && !ccFlag) {
                 notifyObserver(obs -> obs.onUpdateCloud(numCloud));
                 i = 0;
             }
@@ -724,8 +727,10 @@ public class EriantysCLI extends ViewObservable implements View {
         String cc = nextLine().toLowerCase();
         if(cc.equals("cc")){
             notifyObserver(obs -> obs.onUpdateCharacterCardsDescription("m"));
+            ccFlag = true;
         }else {
             try{
+                ccFlag = false;
                 numMoves = Integer.parseInt(cc);
             }catch (NumberFormatException e) {
                 i++;
@@ -733,7 +738,7 @@ public class EriantysCLI extends ViewObservable implements View {
                 onDemandMotherNatureMoves(maxMoves);
                 i--;
             }
-            if (i == 0) {
+            if (i == 0 && !ccFlag) {
                 notifyObserver(obs -> obs.onUpdateMotherNatureMoves(numMoves));
                 i = 0;
             }

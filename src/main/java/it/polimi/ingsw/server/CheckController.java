@@ -348,8 +348,9 @@ public class CheckController implements Serializable {
                 break;
             */
             case "back":
-                askInterrupted(virtualView, activePlayer);
-                return false;
+                game.notifyBoard();
+                gameController.broadcastWaitingMessage(activePlayer);
+                return askInterrupted(virtualView, activePlayer);
         }virtualView.showGenericMessage(ANSIColor.RED+"Invalid input! Please try again."+ANSIColor.RESET);
         virtualView.onDemandCharacterCard(gameController.getText());
         return false;
