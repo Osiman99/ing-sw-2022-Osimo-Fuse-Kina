@@ -224,7 +224,12 @@ public class CheckController implements Serializable {
         Player activePlayer = game.getPlayerByNickname(message.getNickname());
         CharacterCardMessage characterCardMessage = (CharacterCardMessage) message;
         if(game.getBoard().isCardActivated()){
-            virtualView.showGenericMessage(ANSIColor.RED+ "You already activated a card in this turn!"+ANSIColor.RESET);
+            if (characterCardMessage.getCard().equals("back")){
+                game.notifyBoard();
+                gameController.broadcastWaitingMessage(activePlayer);
+            }else {
+                virtualView.showGenericMessage(ANSIColor.RED + "You already activated a card in this turn!" + ANSIColor.RESET);
+            }
             return askInterrupted(virtualView, activePlayer);
         }
         switch (characterCardMessage.getCard()) {

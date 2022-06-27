@@ -163,8 +163,10 @@ public class Board extends Observable implements Serializable {
      * @param island
      */
     public void moveTowerFromPlankToIsland(Player player, Island island){
-        island.addTower(player.getPlank().getTowerSpace().getFirstTower());
-        player.getPlank().getTowerSpace().removeTower();
+        if(!player.getPlank().getTowerSpace().getTowersList().isEmpty()) {
+            island.addTower(player.getPlank().getTowerSpace().getFirstTower());
+            player.getPlank().getTowerSpace().removeTower();
+        }
     }
 
     /**
