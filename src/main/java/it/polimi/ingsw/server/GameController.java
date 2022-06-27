@@ -32,6 +32,7 @@ public class GameController implements Observer, Serializable {
     private String askInterrupted;
     private String[] text;
     private boolean serverEndFlag;
+    private boolean acFlag;
 
 
     public GameController(){
@@ -47,6 +48,7 @@ public class GameController implements Observer, Serializable {
         askInterrupted = "";
         text = new String[3];
         serverEndFlag = false;
+        acFlag = false;
     }
 
     public void switchState(Message receivedMessage){
@@ -280,11 +282,15 @@ public class GameController implements Observer, Serializable {
         askInterrupted = "";
         text = new String[3];
         serverEndFlag = false;
+        acFlag = false;
     }
 
     public void plan(Message receivedMessage){
         if (receivedMessage.getMessageType() == MessageType.ASSISTANTCARD_RESULT){
             if (checkController.verifyReceivedData(receivedMessage)) {
+                if(activePlayer.getDeck().getDeck().size() == 1){
+                    acFlag = true;
+                }
                 activePlayer.chooseAssistantCard(((AssistantCardResult) receivedMessage).getCard());
                 broadcastGenericMessage(ANSIColor.PURPLE_BOLD_BRIGHT+ activePlayer.getNickname().toUpperCase() +ANSIColor.CYAN_BOLD +  " chose the Card number " + ((AssistantCardResult) receivedMessage).getCard() +ANSIColor.RESET );
                 planTurnManager();
@@ -295,7 +301,6 @@ public class GameController implements Observer, Serializable {
     }
 
     public void planTurnManager(){
-        assistantCardEnd();
         if(!endgame) {
             for (int i = 0; i < game.getPlayers().size(); i++) {
                 if (game.getPlayers().get(i).getNickname().equals(activePlayer.getNickname())) {
@@ -544,12 +549,23 @@ public class GameController implements Observer, Serializable {
         Player winner = game.getPlayers().get(0);
 
         for (int i = 0; i < game.getBoard().getProfessorsControlledBy().length; i++) {
-            if(game.getBoard().getProfessorsControlledBy()[i].equals(game.getPlayers().get(0).getNickname())){
-                contProfessorFirstPlayer++;
-            }if(game.getBoard().getProfessorsControlledBy()[i].equals(game.getPlayers().get(1).getNickname())){
-                contProfessorSecondPlayer++;
-            }if(game.getBoard().getProfessorsControlledBy()[i].equals(game.getPlayers().get(2).getNickname())) {
-                contProfessorThirdPlayer++;
+            if(game.getNumPlayers() == 2){
+                if (game.getBoard().getProfessorsControlledBy()[i].equals(game.getPlayers().get(0).getNickname())) {
+                    contProfessorFirstPlayer++;
+                }
+                if (game.getBoard().getProfessorsControlledBy()[i].equals(game.getPlayers().get(1).getNickname())) {
+                    contProfessorSecondPlayer++;
+                }
+            }else if(game.getNumPlayers() == 3) {
+                if (game.getBoard().getProfessorsControlledBy()[i].equals(game.getPlayers().get(0).getNickname())) {
+                    contProfessorFirstPlayer++;
+                }
+                if (game.getBoard().getProfessorsControlledBy()[i].equals(game.getPlayers().get(1).getNickname())) {
+                    contProfessorSecondPlayer++;
+                }
+                if (game.getBoard().getProfessorsControlledBy()[i].equals(game.getPlayers().get(2).getNickname())) {
+                    contProfessorThirdPlayer++;
+                }
             }
         }for (int i = 1; i < game.getPlayers().size(); i++) {
             contTowersPrev = contTowersNext;
@@ -661,19 +677,23 @@ public class GameController implements Observer, Serializable {
                         if (turnCont == game.getPlayers().size()) {
                             bagEmptyEnd();
                             if(!endgame) {
-                                state = GameState.PLAN;
-                                game.setState(GameState.PLAN);
-                                int getNumCardOtherPlayerSize = checkController.getNumCardOtherPlayers().size();
-                                for (int j = 0; j < getNumCardOtherPlayerSize; j++) {
-                                    checkController.getNumCardOtherPlayers().remove(0);
-                                    checkController.getNicknamesInChooseOrder().remove(0);
+                                if(!acFlag) {
+                                    state = GameState.PLAN;
+                                    game.setState(GameState.PLAN);
+                                    int getNumCardOtherPlayerSize = checkController.getNumCardOtherPlayers().size();
+                                    for (int j = 0; j < getNumCardOtherPlayerSize; j++) {
+                                        checkController.getNumCardOtherPlayers().remove(0);
+                                        checkController.getNicknamesInChooseOrder().remove(0);
+                                    }
+                                    game.getBoard().moveStudentsFromBagToClouds();
+                                    activePlayer = game.getPlayerByNickname(checkController.getFirstPlayerInAction());    //mezzo inutile
+                                    broadcastWaitingMessage(activePlayer);
+                                    VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
+                                    virtualView.onDemandAssistantCard(activePlayer.getDeck().getDeck());
+                                    turnCont = 0;
+                                }else{
+                                    assistantCardEnd();
                                 }
-                                game.getBoard().moveStudentsFromBagToClouds();
-                                activePlayer = game.getPlayerByNickname(checkController.getFirstPlayerInAction());    //mezzo inutile
-                                broadcastWaitingMessage(activePlayer);
-                                VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
-                                virtualView.onDemandAssistantCard(activePlayer.getDeck().getDeck());
-                                turnCont = 0;
                             }
                         } else {
                             broadcastWaitingMessage(activePlayer);
