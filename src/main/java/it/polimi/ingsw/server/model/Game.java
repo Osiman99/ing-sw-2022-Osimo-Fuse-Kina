@@ -37,7 +37,7 @@ public class Game extends Observable implements Serializable {
 
 
     /**
-     * initializes the game(the board & the players)
+     * initializes the game(the board & the players(in cases of 2 or 3 players))
      */
     public void initGame(){
         board.initBoard();
@@ -95,6 +95,10 @@ public class Game extends Observable implements Serializable {
      */
 
 
+    /**
+     * adds the nickname to a player
+     * @param player
+     */
     public void addPlayer(Player player){
         players.add(player);
         contPlayer++;
