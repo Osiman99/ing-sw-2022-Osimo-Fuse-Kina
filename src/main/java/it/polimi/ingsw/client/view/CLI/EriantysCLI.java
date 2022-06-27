@@ -60,19 +60,24 @@ public class EriantysCLI extends ViewObservable implements View {
 
     public void welcome() {
         ArrayList<String> welcome = new ArrayList<>();
-        welcome.add(ANSIColor.PURPLE_BOLD_BRIGHT);
-        welcome.add("      (_)(_)(_)(_)(_)     (_)(_)(_)(_) _      (_)(_)(_)          _(_)_          (_) _       (_)     (_)(_)(_)(_)(_)     (_)_       _(_)      _(_)(_)(_)(_)_");
-        welcome.add("     (_)                 (_)         (_)        (_)           _(_) (_)_        (_)(_)_     (_)           (_)             (_)_   _(_)       (_)          (_)");
-        welcome.add("    (_) _  _            (_) _  _  _ (_)        (_)         _(_)     (_)_      (_)  (_)_   (_)           (_)               (_)_(_)         (_)_  _  _  _");
-        welcome.add("   (_)(_)(_)           (_)(_)(_)(_)           (_)        (_) _  _  _ (_)     (_)    (_)_ (_)           (_)                 (_)             (_)(_)(_)(_)_");
-        welcome.add("  (_)                 (_)   (_) _            (_)        (_)(_)(_)(_)(_)     (_)      (_)(_)           (_)                 (_)            _           (_)");
-        welcome.add(" (_) _  _  _  _      (_)      (_) _       _ (_) _      (_)         (_)     (_)         (_)           (_)                 (_)           (_)_  _  _  _(_)");
-        welcome.add("(_)(_)(_)(_)(_)     (_)         (_)     (_)(_)(_)     (_)         (_)     (_)         (_)           (_)                 (_)             (_)(_)(_)(_)");
-        welcome.add(ANSIColor.RESET);
+        clearConsole();
+        welcome.add(ANSIColor.GREEN_BOLD_BRIGHT+ "      (_)(_)(_)(_)(_)     (_)(_)(_)(_) _      (_)(_)(_)          _(_)_          (_) _       (_)     (_)(_)(_)(_)(_)     (_)_       _(_)      _(_)(_)(_)(_)_"+ANSIColor.RESET);
+        welcome.add(ANSIColor.CYAN_BOLD+ "     (_)                 (_)         (_)        (_)           _(_) (_)_        (_)(_)_     (_)           (_)             (_)_   _(_)       (_)          (_)"+ANSIColor.RESET);
+        welcome.add(ANSIColor.GREEN_BOLD_BRIGHT+"    (_) _  _            (_) _  _  _ (_)        (_)         _(_)     (_)_      (_)  (_)_   (_)           (_)               (_)_(_)         (_)_  _  _  _"+ANSIColor.RESET);
+        welcome.add(ANSIColor.CYAN_BOLD+"   (_)(_)(_)           (_)(_)(_)(_)           (_)        (_) _  _  _ (_)     (_)    (_)_ (_)           (_)                 (_)             (_)(_)(_)(_)_"+ANSIColor.RESET);
+        welcome.add(ANSIColor.GREEN_BOLD_BRIGHT+"  (_)                 (_)   (_) _            (_)        (_)(_)(_)(_)(_)     (_)      (_)(_)           (_)                 (_)            _           (_)"+ANSIColor.RESET);
+        welcome.add(ANSIColor.CYAN_BOLD+" (_) _  _  _  _      (_)      (_) _       _ (_) _      (_)         (_)     (_)         (_)           (_)                 (_)           (_)_  _  _  _(_)"+ANSIColor.RESET);
+        welcome.add(ANSIColor.GREEN_BOLD_BRIGHT+"(_)(_)(_)(_)(_)     (_)         (_)     (_)(_)(_)     (_)         (_)     (_)         (_)           (_)                 (_)             (_)(_)(_)(_)"+ANSIColor.RESET);
+        welcome.add("\n");
+        welcome.add(ANSIColor.PURPLE_BOLD_BRIGHT+ "                                                      The Magical World Of Floating Islands" +ANSIColor.RESET);
 
+
+        int i=2;
         for(String w:welcome){
+            gotoXY(19,i++);
             System.out.println(w);
         }
+        System.out.println("\n\n");
 
         try {
             onDemandServerInfo();
@@ -82,7 +87,6 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
     public void drawBoard(Game game) {
-
         clearConsole();
         if(game instanceof GameExpert) {
             GameExpert gameExpert = (GameExpert) game;
@@ -154,13 +158,15 @@ public class EriantysCLI extends ViewObservable implements View {
         }
 
         gotoXY(138, 1);
-        System.out.println(ANSIColor.UNDERLINE+ANSIColor.PURPLE_BOLD_BRIGHT+"CHARACTER CARDS"+ANSIColor.RESET);
+        System.out.println(ANSIColor.PURPLE_BOLD_BRIGHT+"CHARACTER CARDS"+ANSIColor.RESET);
         gotoXY(138, 2);
-        System.out.println("During your "+ ANSIColor.CYAN_BOLD+ "Action Phase"+ANSIColor.RESET+ ", type "+ANSIColor.UNDERLINE+ ANSIColor.PURPLE_BOLD_BRIGHT+ "cc" +ANSIColor.RESET+ " to use one of these Character cards.");
+        System.out.println("During your "+ ANSIColor.CYAN_BOLD+ "Action Phase"+ANSIColor.RESET+ ",");
+        gotoXY(138, 3);
+        System.out.println("type "+ANSIColor.UNDERLINE+ ANSIColor.PURPLE_BOLD_BRIGHT+ "cc" +ANSIColor.RESET+ " to use one of these Character cards.");
         for(int i=0; i<3; i++) {
-            gotoXY(138,4+3*i);
-            System.out.println(ANSIColor.ORANGE_BACKGROUND + ANSIColor.BLACK +(i+1)+") " + characterNames.get(i)+ANSIColor.RESET+" price: "+ANSIColor.UNDERLINE+ characterPrice.get(i)+ANSIColor.RESET);
             gotoXY(138,5+3*i);
+            System.out.println(ANSIColor.ORANGE_BACKGROUND + ANSIColor.BLACK +(i+1)+") " + characterNames.get(i)+ANSIColor.RESET+ANSIColor.YELLOW_BOLD_BRIGHT+" price: "+ characterPrice.get(i)+ANSIColor.RESET);
+            gotoXY(138,6+3*i);
             System.out.println(characterMarkers.get(i));
         }
 
@@ -193,7 +199,7 @@ public class EriantysCLI extends ViewObservable implements View {
             //salvo gli studenti della dining room con un ● colorato e poi riempio con blanckspace
             for(j=0; j<playerBoard.getPlank().getDiningRoom().length; j++) {
                 for(k=0; k< playerBoard.getPlank().getDiningRoom()[j].getStudents().size(); k++)
-                    diningRoomBoard[j].add(" ●");
+                    diningRoomBoard[j].add(" s");
                 for(;k<10;k++)
                     diningRoomBoard[j].add("  ");
             }
@@ -207,7 +213,7 @@ public class EriantysCLI extends ViewObservable implements View {
             //per ogni player ho una lista contenente i professori ▲ che controlla
             for(j=0; j<5; j++) {
                 if(game.getBoard().getProfessorsControlledBy()[j].equals(playerBoard.getNickname()))
-                    professorsBoard[j]="▲";
+                    professorsBoard[j]="P";
                 else
                     professorsBoard[j]=" ";
             }
@@ -217,7 +223,7 @@ public class EriantysCLI extends ViewObservable implements View {
             }
 
 
-            plankBoard.add("→ " +ANSIColor.PINK+ ANSIColor.UNDERLINE+ playerBoard.getNickname().toUpperCase()+ANSIColor.RESET+coins);
+            plankBoard.add(convertANSI(playerBoard.getPlayerColor())+" " +ANSIColor.PINK+ ANSIColor.UNDERLINE+ playerBoard.getNickname().toUpperCase()+ANSIColor.RESET+coins);
             plankBoard.add("╔══════════╦═══════════════════════╦═════════╦═════════════╗");
             plankBoard.add("║"+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+" Entrance "+ANSIColor.RESET+"║"+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+"      Dining Room      "+ANSIColor.RESET+"║"+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+"Professor"+ANSIColor.RESET+"║"+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+" Tower Space "+ANSIColor.RESET+"║");
             plankBoard.add("╠══════════╬═══════════════════════╬═════════╬═════════════╣");
@@ -274,19 +280,19 @@ public class EriantysCLI extends ViewObservable implements View {
 
         switch (color) {
             case YELLOW:
-                return ANSIColor.YELLOW_BOLD_BRIGHT + "●" + ANSIColor.RESET;
+                return ANSIColor.YELLOW_BOLD_BRIGHT + "s" + ANSIColor.RESET;
 
             case RED:
-                return ANSIColor.RED + "●" + ANSIColor.RESET;
+                return ANSIColor.RED + "s" + ANSIColor.RESET;
 
             case PINK:
-                return ANSIColor.PINK + "●" + ANSIColor.RESET;
+                return ANSIColor.PINK + "s" + ANSIColor.RESET;
 
             case BLUE:
-                return ANSIColor.BLUE + "●" + ANSIColor.RESET;
+                return ANSIColor.BLUE + "s" + ANSIColor.RESET;
 
             case GREEN:
-                return ANSIColor.GREEN + "●" + ANSIColor.RESET;
+                return ANSIColor.GREEN + "s" + ANSIColor.RESET;
 
             default:
                 return null;
@@ -374,7 +380,7 @@ public class EriantysCLI extends ViewObservable implements View {
                 islandBoard.add("╠═══════════════════════╬══════╣");
                 islandBoard.add("║TOWERS" + towerBoard.get(0) + towerBoard.get(1) + towerBoard.get(2) + towerBoard.get(3) + towerBoard.get(4) + towerBoard.get(5) + towerBoard.get(6) + towerBoard.get(7) + " ║" + banBoard + "║");
                 islandBoard.add("╠═════╦═════╦═════╦═════╬═════╦╝");
-                islandBoard.add("║ " + ANSIColor.GREEN + "●" + ANSIColor.RESET + " " + numStudent[0] + " ║ " + ANSIColor.RED + "●" + ANSIColor.RESET + " " + numStudent[1] + " ║ " + ANSIColor.YELLOW_BOLD_BRIGHT + "●" + ANSIColor.RESET + " " + numStudent[2] + " ║ " + ANSIColor.PINK + "●" + ANSIColor.RESET + " " + numStudent[3] + " ║ " + ANSIColor.BLUE + "●" + ANSIColor.RESET + " " + numStudent[4] + " ║");
+                islandBoard.add("║ " + ANSIColor.GREEN + "s" + ANSIColor.RESET + " " + numStudent[0] + " ║ " + ANSIColor.RED + "s" + ANSIColor.RESET + " " + numStudent[1] + " ║ " + ANSIColor.YELLOW_BOLD_BRIGHT + "s" + ANSIColor.RESET + " " + numStudent[2] + " ║ " + ANSIColor.PINK + "s" + ANSIColor.RESET + " " + numStudent[3] + " ║ " + ANSIColor.BLUE + "s" + ANSIColor.RESET + " " + numStudent[4] + " ║");
                 islandBoard.add("╚═════╩═════╩═════╩═════╩═════╝");
             }
 
@@ -449,11 +455,11 @@ public class EriantysCLI extends ViewObservable implements View {
             if(cloudStudents.size()==3)
                 cloudStudents.add(" ");
 
-            cloudBoard.add("╭─────────────────╮");
+            cloudBoard.add("@─────────────────@");
             cloudBoard.add("│        "+cloudStudents.get(3)+"        │");
             cloudBoard.add("│ "+cloudStudents.get(0)+"   Cloud "+(i+1)+"   "+cloudStudents.get(1)+" │");
             cloudBoard.add("│        "+cloudStudents.get(2)+"        │");
-            cloudBoard.add("╰─────────────────╯");
+            cloudBoard.add("@─────────────────@");
 
 
             for(int r=0; r<cloudBoard.size(); r++) {
