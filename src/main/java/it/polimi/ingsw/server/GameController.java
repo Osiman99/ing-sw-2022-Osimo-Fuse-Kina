@@ -111,7 +111,7 @@ public class GameController implements Observer, Serializable {
             server = Server.getInstance();
             server.getClientHandlerMap().remove(nickname);
             //LOGGER.info(() -> "Removed " + nickname + " from the client list.");
-            virtualView.showGenericMessage("Max players reached. Connection refused.");
+            virtualView.showGenericMessage(ANSIColor.RED + "Max players reached. Connection refused." + ANSIColor.RESET);
             virtualView.showDisconnectionMessage(nickname, " disconnected from the Server.");
         }
     }
@@ -132,6 +132,7 @@ public class GameController implements Observer, Serializable {
                 lobby.setNumPlayers(playerNumberReply.getPlayerNumber());
                 //game.setChosenPlayersNumber(((PlayerNumberReply) receivedMessage).getPlayerNumber());
                 if (lobby.checkStart()){
+                    server = Server.getInstance();
                     lobby.deleteExtraPlayers();
                     lobby.setFull(true);
                     initGame();
@@ -238,7 +239,7 @@ public class GameController implements Observer, Serializable {
         state = GameState.ENDGAME;
         for (Map.Entry<String, VirtualView> entry : virtualViewMap.entrySet()) {
             if(!entry.getKey().equals(nickname))
-                entry.getValue().showGenericMessage("One player exit the game. The game is over.");
+                entry.getValue().showGenericMessage(ANSIColor.RED + "One player exit the game. The game is over." + ANSIColor.RESET);
                 entry.getValue().showGenericMessage("Type \"quit\" to leave the game.");
         }
     }
@@ -691,9 +692,13 @@ public class GameController implements Observer, Serializable {
     public void broadcastWaitingMessage(Player activePlayer){
         for (VirtualView vv : virtualViewMap.values()){
             if (vv != virtualViewMap.get(activePlayer.getNickname())){
-                vv.showGenericMessage("Waiting for " + ANSIColor.PURPLE_BOLD_BRIGHT + activePlayer.getNickname().toUpperCase(Locale.ROOT) + ANSIColor.RESET + "...");
+                vv.showGenericMessage("Waiting for " + ANSIColor.PURPLE_BOLD_BRIGHT + activePlayer.getNickname().toUpperCase() + ANSIColor.RESET + "...");
             }
         }
+    }
+
+    public Server getServer() {
+        return server;
     }
 
     public GameState getState() {

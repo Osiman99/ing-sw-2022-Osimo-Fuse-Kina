@@ -902,7 +902,7 @@ public class EriantysCLI extends ViewObservable implements View {
 
     @Override
     public void showDisconnectionMessage(String nicknameDisconnected, String text) {
-        out.println("\n" + nicknameDisconnected + text);
+        out.println("\n" + ANSIColor.PURPLE_BOLD_BRIGHT + nicknameDisconnected.toUpperCase() + ANSIColor.CYAN_BOLD + text + ANSIColor.RESET);
 
         System.exit(1);
     }
