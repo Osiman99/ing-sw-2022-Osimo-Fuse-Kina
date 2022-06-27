@@ -31,6 +31,7 @@ public class GameController implements Observer, Serializable {
     private Lobby lobby;
     private String askInterrupted;
     private String[] text;
+    private boolean serverEndFlag;
 
 
     public GameController(){
@@ -45,6 +46,7 @@ public class GameController implements Observer, Serializable {
         endgame = false;
         askInterrupted = "";
         text = new String[3];
+        serverEndFlag = false;
     }
 
     public void switchState(Message receivedMessage){
@@ -106,7 +108,11 @@ public class GameController implements Observer, Serializable {
                 }
             }
         } else {
-            virtualView.showLoginResult(true, false, Game.SERVER_NICKNAME);
+            server = Server.getInstance();
+            server.getClientHandlerMap().remove(nickname);
+            //LOGGER.info(() -> "Removed " + nickname + " from the client list.");
+            virtualView.showGenericMessage("Max players reached. Connection refused.");
+            virtualView.showDisconnectionMessage(nickname, " disconnected from the Server.");
         }
     }
 
@@ -190,7 +196,7 @@ public class GameController implements Observer, Serializable {
     }
 
 
-    private void setGameState(GameState state) {
+    public void setGameState(GameState state) {
         this.state = state;
     }
 
@@ -207,12 +213,12 @@ public class GameController implements Observer, Serializable {
     }
 
 
-    public void removeVirtualView(String nickname, boolean notifyEnabled) {
+    public void removeVirtualView(String nickname) {
         VirtualView vv = virtualViewMap.remove(nickname);
 
         game.removeObserver(vv);
         game.getBoard().removeObserver(vv);
-        game.removePlayerByNickname(nickname, notifyEnabled);
+        game.removePlayerByNickname(nickname);
         nicknames.remove(nickname);
     }
 
@@ -228,11 +234,23 @@ public class GameController implements Observer, Serializable {
     }
 
 
+    public void quitFromServer(String nickname){
+        state = GameState.ENDGAME;
+        for (Map.Entry<String, VirtualView> entry : virtualViewMap.entrySet()) {
+            if(!entry.getKey().equals(nickname))
+                entry.getValue().showGenericMessage("One player exit the game. The game is over.");
+                entry.getValue().showGenericMessage("Type \"quit\" to leave the game.");
+        }
+    }
+
     public void end(Message receivedMessage){
         server = Server.getInstance();
         if (receivedMessage.getMessageType() == MessageType.END_MESSAGE) {
+            virtualViewMap.get(receivedMessage.getNickname()).showDisconnectionMessage(receivedMessage.getNickname(), "disconnected from the Server.");
             ClientHandler clientHandler = server.getClientHandlerMap().get(receivedMessage.getNickname());
             clientHandler.disconnect();
+        }if (virtualViewMap.isEmpty()){
+            endGame();
         }
     }
 
@@ -244,19 +262,23 @@ public class GameController implements Observer, Serializable {
         /*StorageData storageData = new StorageData();
         storageData.delete();*/
 
-        //initGameController();
+        initGameController();
         Server.LOGGER.info("Game finished. Server ready for a new Game.");
     }
 
     public void initGameController() {
-        this.game = Game.getInstance();
-        this.virtualViewMap = Collections.synchronizedMap(new HashMap<>());
-        this.checkController = new CheckController(virtualViewMap, this);
+        lobby = new Lobby(this);
+        virtualViewMap = Collections.synchronizedMap(new HashMap<>());
+        checkController = new CheckController(virtualViewMap, this);
         setGameState(GameState.PREGAME);
         turnCont = 0;
         moveCont = 0;
         cloudFlag = false;
         motherNatureFlag = true;
+        endgame = false;
+        askInterrupted = "";
+        text = new String[3];
+        serverEndFlag = false;
     }
 
     public void plan(Message receivedMessage){
@@ -672,6 +694,14 @@ public class GameController implements Observer, Serializable {
                 vv.showGenericMessage("Waiting for " + ANSIColor.PURPLE_BOLD_BRIGHT + activePlayer.getNickname().toUpperCase(Locale.ROOT) + ANSIColor.RESET + "...");
             }
         }
+    }
+
+    public GameState getState() {
+        return state;
+    }
+
+    public void setServerEndFlag(boolean serverEndFlag) {
+        this.serverEndFlag = serverEndFlag;
     }
 
     public String[] getText() {

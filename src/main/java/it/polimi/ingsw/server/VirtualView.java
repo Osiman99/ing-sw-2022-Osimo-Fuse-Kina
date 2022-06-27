@@ -79,7 +79,10 @@ public class VirtualView implements View, Observer {
         clientHandler.sendMessage(new CharacterCardsDescriptionReply(Game.SERVER_NICKNAME, text));
     }
 
-
+    @Override
+    public void showErrorAndQuit(String error) {
+        clientHandler.sendMessage(new ErrorMessage(Game.SERVER_NICKNAME, error));
+    }
     /**
      * Receives an update message from the model.
      * The message is sent over the network to the client.

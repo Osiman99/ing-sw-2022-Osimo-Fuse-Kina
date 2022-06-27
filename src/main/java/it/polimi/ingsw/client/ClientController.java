@@ -135,12 +135,11 @@ public class ClientController implements ViewObserver, Observer {
                 CharacterCardsDescriptionReply characterCardsDescriptionReply = (CharacterCardsDescriptionReply) message;
                 taskQueue.execute(()-> view.onDemandCharacterCard(characterCardsDescriptionReply.getText()));
                 break;
-
-                /*case ERROR:
+                case ERROR:
                 ErrorMessage errorMessage = (ErrorMessage) message;
                 view.showErrorAndQuit(errorMessage.getError());
                 break;
-                */
+
             default:
                 throw new IllegalStateException("Unexpected value: " + message.getMessageType());
         }

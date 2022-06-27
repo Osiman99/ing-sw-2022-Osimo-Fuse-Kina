@@ -53,4 +53,9 @@ public class EriantysGUI extends ViewObservable implements View {
     public void onDemandCharacterCard(String[] text) {
 
     }
+
+    @Override
+    public void showErrorAndQuit(String error) {
+
+    }
 }

@@ -32,16 +32,10 @@ public class Server {
     public void addClient(String nickname, ClientHandler clientHandler) {
         VirtualView vv = new VirtualView(clientHandler);
 
-        if (!gameController.isGameStarted()) {
-            if (gameController.checkLoginNickname(nickname, vv)) {
-                clientHandlerMap.put(nickname, clientHandler);
-                gameController.loginHandler(nickname, vv);
-            }
-        } else {
-            //vv.showLoginResult(true, false, null);
-            clientHandler.disconnect();
+        if (gameController.checkLoginNickname(nickname, vv)) {
+            clientHandlerMap.put(nickname, clientHandler);
+            gameController.loginHandler(nickname, vv);
         }
-
     }
 
     public static Server getInstance() {
@@ -52,11 +46,17 @@ public class Server {
      * Removes a client given his nickname.
      *
      * @param nickname      the VirtualView to be removed.
-     * @param notifyEnabled set to {@code true} to enable a lobby disconnection message, {@code false} otherwise.
      */
-    public void removeClient(String nickname, boolean notifyEnabled) {
+    public void removeClient(String nickname) {
+
         clientHandlerMap.remove(nickname);
-        gameController.removeVirtualView(nickname, notifyEnabled);
+        gameController.removeVirtualView(nickname);
+
+        if(gameController.getState() != GameState.ENDGAME) {
+            gameController.quitFromServer(nickname);
+        }
+
+        //gameController.setGameState(GameState.PREGAME);
         LOGGER.info(() -> "Removed " + nickname + " from the client list.");
     }
 
@@ -80,8 +80,7 @@ public class Server {
 
             if (nickname != null) {
 
-                boolean gameStarted = gameController.isGameStarted();
-                removeClient(nickname, !gameStarted); // enable lobby notifications only if the game didn't start yet.
+                removeClient(nickname);
 
                 if(gameController.getNicknames() != null &&
                         !gameController.getNicknames().contains(nickname)) {

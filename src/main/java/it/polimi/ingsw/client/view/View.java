@@ -41,6 +41,8 @@ public interface View {
 
     void onDemandCharacterCard(String[] text);
 
+    void showErrorAndQuit(String error);
+
     //void showErrorAndQuit(String error);
 
 }

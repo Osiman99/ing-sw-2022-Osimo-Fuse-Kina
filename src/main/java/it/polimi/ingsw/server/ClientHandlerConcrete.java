@@ -43,7 +43,7 @@ public class ClientHandlerConcrete implements ClientHandler, Runnable {
             handleClientConnection();
         } catch (IOException e) {
             Server.LOGGER.severe("Client " + client.getInetAddress() + " connection dropped.");
-            e.printStackTrace();
+            //e.printStackTrace();
             disconnect();
         }
     }

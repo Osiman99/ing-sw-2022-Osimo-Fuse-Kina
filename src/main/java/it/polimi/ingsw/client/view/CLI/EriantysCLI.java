@@ -607,11 +607,6 @@ public class EriantysCLI extends ViewObservable implements View {
             out.println("Hi, " + ANSIColor.PURPLE_BOLD_BRIGHT+ ANSIColor.UNDERLINE+ nickname +ANSIColor.RESET+ "! You connected to the server.");
         } else if (connection) {
             onDemandNickname();
-        } else if (nicknameAccepted) {
-            out.println("Max players reached. Connection refused.");
-            out.println(ANSIColor.RED+ "EXIT." + ANSIColor.RESET);
-
-            System.exit(1);
         }/* else {
             showErrorAndExit("Could not contact server.");
         }*/
@@ -895,6 +890,14 @@ public class EriantysCLI extends ViewObservable implements View {
         }catch(Exception e){
             System.out.println(e);
         }
+    }
+
+    public void showErrorAndQuit(String error) {
+
+        out.println("\nERROR: " + error);
+        out.println("EXIT.");
+
+        System.exit(1);
     }
 
     @Override

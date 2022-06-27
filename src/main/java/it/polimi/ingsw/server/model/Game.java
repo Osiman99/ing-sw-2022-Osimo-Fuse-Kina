@@ -136,15 +136,10 @@ public class Game extends Observable implements Serializable {
     /**
      * in case the player disconnects
      * @param nickname
-     * @param notifyEnabled
      * @return
      */
-    public boolean removePlayerByNickname(String nickname, boolean notifyEnabled) {
+    public boolean removePlayerByNickname(String nickname) {
         boolean result = players.remove(getPlayerByNickname(nickname));
-
-        if (notifyEnabled) {
-            notifyObserver(new LobbyMessage(getNicknames(), this.chosenPlayersNumber));
-        }
         return result;
     }
 

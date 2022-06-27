@@ -65,7 +65,7 @@ class Game3PlayersTest {
 
     @Test
     void removePlayerByNickname() {
-        assertTrue(game.removePlayerByNickname("AlanTuring", true));
+        assertTrue(game.removePlayerByNickname("AlanTuring"));
     }
 
     @Test
