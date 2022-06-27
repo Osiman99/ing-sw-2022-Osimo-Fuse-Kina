@@ -37,6 +37,12 @@ public class CheckController implements Serializable {
     }
 
 
+    /**
+     * checks if the nickname is empty or iy belongs in a case that it's ignored or if it's taken by another player
+     * @param nickname
+     * @param view
+     * @return
+     */
     public boolean checkLoginNickname(String nickname, View view) {
         if (nickname.isEmpty() || nickname.equalsIgnoreCase(Game.SERVER_NICKNAME)) {
             view.showGenericMessage(ANSIColor.RED+"Forbidden name."+ANSIColor.RESET);
@@ -49,6 +55,7 @@ public class CheckController implements Serializable {
         }
         return true;
     }
+
 
     public boolean verifyReceivedData(Message message) {
 
@@ -77,6 +84,11 @@ public class CheckController implements Serializable {
         }
     }
 
+    /**
+     * if there are 2 or 3 players in the game it returns true, otherwise false
+     * @param message
+     * @return
+     */
     private boolean playerNumberReplyCheck(Message message) {
         PlayerNumberReply playerNumberReply = (PlayerNumberReply) message;
 

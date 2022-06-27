@@ -206,7 +206,7 @@ public class Board extends Observable implements Serializable {
     }
 
     /**
-     * moving the professor in case of an expert game.
+     * moving the professor in case of an expert game by using "the Chef" character card.
      */
     public void moveProfessor(Player player){
         if(game instanceof GameExpert){
@@ -498,6 +498,9 @@ public class Board extends Observable implements Serializable {
         }
     }
 
+    /**
+     * returns true if the character card is activated
+     */
     public boolean isCardActivated() {
         return cardActivated;
     }
@@ -514,6 +517,9 @@ public class Board extends Observable implements Serializable {
         return false;
     }
 
+    /**
+     * returns true if
+     */
     public boolean isBagEmptyGC(){
         if(bag.isBagEmpty()){
             notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
