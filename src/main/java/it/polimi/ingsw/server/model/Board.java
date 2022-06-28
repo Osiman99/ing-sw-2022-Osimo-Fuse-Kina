@@ -536,7 +536,7 @@ public class Board extends Observable implements Serializable {
      * @param numIsland
      */
 
-    public void applyEffectSommelier(Player player, CharacterCard characterCard, StudentColor studentColor, int numIsland){       //FATTO
+    public void applyEffectSommelier(Player player, CharacterCard characterCard, StudentColor studentColor, int numIsland){
         characterCard.setEnabled(true);
         cardActivated = true;
         for (int i = 0; i < 4; i++){
@@ -555,14 +555,14 @@ public class Board extends Observable implements Serializable {
         characterCard.setEnabled(false);
     }
 
-    public void applyEffectChef(Player player, CharacterCard characterCard) {                                           //FATTO
+    public void applyEffectChef(Player player, CharacterCard characterCard) {
         characterCard.setEnabled(true);
         cardActivated = true;
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
     }
 
-    public void applyEffectMessenger(Player player, CharacterCard characterCard, int numIsland){                        //FATTO
+    public void applyEffectMessenger(Player player, CharacterCard characterCard, int numIsland){
         characterCard.setEnabled(true);
         cardActivated = true;
         int prevIsland = 0;
@@ -598,14 +598,14 @@ public class Board extends Observable implements Serializable {
         characterCard.setEnabled(false);
     }
 
-    public void applyEffectPostman(Player player, CharacterCard characterCard){                                         //FATTO
+    public void applyEffectPostman(Player player, CharacterCard characterCard){
         characterCard.setEnabled(true);
         cardActivated = true;
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
     }
 
-    public void applyEffectHerbalist(Player player, CharacterCard characterCard, int numIsland){                        //FATTO
+    public void applyEffectHerbalist(Player player, CharacterCard characterCard, int numIsland){
         characterCard.setEnabled(true);
         cardActivated = true;
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
@@ -621,61 +621,21 @@ public class Board extends Observable implements Serializable {
         characterCard.setEnabled(false);
     }
 
-    /*if (islands.get(numIsland%islandSize).isMotherNature()){
-        islands.get(numIsland%islandSize).setMotherNature(false);
-        islands.get((i+numMoves)%islands.size()).setMotherNature(true);
-    }
-            else if (islands.get((((numIsland-2)%islandSize)+islandSize)%islandSize).isMotherNature()){
-        for (int i = 0; i < islands.size(); i++) {
-            if (islands.get(i).isMotherNature()) {
-                islands.get(i).setMotherNature(false);
-                islands.get((i + numMoves) % islands.size()).setMotherNature(true);
-            }
-        }
-    }
-            else if (islands.get(numIsland-1).isMotherNature()){
-        for (int i = 0; i < islands.size(); i++) {
-            if (islands.get(i).isMotherNature()) {
-                islands.get(i).setMotherNature(false);
-                islands.get((i + numMoves) % islands.size()).setMotherNature(true);
-            }
-        }
-    }*/
-
-    public void applyEffectCentaur(Player player, CharacterCard characterCard){                                         //FATTO
+    public void applyEffectCentaur(Player player, CharacterCard characterCard){
         characterCard.setEnabled(true);
         cardActivated = true;
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
     }
 
-    /*public void applyEffectJoker(Player player, CharacterCard characterCard){
-        characterCard.setEnabled(true);
-        player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
-        characterCard.setPrice(characterCard.getPrice() + 1);
-
-    }*/
-
-    public void applyEffectKnight(Player player, CharacterCard characterCard){                                          //FATTO
+    public void applyEffectKnight(Player player, CharacterCard characterCard){
         characterCard.setEnabled(true);
         cardActivated = true;
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
     }
 
-    /*public void applyEffectMerchant(Player player, CharacterCard characterCard){
-        characterCard.setEnabled(true);
-        player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
-        characterCard.setPrice(characterCard.getPrice() + 1);
-    }
-
-    public void applyEffectMusician(Player player, CharacterCard characterCard){
-        characterCard.setEnabled(true);
-        player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
-        characterCard.setPrice(characterCard.getPrice() + 1);
-    }*/
-
-    public void applyEffectLady(Player player, CharacterCard characterCard, StudentColor studentColor){                 //FATTO
+    public void applyEffectLady(Player player, CharacterCard characterCard, StudentColor studentColor){
         characterCard.setEnabled(true);
         cardActivated = true;
         for (int i = 0; i < 4; i++){
@@ -693,11 +653,5 @@ public class Board extends Observable implements Serializable {
         characterCard.setPrice(characterCard.getPrice() + 1);
         characterCard.setEnabled(false);
     }
-
-    /*public void applyEffectSinister(Player player, CharacterCard characterCard){
-        characterCard.setEnabled(true);
-        player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
-        characterCard.setPrice(characterCard.getPrice() + 1);
-    }*/
 
 }
