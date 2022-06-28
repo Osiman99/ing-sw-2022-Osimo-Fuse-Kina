@@ -2,7 +2,6 @@ package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.network.messages.BoardMessage;
 import it.polimi.ingsw.observer.Observable;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -244,28 +243,7 @@ public class Board extends Observable implements Serializable {
                 }
             }
         }
-
-        /*if (game.getNumPlayers() == 2) {
-            for (int i = 0; i < 5; i++) {
-                if (game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size()) {
-                    professorsControlledBy[i] = game.getPlayers().get(0).getNickname();
-                } else if (game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size()) {
-                    professorsControlledBy[i] = game.getPlayers().get(1).getNickname();
-                }
-            }
-        } else if (game.getNumPlayers() == 3) {
-            for (int i = 0; i < 5; i++) {
-                if (game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() && game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size()) {
-                    professorsControlledBy[i] = game.getPlayers().get(0).getNickname();
-                } else if (game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() && game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size()) {
-                    professorsControlledBy[i] = game.getPlayers().get(1).getNickname();
-                } else if (game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(0).getPlank().getDiningRoom()[i].getStudents().size() && game.getPlayers().get(2).getPlank().getDiningRoom()[i].getStudents().size() > game.getPlayers().get(1).getPlank().getDiningRoom()[i].getStudents().size()) {
-                    professorsControlledBy[i] = game.getPlayers().get(2).getNickname();
-                }
-            }
-        }*/
     }
-
 
     /**
      * moving the professor in case Chef card effect is applied
@@ -328,7 +306,7 @@ public class Board extends Observable implements Serializable {
                     if (characterCard.getCharacterName() == CharacterName.Centaur && characterCard.isEnabled()) {
                         characterCard.setEnabled(false);
                         break;
-                    }if(gameExpert.getThreeChosenCards().get(gameExpert.getThreeChosenCards().size()-1) == characterCard){                         //else if?
+                    }if(gameExpert.getThreeChosenCards().get(gameExpert.getThreeChosenCards().size()-1) == characterCard){
                         towerCont(island);
                     }
                 }
@@ -518,7 +496,7 @@ public class Board extends Observable implements Serializable {
     }
 
     /**
-     * returns true if
+     * returns true if the bag remains empty and notifies the observer.
      */
     public boolean isBagEmptyGC(){
         if(bag.isBagEmpty()){
@@ -528,13 +506,6 @@ public class Board extends Observable implements Serializable {
         return false;
     }
 
-    /**
-     * Applying the effects of the character cards
-     * @param player
-     * @param characterCard
-     * @param studentColor
-     * @param numIsland
-     */
 
     public void applyEffectSommelier(Player player, CharacterCard characterCard, StudentColor studentColor, int numIsland){
         characterCard.setEnabled(true);
@@ -653,5 +624,4 @@ public class Board extends Observable implements Serializable {
         characterCard.setPrice(characterCard.getPrice() + 1);
         characterCard.setEnabled(false);
     }
-
 }
