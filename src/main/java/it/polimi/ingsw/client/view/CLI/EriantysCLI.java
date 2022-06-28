@@ -41,7 +41,7 @@ public class EriantysCLI extends ViewObservable implements View {
         out = System.out;
     }
 
-
+/*
     public String readLine() throws ExecutionException {
         FutureTask<String> futureTask = new FutureTask<>(new InputReadTask());
         Thread inputThread = new Thread(futureTask);
@@ -56,8 +56,11 @@ public class EriantysCLI extends ViewObservable implements View {
         }
         return input;
     }
+*/
 
-
+    /**
+     * shows the login screen
+     */
     public void welcome() {
         ArrayList<String> welcome = new ArrayList<>();
         clearConsole();
@@ -70,7 +73,6 @@ public class EriantysCLI extends ViewObservable implements View {
         welcome.add(ANSIColor.GREEN_BOLD_BRIGHT+"(_)(_)(_)(_)(_)     (_)         (_)     (_)(_)(_)     (_)         (_)     (_)         (_)           (_)                 (_)             (_)(_)(_)(_)"+ANSIColor.RESET);
         welcome.add("\n");
         welcome.add(ANSIColor.PURPLE_BOLD_BRIGHT+ "                                                           The Magical World Of Floating Islands" +ANSIColor.RESET);
-
 
         int i=2;
         for(String w:welcome){
@@ -86,6 +88,10 @@ public class EriantysCLI extends ViewObservable implements View {
         }
     }
 
+    /**
+     * prints the game board, if the game is in expert mode it adds the character cards too
+     * @param game
+     */
     public void drawBoard(Game game) {
         clearConsole();
         if(game instanceof GameExpert) {
@@ -98,6 +104,10 @@ public class EriantysCLI extends ViewObservable implements View {
         drawPlanks(game);
     }
 
+    /**
+     * displays the game phase(planning or action).
+     * @param game
+     */
     private void drawPhase(Game game) {
         String phase="";
         List<String> row= new ArrayList<>();
@@ -127,6 +137,10 @@ public class EriantysCLI extends ViewObservable implements View {
 
     }
 
+    /**
+     * prints the 3 character cards chosen for the match.
+     * @param game
+     */
     private void drawCharacterCards(GameExpert game) {
         List<String> characterNames =  new ArrayList<>();
         List<String> characterPrice = new ArrayList<>();
@@ -172,6 +186,10 @@ public class EriantysCLI extends ViewObservable implements View {
 
     }
 
+    /**
+     * prints the planks of each player, even the coins in case of an expert match
+     * @param game
+     */
     public void drawPlanks(Game game) {
         ArrayList<String> plankBoard = new ArrayList<>();
         ArrayList<String> studentsEntranceBoard = new ArrayList<>(9);
@@ -269,13 +287,22 @@ public class EriantysCLI extends ViewObservable implements View {
         */
     }
 
+    /**
+     * it's used to navigate the command line
+     * @param x column
+     * @param y row
+     */
     public void gotoXY(int x, int y) {
         System.out.print(String.format("\u001B[%d;%dH", y, x));
         // CSI n ; m H
     }
 
 
-    //convert studentColor into ANSIColor
+    /**
+     * convert studentColor into ANSIColor
+     * @param color
+     * @return
+     */
     private String convertANSI(StudentColor color) {
 
         switch (color) {
@@ -299,7 +326,11 @@ public class EriantysCLI extends ViewObservable implements View {
         }
     }
 
-    //convert towerColor into ANSIColor
+    /**
+     * convert towerColor into ANSIColor
+     * @param color
+     * @return
+     */
     private String convertANSI(TowerColor color) {
 
             switch (color) {
@@ -313,6 +344,11 @@ public class EriantysCLI extends ViewObservable implements View {
             }
     }
 
+    /**
+     * prints 12 islands with the attributes in it, if there are less during the game it prints a placeholder that
+     * shows the unavailable island
+     * @param game
+     */
     public void drawIslands(Game game) {
         ArrayList<String> islandBoard = new ArrayList<>();
         String numIsolaBoard;
@@ -321,7 +357,6 @@ public class EriantysCLI extends ViewObservable implements View {
         ArrayList<String> towerBoard = new ArrayList<>();
         int[] numStudent= {0, 0, 0, 0, 0};
         int i,j;
-
 
         for(i=0; i< 12; i++) {
 
@@ -435,6 +470,10 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
 
+    /**
+     * prints the clouds
+     * @param game
+     */
     public void drawClouds(Game game){
 
         ArrayList<String> cloudBoard = new ArrayList<>();
@@ -488,6 +527,11 @@ public class EriantysCLI extends ViewObservable implements View {
 
     }
 
+    /**
+     * verifies if @param is a valid ipv4 address
+     * @param ip
+     * @return
+     */
     public static boolean isValidInet4Address(String ip)
     {
         if (ip == null) {
@@ -500,7 +544,10 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
 
-
+    /**
+     * asks the ip address and the port to the player in order to connect
+     * @throws ExecutionException
+     */
     public void onDemandServerInfo() throws ExecutionException {
 
         Map<String, String> serverInfo = new HashMap<>();
@@ -558,6 +605,11 @@ public class EriantysCLI extends ViewObservable implements View {
 
     }
 
+
+    /**
+     * asks the first client that is connected the number of players that are going to play, and it throws an
+     * exception when the inserted number is not 2 or 3
+     */
     public void onDemandPlayersNumber() {
         playersNumber = 0;
         out.print("How many players are going to play? (You can choose between 2 or 3 players): ");
@@ -617,6 +669,12 @@ public class EriantysCLI extends ViewObservable implements View {
         }*/
     }
 
+    /**
+     * asks the player if he wants to move a student to his dining room or to one of the islands.
+     * Then if he chose his dining room the player has to type the first letter of the student color,
+     * if he chose island he has to type the first letter of the student color and the index of island.
+     * The method throws a NumberFormatException if the player has chosen the  index of an island that doesn't exist.
+     */
     public void onDemandMoveStudent(){
 
         /*StringBuilder builderNumIsland = new StringBuilder();
@@ -759,14 +817,6 @@ public class EriantysCLI extends ViewObservable implements View {
     public void onDemandMode(){
         String mode = nextLine();
         notifyObserver(obs -> obs.onUpdateMode(mode));
-    }
-
-    /**
-     * Clears the EriantysCLI terminal.
-     */
-    public void clearCli() {
-        out.print(ANSIColor.CLEAR);
-        out.flush();
     }
 
     public void onDemandCharacterCard(String[] text){

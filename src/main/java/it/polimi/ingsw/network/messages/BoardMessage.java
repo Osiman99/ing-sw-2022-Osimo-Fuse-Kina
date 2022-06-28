@@ -7,9 +7,12 @@ import java.io.Serializable;
 public class BoardMessage extends Message {
     private static final long serialVersionUID = -1470453323300253394L;
     private final Game game;
-    //
-    //
 
+    /**
+     * personalized constructor
+     * @param nickname
+     * @param game
+     */
     public BoardMessage(String nickname, Game game) {
         super(nickname, MessageType.BOARD);
         this.game = game;
