@@ -155,6 +155,9 @@ public class Game extends Observable implements Serializable {
         this.state = state;
     }
 
+    /**
+     * this method is called when it's necessary to stop the match
+     */
     public static void resetInstance(){
         instance = null;
     }
@@ -173,6 +176,9 @@ public class Game extends Observable implements Serializable {
 
     public int getChosenPlayerNumber() {return chosenPlayersNumber;}
 
+    /**
+     * it notifies the view sending a new message
+     */
     public void notifyBoard(){
         notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, this));
     }
