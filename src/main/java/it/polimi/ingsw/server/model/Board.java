@@ -529,16 +529,14 @@ public class Board extends Observable implements Serializable {
     }
 
     /**
-     * In setup phase draw 4 students and place them on this card.
-     * The effect of this card is to move one of the four students available and to place it on one of the islands.
-     * Then, draw a new student from the bag and place it on this card.
-     * The card price is added by 1 after it's been used.
+     * Applying the effects of the character cards
      * @param player
      * @param characterCard
      * @param studentColor
      * @param numIsland
      */
-    public void applyEffectSommelier(Player player, CharacterCard characterCard, StudentColor studentColor, int numIsland){       //FATTO
+
+    public void applyEffectSommelier(Player player, CharacterCard characterCard, StudentColor studentColor, int numIsland){
         characterCard.setEnabled(true);
         cardActivated = true;
         for (int i = 0; i < 4; i++){
@@ -556,7 +554,6 @@ public class Board extends Observable implements Serializable {
         characterCard.setPrice(characterCard.getPrice() + 1);
         characterCard.setEnabled(false);
     }
-
 
     public void applyEffectChef(Player player, CharacterCard characterCard) {
         characterCard.setEnabled(true);
@@ -624,40 +621,12 @@ public class Board extends Observable implements Serializable {
         characterCard.setEnabled(false);
     }
 
-    /*if (islands.get(numIsland%islandSize).isMotherNature()){
-        islands.get(numIsland%islandSize).setMotherNature(false);
-        islands.get((i+numMoves)%islands.size()).setMotherNature(true);
-    }
-            else if (islands.get((((numIsland-2)%islandSize)+islandSize)%islandSize).isMotherNature()){
-        for (int i = 0; i < islands.size(); i++) {
-            if (islands.get(i).isMotherNature()) {
-                islands.get(i).setMotherNature(false);
-                islands.get((i + numMoves) % islands.size()).setMotherNature(true);
-            }
-        }
-    }
-            else if (islands.get(numIsland-1).isMotherNature()){
-        for (int i = 0; i < islands.size(); i++) {
-            if (islands.get(i).isMotherNature()) {
-                islands.get(i).setMotherNature(false);
-                islands.get((i + numMoves) % islands.size()).setMotherNature(true);
-            }
-        }
-    }*/
-
     public void applyEffectCentaur(Player player, CharacterCard characterCard){
         characterCard.setEnabled(true);
         cardActivated = true;
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
     }
-
-    /*public void applyEffectJoker(Player player, CharacterCard characterCard){
-        characterCard.setEnabled(true);
-        player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
-        characterCard.setPrice(characterCard.getPrice() + 1);
-
-    }*/
 
     public void applyEffectKnight(Player player, CharacterCard characterCard){
         characterCard.setEnabled(true);
@@ -666,27 +635,6 @@ public class Board extends Observable implements Serializable {
         characterCard.setPrice(characterCard.getPrice() + 1);
     }
 
-    /*public void applyEffectMerchant(Player player, CharacterCard characterCard){
-        characterCard.setEnabled(true);
-        player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
-        characterCard.setPrice(characterCard.getPrice() + 1);
-    }
-
-    public void applyEffectMusician(Player player, CharacterCard characterCard){
-        characterCard.setEnabled(true);
-        player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
-        characterCard.setPrice(characterCard.getPrice() + 1);
-    }*/
-
-    /**
-     * In setup phase draw 4 students and place them on this card.
-     * The effect of this card permits the player to take one student from this card and place it on it's dining room.
-     * Then, draw a student from the bag and place it on this card.
-     * The card price is added by 1 after it's been used.
-     * @param player
-     * @param characterCard
-     * @param studentColor
-     */
     public void applyEffectLady(Player player, CharacterCard characterCard, StudentColor studentColor){
         characterCard.setEnabled(true);
         cardActivated = true;
@@ -705,11 +653,5 @@ public class Board extends Observable implements Serializable {
         characterCard.setPrice(characterCard.getPrice() + 1);
         characterCard.setEnabled(false);
     }
-
-    /*public void applyEffectSinister(Player player, CharacterCard characterCard){
-        characterCard.setEnabled(true);
-        player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
-        characterCard.setPrice(characterCard.getPrice() + 1);
-    }*/
 
 }
