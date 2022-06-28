@@ -385,13 +385,13 @@ public class EriantysCLI extends ViewObservable implements View {
             }
 
             else{
-                islandBoard.add(ANSIColor.BLACK_BOLD_BRIGHT+"┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄"+ANSIColor.RESET);
-                islandBoard.add(ANSIColor.BLACK_BOLD_BRIGHT+"┇░░░░░░░░░░░░░░░░░░░░░░░░░░░░░┇"+ANSIColor.RESET);
-                islandBoard.add(ANSIColor.BLACK_BOLD_BRIGHT+"┆░                           ░┆"+ANSIColor.RESET);
-                islandBoard.add(ANSIColor.BLACK_BOLD_BRIGHT+"┇░       not available       ░┇"+ANSIColor.RESET);
-                islandBoard.add(ANSIColor.BLACK_BOLD_BRIGHT+"┆░                           ░┆"+ANSIColor.RESET);
-                islandBoard.add(ANSIColor.BLACK_BOLD_BRIGHT+"┇░░░░░░░░░░░░░░░░░░░░░░░░░░░░░┇"+ANSIColor.RESET);
-                islandBoard.add(ANSIColor.BLACK_BOLD_BRIGHT+"┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄┅┄"+ANSIColor.RESET);
+                islandBoard.add(ANSIColor.BLACK_BOLD_BRIGHT+"╔═════════════════════════════╗"+ANSIColor.RESET);
+                islandBoard.add(ANSIColor.BLACK_BOLD_BRIGHT+"║░░░░░░░░░░░░░░░░░░░░░░░░░░░░░║"+ANSIColor.RESET);
+                islandBoard.add(ANSIColor.BLACK_BOLD_BRIGHT+"║░                           ░║"+ANSIColor.RESET);
+                islandBoard.add(ANSIColor.BLACK_BOLD_BRIGHT+"║░       not available       ░║"+ANSIColor.RESET);
+                islandBoard.add(ANSIColor.BLACK_BOLD_BRIGHT+"║░                           ░║"+ANSIColor.RESET);
+                islandBoard.add(ANSIColor.BLACK_BOLD_BRIGHT+"║░░░░░░░░░░░░░░░░░░░░░░░░░░░░░║"+ANSIColor.RESET);
+                islandBoard.add(ANSIColor.BLACK_BOLD_BRIGHT+"╚═════════════════════════════╝"+ANSIColor.RESET);
 
             }
             for(int r=0; r<islandBoard.size(); r++) {
