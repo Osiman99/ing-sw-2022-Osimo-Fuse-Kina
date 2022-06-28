@@ -69,12 +69,12 @@ public class EriantysCLI extends ViewObservable implements View {
         welcome.add(ANSIColor.CYAN_BOLD+" (_) _  _  _  _      (_)      (_) _       _ (_) _      (_)         (_)     (_)         (_)           (_)                 (_)           (_)_  _  _  _(_)"+ANSIColor.RESET);
         welcome.add(ANSIColor.GREEN_BOLD_BRIGHT+"(_)(_)(_)(_)(_)     (_)         (_)     (_)(_)(_)     (_)         (_)     (_)         (_)           (_)                 (_)             (_)(_)(_)(_)"+ANSIColor.RESET);
         welcome.add("\n");
-        welcome.add(ANSIColor.PURPLE_BOLD_BRIGHT+ "                                                      The Magical World Of Floating Islands" +ANSIColor.RESET);
+        welcome.add(ANSIColor.PURPLE_BOLD_BRIGHT+ "                                                           The Magical World Of Floating Islands" +ANSIColor.RESET);
 
 
         int i=2;
         for(String w:welcome){
-            gotoXY(19,i++);
+            gotoXY(28,i++);
             System.out.println(w);
         }
         System.out.println("\n\n");
@@ -509,10 +509,9 @@ public class EriantysCLI extends ViewObservable implements View {
         boolean correctInput;
         //Scanner scanner = new Scanner(System.in);
 
-        out.println("The default value of address and port is shown between brackets.");
 
         do{
-            out.print("Enter the server address you want to connect or push Enter for the Localhost:");
+            out.print("Type the server address you want to connect or press just Enter for the Localhost:");
             String address = nextLine();
 
             if (isValidInet4Address(address)) {
@@ -533,7 +532,7 @@ public class EriantysCLI extends ViewObservable implements View {
         } while(!correctInput);
 
         do{
-            out.print("Enter the server port [" + defaultPort +"] or push Enter:");
+            out.print("Enter the server port [" + defaultPort +"] or press Enter:");
             String port = nextLine();
 
             if (port.equals("") || port.equals("12500")){

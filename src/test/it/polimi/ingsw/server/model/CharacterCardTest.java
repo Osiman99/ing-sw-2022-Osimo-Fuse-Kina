@@ -42,6 +42,20 @@ class CharacterCardTest {
         assertTrue(characterCard.isEnabled());
     }
 
+    @Test
+    void description() {
+        CharacterCard characterCard= new CharacterCard(CharacterName.Messenger);
+        characterCard.setDescription("Test.");
+        assertEquals("Test.", characterCard.getDescription());
+    }
+
+    @Test
+    void banCards() {
+        CharacterCard characterCard= new CharacterCard(CharacterName.Herbalist);
+        for(int i=0; i<4; i++) {
+            assertTrue(characterCard.getBanCards()[i]);
+        }
+    }
 
     @Test
     void getStudents() {
