@@ -41,7 +41,7 @@ public class EriantysCLI extends ViewObservable implements View {
         out = System.out;
     }
 
-/*
+
     public String readLine() throws ExecutionException {
         FutureTask<String> futureTask = new FutureTask<>(new InputReadTask());
         Thread inputThread = new Thread(futureTask);
@@ -56,7 +56,7 @@ public class EriantysCLI extends ViewObservable implements View {
         }
         return input;
     }
-*/
+
 
     /**
      * shows the login screen
