@@ -612,7 +612,7 @@ public class Board extends Observable implements Serializable {
         characterCard.setPrice(characterCard.getPrice() + 1);
         getIslands().get(numIsland-1).setBanCard(true);
 
-        for (int i = characterCard.getBanCards().length-1; i >= 0; i++) {
+        for (int i = characterCard.getBanCards().length-1; i >= 0; i--) {
             if (characterCard.getBanCards()[i]) {
                 characterCard.getBanCards()[i] = false;
                 break;
