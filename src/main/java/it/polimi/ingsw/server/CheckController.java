@@ -374,10 +374,16 @@ public class CheckController implements Serializable {
     }
 
     private boolean askInterrupted(VirtualView virtualView, Player activePlayer) {
+        GameExpert gameExpert = (GameExpert) game;
         if (gameController.getAskInterrupted().equals("s")){
             virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
         }else if(gameController.getAskInterrupted().equals("m")){
-            virtualView.onDemandMotherNatureMoves(activePlayer.getChosenAssistantCard().getMaxMoves());
+            for (CharacterCard characterCard : gameExpert.getThreeChosenCards()) {
+                if (characterCard.getCharacterName() == CharacterName.Postman && characterCard.isEnabled()) {
+                    virtualView.onDemandMotherNatureMoves(activePlayer.getChosenAssistantCard().getMaxMoves() + 2);
+                    return false;
+                }
+            }virtualView.onDemandMotherNatureMoves(activePlayer.getChosenAssistantCard().getMaxMoves());
         }else if(gameController.getAskInterrupted().equals("c")){
             virtualView.showGenericMessage("Which cloud do you choose? Insert the cloud number.");
         }

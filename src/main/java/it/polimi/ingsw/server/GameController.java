@@ -249,7 +249,7 @@ public class GameController implements Observer, Serializable {
     public void end(Message receivedMessage){
         server = Server.getInstance();
         if (receivedMessage.getMessageType() == MessageType.END_MESSAGE) {
-            virtualViewMap.get(receivedMessage.getNickname()).showDisconnectionMessage(receivedMessage.getNickname(), "disconnected from the Server.");
+            virtualViewMap.get(receivedMessage.getNickname()).showDisconnectionMessage(receivedMessage.getNickname(), " disconnected from the Server.");
             ClientHandler clientHandler = server.getClientHandlerMap().get(receivedMessage.getNickname());
             clientHandler.disconnect();
         }if (virtualViewMap.isEmpty()){
