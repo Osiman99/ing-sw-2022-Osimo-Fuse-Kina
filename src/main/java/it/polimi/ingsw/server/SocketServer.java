@@ -10,6 +10,11 @@ public class SocketServer implements Runnable {
     private final int port;
     ServerSocket serverSocket;
 
+    /**
+     * class constructor
+     * @param server
+     * @param port where the server starts
+     */
     public SocketServer(Server server, int port) {
         this.server = server;
         this.port = port;
