@@ -1,8 +1,6 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.network.messages.Message;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -56,7 +54,6 @@ public class Server {
             gameController.quitFromServer(nickname);
         }
 
-        //gameController.setGameState(GameState.PREGAME);
         LOGGER.info(() -> "Removed " + nickname + " from the client list.");
     }
 
@@ -86,22 +83,14 @@ public class Server {
                         !gameController.getNicknames().contains(nickname)) {
                     return;
                 }
-
-                // Resets server status only if the game was already started.
-                // Otherwise the server will wait for a new player to connect.
-                /*if (gameStarted) {
-                    gameController.broadcastDisconnectionMessage(nickname, " disconnected from the server. GAME ENDED.");
-                    gameController.endGame();
-                    clientHandlerMap.clear();
-                }*/
             }
         }
     }
 
-
     public Map<String, ClientHandler> getClientHandlerMap() {
         return clientHandlerMap;
     }
+
 
     /**
      * Returns the corresponding nickname of a ClientHandler.

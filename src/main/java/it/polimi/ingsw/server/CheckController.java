@@ -4,9 +4,7 @@ import it.polimi.ingsw.client.view.CLI.ANSIColor;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.network.messages.*;
 import it.polimi.ingsw.server.model.*;
-
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

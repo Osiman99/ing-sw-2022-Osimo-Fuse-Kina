@@ -3,13 +3,8 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.network.messages.*;
 import it.polimi.ingsw.observer.Observer;
-import it.polimi.ingsw.server.ClientHandler;
 import it.polimi.ingsw.server.model.AssistantCard;
 import it.polimi.ingsw.server.model.Game;
-import it.polimi.ingsw.server.model.Island;
-import it.polimi.ingsw.server.model.StudentColor;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class VirtualView implements View, Observer {
@@ -23,15 +18,6 @@ public class VirtualView implements View, Observer {
      */
     public VirtualView(ClientHandler clientHandler) {
         this.clientHandler = clientHandler;
-    }
-
-    /**
-     * Returns the client handler associated to a client.
-     *
-     * @return client handler.
-     */
-    public ClientHandler getClientHandler() {
-        return clientHandler;
     }
 
     public void showGenericMessage(String genericMessage) {
