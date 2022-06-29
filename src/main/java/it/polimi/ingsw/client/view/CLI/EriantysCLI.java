@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.view.CLI;
 
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.observer.ViewObservable;
+import it.polimi.ingsw.server.GameController;
 import it.polimi.ingsw.server.GameState;
 import it.polimi.ingsw.server.model.*;
 import java.io.*;
@@ -202,7 +203,7 @@ public class EriantysCLI extends ViewObservable implements View {
             //salvo gli studenti della dining room con un ● colorato e poi riempio con blanckspace
             for(j=0; j<playerBoard.getPlank().getDiningRoom().length; j++) {
                 for(k=0; k< playerBoard.getPlank().getDiningRoom()[j].getStudents().size(); k++)
-                    diningRoomBoard[j].add(" ♥");
+                    diningRoomBoard[j].add(" s");
                 for(;k<10;k++)
                     diningRoomBoard[j].add("  ");
             }
@@ -216,7 +217,7 @@ public class EriantysCLI extends ViewObservable implements View {
             //per ogni player ho una lista contenente i professori ▲ che controlla
             for(j=0; j<5; j++) {
                 if(game.getBoard().getProfessorsControlledBy()[j].equals(playerBoard.getNickname()))
-                    professorsBoard[j]="♦";
+                    professorsBoard[j]="P";
                 else
                     professorsBoard[j]=" ";
             }
@@ -231,7 +232,7 @@ public class EriantysCLI extends ViewObservable implements View {
 
             plankBoard.add(convertANSI(playerBoard.getPlayerColor())+" " +ANSIColor.PINK+ ANSIColor.UNDERLINE+ playerBoard.getNickname().toUpperCase()+ANSIColor.RESET+coins+"      Active assistant card: "+assistantCard);
             plankBoard.add("╔══════════╦═══════════════════════╦═════════╦═════════════╗");
-            plankBoard.add("║"+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+" Entrance "+ANSIColor.RESET+"║"+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+"      Dining Room      "+ANSIColor.RESET+"║"+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+"Professor"+ANSIColor.RESET+"║"+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+" Tower Space "+ANSIColor.RESET+"║");
+            plankBoard.add("║"+ANSIColor.ORANGE_BACKGROUND+ANSIColor.BLACK+" Entrance "+ANSIColor.RESET+"║"+ANSIColor.ORANGE_BACKGROUND+ANSIColor.BLACK+"      Dining Room      "+ANSIColor.RESET+"║"+ANSIColor.ORANGE_BACKGROUND+ANSIColor.BLACK+"Professor"+ANSIColor.RESET+"║"+ANSIColor.ORANGE_BACKGROUND+ANSIColor.BLACK+" Tower Space "+ANSIColor.RESET+"║");
             plankBoard.add("╠══════════╬═══════════════════════╬═════════╬═════════════╣");
             plankBoard.add("║       "+studentsEntranceBoard.get(0)+"  ║ "+ANSIColor.GREEN+diningRoomBoard[0].get(0)+diningRoomBoard[0].get(1)+diningRoomBoard[0].get(2)+diningRoomBoard[0].get(3)+diningRoomBoard[0].get(4)+diningRoomBoard[0].get(5)+diningRoomBoard[0].get(6)+diningRoomBoard[0].get(7)+diningRoomBoard[0].get(8)+diningRoomBoard[0].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.GREEN+professorsBoard[0]+ANSIColor.RESET+"    ║   "+towerBoard.get(0)+"     "+towerBoard.get(1)+"   ║");
             plankBoard.add("║  "+studentsEntranceBoard.get(1)+"    "+studentsEntranceBoard.get(2)+"  ║ "+ANSIColor.RED+diningRoomBoard[1].get(0)+diningRoomBoard[1].get(1)+diningRoomBoard[1].get(2)+diningRoomBoard[1].get(3)+diningRoomBoard[1].get(4)+diningRoomBoard[1].get(5)+diningRoomBoard[1].get(6)+diningRoomBoard[1].get(7)+diningRoomBoard[1].get(8)+diningRoomBoard[1].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.RED+professorsBoard[1]+ANSIColor.RESET+"    ║   "+towerBoard.get(2)+"     "+towerBoard.get(3)+"   ║");
@@ -292,19 +293,19 @@ public class EriantysCLI extends ViewObservable implements View {
 
         switch (color) {
             case YELLOW:
-                return ANSIColor.YELLOW_BOLD_BRIGHT + "♥" + ANSIColor.RESET;
+                return ANSIColor.YELLOW_BOLD_BRIGHT + "s" + ANSIColor.RESET;
 
             case RED:
-                return ANSIColor.RED + "♥" + ANSIColor.RESET;
+                return ANSIColor.RED + "s" + ANSIColor.RESET;
 
             case PINK:
-                return ANSIColor.PINK + "♥" + ANSIColor.RESET;
+                return ANSIColor.PINK + "s" + ANSIColor.RESET;
 
             case BLUE:
-                return ANSIColor.BLUE + "♥" + ANSIColor.RESET;
+                return ANSIColor.BLUE + "s" + ANSIColor.RESET;
 
             case GREEN:
-                return ANSIColor.GREEN + "♥" + ANSIColor.RESET;
+                return ANSIColor.GREEN + "s" + ANSIColor.RESET;
 
             default:
                 return null;
@@ -400,7 +401,7 @@ public class EriantysCLI extends ViewObservable implements View {
                 islandBoard.add("╠═══════════════════════╬══════╣");
                 islandBoard.add("║TOWERS" + towerBoard.get(0) + towerBoard.get(1) + towerBoard.get(2) + towerBoard.get(3) + towerBoard.get(4) + towerBoard.get(5) + towerBoard.get(6) + towerBoard.get(7) + " ║" + banBoard + "║");
                 islandBoard.add("╠═════╦═════╦═════╦═════╬═════╦╝");
-                islandBoard.add("║ " + ANSIColor.GREEN + "♥" + ANSIColor.RESET + " " + numStudent[0] + " ║ " + ANSIColor.RED + "♥" + ANSIColor.RESET + " " + numStudent[1] + " ║ " + ANSIColor.YELLOW_BOLD_BRIGHT + "♥" + ANSIColor.RESET + " " + numStudent[2] + " ║ " + ANSIColor.PINK + "♥" + ANSIColor.RESET + " " + numStudent[3] + " ║ " + ANSIColor.BLUE + "♥" + ANSIColor.RESET + " " + numStudent[4] + " ║");
+                islandBoard.add("║ " + ANSIColor.GREEN + "s" + ANSIColor.RESET + " " + numStudent[0] + " ║ " + ANSIColor.RED + "s" + ANSIColor.RESET + " " + numStudent[1] + " ║ " + ANSIColor.YELLOW_BOLD_BRIGHT + "s" + ANSIColor.RESET + " " + numStudent[2] + " ║ " + ANSIColor.PINK + "s" + ANSIColor.RESET + " " + numStudent[3] + " ║ " + ANSIColor.BLUE + "s" + ANSIColor.RESET + " " + numStudent[4] + " ║");
                 islandBoard.add("╚═════╩═════╩═════╩═════╩═════╝");
             }
 
@@ -715,7 +716,7 @@ public class EriantysCLI extends ViewObservable implements View {
                         showGenericMessage(ANSIColor.RED+"Invalid input! Please try again."+ANSIColor.RESET);
                         showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
                 }
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException | StringIndexOutOfBoundsException e) {
                 showGenericMessage(ANSIColor.RED+"Invalid input! Please try again."+ANSIColor.RESET);
                 showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
             }
@@ -850,7 +851,7 @@ public class EriantysCLI extends ViewObservable implements View {
             StudentColor finalStudentColor = studentColor;
             int finalNumIsland = numIsland;
             notifyObserver(obs -> obs.onUpdateCharacterCard(card, finalStudentColor, finalNumIsland));
-        }catch (NumberFormatException e) {
+        }catch (NumberFormatException | StringIndexOutOfBoundsException e) {
             showGenericMessage(ANSIColor.RED+"Invalid input! Please try again."+ANSIColor.RESET);
             onDemandCharacterCard(text);
         }

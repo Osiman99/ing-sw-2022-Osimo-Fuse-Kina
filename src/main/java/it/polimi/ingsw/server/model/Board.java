@@ -524,6 +524,7 @@ public class Board extends Observable implements Serializable {
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
         characterCard.setEnabled(false);
+        notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 
     public void applyEffectChef(Player player, CharacterCard characterCard) {
@@ -531,6 +532,8 @@ public class Board extends Observable implements Serializable {
         cardActivated = true;
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
+        moveProfessorChef(player);
+        notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 
     public void applyEffectMessenger(Player player, CharacterCard characterCard, int numIsland){
@@ -565,8 +568,8 @@ public class Board extends Observable implements Serializable {
         }else{
             islands.get(numIsland-1).setBanCard(false);
         }
-        notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
         characterCard.setEnabled(false);
+        notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 
     public void applyEffectPostman(Player player, CharacterCard characterCard){
@@ -574,6 +577,7 @@ public class Board extends Observable implements Serializable {
         cardActivated = true;
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
+        notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 
     public void applyEffectHerbalist(Player player, CharacterCard characterCard, int numIsland){
@@ -590,6 +594,7 @@ public class Board extends Observable implements Serializable {
             }
         }
         characterCard.setEnabled(false);
+        notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 
     public void applyEffectCentaur(Player player, CharacterCard characterCard){
@@ -597,6 +602,7 @@ public class Board extends Observable implements Serializable {
         cardActivated = true;
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
+        notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 
     public void applyEffectKnight(Player player, CharacterCard characterCard){
@@ -604,6 +610,7 @@ public class Board extends Observable implements Serializable {
         cardActivated = true;
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
+        notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 
     public void applyEffectLady(Player player, CharacterCard characterCard, StudentColor studentColor){
@@ -623,5 +630,6 @@ public class Board extends Observable implements Serializable {
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
         characterCard.setEnabled(false);
+        notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 }

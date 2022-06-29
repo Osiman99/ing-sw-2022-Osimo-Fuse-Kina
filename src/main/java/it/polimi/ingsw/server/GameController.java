@@ -219,10 +219,12 @@ public class GameController implements Observer, Serializable {
     public void removeVirtualView(String nickname) {
         VirtualView vv = virtualViewMap.remove(nickname);
 
-        game.removeObserver(vv);
-        game.getBoard().removeObserver(vv);
-        game.removePlayerByNickname(nickname);
-        nicknames.remove(nickname);
+        if (game != null) {
+            game.removeObserver(vv);
+            game.getBoard().removeObserver(vv);
+            game.removePlayerByNickname(nickname);
+            nicknames.remove(nickname);
+        }
     }
 
     public List<String> getNicknames() {
@@ -379,7 +381,7 @@ public class GameController implements Observer, Serializable {
                         break;
                     case "chef":
                         for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
-                            if (cc.getCharacterName() == CharacterName.Chef){
+                            if (cc.getCharacterName() == CharacterName.Chef) {
                                 gameExpert.getBoard().applyEffectChef(activePlayer, cc);
                             }
                         }
@@ -434,7 +436,8 @@ public class GameController implements Observer, Serializable {
                         break;
                     //case "sinister":
                         //break;
-                }
+                }broadcastGenericMessage(ANSIColor.PURPLE_BOLD_BRIGHT + activePlayer.getNickname().toUpperCase() + ANSIColor.CYAN_BOLD + " activated " + characterCardMessage.getCard().toUpperCase() + " effect!" + ANSIColor.RESET);
+                broadcastWaitingMessage(activePlayer);
                 if (askInterrupted.equals("s")){
                     virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
                 }else if(askInterrupted.equals("m")){
