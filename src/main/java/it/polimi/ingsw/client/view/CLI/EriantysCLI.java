@@ -210,7 +210,7 @@ public class EriantysCLI extends ViewObservable implements View {
             //salvo gli studenti della dining room con un ● colorato e poi riempio con blanckspace
             for(j=0; j<playerBoard.getPlank().getDiningRoom().length; j++) {
                 for(k=0; k< playerBoard.getPlank().getDiningRoom()[j].getStudents().size(); k++)
-                    diningRoomBoard[j].add(" ♥");
+                    diningRoomBoard[j].add(" s");
                 for(;k<10;k++)
                     diningRoomBoard[j].add("  ");
             }
@@ -224,7 +224,7 @@ public class EriantysCLI extends ViewObservable implements View {
             //per ogni player ho una lista contenente i professori ▲ che controlla
             for(j=0; j<5; j++) {
                 if(game.getBoard().getProfessorsControlledBy()[j].equals(playerBoard.getNickname()))
-                    professorsBoard[j]="♦";
+                    professorsBoard[j]="P";
                 else
                     professorsBoard[j]=" ";
             }
@@ -240,13 +240,13 @@ public class EriantysCLI extends ViewObservable implements View {
 
             plankBoard.add(convertANSI(playerBoard.getPlayerColor())+" " +ANSIColor.PINK+ ANSIColor.UNDERLINE+ playerBoard.getNickname().toUpperCase()+ANSIColor.RESET+coins+"      Active assistant card: "+assistantCard);
             plankBoard.add("╔══════════╦═══════════════════════╦═════════╦═════════════╗");
-            plankBoard.add("║"+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+" Entrance "+ANSIColor.RESET+"║"+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+"      Dining Room      "+ANSIColor.RESET+"║"+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+"Professor"+ANSIColor.RESET+"║"+ANSIColor.RED_BACKGROUND+ANSIColor.BLACK+" Tower Space "+ANSIColor.RESET+"║");
+            plankBoard.add("║"+ANSIColor.ORANGE_BACKGROUND+ANSIColor.BLACK+" Entrance "+ANSIColor.RESET+"║"+ANSIColor.ORANGE_BACKGROUND+ANSIColor.BLACK+"      Dining Room      "+ANSIColor.RESET+"║"+ANSIColor.ORANGE_BACKGROUND+ANSIColor.BLACK+"Professor"+ANSIColor.RESET+"║"+ANSIColor.ORANGE_BACKGROUND+ANSIColor.BLACK+" Tower Space "+ANSIColor.RESET+"║");
             plankBoard.add("╠══════════╬═══════════════════════╬═════════╬═════════════╣");
-            plankBoard.add("║       "+studentsEntranceBoard.get(0)+"  ║ "+ANSIColor.GREEN+diningRoomBoard[0].get(0)+diningRoomBoard[0].get(1)+diningRoomBoard[0].get(2)+diningRoomBoard[0].get(3)+diningRoomBoard[0].get(4)+diningRoomBoard[0].get(5)+diningRoomBoard[0].get(6)+diningRoomBoard[0].get(7)+diningRoomBoard[0].get(8)+diningRoomBoard[0].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.GREEN+professorsBoard[0]+ANSIColor.RESET+"    ║   "+towerBoard.get(0)+"     "+towerBoard.get(1)+"   ║");
-            plankBoard.add("║  "+studentsEntranceBoard.get(1)+"    "+studentsEntranceBoard.get(2)+"  ║ "+ANSIColor.RED+diningRoomBoard[1].get(0)+diningRoomBoard[1].get(1)+diningRoomBoard[1].get(2)+diningRoomBoard[1].get(3)+diningRoomBoard[1].get(4)+diningRoomBoard[1].get(5)+diningRoomBoard[1].get(6)+diningRoomBoard[1].get(7)+diningRoomBoard[1].get(8)+diningRoomBoard[1].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.RED+professorsBoard[1]+ANSIColor.RESET+"    ║   "+towerBoard.get(2)+"     "+towerBoard.get(3)+"   ║");
-            plankBoard.add("║  "+studentsEntranceBoard.get(3)+"    "+studentsEntranceBoard.get(4)+"  ║ "+ANSIColor.YELLOW_BOLD_BRIGHT+diningRoomBoard[2].get(0)+diningRoomBoard[2].get(1)+diningRoomBoard[2].get(2)+diningRoomBoard[2].get(3)+diningRoomBoard[2].get(4)+diningRoomBoard[2].get(5)+diningRoomBoard[2].get(6)+diningRoomBoard[2].get(7)+diningRoomBoard[2].get(8)+diningRoomBoard[2].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.YELLOW_BOLD_BRIGHT+professorsBoard[2]+ANSIColor.RESET+"    ║   "+towerBoard.get(4)+"     "+towerBoard.get(5)+"   ║");
-            plankBoard.add("║  "+studentsEntranceBoard.get(5)+"    "+studentsEntranceBoard.get(6)+"  ║ "+ANSIColor.PINK+diningRoomBoard[3].get(0)+diningRoomBoard[3].get(1)+diningRoomBoard[3].get(2)+diningRoomBoard[3].get(3)+diningRoomBoard[3].get(4)+diningRoomBoard[3].get(5)+diningRoomBoard[3].get(6)+diningRoomBoard[3].get(7)+diningRoomBoard[3].get(8)+diningRoomBoard[3].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.PINK+professorsBoard[3]+ANSIColor.RESET+"    ║   "+towerBoard.get(6)+"     "+towerBoard.get(7)+"   ║");
-            plankBoard.add("║  "+studentsEntranceBoard.get(7)+"    "+studentsEntranceBoard.get(8)+"  ║ "+ANSIColor.BLUE+diningRoomBoard[4].get(0)+diningRoomBoard[4].get(1)+diningRoomBoard[4].get(2)+diningRoomBoard[4].get(3)+diningRoomBoard[4].get(4)+diningRoomBoard[4].get(5)+diningRoomBoard[4].get(6)+diningRoomBoard[4].get(7)+diningRoomBoard[4].get(8)+diningRoomBoard[4].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.BLUE+professorsBoard[4]+ANSIColor.RESET+"    ║             ║");
+            plankBoard.add("║       "+studentsEntranceBoard.get(0)+"  ║ "+ANSIColor.GREEN+diningRoomBoard[0].get(0)+diningRoomBoard[0].get(1)+diningRoomBoard[0].get(2)+diningRoomBoard[0].get(3)+diningRoomBoard[0].get(4)+diningRoomBoard[0].get(5)+diningRoomBoard[0].get(6)+diningRoomBoard[0].get(7)+diningRoomBoard[0].get(8)+diningRoomBoard[0].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.GREEN+professorsBoard[0]+ANSIColor.RESET+"    ║"+ANSIColor.ORANGE_BACKGROUND+ "   "+towerBoard.get(0)+ANSIColor.ORANGE_BACKGROUND+"     "+towerBoard.get(1)+ANSIColor.ORANGE_BACKGROUND+"   "+ANSIColor.RESET+ "║");
+            plankBoard.add("║  "+studentsEntranceBoard.get(1)+"    "+studentsEntranceBoard.get(2)+"  ║ "+ANSIColor.RED+diningRoomBoard[1].get(0)+diningRoomBoard[1].get(1)+diningRoomBoard[1].get(2)+diningRoomBoard[1].get(3)+diningRoomBoard[1].get(4)+diningRoomBoard[1].get(5)+diningRoomBoard[1].get(6)+diningRoomBoard[1].get(7)+diningRoomBoard[1].get(8)+diningRoomBoard[1].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.RED+professorsBoard[1]+ANSIColor.RESET+"    ║"+ANSIColor.ORANGE_BACKGROUND+ "   "+towerBoard.get(2)+ANSIColor.ORANGE_BACKGROUND+"     "+towerBoard.get(3)+ANSIColor.ORANGE_BACKGROUND+"   "+ANSIColor.RESET+ "║");
+            plankBoard.add("║  "+studentsEntranceBoard.get(3)+"    "+studentsEntranceBoard.get(4)+"  ║ "+ANSIColor.YELLOW_BOLD_BRIGHT+diningRoomBoard[2].get(0)+diningRoomBoard[2].get(1)+diningRoomBoard[2].get(2)+diningRoomBoard[2].get(3)+diningRoomBoard[2].get(4)+diningRoomBoard[2].get(5)+diningRoomBoard[2].get(6)+diningRoomBoard[2].get(7)+diningRoomBoard[2].get(8)+diningRoomBoard[2].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.YELLOW_BOLD_BRIGHT+professorsBoard[2]+ANSIColor.RESET+"    ║"+ANSIColor.ORANGE_BACKGROUND+ "   "+towerBoard.get(4)+ANSIColor.ORANGE_BACKGROUND+"     "+towerBoard.get(5)+ANSIColor.ORANGE_BACKGROUND+"   "+ANSIColor.RESET+ "║");
+            plankBoard.add("║  "+studentsEntranceBoard.get(5)+"    "+studentsEntranceBoard.get(6)+"  ║ "+ANSIColor.PINK+diningRoomBoard[3].get(0)+diningRoomBoard[3].get(1)+diningRoomBoard[3].get(2)+diningRoomBoard[3].get(3)+diningRoomBoard[3].get(4)+diningRoomBoard[3].get(5)+diningRoomBoard[3].get(6)+diningRoomBoard[3].get(7)+diningRoomBoard[3].get(8)+diningRoomBoard[3].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.PINK+professorsBoard[3]+ANSIColor.RESET+"    ║"+ANSIColor.ORANGE_BACKGROUND+ "   "+towerBoard.get(6)+ANSIColor.ORANGE_BACKGROUND+"     "+towerBoard.get(7)+ANSIColor.ORANGE_BACKGROUND+"   "+ANSIColor.RESET+ "║");
+            plankBoard.add("║  "+studentsEntranceBoard.get(7)+"    "+studentsEntranceBoard.get(8)+"  ║ "+ANSIColor.BLUE+diningRoomBoard[4].get(0)+diningRoomBoard[4].get(1)+diningRoomBoard[4].get(2)+diningRoomBoard[4].get(3)+diningRoomBoard[4].get(4)+diningRoomBoard[4].get(5)+diningRoomBoard[4].get(6)+diningRoomBoard[4].get(7)+diningRoomBoard[4].get(8)+diningRoomBoard[4].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.BLUE+professorsBoard[4]+ANSIColor.RESET+"    ║"+ANSIColor.ORANGE_BACKGROUND+ "             "+ANSIColor.RESET+ "║");
             plankBoard.add("╚══════════╩═══════════════════════╩═════════╩═════════════╝");
 
 
@@ -304,19 +304,19 @@ public class EriantysCLI extends ViewObservable implements View {
 
         switch (color) {
             case YELLOW:
-                return ANSIColor.YELLOW_BOLD_BRIGHT + "♥" + ANSIColor.RESET;
+                return ANSIColor.YELLOW_BOLD_BRIGHT + "s" + ANSIColor.RESET;
 
             case RED:
-                return ANSIColor.RED + "♥" + ANSIColor.RESET;
+                return ANSIColor.RED + "s" + ANSIColor.RESET;
 
             case PINK:
-                return ANSIColor.PINK + "♥" + ANSIColor.RESET;
+                return ANSIColor.PINK + "s" + ANSIColor.RESET;
 
             case BLUE:
-                return ANSIColor.BLUE + "♥" + ANSIColor.RESET;
+                return ANSIColor.BLUE + "s" + ANSIColor.RESET;
 
             case GREEN:
-                return ANSIColor.GREEN + "♥" + ANSIColor.RESET;
+                return ANSIColor.GREEN + "s" + ANSIColor.RESET;
 
             default:
                 return null;
@@ -412,7 +412,7 @@ public class EriantysCLI extends ViewObservable implements View {
                 islandBoard.add("╠═══════════════════════╬══════╣");
                 islandBoard.add("║TOWERS" + towerBoard.get(0) + towerBoard.get(1) + towerBoard.get(2) + towerBoard.get(3) + towerBoard.get(4) + towerBoard.get(5) + towerBoard.get(6) + towerBoard.get(7) + " ║" + banBoard + "║");
                 islandBoard.add("╠═════╦═════╦═════╦═════╬═════╦╝");
-                islandBoard.add("║ " + ANSIColor.GREEN + "♥" + ANSIColor.RESET + " " + numStudent[0] + " ║ " + ANSIColor.RED + "♥" + ANSIColor.RESET + " " + numStudent[1] + " ║ " + ANSIColor.YELLOW_BOLD_BRIGHT + "♥" + ANSIColor.RESET + " " + numStudent[2] + " ║ " + ANSIColor.PINK + "♥" + ANSIColor.RESET + " " + numStudent[3] + " ║ " + ANSIColor.BLUE + "♥" + ANSIColor.RESET + " " + numStudent[4] + " ║");
+                islandBoard.add("║ " + ANSIColor.GREEN + "s" + ANSIColor.RESET + " " + numStudent[0] + " ║ " + ANSIColor.RED + "s" + ANSIColor.RESET + " " + numStudent[1] + " ║ " + ANSIColor.YELLOW_BOLD_BRIGHT + "s" + ANSIColor.RESET + " " + numStudent[2] + " ║ " + ANSIColor.PINK + "s" + ANSIColor.RESET + " " + numStudent[3] + " ║ " + ANSIColor.BLUE + "s" + ANSIColor.RESET + " " + numStudent[4] + " ║");
                 islandBoard.add("╚═════╩═════╩═════╩═════╩═════╝");
             }
 
