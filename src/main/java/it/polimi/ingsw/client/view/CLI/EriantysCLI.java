@@ -234,7 +234,7 @@ public class EriantysCLI extends ViewObservable implements View {
             plankBoard.add("╔══════════╦═══════════════════════╦═════════╦═════════════╗");
             plankBoard.add("║"+ANSIColor.ORANGE_BACKGROUND+ANSIColor.BLACK+" Entrance "+ANSIColor.RESET+"║"+ANSIColor.ORANGE_BACKGROUND+ANSIColor.BLACK+"      Dining Room      "+ANSIColor.RESET+"║"+ANSIColor.ORANGE_BACKGROUND+ANSIColor.BLACK+"Professor"+ANSIColor.RESET+"║"+ANSIColor.ORANGE_BACKGROUND+ANSIColor.BLACK+" Tower Space "+ANSIColor.RESET+"║");
             plankBoard.add("╠══════════╬═══════════════════════╬═════════╬═════════════╣");
-            plankBoard.add("║       "+studentsEntranceBoard.get(0)+"  ║ "+ANSIColor.GREEN+diningRoomBoard[0].get(0)+diningRoomBoard[0].get(1)+diningRoomBoard[0].get(2)+diningRoomBoard[0].get(3)+diningRoomBoard[0].get(4)+diningRoomBoard[0].get(5)+diningRoomBoard[0].get(6)+diningRoomBoard[0].get(7)+diningRoomBoard[0].get(8)+diningRoomBoard[0].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.GREEN+professorsBoard[0]+ANSIColor.RESET+"    ║   "+towerBoard.get(0)+"     "+towerBoard.get(1)+"   ║");
+            plankBoard.add("║       "+studentsEntranceBoard.get(0)+"  ║ "+ANSIColor.GREEN_BOLD_BRIGHT+diningRoomBoard[0].get(0)+diningRoomBoard[0].get(1)+diningRoomBoard[0].get(2)+diningRoomBoard[0].get(3)+diningRoomBoard[0].get(4)+diningRoomBoard[0].get(5)+diningRoomBoard[0].get(6)+diningRoomBoard[0].get(7)+diningRoomBoard[0].get(8)+diningRoomBoard[0].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.GREEN_BOLD_BRIGHT+professorsBoard[0]+ANSIColor.RESET+"    ║   "+towerBoard.get(0)+"     "+towerBoard.get(1)+"   ║");
             plankBoard.add("║  "+studentsEntranceBoard.get(1)+"    "+studentsEntranceBoard.get(2)+"  ║ "+ANSIColor.RED+diningRoomBoard[1].get(0)+diningRoomBoard[1].get(1)+diningRoomBoard[1].get(2)+diningRoomBoard[1].get(3)+diningRoomBoard[1].get(4)+diningRoomBoard[1].get(5)+diningRoomBoard[1].get(6)+diningRoomBoard[1].get(7)+diningRoomBoard[1].get(8)+diningRoomBoard[1].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.RED+professorsBoard[1]+ANSIColor.RESET+"    ║   "+towerBoard.get(2)+"     "+towerBoard.get(3)+"   ║");
             plankBoard.add("║  "+studentsEntranceBoard.get(3)+"    "+studentsEntranceBoard.get(4)+"  ║ "+ANSIColor.YELLOW_BOLD_BRIGHT+diningRoomBoard[2].get(0)+diningRoomBoard[2].get(1)+diningRoomBoard[2].get(2)+diningRoomBoard[2].get(3)+diningRoomBoard[2].get(4)+diningRoomBoard[2].get(5)+diningRoomBoard[2].get(6)+diningRoomBoard[2].get(7)+diningRoomBoard[2].get(8)+diningRoomBoard[2].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.YELLOW_BOLD_BRIGHT+professorsBoard[2]+ANSIColor.RESET+"    ║   "+towerBoard.get(4)+"     "+towerBoard.get(5)+"   ║");
             plankBoard.add("║  "+studentsEntranceBoard.get(5)+"    "+studentsEntranceBoard.get(6)+"  ║ "+ANSIColor.PINK+diningRoomBoard[3].get(0)+diningRoomBoard[3].get(1)+diningRoomBoard[3].get(2)+diningRoomBoard[3].get(3)+diningRoomBoard[3].get(4)+diningRoomBoard[3].get(5)+diningRoomBoard[3].get(6)+diningRoomBoard[3].get(7)+diningRoomBoard[3].get(8)+diningRoomBoard[3].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.PINK+professorsBoard[3]+ANSIColor.RESET+"    ║   "+towerBoard.get(6)+"     "+towerBoard.get(7)+"   ║");
@@ -305,7 +305,7 @@ public class EriantysCLI extends ViewObservable implements View {
                 return ANSIColor.BLUE + "s" + ANSIColor.RESET;
 
             case GREEN:
-                return ANSIColor.GREEN + "s" + ANSIColor.RESET;
+                return ANSIColor.GREEN_BOLD_BRIGHT + "s" + ANSIColor.RESET;
 
             default:
                 return null;
@@ -401,7 +401,7 @@ public class EriantysCLI extends ViewObservable implements View {
                 islandBoard.add("╠═══════════════════════╬══════╣");
                 islandBoard.add("║TOWERS" + towerBoard.get(0) + towerBoard.get(1) + towerBoard.get(2) + towerBoard.get(3) + towerBoard.get(4) + towerBoard.get(5) + towerBoard.get(6) + towerBoard.get(7) + " ║" + banBoard + "║");
                 islandBoard.add("╠═════╦═════╦═════╦═════╬═════╦╝");
-                islandBoard.add("║ " + ANSIColor.GREEN + "s" + ANSIColor.RESET + " " + numStudent[0] + " ║ " + ANSIColor.RED + "s" + ANSIColor.RESET + " " + numStudent[1] + " ║ " + ANSIColor.YELLOW_BOLD_BRIGHT + "s" + ANSIColor.RESET + " " + numStudent[2] + " ║ " + ANSIColor.PINK + "s" + ANSIColor.RESET + " " + numStudent[3] + " ║ " + ANSIColor.BLUE + "s" + ANSIColor.RESET + " " + numStudent[4] + " ║");
+                islandBoard.add("║ " + ANSIColor.GREEN_BOLD_BRIGHT + "s" + ANSIColor.RESET + " " + numStudent[0] + " ║ " + ANSIColor.RED + "s" + ANSIColor.RESET + " " + numStudent[1] + " ║ " + ANSIColor.YELLOW_BOLD_BRIGHT + "s" + ANSIColor.RESET + " " + numStudent[2] + " ║ " + ANSIColor.PINK + "s" + ANSIColor.RESET + " " + numStudent[3] + " ║ " + ANSIColor.BLUE + "s" + ANSIColor.RESET + " " + numStudent[4] + " ║");
                 islandBoard.add("╚═════╩═════╩═════╩═════╩═════╝");
             }
 
