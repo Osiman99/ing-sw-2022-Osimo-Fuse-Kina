@@ -742,7 +742,7 @@ public class EriantysCLI extends ViewObservable implements View {
                         showGenericMessage(ANSIColor.RED+"Invalid input! Please try again."+ANSIColor.RESET);
                         showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
                 }
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException | StringIndexOutOfBoundsException e) {
                 showGenericMessage(ANSIColor.RED+"Invalid input! Please try again."+ANSIColor.RESET);
                 showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
             }
