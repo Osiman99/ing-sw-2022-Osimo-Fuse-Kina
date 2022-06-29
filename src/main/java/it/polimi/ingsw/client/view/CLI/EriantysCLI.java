@@ -90,7 +90,7 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
     /**
-     * displays the game phase(planning or action).
+     * displays the game phase (planning or action).
      * @param game
      */
     private void drawPhase(Game game) {
@@ -122,9 +122,9 @@ public class EriantysCLI extends ViewObservable implements View {
 
         gotoXY(138, 18);
         System.out.println(ANSIColor.PURPLE_BOLD_BRIGHT+ "ASSISTANT CARD:"+ ANSIColor.RESET);
-        for(int i=1; i<=5;i+=2){
+        for(int i=1; i<=10;i+=2){
             gotoXY(138,18+i);
-            System.out.println(i+") Value: "+ANSIColor.CYAN_BOLD +i+"-"+(i+1)+ANSIColor.RESET+ "    Max moves: "+ANSIColor.CYAN_BOLD+ ((i+1)/2)+ ANSIColor.RESET );
+            System.out.println(((i+1)/2)+") Value: "+ANSIColor.CYAN_BOLD +i+"-"+(i+1)+ANSIColor.RESET+ "    Max moves: "+ANSIColor.CYAN_BOLD+ ((i+1)/2)+ ANSIColor.RESET );
         }
 
     }
@@ -210,7 +210,7 @@ public class EriantysCLI extends ViewObservable implements View {
             //salvo gli studenti della dining room con un ● colorato e poi riempio con blanckspace
             for(j=0; j<playerBoard.getPlank().getDiningRoom().length; j++) {
                 for(k=0; k< playerBoard.getPlank().getDiningRoom()[j].getStudents().size(); k++)
-                    diningRoomBoard[j].add(" ✶");
+                    diningRoomBoard[j].add(" ♥");
                 for(;k<10;k++)
                     diningRoomBoard[j].add("  ");
             }
@@ -224,7 +224,7 @@ public class EriantysCLI extends ViewObservable implements View {
             //per ogni player ho una lista contenente i professori ▲ che controlla
             for(j=0; j<5; j++) {
                 if(game.getBoard().getProfessorsControlledBy()[j].equals(playerBoard.getNickname()))
-                    professorsBoard[j]="◊";
+                    professorsBoard[j]="♦";
                 else
                     professorsBoard[j]=" ";
             }
@@ -304,19 +304,19 @@ public class EriantysCLI extends ViewObservable implements View {
 
         switch (color) {
             case YELLOW:
-                return ANSIColor.YELLOW_BOLD_BRIGHT + "✶" + ANSIColor.RESET;
+                return ANSIColor.YELLOW_BOLD_BRIGHT + "♥" + ANSIColor.RESET;
 
             case RED:
-                return ANSIColor.RED + "✶" + ANSIColor.RESET;
+                return ANSIColor.RED + "♥" + ANSIColor.RESET;
 
             case PINK:
-                return ANSIColor.PINK + "✶" + ANSIColor.RESET;
+                return ANSIColor.PINK + "♥" + ANSIColor.RESET;
 
             case BLUE:
-                return ANSIColor.BLUE + "✶" + ANSIColor.RESET;
+                return ANSIColor.BLUE + "♥" + ANSIColor.RESET;
 
             case GREEN:
-                return ANSIColor.GREEN + "✶" + ANSIColor.RESET;
+                return ANSIColor.GREEN + "♥" + ANSIColor.RESET;
 
             default:
                 return null;
@@ -412,7 +412,7 @@ public class EriantysCLI extends ViewObservable implements View {
                 islandBoard.add("╠═══════════════════════╬══════╣");
                 islandBoard.add("║TOWERS" + towerBoard.get(0) + towerBoard.get(1) + towerBoard.get(2) + towerBoard.get(3) + towerBoard.get(4) + towerBoard.get(5) + towerBoard.get(6) + towerBoard.get(7) + " ║" + banBoard + "║");
                 islandBoard.add("╠═════╦═════╦═════╦═════╬═════╦╝");
-                islandBoard.add("║ " + ANSIColor.GREEN + "✶" + ANSIColor.RESET + " " + numStudent[0] + " ║ " + ANSIColor.RED + "✶" + ANSIColor.RESET + " " + numStudent[1] + " ║ " + ANSIColor.YELLOW_BOLD_BRIGHT + "✶" + ANSIColor.RESET + " " + numStudent[2] + " ║ " + ANSIColor.PINK + "✶" + ANSIColor.RESET + " " + numStudent[3] + " ║ " + ANSIColor.BLUE + "✶" + ANSIColor.RESET + " " + numStudent[4] + " ║");
+                islandBoard.add("║ " + ANSIColor.GREEN + "♥" + ANSIColor.RESET + " " + numStudent[0] + " ║ " + ANSIColor.RED + "♥" + ANSIColor.RESET + " " + numStudent[1] + " ║ " + ANSIColor.YELLOW_BOLD_BRIGHT + "♥" + ANSIColor.RESET + " " + numStudent[2] + " ║ " + ANSIColor.PINK + "♥" + ANSIColor.RESET + " " + numStudent[3] + " ║ " + ANSIColor.BLUE + "♥" + ANSIColor.RESET + " " + numStudent[4] + " ║");
                 islandBoard.add("╚═════╩═════╩═════╩═════╩═════╝");
             }
 
