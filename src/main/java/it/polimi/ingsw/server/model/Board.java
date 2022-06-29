@@ -514,7 +514,15 @@ public class Board extends Observable implements Serializable {
         return false;
     }
 
-
+    /**
+     * In setup, draw 4 students and place them on this card.
+     * When this card effect is applied you can take 1 student from this card and place it on an island of your choice.
+     * Then, draw a student from the bag and place it on this card. The price after this card is used is increased by 1.
+     * @param player who activates the card
+     * @param characterCard Sommelier
+     * @param studentColor
+     * @param numIsland
+     */
     public void applyEffectSommelier(Player player, CharacterCard characterCard, StudentColor studentColor, int numIsland){
         characterCard.setEnabled(true);
         cardActivated = true;
@@ -535,6 +543,11 @@ public class Board extends Observable implements Serializable {
         notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 
+    /**
+     * after this card is used its price is increased by 1.
+     * @param player who activates this card
+     * @param characterCard Chef
+     */
     public void applyEffectChef(Player player, CharacterCard characterCard) {
         characterCard.setEnabled(true);
         cardActivated = true;
@@ -544,6 +557,15 @@ public class Board extends Observable implements Serializable {
         notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 
+    /**
+     * The effect of this card is that during the turn this card is activated the player chooses one island of his
+     * choice and calculates the supremacy as if mother nature had ended her movement there.
+     * Mother Nature will still move during that turn and the island where she ends her movement will still be resolved.
+     * The card price is increased by 1 after its effect is used.
+     * @param player who activates this card
+     * @param characterCard Messenger
+     * @param numIsland
+     */
     public void applyEffectMessenger(Player player, CharacterCard characterCard, int numIsland){
         characterCard.setEnabled(true);
         cardActivated = true;
@@ -580,6 +602,11 @@ public class Board extends Observable implements Serializable {
         notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 
+    /**
+     * The card price is increased by 1 after its effect is used.
+     * @param player who activates this card effect
+     * @param characterCard Postman
+     */
     public void applyEffectPostman(Player player, CharacterCard characterCard){
         characterCard.setEnabled(true);
         cardActivated = true;
@@ -588,6 +615,13 @@ public class Board extends Observable implements Serializable {
         notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 
+    /**
+     * This character card allows the use of the BanCards.
+     * The card price is increased by 1 after its effect is used.
+     * @param player who activates this card effect
+     * @param characterCard Herbalist
+     * @param numIsland
+     */
     public void applyEffectHerbalist(Player player, CharacterCard characterCard, int numIsland){
         characterCard.setEnabled(true);
         cardActivated = true;
@@ -605,6 +639,11 @@ public class Board extends Observable implements Serializable {
         notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 
+    /**
+     * The card price is increased by 1 after its effect is used.
+     * @param player who activates this card effect
+     * @param characterCard Centaur
+     */
     public void applyEffectCentaur(Player player, CharacterCard characterCard){
         characterCard.setEnabled(true);
         cardActivated = true;
@@ -613,6 +652,11 @@ public class Board extends Observable implements Serializable {
         notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 
+    /**
+     * The card price is increased by 1 after its effect is used.
+     * @param player who activates this card effect
+     * @param characterCard Knight
+     */
     public void applyEffectKnight(Player player, CharacterCard characterCard){
         characterCard.setEnabled(true);
         cardActivated = true;
@@ -621,6 +665,15 @@ public class Board extends Observable implements Serializable {
         notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 
+    /**
+     * In setup, draw 4 students and place them on this card.
+     * This card's effect permits the player who activated it to take one student from this card and place it on his
+     * dining room. Then, draw a student from the bag and place it on this card.
+     * The card price is increased by 1 after its effect is used.
+     * @param player who activates this card effect
+     * @param characterCard Lady
+     * @param studentColor
+     */
     public void applyEffectLady(Player player, CharacterCard characterCard, StudentColor studentColor){
         characterCard.setEnabled(true);
         cardActivated = true;

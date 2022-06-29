@@ -309,14 +309,6 @@ public class CheckController implements Serializable {
                     }
                 }
                 break;
-            /*case "joker":
-                for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
-                    if (cc.getCharacterName() == CharacterName.Joker) {
-                        return eachCharCardCheck(virtualView, activePlayer, cc);
-                    }
-                }
-                break;
-            */
             case "knight":
                 for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                     if (cc.getCharacterName() == CharacterName.Knight) {
@@ -324,21 +316,6 @@ public class CheckController implements Serializable {
                     }
                 }
                 break;
-            /*case "merchant":
-                for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
-                    if (cc.getCharacterName() == CharacterName.Merchant) {
-                        return eachCharCardCheck(virtualView, activePlayer, cc);
-                    }
-                }
-                break;
-            case "musician":
-                for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
-                    if (cc.getCharacterName() == CharacterName.Musician) {
-                        return eachCharCardCheck(virtualView, activePlayer, cc);
-                    }
-                }
-                break;
-            */
             case "lady":
                 for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                     if (cc.getCharacterName() == CharacterName.Lady) {
@@ -354,14 +331,6 @@ public class CheckController implements Serializable {
                     }
                 }
                 break;
-            /*case "sinister":
-                for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
-                    if (cc.getCharacterName() == CharacterName.Sinister) {
-                        return eachCharCardCheck(virtualView, activePlayer, cc);
-                    }
-                }
-                break;
-            */
             case "back":
                 game.notifyBoard();
                 gameController.broadcastWaitingMessage(activePlayer);
@@ -433,22 +402,6 @@ public class CheckController implements Serializable {
             nicknamesInChooseOrder.set(lowerNumIndex, sTmp);
 
         }
-
-
-        /*if (game.getPlayers().size() == 2) {
-            int lowerNum = numCardOtherPlayers.get(0);
-            sortedNicknames.add(0, nicknamesInChooseOrder.get(0));
-            for (int i = 1; i < numCardOtherPlayers.size(); i++) {
-                if (lowerNum > numCardOtherPlayers.get(i)) {
-                    lowerNum = numCardOtherPlayers.get(i);
-                    sortedNicknames.add(0, nicknamesInChooseOrder.get(i));
-                } else {
-                    sortedNicknames.add(nicknamesInChooseOrder.get(i));
-                }
-            }
-        }else{
-
-        }*/
     }
 
     public List<Integer> getNumCardOtherPlayers() {
