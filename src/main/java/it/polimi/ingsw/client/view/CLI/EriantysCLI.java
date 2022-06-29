@@ -868,7 +868,7 @@ public class EriantysCLI extends ViewObservable implements View {
             StudentColor finalStudentColor = studentColor;
             int finalNumIsland = numIsland;
             notifyObserver(obs -> obs.onUpdateCharacterCard(card, finalStudentColor, finalNumIsland));
-        }catch (NumberFormatException e) {
+        }catch (NumberFormatException | StringIndexOutOfBoundsException e) {
             showGenericMessage(ANSIColor.RED+"Invalid input! Please try again."+ANSIColor.RESET);
             onDemandCharacterCard(text);
         }

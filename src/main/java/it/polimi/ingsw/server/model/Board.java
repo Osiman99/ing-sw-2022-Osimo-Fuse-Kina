@@ -532,6 +532,7 @@ public class Board extends Observable implements Serializable {
         cardActivated = true;
         player.setNumCoins(player.getNumCoins() - characterCard.getPrice());
         characterCard.setPrice(characterCard.getPrice() + 1);
+        moveProfessorChef(player);
         notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 

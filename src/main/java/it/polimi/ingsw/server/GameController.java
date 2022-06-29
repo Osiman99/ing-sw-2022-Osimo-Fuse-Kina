@@ -379,7 +379,7 @@ public class GameController implements Observer, Serializable {
                         break;
                     case "chef":
                         for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
-                            if (cc.getCharacterName() == CharacterName.Chef){
+                            if (cc.getCharacterName() == CharacterName.Chef) {
                                 gameExpert.getBoard().applyEffectChef(activePlayer, cc);
                             }
                         }
@@ -434,7 +434,8 @@ public class GameController implements Observer, Serializable {
                         break;
                     //case "sinister":
                         //break;
-                }virtualView.showGenericMessage("EFFECT ACTIVATED!");
+                }broadcastGenericMessage(ANSIColor.PURPLE_BOLD_BRIGHT + activePlayer.getNickname().toUpperCase() + ANSIColor.CYAN_BOLD + " activated " + characterCardMessage.getCard().toUpperCase() + " effect!" + ANSIColor.RESET);
+                broadcastWaitingMessage(activePlayer);
                 if (askInterrupted.equals("s")){
                     virtualView.showGenericMessage("Do you want to move a student to your plank or island? [p/i]");
                 }else if(askInterrupted.equals("m")){
@@ -464,12 +465,6 @@ public class GameController implements Observer, Serializable {
                     broadcastWaitingMessage(activePlayer);
                 }else{
                     activePlayer.moveStudentFromEntranceToIsland(new Student(moveMessage.getStudentColor()), game.getBoard().getIslands().get(moveMessage.getNumIsland()-1));
-                    GameExpert gameExpert = (GameExpert) game;
-                    for (CharacterCard characterCard : gameExpert.getThreeChosenCards()) {
-                        if (characterCard.getCharacterName() == CharacterName.Chef && characterCard.isEnabled()) {
-                            game.getBoard().moveProfessorChef(activePlayer);
-                        }
-                    }
                     broadcastGenericMessage(ANSIColor.PURPLE_BOLD_BRIGHT+ activePlayer.getNickname().toUpperCase() +ANSIColor.CYAN_BOLD +" moved a " + moveMessage.getStudentColor() + " student to the island number " + moveMessage.getNumIsland() + "!"+ANSIColor.RESET);
                     broadcastWaitingMessage(activePlayer);
                 }actionTurnManager();
