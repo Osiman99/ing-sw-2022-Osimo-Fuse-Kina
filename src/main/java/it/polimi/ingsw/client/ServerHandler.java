@@ -15,6 +15,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * sends messages and receives messages from the server
+ */
 public class ServerHandler extends Client {
     private final Socket socket;
     private final ObjectOutputStream outputStm;

@@ -5,13 +5,9 @@ import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.server.GameController;
 import it.polimi.ingsw.server.GameState;
 import it.polimi.ingsw.server.model.*;
-
 import java.io.*;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,15 +30,12 @@ public class EriantysCLI extends ViewObservable implements View {
 
     private static final Pattern IPv4_PATTERN = Pattern.compile(IPV4_REGEX);
 
-
     /**
      * Default constructor.
      */
     public EriantysCLI() {
         out = System.out;
     }
-
-
 
     /**
      * shows the login screen
@@ -176,7 +169,6 @@ public class EriantysCLI extends ViewObservable implements View {
             gotoXY(138,6+3*i);
             System.out.println(characterMarkers.get(i));
         }
-
     }
 
     /**
@@ -238,7 +230,6 @@ public class EriantysCLI extends ViewObservable implements View {
                 coins= " - "+ ANSIColor.YELLOW_BOLD_BRIGHT  +"Coins: " + playerBoard.getNumCoins()+ ANSIColor.RESET;
             }
 
-
             plankBoard.add(convertANSI(playerBoard.getPlayerColor())+" " +ANSIColor.PINK+ ANSIColor.UNDERLINE+ playerBoard.getNickname().toUpperCase()+ANSIColor.RESET+coins+"      Active assistant card: "+assistantCard);
             plankBoard.add("╔══════════╦═══════════════════════╦═════════╦═════════════╗");
             plankBoard.add("║"+ANSIColor.ORANGE_BACKGROUND+ANSIColor.BLACK+" Entrance "+ANSIColor.RESET+"║"+ANSIColor.ORANGE_BACKGROUND+ANSIColor.BLACK+"      Dining Room      "+ANSIColor.RESET+"║"+ANSIColor.ORANGE_BACKGROUND+ANSIColor.BLACK+"Professor"+ANSIColor.RESET+"║"+ANSIColor.ORANGE_BACKGROUND+ANSIColor.BLACK+" Tower Space "+ANSIColor.RESET+"║");
@@ -249,8 +240,6 @@ public class EriantysCLI extends ViewObservable implements View {
             plankBoard.add("║  "+studentsEntranceBoard.get(5)+"    "+studentsEntranceBoard.get(6)+"  ║ "+ANSIColor.PINK+diningRoomBoard[3].get(0)+diningRoomBoard[3].get(1)+diningRoomBoard[3].get(2)+diningRoomBoard[3].get(3)+diningRoomBoard[3].get(4)+diningRoomBoard[3].get(5)+diningRoomBoard[3].get(6)+diningRoomBoard[3].get(7)+diningRoomBoard[3].get(8)+diningRoomBoard[3].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.PINK+professorsBoard[3]+ANSIColor.RESET+"    ║   "+towerBoard.get(6)+"     "+towerBoard.get(7)+"   ║");
             plankBoard.add("║  "+studentsEntranceBoard.get(7)+"    "+studentsEntranceBoard.get(8)+"  ║ "+ANSIColor.BLUE+diningRoomBoard[4].get(0)+diningRoomBoard[4].get(1)+diningRoomBoard[4].get(2)+diningRoomBoard[4].get(3)+diningRoomBoard[4].get(4)+diningRoomBoard[4].get(5)+diningRoomBoard[4].get(6)+diningRoomBoard[4].get(7)+diningRoomBoard[4].get(8)+diningRoomBoard[4].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.BLUE+professorsBoard[4]+ANSIColor.RESET+"    ║             ║");
             plankBoard.add("╚══════════╩═══════════════════════╩═════════╩═════════════╝");
-
-
 
 
             for (int r=0; r<plankBoard.size(); r++){
@@ -292,7 +281,6 @@ public class EriantysCLI extends ViewObservable implements View {
      */
     public void gotoXY(int x, int y) {
         System.out.print(String.format("\u001B[%d;%dH", y, x));
-        // CSI n ; m H
     }
 
 
@@ -552,8 +540,6 @@ public class EriantysCLI extends ViewObservable implements View {
         String defaultAddress = "127.0.0.1";
         String defaultPort = "12500";
         boolean correctInput;
-        //Scanner scanner = new Scanner(System.in);
-
 
         do{
             out.print("Type the server address you want to connect or press just Enter for the Localhost:");
@@ -591,18 +577,14 @@ public class EriantysCLI extends ViewObservable implements View {
 
         System.out.println(serverInfo);
         notifyObserver(obs -> obs.onUpdateServerInfo(serverInfo));
-
     }
-
 
     @Override
     public void onDemandNickname() {
         out.print("Enter nickname: ");
         String nickname = nextLine();
         notifyObserver(obs -> obs.onUpdateNickname(nickname));
-
     }
-
 
     /**
      * asks the first client that is connected the number of players that are going to play, and it throws an
@@ -629,14 +611,13 @@ public class EriantysCLI extends ViewObservable implements View {
         }
     }
 
-
     @Override
     public void onDemandAssistantCard(List<AssistantCard> deck) {
         List<String> cardValueList= new ArrayList<String>();
         for (int i = 0; i < deck.size(); i++)
             cardValueList.add(Integer.toString(deck.get(i).getValue()));
 
-        assistantCardValue = 0; //== value
+        assistantCardValue = 0;
 
         out.print("Enter one of the available Assistant Card Value : " + cardValueList);
 
@@ -656,15 +637,14 @@ public class EriantysCLI extends ViewObservable implements View {
 
     @Override
     public void showLoginResult(boolean nicknameAccepted, boolean connection, String nickname) {
+
         clearConsole();
 
         if (nicknameAccepted && connection) {
             out.println("Hi, " + ANSIColor.PURPLE_BOLD_BRIGHT+ ANSIColor.UNDERLINE+ nickname +ANSIColor.RESET+ "! You connected to the server.");
         } else if (connection) {
             onDemandNickname();
-        }/* else {
-            showErrorAndExit("Could not contact server.");
-        }*/
+        }
     }
 
     /**
@@ -674,13 +654,6 @@ public class EriantysCLI extends ViewObservable implements View {
      * The method throws a NumberFormatException if the player has chosen the  index of an island that doesn't exist.
      */
     public void onDemandMoveStudent(){
-
-        /*StringBuilder builderNumIsland = new StringBuilder();
-        for(int i = 2; i < colorIn.length(); i++){
-            builderNumIsland.append(String.valueOf(colorIn.charAt(i)));
-        }
-        String sNumIsland = builderNumIsland.toString();
-        int numIsland = Integer.parseInt(sNumIsland);*/
 
         String plankOrIsland = nextLine().toLowerCase();
 
@@ -753,6 +726,11 @@ public class EriantysCLI extends ViewObservable implements View {
         }
     }
 
+    /**
+     * asks the player to input the number of the cloud he wants to take.
+     * The only exception accepted is "cc" to show the character cards.
+     * In all the other cases it throws an exception.
+     */
     public void onDemandCloud(){
         numCloud = 0;
         String cc = nextLine().toLowerCase();
@@ -774,9 +752,13 @@ public class EriantysCLI extends ViewObservable implements View {
                 i = 0;
             }
         }
-
     }
 
+    /**
+     * asks the player how many moves he wants the mother nature make and if the number is incorrect throws an
+     * exception which asks the player to try again.
+     * @param maxMoves
+     */
     public void onDemandMotherNatureMoves(int maxMoves){
         numMoves = 0;
         showGenericMessage("How many steps do you want Mother Nature does? Insert a number between 1 and " + maxMoves + ".");
@@ -801,6 +783,9 @@ public class EriantysCLI extends ViewObservable implements View {
         }
     }
 
+    /**
+     * if the player writes in input "quit" it exits the game
+     */
     public void onDemandQuit(){
         String quit = nextLine();
         if (quit.equals("quit")) {
@@ -812,11 +797,18 @@ public class EriantysCLI extends ViewObservable implements View {
         }
     }
 
+    /**
+     * the client chooses the modality he wants to play the game(n/e).
+     */
     public void onDemandMode(){
         String mode = nextLine();
         notifyObserver(obs -> obs.onUpdateMode(mode));
     }
 
+    /**
+     * prints the description of the character cards and asks the client which one it has chosen and sends it to the client.
+     * @param text
+     */
     public void onDemandCharacterCard(String[] text){
         for(int i = 0; i < text.length; i++) {
             out.println("\n" + text[i]);
@@ -843,17 +835,10 @@ public class EriantysCLI extends ViewObservable implements View {
                         return;
                     }
                     break;
-
                 case "messenger", "herbalist":
                     showGenericMessage("Which island do you choose? Write its number.");
                     numIsland = Integer.parseInt(nextLine());
                     break;
-                //case "joker":
-                    //break;
-                //case "merchant":
-                    //break;
-                //case "musician":
-                    //break;
                 case "lady":
                     showGenericMessage("Choose your student to move. [g/r/y/p/b]");
                     String colorIn = nextLine();
@@ -862,8 +847,6 @@ public class EriantysCLI extends ViewObservable implements View {
                         return;
                     }
                     break;
-                //case "sinister":
-                //break;
             }
             StudentColor finalStudentColor = studentColor;
             int finalNumIsland = numIsland;
@@ -874,6 +857,13 @@ public class EriantysCLI extends ViewObservable implements View {
         }
     }
 
+    /**
+     * this method controls if the student color chosen exists and returns the chosen color.
+     * @param text
+     * @param studentColor
+     * @param sColor
+     * @return
+     */
     private StudentColor chooseStudent(String[] text, StudentColor studentColor, String sColor) {
         switch(sColor) {
             case "g":
@@ -901,6 +891,10 @@ public class EriantysCLI extends ViewObservable implements View {
         return studentColor;
     }
 
+    /**
+     * prints a generic message and in some specific cases calls their respective methods
+     * @param genericMessage
+     */
     public void showGenericMessage(String genericMessage) {
         out.println(genericMessage);
         if(genericMessage.equals("Do you want to move a student to your plank or island? [p/i]")){
@@ -914,6 +908,10 @@ public class EriantysCLI extends ViewObservable implements View {
         }
     }
 
+    /**
+     * reads the next line from the command line and throws an exception in case there is a problem with the I/O
+     * @return the string in input
+     */
     public String nextLine(){
         String s;
         System.out.print("\n< ");
@@ -926,9 +924,12 @@ public class EriantysCLI extends ViewObservable implements View {
         }
     }
 
+    /**
+     * clears the console for all the types of OS
+     */
     public static void clearConsole(){
         try{
-            String operatingSystem = System.getProperty("os.name"); //Check the current operating system
+            String operatingSystem = System.getProperty("os.name");
 
             if(operatingSystem.contains("Windows")){
                 ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "cls");
@@ -945,6 +946,10 @@ public class EriantysCLI extends ViewObservable implements View {
         }
     }
 
+    /**
+     * prints "error" and "exit" in case of an error, for example when the connection is lost.
+     * @param error
+     */
     public void showErrorAndQuit(String error) {
 
         out.println("\nERROR: " + error);
@@ -955,9 +960,9 @@ public class EriantysCLI extends ViewObservable implements View {
 
     @Override
     public void showDisconnectionMessage(String nicknameDisconnected, String text) {
+
         out.println("\n" + ANSIColor.PURPLE_BOLD_BRIGHT + nicknameDisconnected.toUpperCase() + ANSIColor.CYAN_BOLD + text + ANSIColor.RESET);
 
         System.exit(1);
     }
-
 }

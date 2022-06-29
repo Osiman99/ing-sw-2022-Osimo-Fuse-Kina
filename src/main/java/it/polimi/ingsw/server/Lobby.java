@@ -23,7 +23,6 @@ public class Lobby {
     public static final Logger LOGGER = Logger.getLogger(Server.class.getName());
 
     public Lobby(GameController gameController){
-        //ID = ?
         players = new ArrayList<Player>();
         numPlayers = 0;
         realTimeNumPlayer = 0;

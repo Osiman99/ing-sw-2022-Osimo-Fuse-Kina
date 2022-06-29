@@ -14,7 +14,7 @@ public class Board extends Observable implements Serializable {
     private Game game;
     private List<Island> islands;
     private List<Cloud> clouds;
-    private String professorsControlledBy[];  //da rivedere
+    private String professorsControlledBy[];
     private Bag bag;
     private Random random;
     private int randomInt;
