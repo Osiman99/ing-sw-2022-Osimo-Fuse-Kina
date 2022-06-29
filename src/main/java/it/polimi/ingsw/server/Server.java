@@ -13,6 +13,7 @@ public class Server {
 
     private static Server instance;
     private final GameController gameController;
+    private boolean flag;
 
     private final Map<String, ClientHandler> clientHandlerMap;
 
@@ -25,6 +26,7 @@ public class Server {
         this.gameController = gameController;
         this.clientHandlerMap = Collections.synchronizedMap(new HashMap<>());
         this.lock = new Object();
+        flag = false;
     }
 
 
@@ -51,6 +53,18 @@ public class Server {
 
         clientHandlerMap.remove(nickname);
         gameController.removeVirtualView(nickname);
+        /*if (!flag) {
+            for (int i = 0; i < gameController.getLobby().getPlayers().size(); i++) {
+                if (gameController.getLobby().getPlayers().get(i).getNickname().equals(nickname)) {
+                    gameController.getLobby().getPlayers().remove(i);
+                    flag = true;
+                    break;
+                }
+            }
+        }
+        if (flag) {
+            gameController.initGameController();
+        }*/
 
         if(gameController.getState() != GameState.ENDGAME) {
             gameController.quitFromServer(nickname);
