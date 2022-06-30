@@ -32,7 +32,7 @@ public class SocketServer implements Runnable {
 
                 client.setSoTimeout(5000);
 
-                ClientHandlerConcrete clientHandler = new ClientHandlerConcrete(this, client);
+                ClientHandler clientHandler = new ClientHandler(this, client);
                 Thread thread = new Thread(clientHandler, "ss_handler" + client.getInetAddress());
                 thread.start();
             } catch (IOException e) {
