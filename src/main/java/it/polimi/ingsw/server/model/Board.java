@@ -28,6 +28,8 @@ public class Board extends Observable implements Serializable {
     private int contJoin;
     private boolean cardActivated;
     private boolean contTemp;
+    private Island i1;
+    private Island i2;
 
     /**
      * initialize the game board
@@ -48,6 +50,8 @@ public class Board extends Observable implements Serializable {
         blueCont = 0;
         contJoin = 0;
         contTemp = false;
+        i1 = null;
+        i2 = null;
 
         /**
          * creation of the 12 islands
@@ -452,7 +456,8 @@ public class Board extends Observable implements Serializable {
                             }
                         }
                     }
-                    islands.remove(islands.get((i+1)%islands.size()));
+                    i1 = islands.get((i+1)%islands.size());
+                    //islands.remove(islands.get((i+1)%islands.size()));
                 }if ((i-1) == -1) {
                     if (!(islands.get(islands.size()-1).getTowers().size() == 0  || islands.get(islands.size()-1).getFirstTower().getColor() != island.getFirstTower().getColor())) {
                         int numTowersLastIsland = islands.get(islands.size()-1).getTowers().size();
@@ -472,12 +477,10 @@ public class Board extends Observable implements Serializable {
                                 }
                             }
                         }
-                        islands.remove(islands.get(islands.size()-1));
+                        i2 = islands.get(islands.size()-1);
+                        //islands.remove(islands.get(islands.size()-1));
                     }
                 }else {
-                    if(contTemp){
-                        i--;
-                    }
                     if (!(islands.get(i-1).getTowers().size() == 0  || islands.get(i-1).getFirstTower().getColor() != island.getFirstTower().getColor())) {
                         int numTowersPrevIsland = islands.get(i-1).getTowers().size();
                         for (int j = 0; j < numTowersPrevIsland; j++) {
@@ -496,9 +499,14 @@ public class Board extends Observable implements Serializable {
                                 }
                             }
                         }
-                        islands.remove(islands.get(i-1));
+                        i2 = islands.get(i-1);
+                        //islands.remove(islands.get(i-1));
                     }
-                }contTemp = false;
+                }if (i1 != null){
+                    islands.remove(i1);
+                }if (i2 != null){
+                    islands.remove(i2);
+                }
                 break;
             }
         }
