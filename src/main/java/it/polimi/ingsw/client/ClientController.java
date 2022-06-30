@@ -5,15 +5,15 @@ import it.polimi.ingsw.network.messages.*;
 import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.observer.ViewObserver;
 import it.polimi.ingsw.server.model.*;
-
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * this class connects network and view (cli or gui)
+ * This class is part of the client side.
+ * It is an interpreter between the network and a generic view (which in this case is CLI).
+ * It receives the messages, wraps/unwraps and pass them to the network/view.
  */
 public class ClientController implements ViewObserver, Observer {
     private final View view;
@@ -22,11 +22,15 @@ public class ClientController implements ViewObserver, Observer {
     private String nickname;
 
 
+    /**
+     * ClientController constructor
+     *
+     * @param view the view to be controlled.
+     */
     public ClientController(View view) {
         this.view = view;
         taskQueue = Executors.newSingleThreadExecutor();
     }
-
 
     @Override
     public void onUpdateServerInfo(Map<String, String> serverInfo) {
@@ -40,9 +44,7 @@ public class ClientController implements ViewObserver, Observer {
         } catch (IOException e) {
             taskQueue.execute(() -> view.showLoginResult(false, false, this.nickname));
         }
-
     }
-
 
     @Override
     public void onUpdatePlayersNumber(int playersNumber) {
@@ -99,7 +101,6 @@ public class ClientController implements ViewObserver, Observer {
     public void onUpdateCharacterCard(String card, StudentColor studentColor, int numIsland){
         client.sendMessage(new CharacterCardMessage(this.nickname, card, studentColor, numIsland));
     }
-
 
     @Override
     public void update(Message message) {

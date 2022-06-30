@@ -7,6 +7,11 @@ import it.polimi.ingsw.server.model.AssistantCard;
 import it.polimi.ingsw.server.model.Game;
 import java.util.List;
 
+/**
+ * Hides the network implementation from the controller.
+ * The controller calls methods from this class as if it was a normal view.
+ * Instead, a network protocol is used to communicate with the real view on the client side.
+ */
 public class VirtualView implements View, Observer {
 
     private final ClientHandler clientHandler;
@@ -69,13 +74,7 @@ public class VirtualView implements View, Observer {
     public void showErrorAndQuit(String error) {
         clientHandler.sendMessage(new ErrorMessage(Game.SERVER_NICKNAME, error));
     }
-    /**
-     * Receives an update message from the model.
-     * The message is sent over the network to the client.
-     * The proper action based on the message type will be taken by the real view on the client.
-     *
-     * @param message the update message.
-     */
+
     @Override
     public void update(Message message) {
         clientHandler.sendMessage(message);

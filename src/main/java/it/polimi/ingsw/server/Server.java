@@ -6,7 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-
+/**
+ * Server class that starts a socket server.
+ * It can handle different types of connections.
+ */
 public class Server {
 
     private static Server instance;
@@ -27,8 +30,12 @@ public class Server {
         flag = false;
     }
 
-
-
+    /**
+     * Adds a client to be managed by the server instance.
+     *
+     * @param nickname associated with the client.
+     * @param clientHandler  associated with the client
+     */
     public void addClient(String nickname, ClientHandler clientHandler) {
         VirtualView vv = new VirtualView(clientHandler);
 

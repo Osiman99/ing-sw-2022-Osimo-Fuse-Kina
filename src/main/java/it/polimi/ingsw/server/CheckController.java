@@ -36,10 +36,11 @@ public class CheckController implements Serializable {
 
 
     /**
-     * checks if the nickname is empty or iy belongs in a case that it's ignored or if it's taken by another player
-     * @param nickname
-     * @param view
-     * @return
+     * Check if a nickname is valid or not.
+     *
+     * @param nickname new client's nickname.
+     * @param view view for active client.
+     * @return true if accepted, false otherwise
      */
     public boolean checkLoginNickname(String nickname, View view) {
         if (nickname.isEmpty() || nickname.equalsIgnoreCase(Game.SERVER_NICKNAME)) {
@@ -54,7 +55,12 @@ public class CheckController implements Serializable {
         return true;
     }
 
-
+    /**
+     * Verify data sent by client to server.
+     *
+     * @param message from client
+     * @return true if message contains valid data, otherwise false
+     */
     public boolean verifyReceivedData(Message message) {
 
         switch (message.getMessageType()) {
@@ -84,8 +90,9 @@ public class CheckController implements Serializable {
 
     /**
      * if there are 2 or 3 players in the game it returns true, otherwise false
-     * @param message
-     * @return
+     *
+     * @param message from the client
+     * @return true if it's a valid number, false otherwise.
      */
     private boolean playerNumberReplyCheck(Message message) {
         PlayerNumberReply playerNumberReply = (PlayerNumberReply) message;
@@ -99,6 +106,12 @@ public class CheckController implements Serializable {
         }
     }
 
+    /**
+     * Check if the assistant card played is correct.
+     *
+     * @param message from client
+     * @return true if the card played is allowed
+     */
     private boolean assistantCardResultCheck(Message message) {
         AssistantCardResult assistantCardResult = (AssistantCardResult) message;
         try {
@@ -146,6 +159,12 @@ public class CheckController implements Serializable {
         return false;
     }
 
+    /**
+     * Check if the student movement is allowed.
+     *
+     * @param message from the client
+     * @return true if the movement by the student can be done
+     */
     private boolean moveStudentCheck(Message message) {
         MoveMessage moveMessage = (MoveMessage) message;
         VirtualView virtualView = virtualViewMap.get(message.getNickname());
@@ -177,6 +196,12 @@ public class CheckController implements Serializable {
         return false;
     }
 
+    /**
+     * checks if the cloud number choosen by the player is available to be chosen.
+     *
+     * @param message sent by the client
+     * @return true if the cloud number choice is possible
+     */
     private boolean cloudCheck(Message message){
         CloudMessage cloudMessage = (CloudMessage) message;
         VirtualView virtualView = virtualViewMap.get(message.getNickname());
@@ -196,6 +221,14 @@ public class CheckController implements Serializable {
         return false;
     }
 
+    /**
+     * Checks if the number of moves that mother nature can do is inputed correctly by the player.
+     * Here is applied even the effect of the Postman character card that can allow a player do 2 more moves with
+     * the mother nature.
+     *
+     * @param message sent by the client
+     * @return true if the number that the player has inputed is correct.
+     */
     private boolean motherNatureCheck(Message message){
         MotherNatureResult motherNatureMessage = (MotherNatureResult) message;
         VirtualView virtualView = virtualViewMap.get(message.getNickname());
@@ -388,12 +421,18 @@ public class CheckController implements Serializable {
         }
     }
 
+    /**
+     * Initialize the first player that has to play during the action phase.
+     */
     public void initializeFirstPlayerInAction(){
         sortNicknames();
         setFirstPlayerInAction(nicknamesInChooseOrder.get(0));
     }
 
-    public void sortNicknames(){                 //ordina i nickname dal più basso valore dell'asstant card scelta al più alto
+    /**
+     * Sorts the nicknames from the lowest value of the Assistant card chosen to the highest
+     */
+    public void sortNicknames(){
         for (int i = 0; i < numCardOtherPlayers.size()-1; i++){
             int lowerNumIndex = i;
             for (int j = i + 1; j < numCardOtherPlayers.size(); j++){
@@ -412,6 +451,9 @@ public class CheckController implements Serializable {
         }
     }
 
+    /**
+     * @return the list of assistant card values of the other players
+     */
     public List<Integer> getNumCardOtherPlayers() {
         return numCardOtherPlayers;
     }

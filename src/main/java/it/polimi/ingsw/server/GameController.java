@@ -15,9 +15,11 @@ public class GameController implements Observer, Serializable {
     private static final long serialVersionUID = 4951303731052728724L;
     private transient Map<String, VirtualView> virtualViewMap;
     private Player activePlayer;
-    private List<String> nicknames; //forse final
+    private List<String> nicknames;
     private CheckController checkController;
+
     private static final String STR_INVALID_STATE = "Invalid game state!";
+
     public static final String SAVED_GAME_FILE = "match.bless";
     private int turnCont;
     private int moveCont;
