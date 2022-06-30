@@ -504,8 +504,10 @@ public class Board extends Observable implements Serializable {
                     }
                 }if (i1 != null){
                     islands.remove(i1);
+                    i1 = null;
                 }if (i2 != null){
                     islands.remove(i2);
+                    i2 = null;
                 }
                 break;
             }
