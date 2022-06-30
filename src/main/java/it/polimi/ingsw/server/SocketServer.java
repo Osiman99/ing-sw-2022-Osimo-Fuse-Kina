@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * Socket server that handles all the new socket connection.
+ */
 public class SocketServer implements Runnable {
     private final Server server;
     private final int port;
@@ -42,16 +45,32 @@ public class SocketServer implements Runnable {
     }
 
 
+    /**
+     * Handles the addition of a new client.
+     *
+     * @param nickname      the nickname of the new client.
+     * @param clientHandler the ClientHandler of the new client.
+     */
     public void addClient(String nickname, ClientHandler clientHandler) {
         server.addClient(nickname, clientHandler);
     }
 
 
+    /**
+     * Forwards a received message from the client to the Server.
+     *
+     * @param message the message to be forwarded.
+     */
     public void onMessageReceived(Message message) {
         server.onMessageReceived(message);
     }
 
 
+    /**
+     * Handles a client disconnection.
+     *
+     * @param clientHandler the ClientHandler of the disconnecting client.
+     */
     public void onDisconnect(ClientHandler clientHandler) {
         server.onDisconnect(clientHandler);
     }

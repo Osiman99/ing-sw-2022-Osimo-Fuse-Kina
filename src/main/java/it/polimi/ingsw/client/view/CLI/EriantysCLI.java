@@ -2,7 +2,6 @@ package it.polimi.ingsw.client.view.CLI;
 
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.observer.ViewObservable;
-import it.polimi.ingsw.server.GameController;
 import it.polimi.ingsw.server.GameState;
 import it.polimi.ingsw.server.model.*;
 import java.io.*;
@@ -38,7 +37,7 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
     /**
-     * shows the login screen
+     * Shows the login screen
      */
     public void welcome() {
         ArrayList<String> welcome = new ArrayList<>();
@@ -68,7 +67,8 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
     /**
-     * prints the game board, if the game is in expert mode it adds the character cards too
+     * Prints the game board, if the game is in expert mode it adds the character cards too.
+     *
      * @param game
      */
     public void drawBoard(Game game) {
@@ -84,7 +84,8 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
     /**
-     * displays the game phase (planning or action).
+     * Displays the game phase (planning or action).
+     *
      * @param game
      */
     private void drawPhase(Game game) {
@@ -124,7 +125,8 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
     /**
-     * prints the 3 character cards chosen for the match.
+     * Prints the 3 character cards chosen for the match.
+     *
      * @param game
      */
     private void drawCharacterCards(GameExpert game) {
@@ -172,7 +174,8 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
     /**
-     * prints the planks of each player, even the coins in case of an expert match
+     * Prints the planks of each player, even the coins in case of an expert match.
+     *
      * @param game
      */
     public void drawPlanks(Game game) {
@@ -191,16 +194,13 @@ public class EriantysCLI extends ViewObservable implements View {
 
         for(i=0; i<game.getNumPlayers(); i++){
             Player playerBoard = game.getPlayers().get(i);
-            //dalla lista degli studenti di ogni giocatore aggiungo un ● dello stesso colore in studentsEntranceBoard
 
             for(j=0; j<playerBoard.getPlank().getEntrance().getStudents().size(); j++)
                 studentsEntranceBoard.add(convertANSI(playerBoard.getPlank().getEntrance().getStudents().get(j).getColor()));
 
-            //e proseguo fino alla fine della lista (9 posizioni) settando un blanckspace per le celle vuote
             for(; j <9; j++)
                 studentsEntranceBoard.add(" ");
 
-            //salvo gli studenti della dining room con un ● colorato e poi riempio con blanckspace
             for(j=0; j<playerBoard.getPlank().getDiningRoom().length; j++) {
                 for(k=0; k< playerBoard.getPlank().getDiningRoom()[j].getStudents().size(); k++)
                     diningRoomBoard[j].add(" s");
@@ -208,13 +208,11 @@ public class EriantysCLI extends ViewObservable implements View {
                     diningRoomBoard[j].add("  ");
             }
 
-            //dal towerSpace metto le torri colorate dentro a towerBoard con un ■
             for(j=0; j<playerBoard.getPlank().getTowerSpace().getTowersList().size(); j++)
                 towerBoard.add(convertANSI(playerBoard.getPlayerColor()));
             for(;j<8;j++)
                 towerBoard.add(" ");
 
-            //per ogni player ho una lista contenente i professori ▲ che controlla
             for(j=0; j<5; j++) {
                 if(game.getBoard().getProfessorsControlledBy()[j].equals(playerBoard.getNickname()))
                     professorsBoard[j]="P";
@@ -234,7 +232,7 @@ public class EriantysCLI extends ViewObservable implements View {
             plankBoard.add("╔══════════╦═══════════════════════╦═════════╦═════════════╗");
             plankBoard.add("║"+ANSIColor.ORANGE_BACKGROUND+ANSIColor.BLACK+" Entrance "+ANSIColor.RESET+"║"+ANSIColor.ORANGE_BACKGROUND+ANSIColor.BLACK+"      Dining Room      "+ANSIColor.RESET+"║"+ANSIColor.ORANGE_BACKGROUND+ANSIColor.BLACK+"Professor"+ANSIColor.RESET+"║"+ANSIColor.ORANGE_BACKGROUND+ANSIColor.BLACK+" Tower Space "+ANSIColor.RESET+"║");
             plankBoard.add("╠══════════╬═══════════════════════╬═════════╬═════════════╣");
-            plankBoard.add("║       "+studentsEntranceBoard.get(0)+"  ║ "+ANSIColor.GREEN+diningRoomBoard[0].get(0)+diningRoomBoard[0].get(1)+diningRoomBoard[0].get(2)+diningRoomBoard[0].get(3)+diningRoomBoard[0].get(4)+diningRoomBoard[0].get(5)+diningRoomBoard[0].get(6)+diningRoomBoard[0].get(7)+diningRoomBoard[0].get(8)+diningRoomBoard[0].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.GREEN+professorsBoard[0]+ANSIColor.RESET+"    ║   "+towerBoard.get(0)+"     "+towerBoard.get(1)+"   ║");
+            plankBoard.add("║       "+studentsEntranceBoard.get(0)+"  ║ "+ANSIColor.GREEN_BOLD_BRIGHT+diningRoomBoard[0].get(0)+diningRoomBoard[0].get(1)+diningRoomBoard[0].get(2)+diningRoomBoard[0].get(3)+diningRoomBoard[0].get(4)+diningRoomBoard[0].get(5)+diningRoomBoard[0].get(6)+diningRoomBoard[0].get(7)+diningRoomBoard[0].get(8)+diningRoomBoard[0].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.GREEN_BOLD_BRIGHT+professorsBoard[0]+ANSIColor.RESET+"    ║   "+towerBoard.get(0)+"     "+towerBoard.get(1)+"   ║");
             plankBoard.add("║  "+studentsEntranceBoard.get(1)+"    "+studentsEntranceBoard.get(2)+"  ║ "+ANSIColor.RED+diningRoomBoard[1].get(0)+diningRoomBoard[1].get(1)+diningRoomBoard[1].get(2)+diningRoomBoard[1].get(3)+diningRoomBoard[1].get(4)+diningRoomBoard[1].get(5)+diningRoomBoard[1].get(6)+diningRoomBoard[1].get(7)+diningRoomBoard[1].get(8)+diningRoomBoard[1].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.RED+professorsBoard[1]+ANSIColor.RESET+"    ║   "+towerBoard.get(2)+"     "+towerBoard.get(3)+"   ║");
             plankBoard.add("║  "+studentsEntranceBoard.get(3)+"    "+studentsEntranceBoard.get(4)+"  ║ "+ANSIColor.YELLOW_BOLD_BRIGHT+diningRoomBoard[2].get(0)+diningRoomBoard[2].get(1)+diningRoomBoard[2].get(2)+diningRoomBoard[2].get(3)+diningRoomBoard[2].get(4)+diningRoomBoard[2].get(5)+diningRoomBoard[2].get(6)+diningRoomBoard[2].get(7)+diningRoomBoard[2].get(8)+diningRoomBoard[2].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.YELLOW_BOLD_BRIGHT+professorsBoard[2]+ANSIColor.RESET+"    ║   "+towerBoard.get(4)+"     "+towerBoard.get(5)+"   ║");
             plankBoard.add("║  "+studentsEntranceBoard.get(5)+"    "+studentsEntranceBoard.get(6)+"  ║ "+ANSIColor.PINK+diningRoomBoard[3].get(0)+diningRoomBoard[3].get(1)+diningRoomBoard[3].get(2)+diningRoomBoard[3].get(3)+diningRoomBoard[3].get(4)+diningRoomBoard[3].get(5)+diningRoomBoard[3].get(6)+diningRoomBoard[3].get(7)+diningRoomBoard[3].get(8)+diningRoomBoard[3].get(9)+ANSIColor.RESET+"  ║    "+ANSIColor.PINK+professorsBoard[3]+ANSIColor.RESET+"    ║   "+towerBoard.get(6)+"     "+towerBoard.get(7)+"   ║");
@@ -285,7 +283,8 @@ public class EriantysCLI extends ViewObservable implements View {
 
 
     /**
-     * convert studentColor into ANSIColor
+     * Convert studentColor into ANSIColor.
+     *
      * @param color
      * @return
      */
@@ -305,7 +304,7 @@ public class EriantysCLI extends ViewObservable implements View {
                 return ANSIColor.BLUE + "s" + ANSIColor.RESET;
 
             case GREEN:
-                return ANSIColor.GREEN + "s" + ANSIColor.RESET;
+                return ANSIColor.GREEN_BOLD_BRIGHT + "s" + ANSIColor.RESET;
 
             default:
                 return null;
@@ -313,7 +312,8 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
     /**
-     * convert towerColor into ANSIColor
+     * Convert towerColor into ANSIColor.
+     *
      * @param color
      * @return
      */
@@ -331,8 +331,9 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
     /**
-     * prints 12 islands with the attributes in it, if there are less during the game it prints a placeholder that
-     * shows the unavailable island
+     * Prints 12 islands with the attributes in it, if there are less during the game it prints a placeholder that
+     * shows the unavailable island.
+     *
      * @param game
      */
     public void drawIslands(Game game) {
@@ -401,7 +402,7 @@ public class EriantysCLI extends ViewObservable implements View {
                 islandBoard.add("╠═══════════════════════╬══════╣");
                 islandBoard.add("║TOWERS" + towerBoard.get(0) + towerBoard.get(1) + towerBoard.get(2) + towerBoard.get(3) + towerBoard.get(4) + towerBoard.get(5) + towerBoard.get(6) + towerBoard.get(7) + " ║" + banBoard + "║");
                 islandBoard.add("╠═════╦═════╦═════╦═════╬═════╦╝");
-                islandBoard.add("║ " + ANSIColor.GREEN + "s" + ANSIColor.RESET + " " + numStudent[0] + " ║ " + ANSIColor.RED + "s" + ANSIColor.RESET + " " + numStudent[1] + " ║ " + ANSIColor.YELLOW_BOLD_BRIGHT + "s" + ANSIColor.RESET + " " + numStudent[2] + " ║ " + ANSIColor.PINK + "s" + ANSIColor.RESET + " " + numStudent[3] + " ║ " + ANSIColor.BLUE + "s" + ANSIColor.RESET + " " + numStudent[4] + " ║");
+                islandBoard.add("║ " + ANSIColor.GREEN_BOLD_BRIGHT + "s" + ANSIColor.RESET + " " + numStudent[0] + " ║ " + ANSIColor.RED + "s" + ANSIColor.RESET + " " + numStudent[1] + " ║ " + ANSIColor.YELLOW_BOLD_BRIGHT + "s" + ANSIColor.RESET + " " + numStudent[2] + " ║ " + ANSIColor.PINK + "s" + ANSIColor.RESET + " " + numStudent[3] + " ║ " + ANSIColor.BLUE + "s" + ANSIColor.RESET + " " + numStudent[4] + " ║");
                 islandBoard.add("╚═════╩═════╩═════╩═════╩═════╝");
             }
 
@@ -457,7 +458,8 @@ public class EriantysCLI extends ViewObservable implements View {
 
 
     /**
-     * prints the clouds
+     * Prints the clouds.
+     *
      * @param game
      */
     public void drawClouds(Game game){
@@ -479,6 +481,10 @@ public class EriantysCLI extends ViewObservable implements View {
 
             if(cloudStudents.size()==3)
                 cloudStudents.add(" ");
+
+            while (cloudStudents.size()<game.getNumPlayers()+1) {
+                cloudStudents.add(" ");
+            }
 
             cloudBoard.add("@─────────────────@");
             cloudBoard.add("│        "+cloudStudents.get(3)+"        │");
@@ -514,9 +520,10 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
     /**
-     * verifies if @param is a valid ipv4 address
-     * @param ip
-     * @return
+     * Verifies if @param is a valid ipv4 address.
+     *
+     * @param ip the ip to be verified.
+     * @return false if the ip is null.
      */
     public static boolean isValidInet4Address(String ip)
     {
@@ -531,7 +538,8 @@ public class EriantysCLI extends ViewObservable implements View {
 
 
     /**
-     * asks the ip address and the port to the player in order to connect
+     * Asks the ip address and the port to the player in order to connect.
+     *
      * @throws ExecutionException
      */
     public void onDemandServerInfo() throws ExecutionException {
@@ -587,7 +595,7 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
     /**
-     * asks the first client that is connected the number of players that are going to play, and it throws an
+     * Asks the first client that is connected the number of players that are going to play, and it throws an
      * exception when the inserted number is not 2 or 3
      */
     public void onDemandPlayersNumber() {
@@ -648,7 +656,7 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
     /**
-     * asks the player if he wants to move a student to his dining room or to one of the islands.
+     * Asks the player if he wants to move a student to his dining room or to one of the islands.
      * Then if he chose his dining room the player has to type the first letter of the student color,
      * if he chose island he has to type the first letter of the student color and the index of island.
      * The method throws a NumberFormatException if the player has chosen the  index of an island that doesn't exist.
@@ -727,7 +735,7 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
     /**
-     * asks the player to input the number of the cloud he wants to take.
+     * Asks the player to input the number of the cloud he wants to take.
      * The only exception accepted is "cc" to show the character cards.
      * In all the other cases it throws an exception.
      */
@@ -755,9 +763,10 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
     /**
-     * asks the player how many moves he wants the mother nature make and if the number is incorrect throws an
+     * Asks the player how many moves he wants the mother nature make and if the number is incorrect throws an
      * exception which asks the player to try again.
-     * @param maxMoves
+     *
+     * @param maxMoves the maximum number of moves that can be made by mother nature.
      */
     public void onDemandMotherNatureMoves(int maxMoves){
         numMoves = 0;
@@ -784,7 +793,7 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
     /**
-     * if the player writes in input "quit" it exits the game
+     * If the player writes in input "quit" it exits the game.
      */
     public void onDemandQuit(){
         String quit = nextLine();
@@ -807,7 +816,8 @@ public class EriantysCLI extends ViewObservable implements View {
 
     /**
      * prints the description of the character cards and asks the client which one it has chosen and sends it to the client.
-     * @param text
+     *
+     * @param text the input made by the player
      */
     public void onDemandCharacterCard(String[] text){
         for(int i = 0; i < text.length; i++) {
@@ -859,6 +869,7 @@ public class EriantysCLI extends ViewObservable implements View {
 
     /**
      * this method controls if the student color chosen exists and returns the chosen color.
+     *
      * @param text
      * @param studentColor
      * @param sColor
@@ -892,7 +903,8 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
     /**
-     * prints a generic message and in some specific cases calls their respective methods
+     * Prints a generic message and in some specific cases calls their respective methods.
+     *
      * @param genericMessage
      */
     public void showGenericMessage(String genericMessage) {
@@ -909,7 +921,8 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
     /**
-     * reads the next line from the command line and throws an exception in case there is a problem with the I/O
+     * Reads the next line from the command line and throws an exception in case there is a problem with the I/O.
+     *
      * @return the string in input
      */
     public String nextLine(){
@@ -948,6 +961,7 @@ public class EriantysCLI extends ViewObservable implements View {
 
     /**
      * prints "error" and "exit" in case of an error, for example when the connection is lost.
+     *
      * @param error
      */
     public void showErrorAndQuit(String error) {

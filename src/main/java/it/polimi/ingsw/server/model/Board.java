@@ -197,6 +197,17 @@ public class Board extends Observable implements Serializable {
                     calculateSupremacy(islands.get((i+numMoves)%islands.size()));
                 }else{
                     islands.get((i+numMoves)%islands.size()).setBanCard(false);
+                    GameExpert gameExpert = (GameExpert) game;
+                    for(CharacterCard characterCard : gameExpert.getThreeChosenCards()) {
+                        if (characterCard.getCharacterName() == CharacterName.Herbalist && characterCard.isEnabled()) {
+                            for (int j = 0; j < characterCard.getBanCards().length; j++) {
+                                if (!characterCard.getBanCards()[j]) {
+                                    characterCard.getBanCards()[j] = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
                 }
                 break;
             }
@@ -225,50 +236,58 @@ public class Board extends Observable implements Serializable {
     }
 
     /**
-     * moving the professor in case of a normal game.
+     * moving the professor when a player moves one of his students into his dining room.
+     * @param player is the active player
      */
     private void moveProfessorNormal(Player player) {
-        Player playerTemp = null;
-        for (Player p : game.getPlayers()) {
-            if (player != p) {
-                if(player == game.getPlayers().get(0) && p == game.getPlayers().get(1)) {
-                    playerTemp = p;
-                }if(p == game.getPlayers().get(0)){
-                    playerTemp = p;
-                }
-                for (int i = 0; i < 5; i++) {
-                    if (player.getPlank().getDiningRoom()[i].getStudents().size() > playerTemp.getPlank().getDiningRoom()[i].getStudents().size() && player.getPlank().getDiningRoom()[i].getStudents().size() > p.getPlank().getDiningRoom()[i].getStudents().size()) {
-                        professorsControlledBy[i] = player.getNickname();
+        int numPlayer= game.getNumPlayers();
+        for(int i=0; i<numPlayer; i++) {
+            if(game.getPlayers().get(i)==player) {
+                for(int j=0; j<5; j++) {
+                    if(player.getPlank().getDiningRoom()[j].getStudents().size()>game.getPlayers().get((i+1)%numPlayer).getPlank().getDiningRoom()[j].getStudents().size()){
+                        if(numPlayer==3){
+                            if(player.getPlank().getDiningRoom()[j].getStudents().size()>game.getPlayers().get((i+2)%numPlayer).getPlank().getDiningRoom()[j].getStudents().size()){
+                                professorsControlledBy[j]= player.getNickname();
+                            }
+                        }
+                        else {
+                            professorsControlledBy[j]= player.getNickname();
+                        }
                     }
                 }
+                break;
             }
         }
     }
 
     /**
      * moving the professor in case Chef card effect is applied
+     * @param player is the active player
      */
     public void moveProfessorChef(Player player){
-        Player playerTemp = null;
-        for (Player p : game.getPlayers()) {
-            if (player != p) {
-                if(player == game.getPlayers().get(0) && p == game.getPlayers().get(1)) {
-                    playerTemp = p;
-                }if(p == game.getPlayers().get(0)){
-                    playerTemp = p;
-                }
-                for (int i = 0; i < 5; i++) {
-                    if (player.getPlank().getDiningRoom()[i].getStudents().size() >= playerTemp.getPlank().getDiningRoom()[i].getStudents().size() && player.getPlank().getDiningRoom()[i].getStudents().size() >= p.getPlank().getDiningRoom()[i].getStudents().size()) {
-                        professorsControlledBy[i] = player.getNickname();
+        int numPlayer= game.getNumPlayers();
+        for(int i=0; i<numPlayer; i++) {
+            if(game.getPlayers().get(i)==player) {
+                for(int j=0; j<5; j++) {
+                    if(player.getPlank().getDiningRoom()[j].getStudents().size()>=game.getPlayers().get((i+1)%numPlayer).getPlank().getDiningRoom()[j].getStudents().size()){
+                        if(numPlayer==3){
+                            if(player.getPlank().getDiningRoom()[j].getStudents().size()>=game.getPlayers().get((i+2)%numPlayer).getPlank().getDiningRoom()[j].getStudents().size()){
+                                professorsControlledBy[j]= player.getNickname();
+                            }
+                        }
+                        else {
+                            professorsControlledBy[j]= player.getNickname();
+                        }
                     }
                 }
+                break;
             }
         }
     }
 
     /**
      * calculate the supremacy
-     * @param island
+     * @param island is the island with mothernature onto
      */
     public void calculateSupremacy(Island island){
         if (island.getStudents().size() != 0){
@@ -506,7 +525,15 @@ public class Board extends Observable implements Serializable {
         return false;
     }
 
-
+    /**
+     * In setup, draw 4 students and place them on this card.
+     * When this card effect is applied you can take 1 student from this card and place it on an island of your choice.
+     * Then, draw a student from the bag and place it on this card. The price after this card is used is increased by 1.
+     * @param player who activates the card
+     * @param characterCard Sommelier
+     * @param studentColor
+     * @param numIsland
+     */
     public void applyEffectSommelier(Player player, CharacterCard characterCard, StudentColor studentColor, int numIsland){
         characterCard.setEnabled(true);
         cardActivated = true;
@@ -527,6 +554,11 @@ public class Board extends Observable implements Serializable {
         notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 
+    /**
+     * after this card is used its price is increased by 1.
+     * @param player who activates this card
+     * @param characterCard Chef
+     */
     public void applyEffectChef(Player player, CharacterCard characterCard) {
         characterCard.setEnabled(true);
         cardActivated = true;
@@ -536,6 +568,15 @@ public class Board extends Observable implements Serializable {
         notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 
+    /**
+     * The effect of this card is that during the turn this card is activated the player chooses one island of his
+     * choice and calculates the supremacy as if mother nature had ended her movement there.
+     * Mother Nature will still move during that turn and the island where she ends her movement will still be resolved.
+     * The card price is increased by 1 after its effect is used.
+     * @param player who activates this card
+     * @param characterCard Messenger
+     * @param numIsland is the number of island the player puts the mother nature
+     */
     public void applyEffectMessenger(Player player, CharacterCard characterCard, int numIsland){
         characterCard.setEnabled(true);
         cardActivated = true;
@@ -572,6 +613,11 @@ public class Board extends Observable implements Serializable {
         notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 
+    /**
+     * The card price is increased by 1 after its effect is used.
+     * @param player who activates this card effect
+     * @param characterCard Postman
+     */
     public void applyEffectPostman(Player player, CharacterCard characterCard){
         characterCard.setEnabled(true);
         cardActivated = true;
@@ -580,6 +626,13 @@ public class Board extends Observable implements Serializable {
         notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 
+    /**
+     * This character card allows the use of the BanCards.
+     * The card price is increased by 1 after its effect is used.
+     * @param player who activates this card effect
+     * @param characterCard Herbalist
+     * @param numIsland is the island number where the player puts the ban card
+     */
     public void applyEffectHerbalist(Player player, CharacterCard characterCard, int numIsland){
         characterCard.setEnabled(true);
         cardActivated = true;
@@ -597,6 +650,11 @@ public class Board extends Observable implements Serializable {
         notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 
+    /**
+     * The card price is increased by 1 after its effect is used.
+     * @param player who activates this card effect
+     * @param characterCard Centaur
+     */
     public void applyEffectCentaur(Player player, CharacterCard characterCard){
         characterCard.setEnabled(true);
         cardActivated = true;
@@ -605,6 +663,11 @@ public class Board extends Observable implements Serializable {
         notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 
+    /**
+     * The card price is increased by 1 after its effect is used.
+     * @param player who activates this card effect
+     * @param characterCard Knight
+     */
     public void applyEffectKnight(Player player, CharacterCard characterCard){
         characterCard.setEnabled(true);
         cardActivated = true;
@@ -613,6 +676,15 @@ public class Board extends Observable implements Serializable {
         notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 
+    /**
+     * In setup, draw 4 students and place them on this card.
+     * This card's effect permits the player who activated it to take one student from this card and place it on his
+     * dining room. Then, draw a student from the bag and place it on this card.
+     * The card price is increased by 1 after its effect is used.
+     * @param player who activates this card effect
+     * @param characterCard Lady
+     * @param studentColor
+     */
     public void applyEffectLady(Player player, CharacterCard characterCard, StudentColor studentColor){
         characterCard.setEnabled(true);
         cardActivated = true;
