@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 /**
  * it's a room where the players are put before a match
  */
-public class Lobby extends CloudMessage {
+public class Lobby {
     private int ID;
     private int numPlayers;
     private int realTimeNumPlayer;

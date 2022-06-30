@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CharacterCard extends AssistantCardRequest implements Serializable {
+public class CharacterCard implements Serializable {
 
     private static final long serialVersionUID = -5098098867984135994L;
     private Game game;

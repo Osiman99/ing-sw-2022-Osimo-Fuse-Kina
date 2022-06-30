@@ -8,7 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class ClientHandler extends ErrorMessage implements Runnable {
+public class ClientHandler implements Runnable {
     private final Socket client;
     private final SocketServer socketServer;
 
