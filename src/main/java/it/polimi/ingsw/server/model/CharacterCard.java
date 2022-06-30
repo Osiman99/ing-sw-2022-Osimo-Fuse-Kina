@@ -1,10 +1,12 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.network.messages.AssistantCardRequest;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CharacterCard implements Serializable {
+public class CharacterCard extends AssistantCardRequest implements Serializable {
 
     private static final long serialVersionUID = -5098098867984135994L;
     private Game game;

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.client.view.CLI.ANSIColor;
+import it.polimi.ingsw.network.messages.CloudMessage;
 import it.polimi.ingsw.server.model.Player;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.logging.Logger;
 /**
  * it's a room where the players are put before a match
  */
-public class Lobby {
+public class Lobby extends CloudMessage {
     private int ID;
     private int numPlayers;
     private int realTimeNumPlayer;
