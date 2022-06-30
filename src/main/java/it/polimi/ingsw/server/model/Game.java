@@ -28,7 +28,6 @@ public class Game extends Observable implements Serializable {
      */
     public Game(){
         instance = this;
-        this.chosenPlayersNumber = chosenPlayersNumber;
         contPlayer = 0;
         players = new ArrayList<Player>();
         nicknames = new ArrayList<String>();

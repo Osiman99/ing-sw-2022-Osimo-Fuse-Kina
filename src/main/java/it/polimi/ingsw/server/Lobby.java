@@ -76,7 +76,7 @@ public class Lobby {
 
     public boolean isNicknameTaken(String nickname) {
         return players.stream()
-                .anyMatch(p -> nickname.equals(p.getNickname().toUpperCase(Locale.ROOT)));
+                .anyMatch(p -> nickname.equals(p.getNickname().toUpperCase()));
     }
 
     public void deleteExtraPlayers(){
