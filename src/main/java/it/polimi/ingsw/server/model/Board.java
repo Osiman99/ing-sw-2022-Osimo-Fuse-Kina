@@ -27,9 +27,6 @@ public class Board extends Observable implements Serializable {
     private int blueCont;
     private int contJoin;
     private boolean cardActivated;
-    private boolean contTemp;
-    private Island i1;
-    private Island i2;
 
     /**
      * initialize the game board
@@ -49,9 +46,6 @@ public class Board extends Observable implements Serializable {
         pinkCont = 0;
         blueCont = 0;
         contJoin = 0;
-        contTemp = false;
-        i1 = null;
-        i2 = null;
 
         /**
          * creation of the 12 islands
@@ -432,12 +426,11 @@ public class Board extends Observable implements Serializable {
      * @param island
      */
     public void joinIslands(Island island){
+        Island i1 = null;
+        Island i2 = null;
         int numIsland = islands.size();
         for (int i = 0; i < numIsland; i++){
             if (islands.get(i) == island) {
-                if(i == islands.size()-1){
-                    contTemp = true;
-                }
                 if (!(islands.get((i+1)%islands.size()).getTowers().size() == 0 || islands.get((i+1)%islands.size()).getFirstTower().getColor() != island.getFirstTower().getColor())) {
                     int numTowersNextIsland = islands.get((i+1)%islands.size()).getTowers().size();
                     for (int j = 0; j < numTowersNextIsland; j++){
@@ -504,10 +497,8 @@ public class Board extends Observable implements Serializable {
                     }
                 }if (i1 != null){
                     islands.remove(i1);
-                    i1 = null;
                 }if (i2 != null){
                     islands.remove(i2);
-                    i2 = null;
                 }
                 break;
             }
