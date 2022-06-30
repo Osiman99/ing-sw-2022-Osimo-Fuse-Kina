@@ -1,13 +1,12 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.network.messages.ErrorMessage;
-import it.polimi.ingsw.network.messages.Message;
-import it.polimi.ingsw.network.messages.PingMessage;
+import it.polimi.ingsw.network.ErrorMessage;
+import it.polimi.ingsw.network.Message;
+import it.polimi.ingsw.network.PingMessage;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;

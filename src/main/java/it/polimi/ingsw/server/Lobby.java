@@ -1,7 +1,6 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.client.view.CLI.ANSIColor;
-import it.polimi.ingsw.network.messages.CloudMessage;
 import it.polimi.ingsw.server.model.Player;
 import java.util.ArrayList;
 import java.util.List;

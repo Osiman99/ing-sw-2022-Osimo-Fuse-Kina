@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.client.view.View;
-import it.polimi.ingsw.network.messages.*;
+import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.server.model.AssistantCard;
 import it.polimi.ingsw.server.model.Game;
@@ -46,13 +46,13 @@ public class VirtualView implements View, Observer {
 
     @Override
     public void showLoginResult(boolean nicknameAccepted, boolean connectionResult, String nickname) {
-        clientHandler.sendMessage(new LoginReply(nicknameAccepted, connectionResult));
+        clientHandler.sendMessage(new LoginResult(nicknameAccepted, connectionResult));
 
     }
 
     @Override
     public void onDemandNickname() {
-        clientHandler.sendMessage(new LoginReply(false, true));
+        clientHandler.sendMessage(new LoginResult(false, true));
     }
 
     @Override
@@ -67,7 +67,7 @@ public class VirtualView implements View, Observer {
 
     @Override
     public void onDemandCharacterCard(String[] text){
-        clientHandler.sendMessage(new CharacterCardsDescriptionReply(Game.SERVER_NICKNAME, text));
+        clientHandler.sendMessage(new CharacterCardsDescriptionResult(Game.SERVER_NICKNAME, text));
     }
 
     @Override

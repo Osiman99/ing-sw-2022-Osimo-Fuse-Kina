@@ -1,7 +1,5 @@
 package it.polimi.ingsw.server.model;
 
-import it.polimi.ingsw.network.messages.AssistantCardRequest;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

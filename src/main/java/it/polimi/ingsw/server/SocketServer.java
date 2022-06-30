@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.network.messages.Message;
+import it.polimi.ingsw.network.Message;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;

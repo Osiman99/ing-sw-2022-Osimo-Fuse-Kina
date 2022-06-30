@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.view.View;
-import it.polimi.ingsw.network.messages.*;
+import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.observer.ViewObserver;
 import it.polimi.ingsw.server.model.*;

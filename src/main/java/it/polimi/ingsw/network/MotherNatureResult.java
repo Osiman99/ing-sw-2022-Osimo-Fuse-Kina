@@ -1,4 +1,4 @@
-package it.polimi.ingsw.network.messages;
+package it.polimi.ingsw.network;
 
 /**
  * Message used to send to the server the number of mother nature steps chosen by the client.

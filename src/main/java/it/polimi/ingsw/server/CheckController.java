@@ -2,7 +2,7 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.client.view.CLI.ANSIColor;
 import it.polimi.ingsw.client.view.View;
-import it.polimi.ingsw.network.messages.*;
+import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.model.*;
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.network.messages;
+package it.polimi.ingsw.network;
 
 /**
  * Message used to notify the client the maximum number of steps that mother nature can do.

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.model;
 
-import it.polimi.ingsw.network.messages.BoardMessage;
+import it.polimi.ingsw.network.BoardMessage;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.GameState;
 

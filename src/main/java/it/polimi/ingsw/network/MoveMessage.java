@@ -1,4 +1,4 @@
-package it.polimi.ingsw.network.messages;
+package it.polimi.ingsw.network;
 
 import it.polimi.ingsw.server.model.StudentColor;
 
