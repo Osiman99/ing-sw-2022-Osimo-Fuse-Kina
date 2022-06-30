@@ -480,6 +480,10 @@ public class EriantysCLI extends ViewObservable implements View {
             if(cloudStudents.size()==3)
                 cloudStudents.add(" ");
 
+            while (cloudStudents.size()<game.getNumPlayers()+1) {
+                cloudStudents.add(" ");
+            }
+
             cloudBoard.add("@─────────────────@");
             cloudBoard.add("│        "+cloudStudents.get(3)+"        │");
             cloudBoard.add("│ "+cloudStudents.get(0)+"   Cloud "+(i+1)+"   "+cloudStudents.get(1)+" │");
