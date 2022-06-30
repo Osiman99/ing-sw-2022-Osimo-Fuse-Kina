@@ -1,6 +1,10 @@
 package it.polimi.ingsw.network.messages;
 
+/**
+ * Message used to notify the client the maximum number of steps that mother nature can do.
+ */
 public class MotherNatureRequest extends Message{
+
     private static final long serialVersionUID = 8947772997797978711L;
     private final int maxMoves;
 

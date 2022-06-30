@@ -2,7 +2,11 @@ package it.polimi.ingsw.network.messages;
 
 import it.polimi.ingsw.server.model.StudentColor;
 
+/**
+ * Message to notify which student was chosen to move.
+ */
 public class MoveMessage extends Message {
+
     private static final long serialVersionUID = -7726935391031946027L;
     private final StudentColor studentColor;
     private final int numIsland;

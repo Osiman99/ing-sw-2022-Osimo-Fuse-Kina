@@ -8,6 +8,10 @@ import it.polimi.ingsw.server.model.*;
 import java.io.Serializable;
 import java.util.*;
 
+/**
+ * This class controls the evolution of the Game.
+ * Messages are read and responses are elaborated.
+ */
 public class GameController implements Observer, Serializable {
 
     private GameState state;
@@ -33,7 +37,9 @@ public class GameController implements Observer, Serializable {
     private boolean serverEndFlag;
     private boolean acFlag;
 
-
+    /**
+     * Controller of the Game.
+     */
     public GameController(){
         lobby = new Lobby(this);
         virtualViewMap = Collections.synchronizedMap(new HashMap<>());
@@ -50,6 +56,11 @@ public class GameController implements Observer, Serializable {
         acFlag = false;
     }
 
+    /**
+     *  Switch on Game State.
+     *
+     * @param receivedMessage Message from Active Player.
+     */
     public void switchState(Message receivedMessage){
         VirtualView virtualView = virtualViewMap.get(receivedMessage.getNickname());
         switch(state){
@@ -117,21 +128,24 @@ public class GameController implements Observer, Serializable {
         }
     }
 
+    /**
+     * Switch on Login Messages Types.
+     *
+     * @param receivedMessage Message from Active Player.
+     */
     private void login(Message receivedMessage){
         if(receivedMessage.getMessageType() == MessageType.MODE_MESSAGE){
             ModeMessage modeMessage = (ModeMessage) receivedMessage;
-            if(checkController.verifyReceivedData(modeMessage)){  //check Controller
+            if(checkController.verifyReceivedData(modeMessage)){
                 lobby.setMode(modeMessage.getMode());
                 VirtualView virtualView = virtualViewMap.get(modeMessage.getNickname());
                 virtualView.onDemandPlayersNumber();
             }
         }
-
         if (receivedMessage.getMessageType() == MessageType.PLAYERNUMBER_REPLY) {
             PlayerNumberReply playerNumberReply = (PlayerNumberReply) receivedMessage;
             if (checkController.verifyReceivedData(receivedMessage)) {
                 lobby.setNumPlayers(playerNumberReply.getPlayerNumber());
-                //game.setChosenPlayersNumber(((PlayerNumberReply) receivedMessage).getPlayerNumber());
                 if (lobby.checkStart()){
                     server = Server.getInstance();
                     lobby.deleteExtraPlayers();
@@ -147,7 +161,9 @@ public class GameController implements Observer, Serializable {
     }
 
 
-
+    /**
+     * Initializes the game depending on the modality the user chooses to play(n/e).
+     */
     public void initGame(){
         if (lobby.getMode().equals("n")){
             game = new Game();
@@ -210,6 +226,13 @@ public class GameController implements Observer, Serializable {
         return state != GameState.PREGAME;
     }
 
+    /**
+     * Checks the nickname of the player during the login phase
+     *
+     * @param nickname of the new player
+     * @param view
+     * @return true if the nickname is verified
+     */
     public boolean checkLoginNickname(String nickname, View view) {
         return checkController.checkLoginNickname(nickname, view);
     }
