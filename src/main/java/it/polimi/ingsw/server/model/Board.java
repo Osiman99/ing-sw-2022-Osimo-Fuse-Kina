@@ -27,6 +27,7 @@ public class Board extends Observable implements Serializable {
     private int blueCont;
     private int contJoin;
     private boolean cardActivated;
+    private boolean contTemp;
 
     /**
      * initialize the game board
@@ -46,6 +47,7 @@ public class Board extends Observable implements Serializable {
         pinkCont = 0;
         blueCont = 0;
         contJoin = 0;
+        contTemp = false;
 
         /**
          * creation of the 12 islands
@@ -429,6 +431,9 @@ public class Board extends Observable implements Serializable {
         int numIsland = islands.size();
         for (int i = 0; i < numIsland; i++){
             if (islands.get(i) == island) {
+                if(i == islands.size()-1){
+                    contTemp = true;
+                }
                 if (!(islands.get((i+1)%islands.size()).getTowers().size() == 0 || islands.get((i+1)%islands.size()).getFirstTower().getColor() != island.getFirstTower().getColor())) {
                     int numTowersNextIsland = islands.get((i+1)%islands.size()).getTowers().size();
                     for (int j = 0; j < numTowersNextIsland; j++){
@@ -470,6 +475,9 @@ public class Board extends Observable implements Serializable {
                         islands.remove(islands.get(islands.size()-1));
                     }
                 }else {
+                    if(contTemp){
+                        i--;
+                    }
                     if (!(islands.get(i-1).getTowers().size() == 0  || islands.get(i-1).getFirstTower().getColor() != island.getFirstTower().getColor())) {
                         int numTowersPrevIsland = islands.get(i-1).getTowers().size();
                         for (int j = 0; j < numTowersPrevIsland; j++) {
@@ -490,7 +498,8 @@ public class Board extends Observable implements Serializable {
                         }
                         islands.remove(islands.get(i-1));
                     }
-                }break;
+                }contTemp = false;
+                break;
             }
         }
     }
