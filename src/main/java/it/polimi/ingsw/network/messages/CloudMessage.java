@@ -1,8 +1,10 @@
 package it.polimi.ingsw.network.messages;
 
-import it.polimi.ingsw.server.model.Game;
-
+/**
+ * Message to notify the chosen cloud number by a player.
+ */
 public class CloudMessage extends Message {
+
     private static final long serialVersionUID = -3723257555816197045L;
     private final int numCloud;
 

@@ -1,9 +1,12 @@
 package it.polimi.ingsw.network.messages;
 
+/**
+ * Message to notify the modality of the game that the user chose.
+ */
 public class ModeMessage extends Message{
+
     private static final long serialVersionUID = -8399224133726133105L;
     private String mode;
-    //
 
     public ModeMessage(String nickname, String mode) {
         super(nickname, MessageType.MODE_MESSAGE);

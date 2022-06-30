@@ -1,6 +1,10 @@
 package it.polimi.ingsw.network.messages;
 
+/**
+ * Message used to send to the server the number of mother nature steps chosen by the client.
+ */
 public class MotherNatureResult extends  Message{
+
     private static final long serialVersionUID = 8947772997797978711L;
     private final int numMoves;
 

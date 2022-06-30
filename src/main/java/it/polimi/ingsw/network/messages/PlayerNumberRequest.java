@@ -1,6 +1,5 @@
 package it.polimi.ingsw.network.messages;
 
-
 import it.polimi.ingsw.server.model.Game;
 
 /**
