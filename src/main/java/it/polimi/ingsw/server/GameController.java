@@ -517,7 +517,7 @@ public class GameController implements Observer, Serializable {
                         }
                     }
                 }
-                broadcastGenericMessage(ANSIColor.PURPLE_BOLD_BRIGHT + activePlayer.getNickname() + ANSIColor.RESET + ANSIColor.CYAN_BOLD + " moved MotherNature by " + motherNatureResult.getNumMoves() + " steps" + ANSIColor.RESET);
+                broadcastGenericMessage(ANSIColor.PURPLE_BOLD_BRIGHT + activePlayer.getNickname().toUpperCase() + ANSIColor.RESET + ANSIColor.CYAN_BOLD + " moved MotherNature by " + motherNatureResult.getNumMoves() + " steps" + ANSIColor.RESET);
                 broadcastWaitingMessage(activePlayer);
                 noTowersWin();
                 if (!endgame)

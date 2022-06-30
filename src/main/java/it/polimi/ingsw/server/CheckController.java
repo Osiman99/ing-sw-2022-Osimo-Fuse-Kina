@@ -20,6 +20,7 @@ public class CheckController implements Serializable {
     private List<String> nicknamesInChooseOrder;
     private List<String> sortedNicknames;
     private String firstPlayerInAction;
+    private boolean lastTurnFlag;
 
     /**
      * Constructor of the Input Controller Class.
@@ -32,6 +33,7 @@ public class CheckController implements Serializable {
         this.gameController = gameController;
         numCardOtherPlayers = new ArrayList<Integer>();
         nicknamesInChooseOrder = new ArrayList<String>();
+        lastTurnFlag = false;
     }
 
 
@@ -120,26 +122,26 @@ public class CheckController implements Serializable {
                 if (p.getNickname().equals(assistantCardResult.getNickname())) {
                     for (AssistantCard assistantCard : p.getDeck().getDeck()) {
                         if (assistantCardResult.getCard() == assistantCard.getValue()) {
-                            if (p.getDeck().getDeck().size() != 1) {
-                                if (numCardOtherPlayers.size() == 0) {
-                                    numCardOtherPlayers.add(assistantCardResult.getCard());
-                                    nicknamesInChooseOrder.add(assistantCardResult.getNickname());
-                                    return true;
-                                } else {
-                                    for (int i = 0; i < game.getNumPlayers(); i++) {
-                                        if (assistantCardResult.getCard() == numCardOtherPlayers.get(i)) {
-                                            VirtualView virtualView = virtualViewMap.get(message.getNickname());
-                                            virtualView.showGenericMessage(ANSIColor.RED + "Card already chosen by another player! Please try again." + ANSIColor.RESET);
-                                            virtualView.onDemandAssistantCard(p.getDeck().getDeck());
-                                            return false;
-                                        } else if (numCardOtherPlayers.size() - 1 == i) {
-                                            numCardOtherPlayers.add(assistantCardResult.getCard());
-                                            nicknamesInChooseOrder.add(assistantCardResult.getNickname());
-                                            return true;
-                                        }
+                            if (numCardOtherPlayers.size() == 0) {
+                                numCardOtherPlayers.add(assistantCardResult.getCard());
+                                nicknamesInChooseOrder.add(assistantCardResult.getNickname());
+                            } else {
+                                for (int i = 0; i < game.getNumPlayers(); i++) {
+                                    if (assistantCardResult.getCard() == numCardOtherPlayers.get(i) && p.getDeck().getDeck().size() != 1) {
+                                        VirtualView virtualView = virtualViewMap.get(message.getNickname());
+                                        virtualView.showGenericMessage(ANSIColor.RED + "Card already chosen by another player! Please try again." + ANSIColor.RESET);
+                                        virtualView.onDemandAssistantCard(p.getDeck().getDeck());
+                                        return false;
+                                    }else if(assistantCardResult.getCard() == numCardOtherPlayers.get(i) && p.getDeck().getDeck().size() == 1){
+                                        numCardOtherPlayers.add(assistantCardResult.getCard());
+                                        nicknamesInChooseOrder.add(assistantCardResult.getNickname());
+                                        return true;
+                                    } else if (numCardOtherPlayers.size() - 1 == i) {
+                                        numCardOtherPlayers.add(assistantCardResult.getCard());
+                                        nicknamesInChooseOrder.add(assistantCardResult.getNickname());
+                                        return true;
                                     }
                                 }
-                                return true;
                             }
                             return true;
                         }
