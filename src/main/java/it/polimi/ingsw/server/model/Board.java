@@ -197,6 +197,17 @@ public class Board extends Observable implements Serializable {
                     calculateSupremacy(islands.get((i+numMoves)%islands.size()));
                 }else{
                     islands.get((i+numMoves)%islands.size()).setBanCard(false);
+                    GameExpert gameExpert = (GameExpert) game;
+                    for(CharacterCard characterCard : gameExpert.getThreeChosenCards()) {
+                        if (characterCard.getCharacterName() == CharacterName.Herbalist && characterCard.isEnabled()) {
+                            for (int j = 0; j < characterCard.getBanCards().length; j++) {
+                                if (!characterCard.getBanCards()[j]) {
+                                    characterCard.getBanCards()[j] = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
                 }
                 break;
             }
@@ -225,50 +236,58 @@ public class Board extends Observable implements Serializable {
     }
 
     /**
-     * moving the professor in case of a normal game.
+     * moving the professor when a player moves one of his students into his dining room.
+     * @param player is the active player
      */
     private void moveProfessorNormal(Player player) {
-        Player playerTemp = null;
-        for (Player p : game.getPlayers()) {
-            if (player != p) {
-                if(player == game.getPlayers().get(0) && p == game.getPlayers().get(1)) {
-                    playerTemp = p;
-                }if(p == game.getPlayers().get(0)){
-                    playerTemp = p;
-                }
-                for (int i = 0; i < 5; i++) {
-                    if (player.getPlank().getDiningRoom()[i].getStudents().size() > playerTemp.getPlank().getDiningRoom()[i].getStudents().size() && player.getPlank().getDiningRoom()[i].getStudents().size() > p.getPlank().getDiningRoom()[i].getStudents().size()) {
-                        professorsControlledBy[i] = player.getNickname();
+        int numPlayer= game.getNumPlayers();
+        for(int i=0; i<numPlayer; i++) {
+            if(game.getPlayers().get(i)==player) {
+                for(int j=0; j<5; j++) {
+                    if(player.getPlank().getDiningRoom()[j].getStudents().size()>game.getPlayers().get((i+1)%numPlayer).getPlank().getDiningRoom()[j].getStudents().size()){
+                        if(numPlayer==3){
+                            if(player.getPlank().getDiningRoom()[j].getStudents().size()>game.getPlayers().get((i+2)%numPlayer).getPlank().getDiningRoom()[j].getStudents().size()){
+                                professorsControlledBy[j]= player.getNickname();
+                            }
+                        }
+                        else {
+                            professorsControlledBy[j]= player.getNickname();
+                        }
                     }
                 }
+                break;
             }
         }
     }
 
     /**
      * moving the professor in case Chef card effect is applied
+     * @param player is the active player
      */
     public void moveProfessorChef(Player player){
-        Player playerTemp = null;
-        for (Player p : game.getPlayers()) {
-            if (player != p) {
-                if(player == game.getPlayers().get(0) && p == game.getPlayers().get(1)) {
-                    playerTemp = p;
-                }if(p == game.getPlayers().get(0)){
-                    playerTemp = p;
-                }
-                for (int i = 0; i < 5; i++) {
-                    if (player.getPlank().getDiningRoom()[i].getStudents().size() >= playerTemp.getPlank().getDiningRoom()[i].getStudents().size() && player.getPlank().getDiningRoom()[i].getStudents().size() >= p.getPlank().getDiningRoom()[i].getStudents().size()) {
-                        professorsControlledBy[i] = player.getNickname();
+        int numPlayer= game.getNumPlayers();
+        for(int i=0; i<numPlayer; i++) {
+            if(game.getPlayers().get(i)==player) {
+                for(int j=0; j<5; j++) {
+                    if(player.getPlank().getDiningRoom()[j].getStudents().size()>=game.getPlayers().get((i+1)%numPlayer).getPlank().getDiningRoom()[j].getStudents().size()){
+                        if(numPlayer==3){
+                            if(player.getPlank().getDiningRoom()[j].getStudents().size()>=game.getPlayers().get((i+2)%numPlayer).getPlank().getDiningRoom()[j].getStudents().size()){
+                                professorsControlledBy[j]= player.getNickname();
+                            }
+                        }
+                        else {
+                            professorsControlledBy[j]= player.getNickname();
+                        }
                     }
                 }
+                break;
             }
         }
     }
 
     /**
      * calculate the supremacy
-     * @param island
+     * @param island is the island with mothernature onto
      */
     public void calculateSupremacy(Island island){
         if (island.getStudents().size() != 0){
