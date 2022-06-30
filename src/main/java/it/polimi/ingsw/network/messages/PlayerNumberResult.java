@@ -3,13 +3,13 @@ package it.polimi.ingsw.network.messages;
 /**
  * Message used to send to the server the number of players picked by the client.
  */
-public class PlayerNumberReply extends Message{
+public class PlayerNumberResult extends Message{
 
     private static final long serialVersionUID = -4419241297635925047L;
     private final int playerNumber;
 
-    public PlayerNumberReply(String nickname, int playerNumber) {
-        super(nickname, MessageType.PLAYERNUMBER_REPLY);
+    public PlayerNumberResult(String nickname, int playerNumber) {
+        super(nickname, MessageType.PLAYERNUMBER_RESULT);
         this.playerNumber = playerNumber;
     }
 

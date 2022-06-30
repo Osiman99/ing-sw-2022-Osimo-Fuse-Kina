@@ -9,7 +9,7 @@ public class CloudMessage extends Message {
     private final int numCloud;
 
     public CloudMessage(String nickname,  int numCloud){
-        super(nickname, MessageType.CLOUD);
+        super(nickname, MessageType.CLOUD_MESSAGE);
         this.numCloud = numCloud;
     }
 

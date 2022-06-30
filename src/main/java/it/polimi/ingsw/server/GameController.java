@@ -142,10 +142,10 @@ public class GameController implements Observer, Serializable {
                 virtualView.onDemandPlayersNumber();
             }
         }
-        if (receivedMessage.getMessageType() == MessageType.PLAYERNUMBER_REPLY) {
-            PlayerNumberReply playerNumberReply = (PlayerNumberReply) receivedMessage;
+        if (receivedMessage.getMessageType() == MessageType.PLAYERNUMBER_RESULT) {
+            PlayerNumberResult playerNumberResult = (PlayerNumberResult) receivedMessage;
             if (checkController.verifyReceivedData(receivedMessage)) {
-                lobby.setNumPlayers(playerNumberReply.getPlayerNumber());
+                lobby.setNumPlayers(playerNumberResult.getPlayerNumber());
                 if (lobby.checkStart()){
                     server = Server.getInstance();
                     lobby.deleteExtraPlayers();
@@ -530,7 +530,7 @@ public class GameController implements Observer, Serializable {
                 }
 
             }
-        }else if (receivedMessage.getMessageType() == MessageType.CLOUD){
+        }else if (receivedMessage.getMessageType() == MessageType.CLOUD_MESSAGE){
             CloudMessage cloudMessage = (CloudMessage) receivedMessage;
             if(checkController.verifyReceivedData(receivedMessage)){
                 activePlayer.moveStudentsFromCloudToEntrance(game.getBoard().getClouds().get(cloudMessage.getNumCloud()-1));

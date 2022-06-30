@@ -66,9 +66,9 @@ public class CheckController implements Serializable {
     public boolean verifyReceivedData(Message message) {
 
         switch (message.getMessageType()) {
-            case LOGIN_REPLY: // server doesn't receive a LOGIN_REPLY.
+            case LOGIN_RESULT: // server doesn't receive a LOGIN_REPLY.
                 return false;
-            case PLAYERNUMBER_REPLY:
+            case PLAYERNUMBER_RESULT:
                 return playerNumberReplyCheck(message);
             case PLAYERNUMBER_REQUEST: // server doesn't receive a GenericErrorMessage.
                 return false;
@@ -78,7 +78,7 @@ public class CheckController implements Serializable {
                 return moveStudentCheck(message);
             case MOTHERNATURE_RESULT:
                 return motherNatureCheck(message);
-            case CLOUD:
+            case CLOUD_MESSAGE:
                 return cloudCheck(message);
             case MODE_MESSAGE:
                 return modeCheck(message);
@@ -97,9 +97,9 @@ public class CheckController implements Serializable {
      * @return true if it's a valid number, false otherwise.
      */
     private boolean playerNumberReplyCheck(Message message) {
-        PlayerNumberReply playerNumberReply = (PlayerNumberReply) message;
+        PlayerNumberResult playerNumberResult= (PlayerNumberResult) message;
 
-        if (playerNumberReply.getPlayerNumber() < 4 && playerNumberReply.getPlayerNumber() > 1) {
+        if (playerNumberResult.getPlayerNumber() < 4 && playerNumberResult.getPlayerNumber() > 1) {
             return true;
         } else {
             VirtualView virtualView = virtualViewMap.get(message.getNickname());

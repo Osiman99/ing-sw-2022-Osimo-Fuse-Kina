@@ -48,7 +48,7 @@ public class ClientController implements ViewObserver, Observer {
 
     @Override
     public void onUpdatePlayersNumber(int playersNumber) {
-        client.sendMessage(new PlayerNumberReply(this.nickname, playersNumber));
+        client.sendMessage(new PlayerNumberResult(this.nickname, playersNumber));
     }
 
     @Override
@@ -111,15 +111,15 @@ public class ClientController implements ViewObserver, Observer {
             case GENERIC_MESSAGE:
                 taskQueue.execute(() -> view.showGenericMessage(((GenericMessage) message).getMessage()));
                 break;
-            case LOGIN_REPLY:
-                LoginReply loginReply = (LoginReply) message;
-                taskQueue.execute(() -> view.showLoginResult(loginReply.isNicknameAccepted(), loginReply.isConnectionSuccessful(), this.nickname));
+            case LOGIN_RESULT:
+                LoginResult loginResult = (LoginResult) message;
+                taskQueue.execute(() -> view.showLoginResult(loginResult.isNicknameAccepted(), loginResult.isConnectionSuccessful(), this.nickname));
                 break;
             case ASSISTANTCARD_REQUEST:
                 AssistantCardRequest assistantCardRequest = (AssistantCardRequest) message;
                 taskQueue.execute(()-> view.onDemandAssistantCard(assistantCardRequest.getDeck()));
                 break;
-            case BOARD:
+            case BOARD_MESSAGE:
                 BoardMessage boardMessage = (BoardMessage) message;
                 taskQueue.execute(()-> view.drawBoard(boardMessage.getGame()));
                 break;
@@ -132,9 +132,9 @@ public class ClientController implements ViewObserver, Observer {
                 client.disconnect();
                 view.showDisconnectionMessage(dm.getNicknameDisconnected(), dm.getMessageStr());
                 break;
-            case CHARACTERCARDS_DESCRIPTION_REPLY:
-                CharacterCardsDescriptionReply characterCardsDescriptionReply = (CharacterCardsDescriptionReply) message;
-                taskQueue.execute(()-> view.onDemandCharacterCard(characterCardsDescriptionReply.getText()));
+            case CHARACTERCARDS_DESCRIPTION_RESULT:
+                CharacterCardsDescriptionResult characterCardsDescriptionResult = (CharacterCardsDescriptionResult) message;
+                taskQueue.execute(()-> view.onDemandCharacterCard(characterCardsDescriptionResult.getText()));
                 break;
                 case ERROR:
                 ErrorMessage errorMessage = (ErrorMessage) message;

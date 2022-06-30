@@ -8,7 +8,7 @@ public class BoardMessage extends Message {
     private final Game game;
 
     public BoardMessage(String nickname, Game game) {
-        super(nickname, MessageType.BOARD);
+        super(nickname, MessageType.BOARD_MESSAGE);
         this.game = game;
     }
 
