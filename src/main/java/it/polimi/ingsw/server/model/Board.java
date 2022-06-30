@@ -197,6 +197,17 @@ public class Board extends Observable implements Serializable {
                     calculateSupremacy(islands.get((i+numMoves)%islands.size()));
                 }else{
                     islands.get((i+numMoves)%islands.size()).setBanCard(false);
+                    GameExpert gameExpert = (GameExpert) game;
+                    for(CharacterCard characterCard : gameExpert.getThreeChosenCards()) {
+                        if (characterCard.getCharacterName() == CharacterName.Herbalist && characterCard.isEnabled()) {
+                            for (int j = 0; j < characterCard.getBanCards().length; j++) {
+                                if (!characterCard.getBanCards()[j]) {
+                                    characterCard.getBanCards()[j] = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
                 }
                 break;
             }

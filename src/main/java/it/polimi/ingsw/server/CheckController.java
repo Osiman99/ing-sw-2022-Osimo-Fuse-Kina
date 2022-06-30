@@ -107,24 +107,28 @@ public class CheckController implements Serializable {
                 if (p.getNickname().equals(assistantCardResult.getNickname())) {
                     for (AssistantCard assistantCard : p.getDeck().getDeck()) {
                         if (assistantCardResult.getCard() == assistantCard.getValue()) {
-                            if (numCardOtherPlayers.size() == 0){
-                                numCardOtherPlayers.add(assistantCardResult.getCard());
-                                nicknamesInChooseOrder.add(assistantCardResult.getNickname());
-                                return true;
-                            }else{
-                                for (int i = 0; i < game.getNumPlayers(); i++){
-                                    if (assistantCardResult.getCard() == numCardOtherPlayers.get(i)){
-                                        VirtualView virtualView = virtualViewMap.get(message.getNickname());
-                                        virtualView.showGenericMessage(ANSIColor.RED+ "Card already chosen by another player! Please try again."+ANSIColor.RESET);
-                                        virtualView.onDemandAssistantCard(p.getDeck().getDeck());
-                                        return false;
-                                    }else if (numCardOtherPlayers.size() - 1 == i) {
-                                        numCardOtherPlayers.add(assistantCardResult.getCard());
-                                        nicknamesInChooseOrder.add(assistantCardResult.getNickname());
-                                        return true;
+                            if (p.getDeck().getDeck().size() != 1) {
+                                if (numCardOtherPlayers.size() == 0) {
+                                    numCardOtherPlayers.add(assistantCardResult.getCard());
+                                    nicknamesInChooseOrder.add(assistantCardResult.getNickname());
+                                    return true;
+                                } else {
+                                    for (int i = 0; i < game.getNumPlayers(); i++) {
+                                        if (assistantCardResult.getCard() == numCardOtherPlayers.get(i)) {
+                                            VirtualView virtualView = virtualViewMap.get(message.getNickname());
+                                            virtualView.showGenericMessage(ANSIColor.RED + "Card already chosen by another player! Please try again." + ANSIColor.RESET);
+                                            virtualView.onDemandAssistantCard(p.getDeck().getDeck());
+                                            return false;
+                                        } else if (numCardOtherPlayers.size() - 1 == i) {
+                                            numCardOtherPlayers.add(assistantCardResult.getCard());
+                                            nicknamesInChooseOrder.add(assistantCardResult.getNickname());
+                                            return true;
+                                        }
                                     }
                                 }
-                            }return true;
+                                return true;
+                            }
+                            return true;
                         }
                     }
                     VirtualView virtualView = virtualViewMap.get(message.getNickname());
@@ -249,7 +253,6 @@ public class CheckController implements Serializable {
                         if (eachCharCardCheck(virtualView, activePlayer, cc)) {
                             for (int i = 0; i < cc.getStudents().size(); i++) {
                                 if (characterCardMessage.getStudentColor() == cc.getStudents().get(i).getColor()) {
-                                    System.out.println(characterCardMessage.getNumIsland());
                                     if (characterCardMessage.getNumIsland() <= game.getBoard().getIslands().size() && characterCardMessage.getNumIsland() > 0) {
                                         return true;
                                     } else {
@@ -290,6 +293,11 @@ public class CheckController implements Serializable {
                 for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                     if (cc.getCharacterName() == CharacterName.Herbalist) {
                         if (numIslandCheck(virtualView, activePlayer, characterCardMessage, cc)){
+                            if(game.getBoard().getIslands().get(characterCardMessage.getNumIsland()-1).isBanCard()){
+                                virtualView.showGenericMessage("There's already a BanCard on this island! Please try again.");
+                                virtualView.onDemandCharacterCard(gameController.getText());
+                                return false;
+                            }
                             for(int i = 3; i >=0; i--){
                                 if (cc.getBanCards()[i]){
                                     return true;
