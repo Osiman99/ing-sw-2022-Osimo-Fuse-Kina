@@ -556,7 +556,7 @@ public class Board extends Observable implements Serializable {
      * The card price is increased by 1 after its effect is used.
      * @param player who activates this card
      * @param characterCard Messenger
-     * @param numIsland
+     * @param numIsland is the number of island the player puts the mother nature
      */
     public void applyEffectMessenger(Player player, CharacterCard characterCard, int numIsland){
         characterCard.setEnabled(true);
@@ -612,7 +612,7 @@ public class Board extends Observable implements Serializable {
      * The card price is increased by 1 after its effect is used.
      * @param player who activates this card effect
      * @param characterCard Herbalist
-     * @param numIsland
+     * @param numIsland is the island number where the player puts the ban card
      */
     public void applyEffectHerbalist(Player player, CharacterCard characterCard, int numIsland){
         characterCard.setEnabled(true);

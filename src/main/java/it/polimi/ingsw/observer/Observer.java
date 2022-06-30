@@ -2,12 +2,9 @@ package it.polimi.ingsw.observer;
 
 import it.polimi.ingsw.network.messages.Message;
 
+/**
+ * Observer interface. It supports a generic method of update.
+ */
 public interface Observer {
-
-    /**
-     * updates the observable object depending on the received type of message
-     * @param message
-     */
     void update (Message message);
-
 }
