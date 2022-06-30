@@ -235,6 +235,36 @@ class Board3PlayersTest {
     }
 
     @Test
+    void joinIslandCornerCase() {
+        //salvo l'isola in cui c'è MN
+        for (int i=0; i<12; i++) {
+            if (board.getIslands().get(i).isMotherNature()) {
+                board.getIslands().get(i).setMotherNature(false);
+            }
+        }
+        board.getIslands().get(10).addTower(new Tower(game.getPlayerByNickname("AlanTuring").getPlayerColor()));
+        board.getIslands().get(0).addTower(new Tower(game.getPlayerByNickname("AlanTuring").getPlayerColor()));
+        game.getPlayerByNickname("AlanTuring").getPlank().getTowerSpace().removeTower();
+        game.getPlayerByNickname("AlanTuring").getPlank().getTowerSpace().removeTower();
+
+        board.getIslands().get(11).setMotherNature(true);
+
+        //aggiungo all'isola 1 studente per colore e uno studente RED aggiuntivo
+        for(int i=0; i<5; i++)
+            board.getIslands().get(11).addStudent(new Student(StudentColor.getStudentColor(i)));
+
+
+        //setto manualmente quali giocatori controllani quali professori
+        board.setProfessorsControlledBy(new String[]{"AlanTuring", "AlanTuring", "AlanTuring", "AlanTuring", "AlanTuring"});
+
+        board.calculateSupremacy(board.getIslands().get(11));
+
+        assertEquals(3, board.getIslands().get(9).getTowers().size());
+        assertEquals(TowerColor.BLACK, board.getIslands().get(9).getTowers().get(0).getColor());
+        assertEquals(10, board.getIslands().size());
+    }
+
+    @Test
     void applyEffectSommelier() {
         CharacterCard characterCard = new CharacterCard(CharacterName.Sommelier);
         Student student = characterCard.getStudents().get(0);
