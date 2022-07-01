@@ -13,7 +13,6 @@ public class Player extends Observable implements Serializable {
     private int supremacyCont;
     private final String nickname;
     private Plank plank;
-    private PlayerState state;
     private AssistantDeck deck;
     private int numCoins;
     private AssistantCard chosenAssistantCard;
@@ -28,7 +27,6 @@ public class Player extends Observable implements Serializable {
         this.nickname = nickname;
         numCoins = 1;
         supremacyCont = 0;
-        state = PlayerState.SLEEP;
     }
 
     /**
@@ -56,10 +54,6 @@ public class Player extends Observable implements Serializable {
 
     public Plank getPlank() {
         return plank;
-    }
-
-    public PlayerState getState() {
-        return state;
     }
 
     public AssistantDeck getDeck() {
