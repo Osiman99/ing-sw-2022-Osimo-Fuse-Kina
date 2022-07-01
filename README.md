@@ -37,10 +37,10 @@ To execute .jar files, you have to open the Terminal (if the game doesn't work, 
 
 or in any case some colors that show the black towers.
 
-Then go to the directory where the jars are and input the following command:
+Then go to the path where the jars are (they are in deliverables/jar) and input the following command:
 
-- Server jar:
+- <b>for Server jar</b>:
 java -jar server.jar
 
-- CLI version jar:
+- <b>for CLI version jar</b>:
 java -jar client.jar
