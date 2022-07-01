@@ -39,8 +39,8 @@ in order to see all the different colors printed.
 
 Then search the jars path (../ing-sw-2022-Osimo-Fuse-Kina/deliverables/jar) and type the following command:
 
-- <b>for Server jar</b>:
+- <b>for Server jar:</b> 
 java -jar server.jar
 
-- <b>for CLI version jar</b>:
+- <b>for Client jar:</b> 
 java -jar client.jar
