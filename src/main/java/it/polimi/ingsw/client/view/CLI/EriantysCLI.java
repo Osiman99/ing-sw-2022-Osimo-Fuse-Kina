@@ -10,12 +10,10 @@ import java.util.concurrent.ExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/*
- * Each player interact whith the game through this class:
- * EriantysCLI displays on the console the game board and any message or request received from the server and their results
- *
+/**
+ * Each player interact with the game through this class:
+ * EriantysCLI displays on the console the game board and any message or request received from the server and their results.
  */
-
 public class EriantysCLI extends ViewObservable implements View {
 
     private final PrintStream out;
@@ -75,7 +73,7 @@ public class EriantysCLI extends ViewObservable implements View {
     /**
      * Prints the game board, if the game is in expert mode it adds the character cards too.
      *
-     * @param game
+     * @param game the game instance.
      */
     public void drawBoard(Game game) {
         clearConsole();
@@ -92,7 +90,7 @@ public class EriantysCLI extends ViewObservable implements View {
     /**
      * Displays the game phase (planning or action).
      *
-     * @param game
+     * @param game the game instance.
      */
     private void drawPhase(Game game) {
         String phase="";
@@ -133,7 +131,7 @@ public class EriantysCLI extends ViewObservable implements View {
     /**
      * Prints the 3 character cards chosen for the match.
      *
-     * @param game
+     * @param game the game instance.
      */
     private void drawCharacterCards(GameExpert game) {
         List<String> characterNames =  new ArrayList<>();
@@ -182,7 +180,7 @@ public class EriantysCLI extends ViewObservable implements View {
     /**
      * Prints the planks of each player, even the coins in case of an expert match.
      *
-     * @param game
+     * @param game the game instance.
      */
     public void drawPlanks(Game game) {
         ArrayList<String> plankBoard = new ArrayList<>();
@@ -260,7 +258,8 @@ public class EriantysCLI extends ViewObservable implements View {
     }
 
     /**
-     * it's used to navigate the command line
+     * it's used to navigate the command line.
+     *
      * @param x column
      * @param y row
      */
@@ -321,7 +320,7 @@ public class EriantysCLI extends ViewObservable implements View {
      * Prints 12 islands with the attributes in it, if there are less during the game it prints a placeholder that
      * shows the unavailable island.
      *
-     * @param game
+     * @param game the game instance.
      */
     public void drawIslands(Game game) {
         ArrayList<String> islandBoard = new ArrayList<>();
@@ -337,19 +336,16 @@ public class EriantysCLI extends ViewObservable implements View {
             if(i<game.getBoard().getIslands().size()) {
                 Island currentIsland = game.getBoard().getIslands().get(i);
 
-                //sets the island number
                 if (i + 1 < 10)
                     numIsolaBoard = " " + String.valueOf(i + 1);
                 else
                     numIsolaBoard = String.valueOf(i + 1);
 
-                //sets the mother nature token
                 if (currentIsland.isMotherNature())
                     mnBoard = ANSIColor.ORANGE_BACKGROUND + ANSIColor.BLACK + "  MN  " + ANSIColor.RESET;
                 else
                     mnBoard = "      ";
 
-                //add ■ for each tower onto the island
                 for (j = 0; j < currentIsland.getTowers().size(); j++)
                     towerBoard.add(" " + convertANSI(currentIsland.getTowers().get(j).getColor()));
                 for (; j < 8; j++)
@@ -363,7 +359,6 @@ public class EriantysCLI extends ViewObservable implements View {
                 else
                     banBoard = "      ";
 
-                //counts the students for each color
                 for (j = 0; j < currentIsland.getStudents().size(); j++) {
                     switch (currentIsland.getStudents().get(j).getColor()) {
                         case GREEN:
@@ -421,21 +416,18 @@ public class EriantysCLI extends ViewObservable implements View {
                     System.out.println(islandBoard.get(r));
                 }
             }
-
             islandBoard.clear();
             towerBoard.clear();
             for(j=0; j<5; j++)
                 numStudent[j]=0;
-
         }
-
     }
 
 
     /**
      * Prints the clouds.
      *
-     * @param game
+     * @param game the game instance.
      */
     public void drawClouds(Game game){
 
@@ -561,7 +553,7 @@ public class EriantysCLI extends ViewObservable implements View {
 
     /**
      * Asks the first client that is connected the number of players that are going to play, and it throws an
-     * exception when the inserted number is not 2 or 3
+     * exception when the inserted number is not 2 or 3.
      */
     public void onDemandPlayersNumber() {
         playersNumber = 0;
