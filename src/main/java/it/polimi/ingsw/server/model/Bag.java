@@ -8,12 +8,8 @@ import java.util.List;
 public class Bag implements Serializable {
     private static final long serialVersionUID = 2170486071323199195L;
 
-    private List<Student> students;  //si potrebbe anche non mettere static perchè Bag è singleton
+    private List<Student> students;
     private boolean bagEmpty;
-
-    /**
-     * singular instance
-     */
 
     /**
      * private constructor
@@ -44,7 +40,7 @@ public class Bag implements Serializable {
 
 
     /**
-     * always remove the student in the first position of the arraylist when we need to put them in the clouds or entrance
+     * always remove the student in the first position of the arraylist when we need to put them in the clouds or entrance.
      */
     public void removeStudent(){
         students.remove(0);
@@ -54,10 +50,7 @@ public class Bag implements Serializable {
         students.add(student);
     }
 
-    /**
-     * get the first student in the array
-     * @return
-     */
+
     public Student getFirstStudent(){
         return students.get(0);
     }
@@ -67,8 +60,9 @@ public class Bag implements Serializable {
     }
 
     /**
-     * checks if the bag is empty or not
-     * @return
+     * Checks if the bag is empty or not.
+     *
+     * @return true if bag is empty.
      */
     public boolean isBagEmpty() {
         return bagEmpty;
