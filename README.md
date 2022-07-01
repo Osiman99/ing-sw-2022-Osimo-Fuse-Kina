@@ -39,8 +39,8 @@ or in any case some colors that show the black towers.
 
 Then go to the directory where the jars are and input the following command:
 
-#### Server jar:
+- Server jar:
 java -jar server.jar
 
-#### CLI version jar:
+- CLI version jar:
 java -jar client.jar
