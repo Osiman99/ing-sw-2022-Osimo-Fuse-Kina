@@ -52,11 +52,6 @@ class PlayerTest {
     }
 
     @Test
-    void getState() {
-        assertEquals(PlayerState.SLEEP, player.getState());
-    }
-
-    @Test
     void getDeck() {
         AssistantDeck deck = player.getDeck();
         assertEquals(deck, player.getDeck());
