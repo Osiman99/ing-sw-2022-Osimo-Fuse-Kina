@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * TowerSpace is an arraylist which contains the towers in the plank.
+ */
 public class TowerSpace implements Serializable {
 
     private static final long serialVersionUID = 2280687268501499016L;

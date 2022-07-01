@@ -251,8 +251,9 @@ public class GameController implements Serializable {
 
 
     /**
+     * When a player exits the game, to the other players arrives a message "Type \"quit\" to leave the game."
      *
-     * @param nickname
+     * @param nickname the nickname of the player who exited.
      */
     public void quitFromServer(String nickname){
         state = GameState.ENDGAME;
@@ -263,6 +264,11 @@ public class GameController implements Serializable {
         }
     }
 
+    /**
+     * If a player inputs "quit" this method disconnects him.
+     *
+     * @param receivedMessage the quit message received by a player.
+     */
     public void end(Message receivedMessage){
         server = Server.getInstance();
         if (receivedMessage.getMessageType() == MessageType.END_MESSAGE) {
@@ -274,13 +280,18 @@ public class GameController implements Serializable {
         }
     }
 
+    /**
+     * Resets the game and the gameController for a new game.
+     */
     public void endGame() {
-
         Game.resetInstance();
         initGameController();
         Server.LOGGER.info("Game finished. Server ready for a new Game.");
     }
 
+    /**
+     * Resets all the fields of the gameController class.
+     */
     public void initGameController() {
         lobby = new Lobby(this);
         virtualViewMap = Collections.synchronizedMap(new HashMap<>());
@@ -296,6 +307,11 @@ public class GameController implements Serializable {
         acFlag = false;
     }
 
+    /**
+     * Manage the planning phase of the active player.
+     *
+     * @param receivedMessage the message received by the active player.
+     */
     public void plan(Message receivedMessage){
         if (receivedMessage.getMessageType() == MessageType.ASSISTANTCARD_RESULT){
             if (checkController.verifyReceivedData(receivedMessage)) {
@@ -311,6 +327,9 @@ public class GameController implements Serializable {
         }
     }
 
+    /**
+     * Manages the turns during the planning phase.
+     */
     public void planTurnManager(){
         if(!endgame) {
             for (int i = 0; i < game.getPlayers().size(); i++) {
@@ -339,12 +358,18 @@ public class GameController implements Serializable {
         }
     }
 
+    /**
+     * Manages the end of the game in case the players have used all the assistant cards.
+     */
     public void assistantCardEnd(){
         if(activePlayer.isDeckEmpty()){
             establishWin();
         }
     }
 
+    /**
+     * Fills the array text with the descriptions of the three character cards in the game.
+     */
     public void ccDescription(){
         GameExpert gameExpert = (GameExpert) game;
         for(int i = 0; i < 3; i++) {
@@ -352,6 +377,11 @@ public class GameController implements Serializable {
         }
     }
 
+    /**
+     * Verifies and sends the descriptions of the three character cards in the game.
+     *
+     * @param receivedMessage the message received by the active player.
+     */
     public void characterCardsDescription(Message receivedMessage){
         if (receivedMessage.getMessageType() == MessageType.CHARACTERCARDS_DESCRIPTION_REQUEST){
             CharacterCardsDescriptionRequest characterCardsDescriptionRequest = (CharacterCardsDescriptionRequest) receivedMessage;
@@ -374,12 +404,17 @@ public class GameController implements Serializable {
         }
     }
 
+    /**
+     * Verifies and applies the effect of the chosen character card by the active player.
+     *
+     * @param receivedMessage the message received by the active player.
+     */
     public void characterCardManager(Message receivedMessage){
         if (receivedMessage.getMessageType() == MessageType.CHARACTERCARDS_REQUEST) {
             VirtualView virtualView = virtualViewMap.get(activePlayer.getNickname());
             GameExpert gameExpert = (GameExpert) game;
             CharacterCardMessage characterCardMessage = (CharacterCardMessage) receivedMessage;
-            if(checkController.verifyReceivedData(receivedMessage)) {            //DA IMPLEMENTARE IL CONTROLLO
+            if(checkController.verifyReceivedData(receivedMessage)) {
                 switch (characterCardMessage.getCard()) {
                     case "sommelier":
                         for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
@@ -455,6 +490,11 @@ public class GameController implements Serializable {
         }
     }
 
+    /**
+     * Manage the action phase of the active player.
+     *
+     * @param receivedMessage the message received by the active player.
+     */
     public void action(Message receivedMessage){
         characterCardsDescription(receivedMessage);
         characterCardManager(receivedMessage);
@@ -507,7 +547,6 @@ public class GameController implements Serializable {
                     moveCont--;
                     actionTurnManager();
                 }
-
             }
         }else if (receivedMessage.getMessageType() == MessageType.CLOUD_MESSAGE){
             CloudMessage cloudMessage = (CloudMessage) receivedMessage;
@@ -521,6 +560,9 @@ public class GameController implements Serializable {
         }
     }
 
+    /**
+     * Manages the end of the game in case the tower space remains empty.
+     */
     public void noTowersWin(){
         for (Player player : game.getPlayers()) {
             if (player.isTowerSpaceEmpty()) {
@@ -534,17 +576,22 @@ public class GameController implements Serializable {
         }
     }
 
+    /**
+     * Manages the end of the game in case three islands or fewer remain.
+     */
     public void threeIslandEnd(){
         if(game.getBoard().areIslandsLessThanThree()) {
             establishWin();
         }
     }
 
+    /**
+     * Establish who wins the game in all cases except when the tower space remains empty.
+     */
     public void establishWin(){
         int contProfessorFirstPlayer = 0;
         int contProfessorSecondPlayer = 0;
         int contProfessorThirdPlayer = 0;
-        int cont = 0;
         int firstPlayerCont = game.getPlayers().get(0).getPlank().getTowerSpace().getTowersList().size();
         int contTowersPrev;
         int contTowersNext = game.getPlayers().get(0).getPlank().getTowerSpace().getTowersList().size();
@@ -630,12 +677,18 @@ public class GameController implements Serializable {
         endgame = true;
     }
 
+    /**
+     * Manages the end of the game in case the bag remains empty.
+     */
     public void bagEmptyEnd(){
         if (game.getBoard().isBagEmptyGC()) {
             establishWin();
         }
     }
 
+    /**
+     * Manages the turns during the action phase.
+     */
     public void actionTurnManager(){
         moveCont++;
         if(moveCont < game.getNumPlayers()+1) {
@@ -708,6 +761,11 @@ public class GameController implements Serializable {
         }
     }
 
+    /**
+     * Sends a waiting message to all except the active player.
+     *
+     * @param activePlayer the active player.
+     */
     public void broadcastWaitingMessage(Player activePlayer){
         for (VirtualView vv : virtualViewMap.values()){
             if (vv != virtualViewMap.get(activePlayer.getNickname())){

@@ -18,10 +18,7 @@ public class Player extends Observable implements Serializable {
     private int chosenACValue;
     private Game game;
 
-    /**
-     * class constructor(in the beginning the player has 1 coin & is in SLEEP State
-     * @param nickname
-     */
+
     public Player(String nickname){
         this.nickname = nickname;
         numCoins = 1;
@@ -84,7 +81,11 @@ public class Player extends Observable implements Serializable {
         this.numCoins = numCoins;
     }
 
-
+    /**
+     * Move the students from the chosen cloud to the active player entrance.
+     *
+     * @param cloud the chosen cloud
+     */
     public void moveStudentsFromCloudToEntrance(Cloud cloud) {
         int studentsSize = cloud.getStudentsSize();
         for (int i = 0; i < studentsSize; i++) {
@@ -94,7 +95,12 @@ public class Player extends Observable implements Serializable {
         notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 
-    public void moveStudentFromEntranceToDiningRoom(Student student){    //la for si fa nel main (GUI)
+    /**
+     * Move the students from the active player entrance to his dining room.
+     *
+     * @param student the chosen student.
+     */
+    public void moveStudentFromEntranceToDiningRoom(Student student){
         plank.getDiningRoom()[student.getColor().getCode()].addStudent(student);
         plank.getEntrance().removeStudent(student);
         if (plank.getDiningRoom()[student.getColor().getCode()].getStudents().size() == 3 || plank.getDiningRoom()[student.getColor().getCode()].getStudents().size() == 6 || plank.getDiningRoom()[student.getColor().getCode()].getStudents().size() == 9){
@@ -103,15 +109,22 @@ public class Player extends Observable implements Serializable {
         notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 
-    public void moveStudentFromEntranceToIsland(Student student, Island island){    //la for si fa nel main (GUI)
+    /**
+     * Move the students from the active player entrance to a chosen island.
+     *
+     * @param student the chosen student.
+     * @param island the chosen island.
+     */
+    public void moveStudentFromEntranceToIsland(Student student, Island island){
         island.addStudent(student);
         plank.getEntrance().removeStudent(student);
         notifyObserver(new BoardMessage(Game.SERVER_NICKNAME, game));
     }
 
     /**
-     * you can choose one Assistant Card based on its value and then it's removed from the deck
-     * @param value
+     * you can choose one Assistant Card based on its value and then it's removed from the deck.
+     *
+     * @param value the value of the assistant card
      */
     public void chooseAssistantCard(int value){
         chosenAssistantCard = new AssistantCard(value, (value-1)/2 + 1);

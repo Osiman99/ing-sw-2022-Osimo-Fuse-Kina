@@ -29,9 +29,10 @@ public enum StudentColor implements Serializable {
     }
 
     /**
-     * gets the student color given its code
-     * @param code
-     * @return
+     * gets the student color given its code.
+     *
+     * @param code the code corresponding to the color.
+     * @return the color
      */
     public static StudentColor getStudentColor(int code) {
         if (StudentColor.GREEN.getCode() == code) {
