@@ -1,5 +1,5 @@
 # Prova Finale di Ingegneria del Software - AA 2021-2022
-![alt text](src/main/resources/eriantys.png)
+<img src="https://www.craniocreations.it/wp-content/uploads/2021/06/Eriantys_scatolaFrontombra-600x600.png" width=400px height=400px align="right" />
 
 ## Group members
 
