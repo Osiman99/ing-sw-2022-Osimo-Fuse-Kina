@@ -36,10 +36,6 @@ To execute .jar files, you have to open the Terminal (if the game doesn't work, 
 <b>Blue</b>: 128
 
 or in any case some colors that show the black towers.
-
-### Mac:
-
-
 Then go to the directory where the jars are and input the following command:
 
 #### Server jar:
