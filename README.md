@@ -19,7 +19,9 @@
 To execute .jar files, you have to open the Windows Powershell (if the game doesn't work, open the Powershell as admin). It is highly recommended to set the Powershell colors to:
 
 <b>Red</b>: 0
+
 <b>Green</b>: 128
+
 <b>Blue</b>: 128
 
 or in any case some colors that show the black towers.
@@ -28,7 +30,9 @@ or in any case some colors that show the black towers.
 To execute .jar files, you have to open the Terminal (if the game doesn't work, open the Terminal as admin). It is highly recommended to set the Terminal colors to:
 
 <b>Red</b>: 0
+
 <b>Green</b>: 128
+
 <b>Blue</b>: 128
 
 or in any case some colors that show the black towers.
