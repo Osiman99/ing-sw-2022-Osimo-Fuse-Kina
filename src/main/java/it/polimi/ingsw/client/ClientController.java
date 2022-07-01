@@ -10,11 +10,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-/**
- * This class is part of the client side.
- * It is an interpreter between the network and a generic view (which in this case is CLI).
- * It receives the messages, wraps/unwraps and pass them to the network/view.
- */
+
 public class ClientController implements ViewObserver, Observer {
     private final View view;
     private final ExecutorService taskQueue;
