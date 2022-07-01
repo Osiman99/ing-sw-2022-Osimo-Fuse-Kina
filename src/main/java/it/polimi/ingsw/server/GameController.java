@@ -21,10 +21,6 @@ public class GameController implements Observer, Serializable {
     private Player activePlayer;
     private List<String> nicknames;
     private CheckController checkController;
-
-    private static final String STR_INVALID_STATE = "Invalid game state!";
-
-    public static final String SAVED_GAME_FILE = "match.bless";
     private int turnCont;
     private int moveCont;
     private boolean cloudFlag;
@@ -80,8 +76,14 @@ public class GameController implements Observer, Serializable {
         }
     }
 
+    /**
+     * Verifies and logs in a client.
+     *
+     * @param nickname the nickname chosen by the client
+     * @param virtualView the virtual view of the client.
+     */
     public void loginHandler(String nickname, VirtualView virtualView) {
-        if (virtualViewMap.isEmpty()) { // First player logged. Ask the game mode.
+        if (virtualViewMap.isEmpty()) {
             addVirtualView(nickname, virtualView);
             lobby.addPlayer(nickname);
             lobby.getPlayers().get(0).setPlayerColor(TowerColor.BLACK);
@@ -98,21 +100,7 @@ public class GameController implements Observer, Serializable {
             }
             virtualView.showLoginResult(true, true, Game.SERVER_NICKNAME);
 
-
-            if (lobby.isFull()) { // If all players logged
-                //PERSISTENZA FA
-
-                /*StorageData storageData = new StorageData();
-                GameController savedGameController = storageData.restore();
-                if (savedGameController != null &&
-                        game.getPlayersNicknames().containsAll(savedGameController.getTurnController().getNicknameQueue())) {
-                    restoreControllers(savedGameController);
-                    broadcastRestoreMessages();
-                    Server.LOGGER.info("Saved Match restored.");
-                    turnController.newTurn();
-                } else {
-                    initGame();
-                }*/
+            if (lobby.isFull()) {
                 initGame();
             }else{
                 if (virtualViewMap.size() != 1){
@@ -122,7 +110,6 @@ public class GameController implements Observer, Serializable {
         } else {
             server = Server.getInstance();
             server.getClientHandlerMap().remove(nickname);
-            //LOGGER.info(() -> "Removed " + nickname + " from the client list.");
             virtualView.showGenericMessage(ANSIColor.RED + "Max players reached. Connection refused." + ANSIColor.RESET);
             virtualView.showDisconnectionMessage(nickname, " disconnected from the Server.");
         }
@@ -207,6 +194,11 @@ public class GameController implements Observer, Serializable {
         virtualView.onDemandAssistantCard(activePlayer.getDeck().getDeck());
     }
 
+    /**
+     * Sends to all the clients a generic message.
+     *
+     * @param message the message which is sent.
+     */
     public void broadcastGenericMessage(String message) {
         for (VirtualView virtualView : virtualViewMap.values()) {
             virtualView.showGenericMessage(message);
@@ -218,26 +210,33 @@ public class GameController implements Observer, Serializable {
         this.state = state;
     }
 
+    /**
+     * Adds a new virtual view to the virtual view map.
+     *
+     * @param nickname chosen by the client
+     * @param virtualView the virtual view of the client.
+     */
     public void addVirtualView(String nickname, VirtualView virtualView) {
         virtualViewMap.put(nickname, virtualView);
     }
 
-    public boolean isGameStarted() {
-        return state != GameState.PREGAME;
-    }
 
     /**
-     * Checks the nickname of the player during the login phase
+     * Checks the nickname of the player during the login phase.
      *
      * @param nickname of the new player
-     * @param view
+     * @param view the virtual view of the client.
      * @return true if the nickname is verified
      */
     public boolean checkLoginNickname(String nickname, View view) {
         return checkController.checkLoginNickname(nickname, view);
     }
 
-
+    /**
+     * Removes a virtual view from the virtual view map and from the list of the observers of the game & board.
+     *
+     * @param nickname chosen by the client
+     */
     public void removeVirtualView(String nickname) {
         VirtualView vv = virtualViewMap.remove(nickname);
 
@@ -254,13 +253,10 @@ public class GameController implements Observer, Serializable {
     }
 
 
-    public void broadcastDisconnectionMessage(String nicknameDisconnected, String text) {
-        for (VirtualView virtualView : virtualViewMap.values()) {
-            virtualView.showDisconnectionMessage(nicknameDisconnected, text);
-        }
-    }
-
-
+    /**
+     *
+     * @param nickname
+     */
     public void quitFromServer(String nickname){
         state = GameState.ENDGAME;
         for (Map.Entry<String, VirtualView> entry : virtualViewMap.entrySet()) {
@@ -284,11 +280,6 @@ public class GameController implements Observer, Serializable {
     public void endGame() {
 
         Game.resetInstance();
-
-        //PERSISTENZA FA
-        /*StorageData storageData = new StorageData();
-        storageData.delete();*/
-
         initGameController();
         Server.LOGGER.info("Game finished. Server ready for a new Game.");
     }
@@ -436,8 +427,6 @@ public class GameController implements Observer, Serializable {
                             }
                         }
                         break;
-                    //case "joker":
-                        //break;
                     case "knight":
                         for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                             if (cc.getCharacterName() == CharacterName.Knight){
@@ -445,10 +434,6 @@ public class GameController implements Observer, Serializable {
                             }
                         }
                         break;
-                    //case "merchant":
-                        //break;
-                    //case "musician":
-                        //break;
                     case "lady":
                         for(CharacterCard cc : gameExpert.getThreeChosenCards()) {
                             if (cc.getCharacterName() == CharacterName.Lady){
@@ -456,8 +441,6 @@ public class GameController implements Observer, Serializable {
                             }
                         }
                         break;
-                    //case "sinister":
-                        //break;
                 }broadcastGenericMessage(ANSIColor.PURPLE_BOLD_BRIGHT + activePlayer.getNickname().toUpperCase() + ANSIColor.CYAN_BOLD + " activated " + characterCardMessage.getCard().toUpperCase() + " effect!" + ANSIColor.RESET);
                 broadcastWaitingMessage(activePlayer);
                 if (askInterrupted.equals("s")){
@@ -750,9 +733,6 @@ public class GameController implements Observer, Serializable {
         return state;
     }
 
-    public void setServerEndFlag(boolean serverEndFlag) {
-        this.serverEndFlag = serverEndFlag;
-    }
 
     public String[] getText() {
         return text;

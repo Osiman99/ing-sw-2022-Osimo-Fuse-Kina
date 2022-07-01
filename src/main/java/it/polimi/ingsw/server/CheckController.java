@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Controls the input of the players.
+ */
 public class CheckController implements Serializable {
 
     private static final long serialVersionUID = 7413156215358698632L;
@@ -199,7 +202,7 @@ public class CheckController implements Serializable {
     }
 
     /**
-     * checks if the cloud number choosen by the player is available to be chosen.
+     * checks if the cloud number chosen by the player is available to be chosen.
      *
      * @param message sent by the client
      * @return true if the cloud number choice is possible
@@ -224,12 +227,12 @@ public class CheckController implements Serializable {
     }
 
     /**
-     * Checks if the number of moves that mother nature can do is inputed correctly by the player.
+     * Checks if the number of moves that mother nature can do is input correctly by the player.
      * Here is applied even the effect of the Postman character card that can allow a player do 2 more moves with
      * the mother nature.
      *
      * @param message sent by the client
-     * @return true if the number that the player has inputed is correct.
+     * @return true if the number that the player has input is correct.
      */
     private boolean motherNatureCheck(Message message){
         MotherNatureResult motherNatureMessage = (MotherNatureResult) message;
@@ -257,6 +260,12 @@ public class CheckController implements Serializable {
         }
     }
 
+    /**
+     * Checks if the modality chosen is normal or expert.
+     *
+     * @param message sent by the client
+     * @return true if the input is "n" or "e", false otherwise.
+     */
     public boolean modeCheck(Message message){
         ModeMessage modeMessage = (ModeMessage) message;
         VirtualView virtualView = virtualViewMap.get(message.getNickname());
@@ -267,6 +276,13 @@ public class CheckController implements Serializable {
         return false;
     }
 
+    /**
+     * Checks if the character card chosen by a player can be applied.
+     * If the player types "back" it returns to the interrupted request.
+     *
+     * @param message sent by the client
+     * @return true if the  card can be applied, false otherwise.
+     */
     public boolean characterCardCheck(Message message){
         GameExpert gameExpert = (GameExpert) game;
         VirtualView virtualView = virtualViewMap.get(message.getNickname());
@@ -383,6 +399,13 @@ public class CheckController implements Serializable {
         return false;
     }
 
+    /**
+     * In case that the character card can not be applied, it makes the question interrupted.
+     *
+     * @param virtualView the virtual view of the active player
+     * @param activePlayer the active player
+     * @return false
+     */
     private boolean askInterrupted(VirtualView virtualView, Player activePlayer) {
         GameExpert gameExpert = (GameExpert) game;
         if (gameController.getAskInterrupted().equals("s")){
@@ -400,6 +423,15 @@ public class CheckController implements Serializable {
         return false;
     }
 
+    /**
+     * Checks if the island number input by the player is available and correct.
+     *
+     * @param virtualView the virtual view of the active player
+     * @param activePlayer the active player
+     * @param characterCardMessage
+     * @param cc che character card selected by the player
+     * @return true if the island number is correct and available, false otherwise.
+     */
     private boolean numIslandCheck(VirtualView virtualView, Player activePlayer, CharacterCardMessage characterCardMessage, CharacterCard cc) {
         if (eachCharCardCheck(virtualView, activePlayer, cc)){
             if (characterCardMessage.getNumIsland() > 0 && characterCardMessage.getNumIsland() <= game.getBoard().getIslands().size()){
@@ -414,6 +446,14 @@ public class CheckController implements Serializable {
         }
     }
 
+    /**
+     * Checks if the player has enough coins to activate a character card.
+     *
+     * @param virtualView the virtual view of the active player
+     * @param activePlayer the active player
+     * @param cc che character card selected by the player
+     * @return true if the player has enough coins, false otherwise and activates the askInterrupted method.
+     */
     private boolean eachCharCardCheck(VirtualView virtualView, Player activePlayer, CharacterCard cc) {
         if (cc.getPrice() <= activePlayer.getNumCoins()) {
             return true;

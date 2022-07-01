@@ -58,18 +58,6 @@ public class Server {
 
         clientHandlerMap.remove(nickname);
         gameController.removeVirtualView(nickname);
-        /*if (!flag) {
-            for (int i = 0; i < gameController.getLobby().getPlayers().size(); i++) {
-                if (gameController.getLobby().getPlayers().get(i).getNickname().equals(nickname)) {
-                    gameController.getLobby().getPlayers().remove(i);
-                    flag = true;
-                    break;
-                }
-            }
-        }
-        if (flag) {
-            gameController.initGameController();
-        }*/
 
         if(gameController.getState() != GameState.ENDGAME) {
             gameController.quitFromServer(nickname);
@@ -107,6 +95,7 @@ public class Server {
             }
         }
     }
+
 
     public Map<String, ClientHandler> getClientHandlerMap() {
         return clientHandlerMap;

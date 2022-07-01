@@ -2,6 +2,9 @@ package it.polimi.ingsw.network;
 
 import it.polimi.ingsw.server.model.StudentColor;
 
+/**
+ * The client sends the request to activate the effect of a character card.
+ */
 public class CharacterCardMessage extends Message{
 
     private static final long serialVersionUID = 6374071475323421718L;
