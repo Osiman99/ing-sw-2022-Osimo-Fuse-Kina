@@ -16,7 +16,7 @@
 ## Running instructions
 
 ### Windows:
-To execute .jar files, you have to open the Windows Powershell (if the game doesn't work, open the Powershell as admin). It is highly recommended to set the Powershell colors to:
+To execute .jar files, you have to run the Windows Powershell (if the game doesn't work, run the Powershell as admin). It is highly recommended to set the Powershell colors to:
 
 <b>Red</b>: 0
 
@@ -24,10 +24,10 @@ To execute .jar files, you have to open the Windows Powershell (if the game does
 
 <b>Blue</b>: 128
 
-or in any case some colors that show the black towers.
+in order to see all the different colors printed.
 
 ### Linux:
-To execute .jar files, you have to open the Terminal (if the game doesn't work, open the Terminal as admin). It is highly recommended to set the Terminal colors to:
+To execute .jar files, you have to run the Terminal (if the game doesn't work, run the Terminal as admin). It is highly recommended to set the Terminal colors to:
 
 <b>Red</b>: 0
 
@@ -35,9 +35,9 @@ To execute .jar files, you have to open the Terminal (if the game doesn't work, 
 
 <b>Blue</b>: 128
 
-or in any case some colors that show the black towers.
+in order to see all the different colors printed.
 
-Then go to the path where the jars are (they are in deliverables/jar) and input the following command:
+Then search the jars path (../ing-sw-2022-Osimo-Fuse-Kina/deliverables/jar) and type the following command:
 
 - <b>for Server jar</b>:
 java -jar server.jar
