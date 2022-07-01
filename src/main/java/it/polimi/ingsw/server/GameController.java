@@ -116,7 +116,7 @@ public class GameController implements Observer, Serializable {
                 initGame();
             }else{
                 if (virtualViewMap.size() != 1){
-                    virtualView.showGenericMessage("Waiting for other players...");
+                    virtualView.showGenericMessage("Waiting for other Players . . .");
                 }
             }
         } else {
