@@ -1,9 +1,5 @@
 package it.polimi.ingsw.server.model;
 
-import it.polimi.ingsw.client.view.CLI.ANSIColor;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.Nullable;
-
 import java.io.Serializable;
 
 /**
@@ -70,13 +66,4 @@ public enum StudentColor implements Serializable {
             default: return null;
         }
     }
-
-    /*
-     * Get the color given the color code
-     * @param code
-     * @return color
-
-     public int getStudentColor(int code) {
-        return StudentColor.this.code;
-    }*/
 }

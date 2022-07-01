@@ -16,7 +16,7 @@ public class Plank implements Serializable {
         towerSpace = new TowerSpace();
         diningRoom = new StudentRow[5];
         for (int i = 0; i < 5; i++){
-            diningRoom[i] = new StudentRow(i);
+            diningRoom[i] = new StudentRow();
         }
         entrance = new Entrance();
     }
@@ -44,16 +44,5 @@ public class Plank implements Serializable {
         return towerSpace;
     }
 
-
-
-
-    /*public Plank() {
-        Student[] diningRoom = {null};
-
-        diningRoom = new StudentRow[10];
-        for(int i=0; i<StudentRow.length;)
-
-
-    }*/
 
 }

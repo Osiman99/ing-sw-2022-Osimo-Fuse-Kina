@@ -10,9 +10,6 @@ public class TowerSpace implements Serializable {
     private Game game;
     private List<Tower> towers;
 
-    /**
-     * class constructor
-     */
     public TowerSpace(){
         towers = new ArrayList<Tower>();
         game = Game.getInstance();

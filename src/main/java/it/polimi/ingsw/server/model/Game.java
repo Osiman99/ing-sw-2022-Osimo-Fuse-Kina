@@ -3,7 +3,6 @@ package it.polimi.ingsw.server.model;
 import it.polimi.ingsw.network.BoardMessage;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.GameState;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,12 +10,10 @@ import java.util.List;
 public class Game extends Observable implements Serializable {
 
     private static final long serialVersionUID = 4004020661063976635L;
-
-    public static final int MAX_PLAYERS = 3;
-    private Board board;              //forse va fatto final (singleton o no?)
-    private static Game instance;   //classe Game, per non farla singleton basta non mettere static in instance (e chiamare il setInstance per ogni game creato nel main)
+    private Board board;
+    private static Game instance;
     private List<Player> players;
-    private int chosenPlayersNumber;       //servirebbe nel caso un player si scollega dal gioco (FA)
+    private int chosenPlayersNumber;
     private int contPlayer;
     public static final String SERVER_NICKNAME = "server";
     public List<String> nicknames;
@@ -87,15 +84,11 @@ public class Game extends Observable implements Serializable {
         return contPlayer;
     }
 
-    /**
-     * getter
-     * @return
-     */
-
 
     /**
-     * adds the nickname to a player
-     * @param player
+     * adds the nickname to a player.
+     *
+     * @param player the player to be added
      */
     public void addPlayer(Player player){
         players.add(player);
@@ -108,14 +101,15 @@ public class Game extends Observable implements Serializable {
     }
 
     public int getNumPlayers() {
-        return chosenPlayersNumber;   //oppure return chosenPlayersNumber (in base a se vogliamo
-                                 // fare la FA se uno si scollega dal gioco)
+        return chosenPlayersNumber;
+
     }
 
     /**
-     * it searches the player with this nickname
-     * @param nickname
-     * @return Player
+     * it searches the player with this nickname.
+     *
+     * @param nickname to be filtered
+     * @return Player who has the corresponding nickname
      */
     public Player getPlayerByNickname(String nickname) {
         return players.stream()
@@ -126,7 +120,8 @@ public class Game extends Observable implements Serializable {
 
 
     /**
-     * controls if the nickname is occupied
+     * controls if the nickname is occupied.
+     *
      * @param nickname
      * @return
      */
@@ -136,7 +131,8 @@ public class Game extends Observable implements Serializable {
     }
 
     /**
-     * in case the player disconnects
+     * in case the player disconnects.
+     *
      * @param nickname
      * @return
      */

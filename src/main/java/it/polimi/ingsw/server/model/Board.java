@@ -100,10 +100,6 @@ public class Board extends Observable implements Serializable {
 
     }
 
-    /**
-     * setters and getters
-     */
-
     public Bag getBag() {
         return bag;
     }
@@ -157,9 +153,10 @@ public class Board extends Observable implements Serializable {
 
     /**
      * when we add the tower to the island, at the same time we remove the tower from the towerSpace.
-     * when the towerSpace remains empty the player owning that plank wins the game
-     * @param player
-     * @param island
+     * when the towerSpace remains empty the player owning that plank wins the game.
+     *
+     * @param player the player who has the tower moving.
+     * @param island the island where the tower is being placed
      */
     public void moveTowerFromPlankToIsland(Player player, Island island){
         if(!player.getPlank().getTowerSpace().getTowersList().isEmpty()) {
@@ -171,6 +168,7 @@ public class Board extends Observable implements Serializable {
     /**
      * if one player conquers an island(group of islands) that before was conquered by another player,
      * the ex-conqueror of the island gets in its plank all the towers belonging to him.
+     *
      * @param island
      */
     public void moveTowerFromIslandToPlank(Island island){      //la for sarà nel conquerIsland
@@ -186,7 +184,8 @@ public class Board extends Observable implements Serializable {
     /**
      * the method that allows the mother nature to move.
      * after the move is done the supremacy is calculated in the island in which mother nature is found.
-     * @param numMoves
+     *
+     * @param numMoves number of moves mother nature should do
      */
     public void moveMotherNature(int numMoves){
         for (int i = 0; i < islands.size(); i++){
@@ -237,6 +236,7 @@ public class Board extends Observable implements Serializable {
 
     /**
      * moving the professor when a player moves one of his students into his dining room.
+     *
      * @param player is the active player
      */
     private void moveProfessorNormal(Player player) {
@@ -261,7 +261,8 @@ public class Board extends Observable implements Serializable {
     }
 
     /**
-     * moving the professor in case Chef card effect is applied
+     * moving the professor in case Chef card effect is applied.
+     *
      * @param player is the active player
      */
     public void moveProfessorChef(Player player){
@@ -286,8 +287,9 @@ public class Board extends Observable implements Serializable {
     }
 
     /**
-     * calculate the supremacy
-     * @param island is the island with mothernature onto
+     * calculate the supremacy.
+     *
+     * @param island is the island with mother nature onto.
      */
     public void calculateSupremacy(Island island){
         if (island.getStudents().size() != 0){
@@ -336,8 +338,9 @@ public class Board extends Observable implements Serializable {
     }
 
     /**
-     * count the tower in the supremacy calculation
-     * @param island
+     * count the tower in the supremacy calculation.
+     *
+     * @param island the island where the towers are in.
      */
     private void towerCont(Island island) {
         if (island.getTowers().size() != 0) {
@@ -353,8 +356,9 @@ public class Board extends Observable implements Serializable {
 
     /**
      * if one player has the highest supremacy in the island in which mother nature stops,
-     * he conquers the island by putting his tower in it
-     * @param island
+     * he conquers the island by putting his tower in it.
+     *
+     * @param island the island to be conquered
      */
     public void conquerIsland(Island island){
         if (island.getTowers().size() != 0){
@@ -422,7 +426,7 @@ public class Board extends Observable implements Serializable {
 
     /**
      * if there are 2 or more islands near each other and those islands are conquered by the same player,
-     * then the islands are unified
+     * then the islands are unified.
      * @param island
      */
     public void joinIslands(Island island){
@@ -450,7 +454,6 @@ public class Board extends Observable implements Serializable {
                         }
                     }
                     i1 = islands.get((i+1)%islands.size());
-                    //islands.remove(islands.get((i+1)%islands.size()));
                 }if ((i-1) == -1) {
                     if (!(islands.get(islands.size()-1).getTowers().size() == 0  || islands.get(islands.size()-1).getFirstTower().getColor() != island.getFirstTower().getColor())) {
                         int numTowersLastIsland = islands.get(islands.size()-1).getTowers().size();
@@ -471,7 +474,6 @@ public class Board extends Observable implements Serializable {
                             }
                         }
                         i2 = islands.get(islands.size()-1);
-                        //islands.remove(islands.get(islands.size()-1));
                     }
                 }else {
                     if (!(islands.get(i-1).getTowers().size() == 0  || islands.get(i-1).getFirstTower().getColor() != island.getFirstTower().getColor())) {
@@ -493,7 +495,6 @@ public class Board extends Observable implements Serializable {
                             }
                         }
                         i2 = islands.get(i-1);
-                        //islands.remove(islands.get(i-1));
                     }
                 }if (i1 != null){
                     islands.remove(i1);
@@ -506,7 +507,7 @@ public class Board extends Observable implements Serializable {
     }
 
     /**
-     * returns true if the character card is activated
+     * returns true if the character card is activated.
      */
     public boolean isCardActivated() {
         return cardActivated;
@@ -539,6 +540,7 @@ public class Board extends Observable implements Serializable {
      * In setup, draw 4 students and place them on this card.
      * When this card effect is applied you can take 1 student from this card and place it on an island of your choice.
      * Then, draw a student from the bag and place it on this card. The price after this card is used is increased by 1.
+     *
      * @param player who activates the card
      * @param characterCard Sommelier
      * @param studentColor
@@ -566,6 +568,7 @@ public class Board extends Observable implements Serializable {
 
     /**
      * after this card is used its price is increased by 1.
+     *
      * @param player who activates this card
      * @param characterCard Chef
      */
@@ -583,6 +586,7 @@ public class Board extends Observable implements Serializable {
      * choice and calculates the supremacy as if mother nature had ended her movement there.
      * Mother Nature will still move during that turn and the island where she ends her movement will still be resolved.
      * The card price is increased by 1 after its effect is used.
+     *
      * @param player who activates this card
      * @param characterCard Messenger
      * @param numIsland is the number of island the player puts the mother nature
@@ -625,6 +629,7 @@ public class Board extends Observable implements Serializable {
 
     /**
      * The card price is increased by 1 after its effect is used.
+     *
      * @param player who activates this card effect
      * @param characterCard Postman
      */
@@ -639,6 +644,7 @@ public class Board extends Observable implements Serializable {
     /**
      * This character card allows the use of the BanCards.
      * The card price is increased by 1 after its effect is used.
+     *
      * @param player who activates this card effect
      * @param characterCard Herbalist
      * @param numIsland is the island number where the player puts the ban card
@@ -662,6 +668,7 @@ public class Board extends Observable implements Serializable {
 
     /**
      * The card price is increased by 1 after its effect is used.
+     *
      * @param player who activates this card effect
      * @param characterCard Centaur
      */
@@ -675,6 +682,7 @@ public class Board extends Observable implements Serializable {
 
     /**
      * The card price is increased by 1 after its effect is used.
+     *
      * @param player who activates this card effect
      * @param characterCard Knight
      */
@@ -691,9 +699,10 @@ public class Board extends Observable implements Serializable {
      * This card's effect permits the player who activated it to take one student from this card and place it on his
      * dining room. Then, draw a student from the bag and place it on this card.
      * The card price is increased by 1 after its effect is used.
+     *
      * @param player who activates this card effect
      * @param characterCard Lady
-     * @param studentColor
+     * @param studentColor the student color
      */
     public void applyEffectLady(Player player, CharacterCard characterCard, StudentColor studentColor){
         characterCard.setEnabled(true);

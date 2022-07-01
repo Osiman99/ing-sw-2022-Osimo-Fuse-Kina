@@ -1,7 +1,6 @@
 package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.client.view.CLI.ANSIColor;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
