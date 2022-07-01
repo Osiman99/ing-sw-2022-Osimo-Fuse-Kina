@@ -14,7 +14,6 @@ public class Server {
 
     private static Server instance;
     private final GameController gameController;
-    private boolean flag;
 
     private final Map<String, ClientHandler> clientHandlerMap;
 
@@ -27,7 +26,6 @@ public class Server {
         this.gameController = gameController;
         this.clientHandlerMap = Collections.synchronizedMap(new HashMap<>());
         this.lock = new Object();
-        flag = false;
     }
 
     /**
