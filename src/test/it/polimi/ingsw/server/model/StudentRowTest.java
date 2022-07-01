@@ -14,7 +14,7 @@ class StudentRowTest {
 
     @BeforeEach
     void setUp() {
-        studentRow = new StudentRow(0);
+        studentRow = new StudentRow();
         for(int i=0; i<5; i++)
             studentRow.addStudent(new Student(StudentColor.getStudentColor(0)));
     }
@@ -40,17 +40,6 @@ class StudentRowTest {
 
         for(Student s: students)
             assertTrue(studentRow.getStudents().contains(s));
-    }
-
-    @Test
-    void getRowColor() {
-        assertEquals(StudentColor.GREEN, studentRow.getRowColor());
-    }
-
-    @Test
-    void setRowColor() {
-        studentRow.setRowColor(StudentColor.PINK);
-        assertEquals(StudentColor.PINK, studentRow.getRowColor());
     }
 
     @Test

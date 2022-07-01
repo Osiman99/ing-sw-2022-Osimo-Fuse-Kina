@@ -42,7 +42,6 @@ public class ClientHandler implements Runnable {
             messageManager();
         } catch (IOException e) {
             Server.LOGGER.severe("Client " + client.getInetAddress() + " connection dropped.");
-            //e.printStackTrace();
             disconnect();
         }
     }
@@ -69,11 +68,6 @@ public class ClientHandler implements Runnable {
             Server.LOGGER.severe("Invalid stream from client");
         }
         client.close();
-    }
-
-
-    public boolean isConnected() {
-        return connected;
     }
 
 

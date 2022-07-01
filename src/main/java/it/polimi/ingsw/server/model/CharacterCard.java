@@ -21,7 +21,7 @@ public class CharacterCard implements Serializable {
      * @param characterName
      */
     public CharacterCard(CharacterName characterName){
-        game = GameExpert.getInstance();          //da spostare e da mattere in un initMethod
+        game = GameExpert.getInstance();
         this.characterName = characterName;
 
         switch (characterName){

@@ -20,10 +20,6 @@ public abstract class ViewObservable {
         observerList.add(observer);
     }
 
-    public void removeObserver (ViewObserver observer) {
-        observerList.remove(observer);
-    }
-
     /**
      * Notifies all the current observers through the lambda argument.
      *

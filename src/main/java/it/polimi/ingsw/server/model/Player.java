@@ -2,7 +2,6 @@ package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.network.BoardMessage;
 import it.polimi.ingsw.observer.Observable;
-
 import java.io.Serializable;
 
 public class Player extends Observable implements Serializable {
@@ -38,9 +37,6 @@ public class Player extends Observable implements Serializable {
         deck = new AssistantDeck();
     }
 
-    /**
-     * getters and setters
-     */
 
     public String getNickname(){
         return nickname;

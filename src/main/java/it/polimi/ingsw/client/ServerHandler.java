@@ -46,11 +46,10 @@ public class ServerHandler extends Client {
                 Message message;
                 try {
                     message = (Message) inputStm.readObject();
-                    //Client.LOGGER.info("Received: " + message);
                 } catch (IOException | ClassNotFoundException e) {
                     message = new ErrorMessage(null, "Connection lost with the server.");
                     disconnect();
-                    //readExecutionQueue.shutdownNow();
+                    readExecutionQueue.shutdownNow();
                 }
                 notifyObserver(message);
             }
