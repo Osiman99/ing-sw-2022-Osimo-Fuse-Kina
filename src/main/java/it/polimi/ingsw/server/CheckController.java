@@ -21,9 +21,7 @@ public class CheckController implements Serializable {
     private final GameController gameController;
     private List<Integer> numCardOtherPlayers;
     private List<String> nicknamesInChooseOrder;
-    private List<String> sortedNicknames;
     private String firstPlayerInAction;
-    private boolean lastTurnFlag;
 
     /**
      * Constructor of the Input Controller Class.
@@ -36,7 +34,6 @@ public class CheckController implements Serializable {
         this.gameController = gameController;
         numCardOtherPlayers = new ArrayList<Integer>();
         nicknamesInChooseOrder = new ArrayList<String>();
-        lastTurnFlag = false;
     }
 
 

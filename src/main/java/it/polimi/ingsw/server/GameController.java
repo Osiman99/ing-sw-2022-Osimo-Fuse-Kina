@@ -12,7 +12,7 @@ import java.util.*;
  * This class controls the evolution of the Game.
  * Messages are read and responses are elaborated.
  */
-public class GameController implements Observer, Serializable {
+public class GameController implements Serializable {
 
     private GameState state;
     private Game game;
@@ -30,7 +30,6 @@ public class GameController implements Observer, Serializable {
     private Lobby lobby;
     private String askInterrupted;
     private String[] text;
-    private boolean serverEndFlag;
     private boolean acFlag;
 
     /**
@@ -48,7 +47,6 @@ public class GameController implements Observer, Serializable {
         endgame = false;
         askInterrupted = "";
         text = new String[3];
-        serverEndFlag = false;
         acFlag = false;
     }
 
@@ -58,7 +56,6 @@ public class GameController implements Observer, Serializable {
      * @param receivedMessage Message from Active Player.
      */
     public void switchState(Message receivedMessage){
-        VirtualView virtualView = virtualViewMap.get(receivedMessage.getNickname());
         switch(state){
             case PREGAME:
                 login(receivedMessage);
@@ -296,7 +293,6 @@ public class GameController implements Observer, Serializable {
         endgame = false;
         askInterrupted = "";
         text = new String[3];
-        serverEndFlag = false;
         acFlag = false;
     }
 
@@ -545,7 +541,6 @@ public class GameController implements Observer, Serializable {
     }
 
     public void establishWin(){
-        boolean tie = false;
         int contProfessorFirstPlayer = 0;
         int contProfessorSecondPlayer = 0;
         int contProfessorThirdPlayer = 0;
@@ -582,7 +577,6 @@ public class GameController implements Observer, Serializable {
             if (contTowersPrev > contTowersNext && firstPlayerCont > contTowersNext) {
                 game.getPlayers().get(i).setTowerCont(contTowersNext);
                 winner = game.getPlayers().get(i);
-                tie = false;
 
             } if (i == 1 && contTowersPrev == contTowersNext && contTowersNext == winner.getTowerCont()) {
                 game.getPlayers().get(1).setTowerCont(contTowersNext);
@@ -591,7 +585,6 @@ public class GameController implements Observer, Serializable {
                 } else if (contProfessorFirstPlayer < contProfessorSecondPlayer) {
                     winner = game.getPlayers().get(1);
                 } else {
-                    tie = true;
                     state = GameState.ENDGAME;
                     game.setState(GameState.ENDGAME);
                     broadcastGenericMessage(ANSIColor.CYAN_BOLD +"It's a DRAW!"+ANSIColor.RESET);
@@ -607,7 +600,6 @@ public class GameController implements Observer, Serializable {
                 } else if (contProfessorSecondPlayer < contProfessorThirdPlayer) {
                     winner = game.getPlayers().get(2);
                 } else {
-                    tie = true;
                     state = GameState.ENDGAME;
                     game.setState(GameState.ENDGAME);
                     broadcastGenericMessage(ANSIColor.CYAN_BOLD +"It's a DRAW!"+ANSIColor.RESET);
@@ -622,7 +614,6 @@ public class GameController implements Observer, Serializable {
                 } else if (contProfessorFirstPlayer < contProfessorThirdPlayer) {
                     winner = game.getPlayers().get(2);
                 } else {
-                    tie = true;
                     state = GameState.ENDGAME;
                     game.setState(GameState.ENDGAME);
                     broadcastGenericMessage(ANSIColor.CYAN_BOLD +"It's a DRAW!"+ANSIColor.RESET);
@@ -748,11 +739,6 @@ public class GameController implements Observer, Serializable {
 
     public Map<String, VirtualView> getVirtualViewMap() {
         return virtualViewMap;
-    }
-
-    @Override
-    public void update(Message message) {
-
     }
 
 }

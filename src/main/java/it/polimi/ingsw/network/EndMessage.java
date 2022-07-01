@@ -13,10 +13,6 @@ public class EndMessage extends Message {
         this.quit = quit;
     }
 
-    public String getQuit() {
-        return quit;
-    }
-
     public String toString(){
         return getNickname() + " wants to quit";
     }
