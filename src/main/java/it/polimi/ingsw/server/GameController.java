@@ -723,6 +723,12 @@ public class GameController implements Serializable {
                 for (int i = 0; i < checkController.getNicknamesInChooseOrder().size(); i++) {
                     if (checkController.getNicknamesInChooseOrder().get(i).equals(activePlayer.getNickname())) {
                         game.getBoard().setCardActivated(false);
+                        if (game instanceof GameExpert){
+                            GameExpert gameExpert = (GameExpert) game;
+                            for (int j = 0; j < gameExpert.getThreeChosenCards().size(); j++) {
+                                gameExpert.getThreeChosenCards().get(j).setEnabled(false);
+                            }
+                        }
                         activePlayer = game.getPlayerByNickname(checkController.getNicknamesInChooseOrder().get((i + 1) % checkController.getNicknamesInChooseOrder().size()));
                         moveCont = 0;
                         turnCont++;
