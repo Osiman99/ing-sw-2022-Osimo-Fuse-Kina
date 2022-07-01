@@ -37,7 +37,7 @@ To execute .jar files, you have to run the Terminal (if the game doesn't work, r
 
 in order to see all the different colors printed.
 
-Then search the jars path (../ing-sw-2022-Osimo-Fuse-Kina/deliverables/jar) and type the following command:
+Then search the jars path (. . /ing-sw-2022-Osimo-Fuse-Kina/deliverables/jar) and type the following command:
 
 - <b>for Server jar:</b> 
 java -jar server.jar
