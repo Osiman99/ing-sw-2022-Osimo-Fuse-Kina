@@ -3,7 +3,6 @@ package it.polimi.ingsw.client;
 import it.polimi.ingsw.network.ErrorMessage;
 import it.polimi.ingsw.network.Message;
 import it.polimi.ingsw.network.PingMessage;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -15,7 +14,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- * sends messages and receives messages from the server
+ * Sends messages and receives messages from the server.
  */
 public class ServerHandler extends Client {
     private final Socket socket;

@@ -5,6 +5,10 @@ import it.polimi.ingsw.server.model.Game;
 
 import java.util.List;
 
+/**
+ * Defines a generic view to be implemented by each view type (e.g. CLI, GUI, ...).
+ * This project has only CLI.
+ */
 public interface View {
 
     /**
