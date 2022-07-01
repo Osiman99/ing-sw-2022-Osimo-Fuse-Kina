@@ -2,10 +2,7 @@ package it.polimi.ingsw.client.view;
 
 import it.polimi.ingsw.server.model.AssistantCard;
 import it.polimi.ingsw.server.model.Game;
-import it.polimi.ingsw.server.model.Island;
-import it.polimi.ingsw.server.model.StudentColor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface View {
@@ -31,18 +28,46 @@ public interface View {
      */
     void showLoginResult(boolean nicknameAccepted, boolean connection, String nickname);
 
+    /**
+     * Shows to the user the GenericMessage content.
+     *
+     * @param genericMessage the message string
+     */
     void showGenericMessage(String genericMessage);
 
+    /**
+     * Shows to the user if another user is disconnected.
+     *
+     * @param nicknameDisconnected the disconnected player
+     * @param value the message string
+     */
     void showDisconnectionMessage(String nicknameDisconnected, String value);
 
+    /**
+     * Shows to the user the updated board.
+     *
+     * @param game the game instance
+     */
     void drawBoard(Game game);
 
+    /**
+     * Shows the maximum number of steps that mother nature can make this turn
+     *
+     * @param maxMoves the number of maximum steps
+     */
     void onDemandMotherNatureMoves(int maxMoves);
 
+    /**
+     * Shows to the user the effects of the three active character cards.
+     *
+     * @param text the three chosen character card descriptions.
+     */
     void onDemandCharacterCard(String[] text);
 
+    /**
+     * Shows to the user the error message.
+     *
+     * @param error the string error message
+     */
     void showErrorAndQuit(String error);
-
-    //void showErrorAndQuit(String error);
-
 }

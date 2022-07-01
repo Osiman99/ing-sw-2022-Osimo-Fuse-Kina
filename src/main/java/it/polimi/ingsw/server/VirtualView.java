@@ -25,6 +25,11 @@ public class VirtualView implements View, Observer {
         this.clientHandler = clientHandler;
     }
 
+    /**
+     * Sends a generic type message to the client.
+     *
+     * @param genericMessage the message to be sent.
+     */
     public void showGenericMessage(String genericMessage) {
         clientHandler.sendMessage(new GenericMessage(genericMessage));
     }
