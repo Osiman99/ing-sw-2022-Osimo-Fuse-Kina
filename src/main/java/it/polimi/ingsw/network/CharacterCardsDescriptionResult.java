@@ -1,6 +1,8 @@
 package it.polimi.ingsw.network;
 
-
+/**
+ * The server sends the descriptions of the three available character cards.
+ */
 public class CharacterCardsDescriptionResult extends Message{
 
     private static final long serialVersionUID = -9072253637635095715L;
