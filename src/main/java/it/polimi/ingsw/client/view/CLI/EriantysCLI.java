@@ -10,6 +10,12 @@ import java.util.concurrent.ExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/*
+ * Each player interact whith the game through this class:
+ * EriantysCLI displays on the console the game board and any message or request received from the server and their results
+ *
+ */
+
 public class EriantysCLI extends ViewObservable implements View {
 
     private final PrintStream out;
@@ -251,25 +257,6 @@ public class EriantysCLI extends ViewObservable implements View {
             for(j=0; j<5; j++)
                 diningRoomBoard[j].clear();
         }
-
-        /*
-            ╔ ═ ═ ═ ╦ ═ ═ ═ ╗       →
-            ║   	║       ║       ● studente
-            ╠ ═ ═ ═	╬ ═ ═ ═	╣       ▲ professore
-            ║       ║       ║       •  ☻ ☼
-            ╚ ═ ═ ═ ╩ ═ ═ ═ ╝       ■ torre
-                                    ☬  ℳ madrenatura
-                            → nickname's plank
-            "               ╔══════════╦═══════════════════════╦═════════╦═════════════╗");
-            plankBoard.add("║ Entrance ║      Dining Room      ║Professor║ Tower Space ║");
-            plankBoard.add("╠══════════╬═══════════════════════╬═════════╬═════════════╣");
-            plankBoard.add("║       ●  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║   ■     ■   ║");
-            plankBoard.add("║  ●    ●  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║   ■     ■   ║");
-            plankBoard.add("║  ●    ●  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║   ■     ■   ║");
-            plankBoard.add("║  ●    ●  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║   ■     ■   ║");
-            plankBoard.add("║  ●    ●  ║  ● ● ● ● ● ● ● ● ● ●  ║    ▲    ║             ║");
-            plankBoard.add("╚══════════╩═══════════════════════╩═════════╩═════════════╝");
-        */
     }
 
     /**
@@ -442,18 +429,6 @@ public class EriantysCLI extends ViewObservable implements View {
 
         }
 
-
-                // ☬  ℳ madrenatura
-        /*
-            ┄┆┅┇░
-            ╔═══════════════════════╦══════╗
-            ║     ISLAND  n°  1     ║  MN  ║
-            ╠═══════════════════════╬══════╣
-            ║TOWERS                 ║  XX  ║
-            ╠═════╦═════╦═════╦═════╬═════╦╝
-            ║ ● 0 ║ ● 0 ║ ● 0 ║ ● 0 ║ ● 0 ║
-            ╚═════╩═════╩═════╩═════╩═════╝");
-         */
     }
 
 
@@ -506,16 +481,6 @@ public class EriantysCLI extends ViewObservable implements View {
             cloudBoard.clear();
             cloudStudents.clear();
         }
-
-
-        /*
-        ─┌─────└┐┘ ╭╯╮╰
-        ╭─────────────────╮
-        │        ●        │
-        │ ●   Cloud 1   ● │
-        │        ●        │
-        ╰─────────────────╯
-         */
 
     }
 
@@ -817,7 +782,7 @@ public class EriantysCLI extends ViewObservable implements View {
     /**
      * prints the description of the character cards and asks the client which one it has chosen and sends it to the client.
      *
-     * @param text the input made by the player
+     * @param text contains the Character Card descriptions
      */
     public void onDemandCharacterCard(String[] text){
         for(int i = 0; i < text.length; i++) {
@@ -870,10 +835,10 @@ public class EriantysCLI extends ViewObservable implements View {
     /**
      * this method controls if the student color chosen exists and returns the chosen color.
      *
-     * @param text
-     * @param studentColor
-     * @param sColor
-     * @return
+     * @param text contains the Character Card descriptions
+     * @param studentColor is the corresponding color
+     * @param sColor is the color chosen by the player
+     * @return the student color converted into StudentColor type
      */
     private StudentColor chooseStudent(String[] text, StudentColor studentColor, String sColor) {
         switch(sColor) {
@@ -905,7 +870,7 @@ public class EriantysCLI extends ViewObservable implements View {
     /**
      * Prints a generic message and in some specific cases calls their respective methods.
      *
-     * @param genericMessage
+     * @param genericMessage is the string message
      */
     public void showGenericMessage(String genericMessage) {
         out.println(genericMessage);
@@ -962,7 +927,7 @@ public class EriantysCLI extends ViewObservable implements View {
     /**
      * prints "error" and "exit" in case of an error, for example when the connection is lost.
      *
-     * @param error
+     * @param error contains the type of error produced
      */
     public void showErrorAndQuit(String error) {
 
